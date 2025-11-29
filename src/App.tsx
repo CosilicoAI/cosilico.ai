@@ -14,7 +14,7 @@ function App() {
           <div className="nav-links">
             <a href="#what-we-build">Platform</a>
             <a href="#for-ai" className="desktop-only">For AI</a>
-            <a href="https://github.com/CosilicoAI/engine" className="desktop-only">Engine</a>
+            <a href="https://github.com/CosilicoAI/cosilico-engine" className="desktop-only">Engine</a>
             <a href="https://github.com/CosilicoAI" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
@@ -23,16 +23,16 @@ function App() {
       {/* Hero Section */}
       <section className="hero">
         <div className="container">
-          <p className="hero-eyebrow">The infrastructure AI needs</p>
+          <p className="hero-eyebrow">Rules • Data • Simulation</p>
           <h1 className="hero-title">
-            Stripe for the <span className="gradient-text">Law</span>
+            Simulate <span className="gradient-text">Society</span>
           </h1>
           <p className="hero-subtitle">
-            AI systems need reliable, programmatic access to tax and benefit law.
-            Not PDFs. Not chatbot summaries. Encoded legislation with legal provenance.
+            Open source infrastructure for modeling how policy affects people.
+            From a single household to entire populations.
           </p>
           <div className="hero-buttons">
-            <a href="https://github.com/CosilicoAI/engine" className="btn btn-primary">View Engine →</a>
+            <a href="https://github.com/CosilicoAI/cosilico-engine" className="btn btn-primary">View Engine →</a>
             <a href="#what-we-build" className="btn btn-secondary">Learn More</a>
           </div>
         </div>
@@ -84,7 +84,7 @@ function App() {
                 <li>Jurisdiction modularity</li>
                 <li>Apache 2.0 licensed</li>
               </ul>
-              <a href="https://github.com/CosilicoAI/engine" className="engine-link">View on GitHub →</a>
+              <a href="https://github.com/CosilicoAI/cosilico-engine" className="engine-link">View on GitHub →</a>
             </div>
             <div className="engine-component">
               <div className="engine-icon">📊</div>
@@ -242,7 +242,7 @@ result = calculate(
           <h2>Start Building</h2>
           <p>Open source. Apache 2.0. No API keys required to get started.</p>
           <div className="cta-buttons">
-            <a href="https://github.com/CosilicoAI/engine" className="btn btn-primary">
+            <a href="https://github.com/CosilicoAI/cosilico-engine" className="btn btn-primary">
               View Engine on GitHub
             </a>
             <a href="https://github.com/CosilicoAI" className="btn btn-secondary">
@@ -263,13 +263,13 @@ result = calculate(
             <div className="footer-sections">
               <div className="footer-section">
                 <h5>Platform</h5>
-                <a href="https://github.com/CosilicoAI/engine">Rules Engine</a>
+                <a href="https://github.com/CosilicoAI/cosilico-engine">Rules Engine</a>
                 <a href="#what-we-build">Microdata</a>
                 <a href="#what-we-build">APIs</a>
               </div>
               <div className="footer-section">
                 <h5>Resources</h5>
-                <a href="https://github.com/CosilicoAI/engine">Documentation</a>
+                <a href="https://github.com/CosilicoAI/cosilico-engine">Documentation</a>
                 <a href="https://github.com/CosilicoAI">GitHub</a>
               </div>
               <div className="footer-section">
