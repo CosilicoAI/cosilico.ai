@@ -13,14 +13,62 @@ bd update bd-123 --status in_progress --json  # Claim work
 bd close bd-123 --reason "Done" --json  # Complete work
 ```
 
+### Priority Levels
+
+- **P1**: Critical, do first (lower number = higher priority)
+- **P2**: Important, do soon
+- **P3**: Nice to have
+
+### Issue Types
+
+- `epic`: Large initiative with subtasks
+- `feature`: New functionality
+- `task`: General work item
+- `bug`: Something broken
+
+### Dependency Types
+
+Use `--deps <type>:<id>` when creating issues:
+
+```bash
+# Subtask under an epic
+bd create "VC outreach" -p 1 --deps parent-child:cosilico.ai-m61 --json
+
+# Found new work while working on another issue
+bd create "Found auth bug" -p 1 --deps discovered-from:cosilico.ai-abc --json
+
+# This issue blocks another
+bd create "Fix API" -p 1 --deps blocks:cosilico.ai-xyz --json
+
+# Soft link between related issues
+bd create "Related cleanup" -p 2 --deps related:cosilico.ai-abc --json
+```
+
+Or add dependencies after creation:
+```bash
+bd dep add <issue-id> <depends-on-id> --type discovered-from
+```
+
 ### Workflow for AI Agents
 
-1. **Check ready work**: `bd ready` shows unblocked issues
-2. **Claim your task**: `bd update <id> --status in_progress`
+1. **Check ready work**: `bd ready --json` shows unblocked issues
+2. **Claim your task**: `bd update <id> --status in_progress --json`
 3. **Work on it**: Implement, test, document
-4. **Discover new work?** Create linked issue with `discovered-from`
-5. **Complete**: `bd close <id> --reason "Done"`
+4. **Discover new work?** Create linked issue:
+   ```bash
+   bd create "Found issue" -p 1 --deps discovered-from:<current-task-id> --json
+   ```
+5. **Complete**: `bd close <id> --reason "Brief summary of what was done" --json`
 6. **Commit together**: Always commit `.beads/issues.jsonl` with code changes
+
+### Viewing Issues
+
+```bash
+bd ready --json          # Unblocked issues ready for work
+bd list --json           # All open issues
+bd show <id> --json      # Details of specific issue
+bd list --status closed  # Completed issues
+```
 
 ### Important Rules
 
@@ -28,6 +76,8 @@ bd close bd-123 --reason "Done" --json  # Complete work
 - Always use `--json` flag for programmatic use
 - Check `bd ready` before asking "what should I work on?"
 - Do NOT create markdown TODO lists
+- Link discovered work with `discovered-from` to maintain context
+- Use `parent-child` to create subtasks under epics
 
 ---
 
