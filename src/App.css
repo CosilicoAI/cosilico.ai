@@ -85,6 +85,15 @@ body {
   text-align: center;
 }
 
+.hero-eyebrow {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #0066ff;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
 .hero-title {
   font-size: 3.5rem;
   font-weight: 700;
@@ -146,6 +155,84 @@ body {
 .btn-secondary:hover {
   background: #f5f8ff;
   transform: translateY(-2px);
+}
+
+/* Problem Section */
+.problem-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.problem-card {
+  padding: 32px;
+  border-radius: 12px;
+}
+
+.problem-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.problem-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.problem-card li {
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+}
+
+.problem-bad {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.problem-bad h3 {
+  color: #991b1b;
+}
+
+.problem-bad li {
+  color: #7f1d1d;
+}
+
+.problem-bad li::before {
+  content: "✗";
+  position: absolute;
+  left: 0;
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.problem-good {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.problem-good h3 {
+  color: #166534;
+}
+
+.problem-good li {
+  color: #15803d;
+}
+
+.problem-good li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #22c55e;
+  font-weight: bold;
 }
 
 /* Products Section */
@@ -289,6 +376,118 @@ body {
   color: #0066ff;
   font-weight: bold;
   margin-right: 8px;
+}
+
+.engine-link {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  color: #0066ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.engine-link:hover {
+  color: #0052cc;
+}
+
+/* For AI Section */
+.for-ai-section {
+  padding: 100px 0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+}
+
+.for-ai-section .section-title {
+  color: white;
+}
+
+.for-ai-section .section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ai-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+.ai-feature {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 32px;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.ai-feature:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 102, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.ai-feature h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #00c9ff;
+}
+
+.ai-feature p {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+}
+
+/* Code Section */
+.code-section {
+  padding: 100px 0;
+  background: #fafafa;
+}
+
+.code-example {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #1a1a2e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.code-example pre {
+  margin: 0;
+  padding: 32px;
+  overflow-x: auto;
+}
+
+.code-example code {
+  font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #e5e5e5;
+}
+
+/* Vision Section */
+.vision-section {
+  padding: 100px 0;
+  background: white;
+}
+
+.vision-content {
+  max-width: 800px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.vision-text {
+  font-size: 1.25rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.vision-text strong {
+  color: #0066ff;
 }
 
 /* Open Source Section */
@@ -761,8 +960,32 @@ body {
   .use-cases,
   .about,
   .cta,
-  .features {
+  .features,
+  .problem-section,
+  .for-ai-section,
+  .code-section,
+  .vision-section {
     padding: 60px 0;
+  }
+
+  .problem-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-features {
+    grid-template-columns: 1fr;
+  }
+
+  .code-example pre {
+    padding: 20px;
+  }
+
+  .code-example code {
+    font-size: 0.75rem;
+  }
+
+  .vision-text {
+    font-size: 1.1rem;
   }
   
   .section-title {
