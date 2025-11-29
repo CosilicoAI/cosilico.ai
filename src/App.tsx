@@ -2077,7 +2077,7 @@ poverty_reform = reformed.calculate("in_poverty").mean()`}</code></pre>
                     "Why can't AI just get better at tax calculations?"
                   </div>
                   <div className="objection-answer">
-                    <strong>The data proves it can't.</strong> Stanford research shows GPT-4 achieves only 67% accuracy on tax true/false questions and only 76 of 98 scenarios within 10% of correct tax liability. Tax law requires deterministic precision, not probabilistic guesses. LLMs will always need to call verified calculation tools.
+                    <strong>The data proves it can't.</strong> <a href="https://arxiv.org/abs/2309.09992" target="_blank" rel="noopener noreferrer">Johns Hopkins research (SARA)</a> shows GPT-4 achieves only 67% accuracy on tax true/false questions (186/276) and only 76 of 98 scenarios within 10% of correct tax liability. Even if LLMs improve, deterministic tools will always be faster, auditable, and legally citable. LLMs will call tools—ours.
                   </div>
                 </div>
 

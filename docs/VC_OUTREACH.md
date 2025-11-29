@@ -213,7 +213,7 @@ Hi [Partner Name],
 
 I'm building Cosilico, the "Stripe for policy calculations" - open source API infrastructure that lets AI systems calculate taxes, predict household attributes, and run population-scale simulations.
 
-**The problem:** AI can't do taxes. GPT-4 achieves only 67% accuracy on tax questions. LLMs hallucinate rates, miss edge cases, and can't cite sources. Yet every AI financial assistant needs these calculations.
+**The problem:** AI can't do taxes. [Johns Hopkins research](https://arxiv.org/abs/2309.09992) shows GPT-4 achieves only 67% accuracy on tax questions (186/276 on SARA benchmark). Even if LLMs improve, deterministic tools are faster, auditable, and legally citable. Yet every AI financial assistant needs these calculations.
 
 **The solution:** Deterministic tax/benefit calculations with legal citations + ML-based attribute prediction + microsimulation on 100M+ households. Already live in US (50 states), UK, and Canada (50% built).
 
