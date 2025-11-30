@@ -5,7 +5,9 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Oxygen,
+    Ubuntu, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #1a1a1a;
@@ -67,11 +69,11 @@ body {
   .navbar .container {
     padding: 12px 16px;
   }
-  
+
   .nav-links {
     gap: 12px;
   }
-  
+
   .nav-links a {
     font-size: 0.875rem;
     padding: 4px 8px;
@@ -340,6 +342,15 @@ body {
   font-size: 3rem;
   margin-bottom: 16px;
   text-align: center;
+  color: #0066ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.engine-icon svg {
+  width: 56px;
+  height: 56px;
 }
 
 .engine-component h3 {
@@ -461,7 +472,7 @@ body {
 }
 
 .code-example code {
-  font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
+  font-family: "SF Mono", "Fira Code", "Monaco", monospace;
   font-size: 0.875rem;
   line-height: 1.7;
   color: #e5e5e5;
@@ -561,7 +572,7 @@ body {
 /* Fade edges - about 1/3 on each side */
 .simple-marquee::before,
 .simple-marquee::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -587,7 +598,8 @@ body {
 }
 
 .marquee-text {
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
   font-size: 1.8rem;
   color: #0066ff;
   letter-spacing: -0.02em;
@@ -930,30 +942,30 @@ body {
   .container {
     padding: 0 16px;
   }
-  
+
   .hero {
     padding: 60px 0;
   }
-  
+
   .hero-title {
     font-size: 2rem;
     margin-bottom: 16px;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
     margin-bottom: 32px;
   }
-  
+
   .hero-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .btn {
     width: 200px;
   }
-  
+
   .products,
   .engine,
   .open-source,
@@ -987,121 +999,121 @@ body {
   .vision-text {
     font-size: 1.1rem;
   }
-  
+
   .section-title {
     font-size: 1.75rem;
     margin-bottom: 12px;
   }
-  
+
   .section-subtitle {
     font-size: 1rem;
     margin-bottom: 40px;
   }
-  
+
   .products-grid,
   .features-grid,
   .use-cases-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .product-card,
   .feature-card,
   .use-case,
   .engine-component {
     padding: 24px;
   }
-  
+
   .engine-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .engine-component h3 {
     font-size: 1.25rem;
   }
-  
+
   .engine-icon {
     font-size: 2rem;
   }
-  
+
   .open-source-content {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  
+
   .open-source-stats {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
-  
+
   .stat-number {
     font-size: 1.75rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
   }
-  
+
   .footer {
     padding: 40px 0 16px;
   }
-  
+
   .footer-content {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  
+
   .footer-sections {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .cta {
     padding: 60px 0;
   }
-  
+
   .cta h2 {
     font-size: 1.75rem;
   }
-  
+
   .cta p {
     font-size: 1rem;
   }
-  
+
   .cta-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .recursive-visual {
     padding: 24px;
   }
-  
+
   .marquee-text {
     font-size: 1.3rem;
   }
-  
+
   .recursive-description {
     font-size: 0.85rem;
   }
-  
+
   .product-header {
     margin-bottom: 12px;
   }
-  
+
   .product-icon {
     font-size: 1.5rem;
   }
-  
+
   .desktop-only {
     display: none;
   }
-  
+
   .about-text {
     font-size: 1.1rem;
   }
-  
+
   .logo-showcase {
     margin-top: 40px;
   }
@@ -1478,7 +1490,7 @@ body {
   padding: 2px 8px;
   border-radius: 4px;
   color: #0066ff;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: "SF Mono", "Fira Code", monospace;
 }
 
 .flow-controls {
@@ -1726,7 +1738,7 @@ body {
 }
 
 .workflow-item code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: "SF Mono", "Fira Code", monospace;
   font-size: 0.8rem;
   color: #e5e5e5;
   line-height: 1.5;
@@ -2067,6 +2079,118 @@ body {
 
 .revenue-example strong {
   color: #0066ff;
+}
+
+.revenue-validation {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #ddd;
+}
+
+.revenue-validation strong {
+  color: #666;
+}
+
+.revenue-validation a {
+  color: #0066ff;
+}
+
+/* Team */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.team-member {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.team-member-highlight {
+  border: 2px solid #0066ff;
+}
+
+.team-member-open {
+  border: 2px dashed #ccc;
+  background: #fafafa;
+}
+
+.team-role {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0066ff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.team-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+
+.team-bio {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+.team-bio li {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 8px;
+  padding-left: 16px;
+  position: relative;
+}
+
+.team-bio li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #0066ff;
+}
+
+.team-bio a {
+  color: #0066ff;
+  text-decoration: none;
+}
+
+.team-links {
+  display: flex;
+  gap: 16px;
+}
+
+.team-links a {
+  font-size: 0.9rem;
+  color: #0066ff;
+  text-decoration: none;
+}
+
+.team-links a:hover {
+  text-decoration: underline;
+}
+
+.team-note {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Projections */
@@ -2828,7 +2952,7 @@ body {
 .code-file {
   font-size: 0.8rem;
   color: #64748b;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: "SF Mono", "Fira Code", monospace;
 }
 
 .demo-code {
@@ -2838,7 +2962,7 @@ body {
 }
 
 .demo-code code {
-  font-family: 'SF Mono', 'Fira Code', 'Monaco', monospace;
+  font-family: "SF Mono", "Fira Code", "Monaco", monospace;
   font-size: 0.85rem;
   line-height: 1.7;
   color: #e2e8f0;
@@ -2893,7 +3017,7 @@ body {
 .result-value {
   font-size: 1.1rem;
   font-weight: 700;
-  font-family: 'SF Mono', monospace;
+  font-family: "SF Mono", monospace;
 }
 
 .result-value.positive {
@@ -2907,7 +3031,7 @@ body {
 .result-citation {
   font-size: 0.75rem;
   color: #94a3b8;
-  font-family: 'SF Mono', monospace;
+  font-family: "SF Mono", monospace;
   background: #f1f5f9;
   padding: 2px 8px;
   border-radius: 4px;
@@ -2962,7 +3086,7 @@ body {
 
 .ci-range {
   color: #64748b;
-  font-family: 'SF Mono', monospace;
+  font-family: "SF Mono", monospace;
 }
 
 /* Simulation Stats */
@@ -2987,7 +3111,7 @@ body {
   font-size: 2rem;
   font-weight: 700;
   color: #1a1a1a;
-  font-family: 'SF Mono', monospace;
+  font-family: "SF Mono", monospace;
 }
 
 .sim-stat-value.cost {
@@ -3053,7 +3177,7 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   color: #16a34a;
-  font-family: 'SF Mono', monospace;
+  font-family: "SF Mono", monospace;
 }
 
 /* API Examples */
@@ -3116,7 +3240,7 @@ body {
 }
 
 .demo-cta-code code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: "SF Mono", "Fira Code", monospace;
   font-size: 1.1rem;
   color: white;
 }

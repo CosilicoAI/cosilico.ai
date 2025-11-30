@@ -74,7 +74,20 @@ export default function HomePage({ setActiveTab }: HomePageProps) {
           </p>
           <div className="engine-grid">
             <div className="engine-component">
-              <div className="engine-icon">&#9881;&#65039;</div>
+              <div className="engine-icon">
+                {/* Calculator/abacus-inspired icon */}
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+                  <line x1="6" y1="16" x2="42" y2="16" stroke="currentColor" strokeWidth="2"/>
+                  <circle cx="14" cy="24" r="3" fill="currentColor"/>
+                  <circle cx="24" cy="24" r="3" fill="currentColor"/>
+                  <circle cx="34" cy="24" r="3" fill="currentColor"/>
+                  <circle cx="14" cy="34" r="3" fill="currentColor"/>
+                  <circle cx="24" cy="34" r="3" fill="currentColor"/>
+                  <rect x="12" y="9" width="8" height="4" rx="1" fill="currentColor"/>
+                  <rect x="28" y="9" width="8" height="4" rx="1" fill="currentColor"/>
+                </svg>
+              </div>
               <h3>Calculate</h3>
               <p>
                 Deterministic tax and benefit calculations from statute.
@@ -94,7 +107,21 @@ export default function HomePage({ setActiveTab }: HomePageProps) {
               </a>
             </div>
             <div className="engine-component">
-              <div className="engine-icon">&#128202;</div>
+              <div className="engine-icon">
+                {/* Neural network / prediction icon */}
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <circle cx="12" cy="36" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <circle cx="24" cy="24" r="5" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+                  <circle cx="36" cy="16" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <circle cx="36" cy="32" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <line x1="16" y1="14" x2="19" y2="21" stroke="currentColor" strokeWidth="1.5"/>
+                  <line x1="16" y1="34" x2="19" y2="27" stroke="currentColor" strokeWidth="1.5"/>
+                  <line x1="29" y1="22" x2="32" y2="18" stroke="currentColor" strokeWidth="1.5"/>
+                  <line x1="29" y1="26" x2="32" y2="30" stroke="currentColor" strokeWidth="1.5"/>
+                  <circle cx="24" cy="24" r="2" fill="currentColor"/>
+                </svg>
+              </div>
               <h3>Predict</h3>
               <p>
                 Statistical predictions for attributes you don't observe. ML
@@ -108,7 +135,26 @@ export default function HomePage({ setActiveTab }: HomePageProps) {
               </ul>
             </div>
             <div className="engine-component">
-              <div className="engine-icon">&#127760;</div>
+              <div className="engine-icon">
+                {/* Population/network simulation icon */}
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="8" r="4" fill="currentColor"/>
+                  <circle cx="10" cy="20" r="3" fill="currentColor" opacity="0.7"/>
+                  <circle cx="38" cy="20" r="3" fill="currentColor" opacity="0.7"/>
+                  <circle cx="6" cy="34" r="2.5" fill="currentColor" opacity="0.5"/>
+                  <circle cx="16" cy="38" r="2.5" fill="currentColor" opacity="0.5"/>
+                  <circle cx="32" cy="38" r="2.5" fill="currentColor" opacity="0.5"/>
+                  <circle cx="42" cy="34" r="2.5" fill="currentColor" opacity="0.5"/>
+                  <circle cx="24" cy="32" r="3" fill="currentColor" opacity="0.6"/>
+                  <line x1="24" y1="12" x2="12" y2="17" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
+                  <line x1="24" y1="12" x2="36" y2="17" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
+                  <line x1="10" y1="23" x2="7" y2="31" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
+                  <line x1="10" y1="23" x2="15" y2="35" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
+                  <line x1="38" y1="23" x2="41" y2="31" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
+                  <line x1="38" y1="23" x2="33" y2="35" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
+                  <line x1="24" y1="12" x2="24" y2="29" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
+                </svg>
+              </div>
               <h3>Simulate</h3>
               <p>
                 Population-scale microsimulation. Model policy impacts
