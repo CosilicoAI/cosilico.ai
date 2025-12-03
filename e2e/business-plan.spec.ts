@@ -11,7 +11,7 @@ test.describe('Business Plan page', () => {
     await expect(page.getByRole('heading', { name: 'Market Opportunity' })).toBeVisible();
 
     // Verify at least one market card is visible
-    await expect(page.getByText('Tax Software')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Tax Software', exact: true })).toBeVisible();
 
     // Save a screenshot as test attachment
     const image = await page.screenshot({ fullPage: true });
