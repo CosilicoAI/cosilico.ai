@@ -1,0 +1,18 @@
+{
+  "cust_policyengine": { "status": "validated", "evidence": [], "notes": "Flagship client" },
+  "cust_gov": { "status": "in_progress", "tam": null, "sam": null, "som": null, "evidence": [], "notes": "Gov fiscal/social policy teams" },
+  "cust_ai": { "status": "unresearched", "tam": null, "sam": null, "som": null, "evidence": [], "notes": "AI companies building policy/finance copilots" },
+  "cust_research": { "status": "unresearched", "tam": null, "sam": null, "som": null, "evidence": [], "notes": "Universities and institutes" },
+  "cust_fintech": { "status": "unresearched", "tam": null, "sam": null, "som": null, "evidence": [], "notes": "Consumer and SMB finance apps" },
+
+  "comp_openfisca": { "status": "in_progress", "oss": true, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_taxcalc": { "status": "in_progress", "oss": true, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_taxsim": { "status": "unresearched", "oss": null, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_euromod": { "status": "unresearched", "oss": null, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_taxben": { "status": "unresearched", "oss": null, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_spsdm": { "status": "unresearched", "oss": null, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_openmpp": { "status": "unresearched", "oss": true, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_liam2": { "status": "unresearched", "oss": true, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] },
+  "comp_jasmine": { "status": "unresearched", "oss": true, "license": "", "website": "", "pricing": "", "strengths": "", "weaknesses": "", "evidence": [] }
+}
+

@@ -1,0 +1,250 @@
+- from: cust_policyengine
+  to: uc_tax_calc
+- from: cust_policyengine
+  to: uc_scoring
+- from: cust_policyengine
+  to: uc_dist
+
+- from: cust_gov
+  to: uc_scoring
+- from: cust_gov
+  to: uc_dist
+- from: cust_gov
+  to: uc_audit
+
+- from: cust_ai
+  to: uc_microdata
+- from: cust_ai
+  to: uc_scenarios
+
+- from: cust_research
+  to: uc_microdata
+- from: cust_research
+  to: uc_ge
+
+- from: cust_fintech
+  to: uc_tax_calc
+- from: cust_fintech
+  to: uc_benefit
+
+# New customer -> use case links (API customers)
+- from: cust_myfriendben
+  to: uc_benefit
+- from: cust_myfriendben
+  to: uc_tax_calc
+
+- from: cust_benefitnav
+  to: uc_benefit
+
+- from: cust_impactica
+  to: uc_benefit
+- from: cust_impactica
+  to: uc_benefit_orch
+
+- from: cust_mirza
+  to: uc_benefit
+- from: cust_mirza
+  to: uc_tax_calc
+
+- from: cust_taxproject
+  to: uc_tax_calc
+  
+# Segment customers
+- from: cust_accounting
+  to: uc_tax_prep
+- from: cust_accounting
+  to: uc_payroll
+- from: cust_accounting
+  to: uc_rules_data
+
+- from: cust_tax_consult
+  to: uc_scoring
+- from: cust_tax_consult
+  to: uc_dist
+
+- from: cust_gov_ops
+  to: uc_benefit_orch
+- from: cust_gov_ops
+  to: uc_audit
+
+# Data-centric segments
+- from: cust_market_research
+  to: uc_local_demand
+- from: cust_market_research
+  to: uc_rules_data
+- from: cust_retail
+  to: uc_local_demand
+
+# UseCase -> Product
+- from: uc_tax_calc
+  to: prod_rest
+- from: uc_tax_calc
+  to: prod_python
+- from: uc_benefit
+  to: prod_rest
+- from: uc_scoring
+  to: prod_python
+- from: uc_scoring
+  to: prod_hosted
+- from: uc_dist
+  to: prod_python
+- from: uc_microdata
+  to: prod_rest
+- from: uc_ge
+  to: prod_python
+- from: uc_scenarios
+  to: prod_playground
+- from: uc_audit
+  to: prod_hosted
+
+# New use cases -> products
+- from: uc_tax_prep
+  to: prod_rest
+- from: uc_tax_prep
+  to: prod_python
+
+- from: uc_payroll
+  to: prod_rest
+- from: uc_payroll
+  to: prod_hosted
+
+- from: uc_benefit_orch
+  to: prod_hosted
+- from: uc_benefit_orch
+  to: prod_rest
+
+- from: uc_rules_data
+  to: prod_rest
+- from: uc_rules_data
+  to: prod_data_packs
+
+- from: uc_change_tracking
+  to: prod_data_packs
+- from: uc_change_tracking
+  to: prod_rest
+
+- from: uc_llm_policy
+  to: prod_rest
+
+- from: uc_local_demand
+  to: prod_data_packs
+- from: uc_local_demand
+  to: prod_rest
+
+# Product -> Capability
+- from: prod_rest
+  to: cap_rules
+- from: prod_rest
+  to: cap_data
+- from: prod_python
+  to: cap_rules
+- from: prod_python
+  to: cap_behavior
+- from: prod_playground
+  to: cap_rules
+- from: prod_hosted
+  to: cap_validation
+- from: prod_private
+  to: cap_versioning
+- from: prod_data_packs
+  to: cap_data
+- from: uc_ge
+  to: cap_ge
+
+# Capability -> Resource
+- from: cap_rules
+  to: res_core_eng
+- from: cap_data
+  to: res_data_eng
+- from: cap_behavior
+  to: res_econ
+- from: cap_ge
+  to: res_econ
+- from: cap_validation
+  to: res_core_eng
+- from: cap_versioning
+  to: res_core_eng
+- from: prod_hosted
+  to: res_sre
+- from: prod_playground
+  to: res_design
+- from: prod_python
+  to: res_devrel
+
+# Revenue
+- from: prod_hosted
+  to: rev_sla
+- from: prod_private
+  to: rev_private
+- from: cust_gov
+  to: rev_custom
+- from: cust_ai
+  to: rev_custom
+- from: prod_playground
+  to: rev_training
+
+# Costs
+- from: prod_hosted
+  to: cost_compute
+- from: prod_hosted
+  to: cost_storage
+- from: rev_sla
+  to: cost_support
+- from: prod_private
+  to: cost_compliance
+
+# Risks
+- from: res_core_eng
+  to: risk_migration
+- from: cust_policyengine
+  to: risk_brand
+- from: cap_data
+  to: risk_quality
+- from: uc_scoring
+  to: risk_adoption
+
+# Metrics
+- from: prod_rest
+  to: met_maus
+- from: prod_python
+  to: met_maus
+- from: cap_rules
+  to: met_coverage
+- from: prod_hosted
+  to: met_latency
+- from: prod_rest
+  to: met_success
+- from: partner_universities
+  to: met_contribs
+
+# Partners
+- from: cust_research
+  to: partner_universities
+- from: cust_gov
+  to: partner_agencies
+- from: cust_policyengine
+  to: partner_foundations
+
+# Competitors to UseCases
+- from: comp_openfisca
+  to: uc_tax_calc
+- from: comp_openfisca
+  to: uc_benefit
+- from: comp_taxcalc
+  to: uc_tax_calc
+- from: comp_taxsim
+  to: uc_tax_calc
+- from: comp_euromod
+  to: uc_dist
+- from: comp_euromod
+  to: uc_scoring
+- from: comp_taxben
+  to: uc_benefit
+- from: comp_spsdm
+  to: uc_scoring
+- from: comp_openmpp
+  to: uc_scenarios
+- from: comp_liam2
+  to: uc_scenarios
+- from: comp_jasmine
+  to: uc_ge

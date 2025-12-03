@@ -1,0 +1,459 @@
+- id: cust_policyengine
+  label: PolicyEngine Nonprofit
+  type: Customer
+  tags: [flagship]
+  meta:
+    status: validated
+    notes: Flagship client building public-interest apps on Cosilico
+    evidence:
+      - title: PolicyEngine website
+        url: https://policyengine.org
+        date: 2025-08-31
+
+- id: cust_gov
+  label: Government Agencies
+  type: Customer
+  tags: [public]
+  meta:
+    status: in_progress
+    notes: Fiscal/social policy teams in federal and state agencies
+    tam: 0  # TODO: fill with sourced estimate
+    sam: 0  # TODO: regions you cover
+    som: 0  # TODO: 12–24m achievable
+    evidence:
+      - title: Research needed — fiscal note and policy analytics contracts
+        kind: tam
+
+- id: cust_ai
+  label: AI Companies
+  type: Customer
+  tags: [ai]
+  meta:
+    status: unresearched
+    tam: 0
+    sam: 0
+    som: 0
+    evidence:
+      - title: Research needed — AI policy assistants addressable market
+        kind: tam
+
+- id: cust_research
+  label: Research Institutes
+  type: Customer
+  tags: [academic]
+  meta:
+    status: unresearched
+    tam: 0
+    sam: 0
+    som: 0
+    evidence:
+      - title: Research needed — academic institutional licenses
+        kind: tam
+
+- id: cust_fintech
+  label: Fintech Apps
+  type: Customer
+  tags: [consumer]
+  meta:
+    status: unresearched
+    tam: 0
+    sam: 0
+    som: 0
+    evidence:
+      - title: Research needed — benefits fintech/API spend
+        kind: tam
+
+# Additional concrete API customers
+- id: cust_myfriendben
+  label: MyFriendBen
+  type: Customer
+  tags: [api, us]
+  meta:
+    status: validated
+    notes: API customer for benefits screening and tax interactions
+
+- id: cust_benefitnav
+  label: Benefit Navigator
+  type: Customer
+  tags: [api, us]
+  meta:
+    status: validated
+    notes: API customer focused on benefits discovery and eligibility
+
+- id: cust_impactica
+  label: Impactica (Navvy)
+  type: Customer
+  tags: [api, us]
+  meta:
+    status: validated
+    notes: Building Navvy for the Student Basic Needs Coalition
+
+- id: cust_mirza
+  label: Mirza
+  type: Customer
+  tags: [api, uk]
+  meta:
+    status: in_progress
+    notes: Childcare affordability and benefits planning
+    tam: 0
+    sam: 0
+    som: 0
+
+- id: cust_taxproject
+  label: The Tax Project
+  type: Customer
+  tags: [api, us]
+  meta:
+    status: in_progress
+    notes: Tax analysis and calculator use cases
+    tam: 0
+    sam: 0
+    som: 0
+
+# Prospective/segment customers
+- id: cust_market_research
+  label: Market Research Orgs
+  type: Customer
+  tags: [segment, data, us]
+  meta:
+    status: unresearched
+    notes: Local demand estimation using enriched microdata
+    tam: 0
+    sam: 0
+    som: 0
+
+- id: cust_retail
+  label: Retail Companies
+  type: Customer
+  tags: [segment, data, us]
+  meta:
+    status: unresearched
+    notes: Store planning and assortment via county-level demand
+    tam: 0
+    sam: 0
+    som: 0
+- id: cust_accounting
+  label: Accounting Firms
+  type: Customer
+  tags: [segment, us, uk]
+  meta:
+    status: in_progress
+    notes: Advisory, tax prep, and payroll integrations
+    tam: 0
+    sam: 0
+    som: 0
+    evidence:
+      - title: Research needed — US/UK firm counts × attach rate
+        kind: tam
+
+- id: cust_tax_consult
+  label: Tax Consultancies
+  type: Customer
+  tags: [segment, us, uk]
+  meta:
+    status: unresearched
+    notes: Policy scoring and distributional analysis services
+    tam: 0
+    sam: 0
+    som: 0
+    evidence:
+      - title: Research needed — policy consulting market sizing
+        kind: tam
+
+- id: cust_gov_ops
+  label: Gov Program Operators
+  type: Customer
+  tags: [public, us, uk]
+  meta:
+    status: unresearched
+    notes: Operating benefit programs (eligibility, adjudication, audit)
+    tam: 0
+    sam: 0
+    som: 0
+
+# Use cases
+- id: uc_tax_calc
+  label: Tax Calculator
+  type: UseCase
+
+- id: uc_benefit
+  label: Benefit Eligibility
+  type: UseCase
+
+- id: uc_scoring
+  label: Policy Scoring
+  type: UseCase
+
+- id: uc_dist
+  label: Distributional Analysis
+  type: UseCase
+
+- id: uc_microdata
+  label: Microdata API
+  type: UseCase
+
+- id: uc_ge
+  label: GE Modeling
+  type: UseCase
+
+- id: uc_scenarios
+  label: Scenario Planning
+  type: UseCase
+
+- id: uc_audit
+  label: Audit Trails
+  type: UseCase
+
+# New use cases
+- id: uc_tax_prep
+  label: Tax Prep & Advisory
+  type: UseCase
+
+- id: uc_payroll
+  label: Payroll & Withholding
+  type: UseCase
+
+- id: uc_benefit_orch
+  label: Benefit Application Orchestration
+  type: UseCase
+
+- id: uc_rules_data
+  label: Rules-as-Data
+  type: UseCase
+
+- id: uc_change_tracking
+  label: Policy Change Tracking
+  type: UseCase
+
+- id: uc_llm_policy
+  label: LLM Policy Reasoning
+  type: UseCase
+
+- id: uc_local_demand
+  label: Local Demand Estimation
+  type: UseCase
+
+# Products
+- id: prod_playground
+  label: Playground
+  type: Product
+
+- id: prod_python
+  label: Python SDK
+  type: Product
+
+- id: prod_rest
+  label: REST API
+  type: Product
+
+- id: prod_hosted
+  label: Hosted Platform
+  type: Product
+
+- id: prod_private
+  label: Private Deployment
+  type: Product
+
+- id: prod_data_packs
+  label: Data Packs
+  type: Product
+
+# Capabilities
+- id: cap_rules
+  label: Rules Engine
+  type: Capability
+
+- id: cap_data
+  label: Microdata Synthesizer
+  type: Capability
+
+- id: cap_behavior
+  label: Behavioral Models
+  type: Capability
+
+- id: cap_ge
+  label: GE Solver
+  type: Capability
+
+- id: cap_validation
+  label: Validation Suite
+  type: Capability
+
+- id: cap_versioning
+  label: Versioning
+  type: Capability
+
+# Resources
+- id: res_core_eng
+  label: Core Engineering
+  type: Resource
+
+- id: res_data_eng
+  label: Data Engineering
+  type: Resource
+
+- id: res_econ
+  label: Economists/Modelers
+  type: Resource
+
+- id: res_devrel
+  label: DevRel/Docs
+  type: Resource
+
+- id: res_sre
+  label: SRE/Ops
+  type: Resource
+
+- id: res_design
+  label: Design/UX
+  type: Resource
+
+# Revenues
+- id: rev_sla
+  label: Enterprise SLAs
+  type: Revenue
+
+- id: rev_custom
+  label: Custom Development
+  type: Revenue
+
+- id: rev_private
+  label: Private Extensions
+  type: Revenue
+
+- id: rev_training
+  label: Training & Workshops
+  type: Revenue
+
+# Costs
+- id: cost_compute
+  label: Compute
+  type: Cost
+
+- id: cost_storage
+  label: Storage
+  type: Cost
+
+- id: cost_support
+  label: Support
+  type: Cost
+
+- id: cost_compliance
+  label: Compliance
+  type: Cost
+
+# Risks
+- id: risk_migration
+  label: Migration Complexity
+  type: Risk
+
+- id: risk_brand
+  label: Brand Confusion
+  type: Risk
+
+- id: risk_quality
+  label: Data Quality
+  type: Risk
+
+- id: risk_adoption
+  label: Adoption
+  type: Risk
+
+# Metrics
+- id: met_maus
+  label: API MAUs
+  type: Metric
+
+- id: met_coverage
+  label: Jurisdiction Coverage
+  type: Metric
+
+- id: met_latency
+  label: Run Latency
+  type: Metric
+
+- id: met_success
+  label: Success Rate
+  type: Metric
+
+- id: met_contribs
+  label: Contributions
+  type: Metric
+
+# Partners
+- id: partner_universities
+  label: Universities
+  type: Partner
+
+- id: partner_agencies
+  label: Agencies
+  type: Partner
+
+- id: partner_foundations
+  label: Foundations
+  type: Partner
+
+# Competitors
+- id: comp_openfisca
+  label: OpenFisca
+  type: Competitor
+  tags: [oss]
+  meta:
+    status: in_progress
+    oss: true
+
+- id: comp_taxcalc
+  label: Tax-Calculator (PSL)
+  type: Competitor
+  tags: [oss]
+  meta:
+    status: in_progress
+    oss: true
+
+- id: comp_taxsim
+  label: NBER TAXSIM
+  type: Competitor
+  meta:
+    status: unresearched
+
+- id: comp_euromod
+  label: EUROMOD
+  type: Competitor
+  meta:
+    status: unresearched
+
+- id: comp_taxben
+  label: OECD TaxBEN
+  type: Competitor
+  meta:
+    status: unresearched
+
+- id: comp_spsdm
+  label: SPSD/M
+  type: Competitor
+  meta:
+    status: unresearched
+
+- id: comp_openmpp
+  label: OpenM++
+  type: Competitor
+  tags: [oss]
+  meta:
+    status: unresearched
+    oss: true
+
+- id: comp_liam2
+  label: LIAM2
+  type: Competitor
+  tags: [oss]
+  meta:
+    status: unresearched
+    oss: true
+
+- id: comp_jasmine
+  label: JAS-MINE
+  type: Competitor
+  tags: [oss]
+  meta:
+    status: unresearched
+    oss: true
