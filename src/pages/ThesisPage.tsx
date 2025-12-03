@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../styles/Thesis.css";
 
-type Section = "problem" | "gap" | "platform" | "markets" | "competition" | "model" | "traction" | "team" | "risks" | "ask";
+type Section = "problem" | "gap" | "simulation" | "markets" | "competition" | "model" | "traction" | "team" | "risks" | "ask";
 
 interface Source {
   id: number;
@@ -287,7 +287,7 @@ const competitors: Competitor[] = [
   },
 ];
 
-const sections: Section[] = ["problem", "gap", "platform", "markets", "competition", "model", "traction", "team", "risks", "ask"];
+const sections: Section[] = ["problem", "gap", "simulation", "markets", "competition", "model", "traction", "team", "risks", "ask"];
 
 // Citation component with hover card
 function Cite({ id }: { id: number }) {
@@ -401,9 +401,9 @@ export default function ThesisPage() {
       {/* Hero */}
       <section className="thesis-hero">
         <p className="thesis-label">Research Prospectus</p>
-        <h1>The Thesis</h1>
+        <h1>Society, in Silico</h1>
         <p className="thesis-subtitle">
-          AI can't calculate taxes. We're building the infrastructure it needs.
+          We're building the simulation of the economy that everyone can query.
         </p>
         <p className="thesis-meta">
           Every claim in this document is corroborated with a primary source.
@@ -415,6 +415,23 @@ export default function ThesisPage() {
       <section className="thesis-section" ref={setRef("problem")}>
         <div className="thesis-content">
           <h2>1. The Problem</h2>
+          <p className="problem-lead">
+            Society is hard to optimize because nobody has a shared model to reason against.
+          </p>
+          <div className="problem-examples">
+            <div className="problem-example">
+              <h4>Congress</h4>
+              <p>Debates policy with napkin math. No one knows who wins or loses until years later.</p>
+            </div>
+            <div className="problem-example">
+              <h4>Banks</h4>
+              <p>Model portfolio risk without knowing how policy changes will affect borrowers.</p>
+            </div>
+            <div className="problem-example">
+              <h4>AI Agents</h4>
+              <p>Hallucinate tax and benefit calculations that require statutory precision.</p>
+            </div>
+          </div>
           <div className="stat-callout">
             <span className="stat-number">67%</span>
             <span className="stat-context">
@@ -422,26 +439,19 @@ export default function ThesisPage() {
             </span>
           </div>
           <p>
-            Large language models hallucinate when asked to perform calculations
-            governed by statute. The SARA benchmark<Cite id={1} /> evaluated GPT-4 on
-            US income tax scenarios and found:
-          </p>
-          <ul className="thesis-list">
-            <li>Only <strong>67% accuracy</strong> on true/false tax questions (186/276 correct)</li>
-            <li>Only <strong>78% of calculations</strong> within 10% of correct tax liability</li>
-            <li>Models confused marginal vs. effective rates, misapplied filing status rules, and hallucinated phase-out thresholds</li>
-          </ul>
-          <p>
-            This isn't a training data problem. Tax law changes annually.
-            State rules vary across 50 jurisdictions. Benefit eligibility depends
-            on dozens of interacting variables. No amount of pretraining will
-            produce reliable results.
+            Even the most capable AI models fail at policy calculations. The SARA benchmark<Cite id={1} /> evaluated GPT-4 on
+            US income tax scenarios and found only <strong>67% accuracy</strong> on true/false tax questions—and only <strong>78% of calculations</strong> within 10% of correct liability.
           </p>
           <blockquote>
             "Today's LLMs cannot 'do taxes' on their own because tax
             calculations require 100% correctness. Today's models hallucinate."
             <cite>— Column Tax, 2024<Cite id={2} /></cite>
           </blockquote>
+          <p>
+            This isn't a training data problem. Tax law changes annually.
+            State rules vary across 50 jurisdictions. Benefit eligibility depends
+            on dozens of interacting variables. <strong>What we need is infrastructure—a simulation of society that anyone can query.</strong>
+          </p>
         </div>
       </section>
 
@@ -450,8 +460,7 @@ export default function ThesisPage() {
         <div className="thesis-content">
           <h2>2. The Gap</h2>
           <p>
-            Every fintech app, government agency, and AI assistant needs tax and
-            benefit calculations. But the infrastructure doesn't exist.
+            Building a simulation of society requires three layers: <strong>rules</strong> (how taxes and benefits work), <strong>data</strong> (who the households are), and <strong>scenarios</strong> (what-if analysis at scale). Today, these pieces exist in fragments.
           </p>
 
           <div className="gap-grid">
@@ -485,11 +494,11 @@ export default function ThesisPage() {
       </section>
 
       {/* Platform */}
-      <section className="thesis-section" ref={setRef("platform")}>
+      <section className="thesis-section" ref={setRef("simulation")}>
         <div className="thesis-content">
-          <h2>3. The Platform</h2>
+          <h2>3. The Simulation</h2>
           <p>
-            Three APIs. One simulation. Click any node to explore connections.
+            We're building the shared substrate—a simulation that anyone can query (and more importantly, any AI). Decisions grounded in the same reality. Three APIs. One model of society.
           </p>
         </div>
 
