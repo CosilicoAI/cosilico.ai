@@ -1,24 +1,19 @@
 import { test, expect } from '@playwright/test';
-import fs from 'fs';
 
-test.describe('Business Plan interactive explorer', () => {
-  test('loads and can search/select nodes', async ({ page }) => {
+test.describe('Business Plan page', () => {
+  test('loads and displays market opportunity', async ({ page }) => {
     await page.goto('/');
     // Navigate to Plan tab
     await page.getByRole('button', { name: 'Plan' }).click();
-    await expect(page.getByRole('heading', { name: 'Cosilico Business Plan' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Business Plan' })).toBeVisible();
 
-    await page.getByPlaceholder('Search nodes').fill('PolicyEngine');
-    // Click the PolicyEngine node
-    await page.getByText('PolicyEngine Nonprofit', { exact: true }).click();
+    // Verify market opportunity section exists
+    await expect(page.getByRole('heading', { name: 'Market Opportunity' })).toBeVisible();
 
-    // Aside shows selected node
-    await expect(page.getByRole('heading', { name: 'PolicyEngine Nonprofit' })).toBeVisible();
+    // Verify at least one market card is visible
+    await expect(page.getByText('Tax Software')).toBeVisible();
 
-    // Read-only view: verify status badge shows validated
-    await expect(page.locator('.badge', { hasText: /validated/i })).toBeVisible();
-
-    // Save a screenshot as test attachment (view in HTML report)
+    // Save a screenshot as test attachment
     const image = await page.screenshot({ fullPage: true });
     await test.info().attach('business-plan', { body: image, contentType: 'image/png' });
   });
