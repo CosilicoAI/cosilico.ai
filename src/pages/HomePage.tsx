@@ -1,344 +1,211 @@
-import React from "react";
-import { Tab } from "../data/types";
+import React, { useState } from "react";
+import "../styles/Home.css";
 
-interface HomePageProps {
-  setActiveTab: (tab: Tab) => void;
-}
+export default function HomePage() {
+  const [query, setQuery] = useState("What happens if we expand EITC by 50%?");
+  const [showResult, setShowResult] = useState(false);
 
-export default function HomePage({ setActiveTab }: HomePageProps) {
+  const handleQuery = () => {
+    setShowResult(true);
+  };
+
   return (
-    <>
-      {/* Hero Section */}
+    <div className="home">
+      {/* Hero */}
       <section className="hero">
-        <div className="container">
-          <p className="hero-eyebrow">Calculate &bull; Predict &bull; Simulate</p>
-          <h1 className="hero-title">
-            Simulate <span className="gradient-text">Society</span>
+        <div className="hero-content">
+          <p className="tagline">Society, in silico.</p>
+          <h1>
+            We simulate<br />
+            the economy.
           </h1>
-          <p className="hero-subtitle">
-            Calculate taxes and benefits. Predict household attributes.
-            Model policy impacts. One open-source API.
+          <p className="subtitle">
+            Household by household. Tax by tax. Policy by policy.<br />
+            Open source infrastructure. APIs for the rest.
           </p>
-          <div className="hero-buttons">
-            <a
-              href="https://github.com/CosilicoAI/cosilico-engine"
-              className="btn btn-primary"
-            >
-              View Engine &rarr;
+          <div className="hero-cta">
+            <a href="https://docs.cosilico.ai" className="btn-primary">
+              Read the Docs
             </a>
-            <button
-              onClick={() => setActiveTab("architecture")}
-              className="btn btn-secondary"
-            >
-              See Architecture
+            <a href="https://github.com/PolicyEngine" className="btn-secondary">
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Live Query Demo */}
+      <section className="demo">
+        <div className="demo-container">
+          <div className="demo-input-group">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setShowResult(false);
+              }}
+              placeholder="Ask the simulation..."
+              className="demo-input"
+            />
+            <button onClick={handleQuery} className="demo-button">
+              Query
             </button>
           </div>
-        </div>
-      </section>
-
-      {/* Problem Section */}
-      <section className="problem-section">
-        <div className="container">
-          <div className="problem-grid">
-            <div className="problem-card problem-bad">
-              <h3>How AI handles law today</h3>
-              <ul>
-                <li>Hallucinates tax brackets</li>
-                <li>Guesses at eligibility rules</li>
-                <li>No audit trail</li>
-                <li>Can't cite sources</li>
-                <li>"Based on my training data..."</li>
-              </ul>
-            </div>
-            <div className="problem-card problem-good">
-              <h3>With Cosilico APIs</h3>
-              <ul>
-                <li>Precise calculations</li>
-                <li>Every rule traceable to statute</li>
-                <li>Full audit trail</li>
-                <li>Legal citations included</li>
-                <li>Structured, verifiable outputs</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What We Build Section */}
-      <section id="what-we-build" className="engine">
-        <div className="container">
-          <h2 className="section-title">Three Capabilities, One API</h2>
-          <p className="section-subtitle">
-            Deterministic calculations, statistical predictions, and
-            population-scale modeling
-          </p>
-          <div className="engine-grid">
-            <div className="engine-component">
-              <div className="engine-icon">
-                {/* Calculator/abacus-inspired icon */}
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" strokeWidth="2.5" fill="none"/>
-                  <line x1="6" y1="16" x2="42" y2="16" stroke="currentColor" strokeWidth="2"/>
-                  <circle cx="14" cy="24" r="3" fill="currentColor"/>
-                  <circle cx="24" cy="24" r="3" fill="currentColor"/>
-                  <circle cx="34" cy="24" r="3" fill="currentColor"/>
-                  <circle cx="14" cy="34" r="3" fill="currentColor"/>
-                  <circle cx="24" cy="34" r="3" fill="currentColor"/>
-                  <rect x="12" y="9" width="8" height="4" rx="1" fill="currentColor"/>
-                  <rect x="28" y="9" width="8" height="4" rx="1" fill="currentColor"/>
-                </svg>
+          {showResult && (
+            <div className="demo-result">
+              <div className="result-stat">
+                <span className="stat-value">$147B</span>
+                <span className="stat-label">10-year cost</span>
               </div>
-              <h3>Calculate</h3>
-              <p>
-                Deterministic tax and benefit calculations from statute.
-                Every formula maps to law with citations.
-              </p>
-              <ul className="engine-features">
-                <li>Federal + 50 state taxes</li>
-                <li>SNAP, Medicaid, TANF, SSI</li>
-                <li>Bi-temporal parameters</li>
-                <li>Full audit trail</li>
-              </ul>
-              <a
-                href="https://github.com/CosilicoAI/cosilico-engine"
-                className="engine-link"
-              >
-                View on GitHub &rarr;
-              </a>
-            </div>
-            <div className="engine-component">
-              <div className="engine-icon">
-                {/* Neural network / prediction icon */}
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <circle cx="12" cy="36" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <circle cx="24" cy="24" r="5" stroke="currentColor" strokeWidth="2.5" fill="none"/>
-                  <circle cx="36" cy="16" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <circle cx="36" cy="32" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <line x1="16" y1="14" x2="19" y2="21" stroke="currentColor" strokeWidth="1.5"/>
-                  <line x1="16" y1="34" x2="19" y2="27" stroke="currentColor" strokeWidth="1.5"/>
-                  <line x1="29" y1="22" x2="32" y2="18" stroke="currentColor" strokeWidth="1.5"/>
-                  <line x1="29" y1="26" x2="32" y2="30" stroke="currentColor" strokeWidth="1.5"/>
-                  <circle cx="24" cy="24" r="2" fill="currentColor"/>
-                </svg>
+              <div className="result-stat">
+                <span className="stat-value">43M</span>
+                <span className="stat-label">households affected</span>
               </div>
-              <h3>Predict</h3>
-              <p>
-                Statistical predictions for attributes you don't observe. ML
-                models trained on enhanced microdata.
-              </p>
-              <ul className="engine-features">
-                <li>Childcare, healthcare costs</li>
-                <li>Consumption patterns</li>
-                <li>Uncertainty quantification</li>
-                <li>Privacy-preserving</li>
-              </ul>
-            </div>
-            <div className="engine-component">
-              <div className="engine-icon">
-                {/* Population/network simulation icon */}
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="24" cy="8" r="4" fill="currentColor"/>
-                  <circle cx="10" cy="20" r="3" fill="currentColor" opacity="0.7"/>
-                  <circle cx="38" cy="20" r="3" fill="currentColor" opacity="0.7"/>
-                  <circle cx="6" cy="34" r="2.5" fill="currentColor" opacity="0.5"/>
-                  <circle cx="16" cy="38" r="2.5" fill="currentColor" opacity="0.5"/>
-                  <circle cx="32" cy="38" r="2.5" fill="currentColor" opacity="0.5"/>
-                  <circle cx="42" cy="34" r="2.5" fill="currentColor" opacity="0.5"/>
-                  <circle cx="24" cy="32" r="3" fill="currentColor" opacity="0.6"/>
-                  <line x1="24" y1="12" x2="12" y2="17" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
-                  <line x1="24" y1="12" x2="36" y2="17" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
-                  <line x1="10" y1="23" x2="7" y2="31" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
-                  <line x1="10" y1="23" x2="15" y2="35" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
-                  <line x1="38" y1="23" x2="41" y2="31" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
-                  <line x1="38" y1="23" x2="33" y2="35" stroke="currentColor" strokeWidth="1.5" opacity="0.5"/>
-                  <line x1="24" y1="12" x2="24" y2="29" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
-                </svg>
+              <div className="result-stat">
+                <span className="stat-value">-2.1pp</span>
+                <span className="stat-label">poverty reduction</span>
               </div>
-              <h3>Simulate</h3>
-              <p>
-                Population-scale microsimulation. Model policy impacts
-                across millions of households.
-              </p>
-              <ul className="engine-features">
-                <li>Census-scale (100M+ households)</li>
-                <li>Distributional analysis</li>
-                <li>Revenue/cost estimates</li>
-                <li>Reform comparisons</li>
-              </ul>
+              <div className="result-meta">
+                <a href="https://docs.cosilico.ai/methodology">See methodology</a>
+                <a href="https://docs.cosilico.ai/playground">Run your own</a>
+              </div>
             </div>
+          )}
+        </div>
+      </section>
+
+      {/* What We Offer */}
+      <section className="products">
+        <h2>Three APIs. One simulation.</h2>
+        <div className="product-grid">
+          <div className="product-card">
+            <div className="product-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 9h18M9 21V9" />
+              </svg>
+            </div>
+            <h3>Rules</h3>
+            <p>
+              Calculate taxes and benefits for any household.
+              Every formula traced to statute.
+            </p>
+            <code>cosilico.calculate(household)</code>
+          </div>
+          <div className="product-card">
+            <div className="product-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 3v9l6 3" />
+              </svg>
+            </div>
+            <h3>Data</h3>
+            <p>
+              Synthetic populations calibrated to reality.
+              Predict attributes you don't observe.
+            </p>
+            <code>cosilico.predict(partial_household)</code>
+          </div>
+          <div className="product-card">
+            <div className="product-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+              </svg>
+            </div>
+            <h3>Scenarios</h3>
+            <p>
+              Run policy reforms at population scale.
+              Distributional impacts in milliseconds.
+            </p>
+            <code>cosilico.simulate(reform, population)</code>
           </div>
         </div>
       </section>
 
-      {/* For AI Section */}
-      <section id="for-ai" className="for-ai-section">
-        <div className="container">
-          <h2 className="section-title">Built for AI Systems</h2>
-          <p className="section-subtitle">
-            We're not building flashy web apps — AIs will generate those in
-            seconds. We're building the infrastructure those AIs need.
-          </p>
-          <div className="ai-features">
-            <div className="ai-feature">
-              <h4>Tool Use Ready</h4>
-              <p>
-                Designed for function calling. Give Claude, GPT, or your
-                custom agents reliable tax and benefit tools.
-              </p>
-            </div>
-            <div className="ai-feature">
-              <h4>Filesystem First</h4>
-              <p>
-                Rules and parameters live in local files. AI agents read,
-                edit, and commit changes via git.
-              </p>
-            </div>
-            <div className="ai-feature">
-              <h4>Audit Trails</h4>
-              <p>
-                Every calculation includes the legal citations and parameter
-                values used. Explainable by design.
-              </p>
-            </div>
-            <div className="ai-feature">
-              <h4>No Hallucinations</h4>
-              <p>
-                When AI calls our APIs, it gets the actual law — not a guess
-                based on training data.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Code Example Section */}
-      <section className="code-section">
-        <div className="container">
-          <h2 className="section-title">Simple Integration</h2>
-          <div className="code-example">
-            <pre>
-              <code>{`from cosilico import predict
-
-# One API for calculations and predictions
-result = predict(
-    person={"age": 35, "income": 45000, "state": "CA"},
-    variables=[
-        "eitc",              # Calculated from statute
-        "childcare_expense", # Predicted from microdata
-        "snap_eligible",     # Calculated from rules
-    ]
-)
-
-# {
-#   "eitc": {"value": 3200, "type": "calculated", "citation": "26 USC § 32"},
-#   "childcare_expense": {"value": 8500, "type": "predicted", "confidence": 0.82},
-#   "snap_eligible": {"value": true, "type": "calculated", "citation": "7 USC § 2014"}
-# }`}</code>
-            </pre>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases Section */}
+      {/* Who Uses This */}
       <section className="use-cases">
-        <div className="container">
-          <h2 className="section-title">Use Cases</h2>
-          <div className="use-cases-grid">
-            <div className="use-case">
-              <h4>AI Agents</h4>
-              <p>
-                Give AI reliable tools for taxes, benefits, eligibility.
-                Structured outputs, not hallucinations.
-              </p>
-            </div>
-            <div className="use-case">
-              <h4>Microsimulation</h4>
-              <p>
-                Model policy impacts across millions of households.
-                Census-scale analysis.
-              </p>
-            </div>
-            <div className="use-case">
-              <h4>Data Enrichment</h4>
-              <p>
-                Impute income, demographics, consumption to customer data.
-                ML-enhanced attributes.
-              </p>
-            </div>
-            <div className="use-case">
-              <h4>Benefit Administration</h4>
-              <p>
-                Precise enough for production eligibility systems. Every
-                calculation traceable.
-              </p>
-            </div>
-            <div className="use-case">
-              <h4>Financial Planning</h4>
-              <p>
-                Accurate tax calculations for personal finance apps.
-                Multi-year projections.
-              </p>
-            </div>
-            <div className="use-case">
-              <h4>Policy Research</h4>
-              <p>
-                Model reforms with distributional analysis. Used by
-                governments worldwide.
-              </p>
-            </div>
+        <h2>Who queries the simulation?</h2>
+        <div className="use-case-grid">
+          <div className="use-case">
+            <h4>Financial Services</h4>
+            <p>"How will rate changes affect default risk across our portfolio?"</p>
+          </div>
+          <div className="use-case">
+            <h4>Government Agencies</h4>
+            <p>"What's the 10-year cost of this bill?"</p>
+          </div>
+          <div className="use-case">
+            <h4>Asset Managers</h4>
+            <p>"Which sectors win under each candidate's tax plan?"</p>
+          </div>
+          <div className="use-case">
+            <h4>AI Agents</h4>
+            <p>"Calculate this household's benefits eligibility."</p>
+          </div>
+          <div className="use-case">
+            <h4>Retailers</h4>
+            <p>"How does SNAP expansion affect grocery spend by region?"</p>
+          </div>
+          <div className="use-case">
+            <h4>Researchers</h4>
+            <p>"Model the distributional impact of UBI."</p>
           </div>
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section className="vision-section">
-        <div className="container">
-          <h2 className="section-title">The Vision</h2>
-          <div className="vision-content">
-            <p className="vision-text">
-              <strong>Cooperation in silico.</strong> We're building toward
-              calibrated AI agents that truly represent society — not
-              helpful assistants, but synthetic populations whose collective
-              behavior matches real human distributions.
-            </p>
-            <p className="vision-text">
-              The rules engine and microdata are the foundation. The APIs
-              are the interface. The future is simulating societal
-              trajectories to guide us toward outcomes that align with our
-              collective values.
-            </p>
-            <p className="vision-text">
-              100% open source. Because understanding society requires
-              transparency.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta">
-        <div className="container">
-          <h2>Start Building</h2>
+      {/* Open Source */}
+      <section className="open-source">
+        <div className="os-content">
+          <h2>Open infrastructure.<br />Commercial APIs.</h2>
           <p>
-            Open source. Apache 2.0. No API keys required to get started.
+            The simulation engine is open source.
+            Run it yourself, or use our hosted APIs for scale and support.
           </p>
-          <div className="cta-buttons">
-            <a
-              href="https://github.com/CosilicoAI/cosilico-engine"
-              className="btn btn-primary"
-            >
-              View Engine on GitHub
-            </a>
-            <a
-              href="https://github.com/CosilicoAI"
-              className="btn btn-secondary"
-            >
-              CosilicoAI Organization
-            </a>
+          <div className="os-stats">
+            <div className="os-stat">
+              <span className="os-value">50+</span>
+              <span className="os-label">state tax systems</span>
+            </div>
+            <div className="os-stat">
+              <span className="os-value">100+</span>
+              <span className="os-label">benefit programs</span>
+            </div>
+            <div className="os-stat">
+              <span className="os-value">100M+</span>
+              <span className="os-label">synthetic households</span>
+            </div>
           </div>
         </div>
       </section>
-    </>
+
+      {/* Coordination */}
+      <section className="vision">
+        <h2>The coordination problem</h2>
+        <p className="vision-text">
+          Society is hard to optimize because nobody has a shared model to reason against.
+          Congress debates with napkin math. Banks model risk without knowing policy changes.
+          AI agents hallucinate eligibility rules.
+        </p>
+        <p className="vision-text">
+          <strong>Cosilico is the shared substrate.</strong> A simulation everyone can query,
+          so decisions are grounded in the same reality.
+        </p>
+      </section>
+
+      {/* CTA */}
+      <section className="cta">
+        <h2>Query the simulation.</h2>
+        <div className="cta-buttons">
+          <a href="https://docs.cosilico.ai" className="btn-primary">
+            Get Started
+          </a>
+          <a href="mailto:hello@cosilico.ai" className="btn-secondary">
+            Talk to Us
+          </a>
+        </div>
+      </section>
+    </div>
   );
 }
