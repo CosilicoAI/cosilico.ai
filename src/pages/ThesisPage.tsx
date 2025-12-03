@@ -175,6 +175,13 @@ const sources: Source[] = [
     year: 2024,
     url: "https://www.marketsandmarkets.com/Market-Reports/tax-tech-market-28373824.html",
   },
+  {
+    id: 20,
+    author: "Polaris Market Research",
+    title: "Financial Planning Software Market Size",
+    year: 2024,
+    url: "https://www.polarismarketresearch.com/industry-analysis/financial-planning-software-market",
+  },
 ];
 
 const nodes: Node[] = [
@@ -612,6 +619,11 @@ export default function ThesisPage() {
           <div className="market-additional">
             <h3>Additional Markets</h3>
             <div className="market-cards">
+              <div className="market-card">
+                <h3>Financial Planning</h3>
+                <div className="market-size">$3.6B → $14B<Cite id={20} /></div>
+                <p>16.3% CAGR. Retirement, estate planning, wealth management all need tax/benefit calculations.</p>
+              </div>
               <div className="market-card">
                 <h3>Corporate Tax Software</h3>
                 <div className="market-size">$12.9B → $24.1B<Cite id={18} /></div>
