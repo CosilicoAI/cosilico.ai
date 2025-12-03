@@ -7,7 +7,10 @@ function App() {
     <div className="App">
       <nav className="nav">
         <div className="nav-container">
-          <a href="/" className="nav-logo">cosilico</a>
+          <a href="/" className="nav-logo">
+            <img src="/cosilico-logo-dark.svg" alt="" className="nav-logo-icon" />
+            cosilico
+          </a>
           <div className="nav-links">
             <a href="https://docs.cosilico.ai">Docs</a>
             <a href="https://github.com/PolicyEngine">GitHub</a>

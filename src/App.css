@@ -54,11 +54,19 @@ body {
 }
 
 .nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-text);
   text-decoration: none;
   letter-spacing: -0.02em;
+}
+
+.nav-logo-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .nav-links {
