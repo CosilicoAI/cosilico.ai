@@ -1,20 +1,39 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Business Plan page', () => {
-  test('loads and displays market opportunity', async ({ page }) => {
+test.describe('Cosilico homepage', () => {
+  test('loads and displays key content', async ({ page }) => {
     await page.goto('/');
-    // Navigate to Plan tab
-    await page.getByRole('button', { name: 'Plan' }).click();
-    await expect(page.getByRole('heading', { name: 'Business Plan' })).toBeVisible();
 
-    // Verify market opportunity section exists
-    await expect(page.getByRole('heading', { name: 'Market Opportunity' })).toBeVisible();
+    // Hero
+    await expect(page.getByText('Society, in silico.')).toBeVisible();
+    await expect(page.getByRole('heading', { name: /We simulate/i })).toBeVisible();
 
-    // Verify at least one market card is visible
-    await expect(page.getByRole('heading', { name: 'Tax Software', exact: true })).toBeVisible();
+    // Products section
+    await expect(page.getByRole('heading', { name: 'Three APIs. One simulation.' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Rules' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Data' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Scenarios' })).toBeVisible();
 
-    // Save a screenshot as test attachment
+    // Screenshot
     const image = await page.screenshot({ fullPage: true });
-    await test.info().attach('business-plan', { body: image, contentType: 'image/png' });
+    await test.info().attach('homepage', { body: image, contentType: 'image/png' });
+  });
+
+  test('demo interaction works', async ({ page }) => {
+    await page.goto('/');
+
+    // Find demo input and button
+    const input = page.getByPlaceholder('Ask the simulation...');
+    const button = page.getByRole('button', { name: 'Query' });
+
+    await expect(input).toBeVisible();
+    await expect(button).toBeVisible();
+
+    // Click query button
+    await button.click();
+
+    // Results should appear
+    await expect(page.locator('.stat-label').getByText('10-year cost')).toBeVisible();
+    await expect(page.locator('.stat-label').getByText('households affected')).toBeVisible();
   });
 });

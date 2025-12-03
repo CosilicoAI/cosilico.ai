@@ -2,8 +2,12 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders site headline', () => {
+test('renders site tagline', () => {
   render(<App />);
-  const matches = screen.getAllByText(/Simulating Society/i);
-  expect(matches.length).toBeGreaterThan(0);
+  expect(screen.getByText(/Society, in silico/i)).toBeInTheDocument();
+});
+
+test('renders main heading', () => {
+  render(<App />);
+  expect(screen.getByText(/We simulate/i)).toBeInTheDocument();
 });
