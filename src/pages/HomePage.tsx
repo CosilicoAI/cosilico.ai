@@ -161,8 +161,7 @@ export default function HomePage() {
           <h2>Open infrastructure.<br />Commercial APIs.</h2>
           <p>
             The simulation engine is open source.
-            We monetize hosted APIs, premium data, and enterprise features.
-            Like Redis, Elastic, or Databricks — we build the standard, you use the cloud.
+            Run it yourself, or use our hosted APIs for scale and support.
           </p>
           <div className="os-stats">
             <div className="os-stat">
