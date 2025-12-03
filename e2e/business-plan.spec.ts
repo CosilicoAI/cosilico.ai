@@ -3,7 +3,9 @@ import fs from 'fs';
 
 test.describe('Business Plan interactive explorer', () => {
   test('loads and can search/select nodes', async ({ page }) => {
-    await page.goto('/business-plan');
+    await page.goto('/');
+    // Navigate to Plan tab
+    await page.getByRole('button', { name: 'Plan' }).click();
     await expect(page.getByRole('heading', { name: 'Cosilico Business Plan' })).toBeVisible();
 
     await page.getByPlaceholder('Search nodes').fill('PolicyEngine');
