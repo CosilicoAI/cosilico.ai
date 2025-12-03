@@ -20,7 +20,7 @@ export default function HomePage() {
             the economy.
           </h1>
           <p className="subtitle">
-            Every household. Every rule. Every scenario.<br />
+            Household by household. Tax by tax. Policy by policy.<br />
             Open source infrastructure. APIs for the rest.
           </p>
           <div className="hero-cta">
