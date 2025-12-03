@@ -392,6 +392,14 @@ export default function ThesisPage() {
 
   return (
     <div className="thesis">
+      {/* Top nav with logo */}
+      <nav className="thesis-top-nav">
+        <a href="/" className="thesis-logo">
+          <img src="/cosilico-logo-dark.svg" alt="" className="thesis-logo-icon" />
+          cosilico
+        </a>
+      </nav>
+
       {/* Progress nav */}
       <nav className="thesis-nav">
         {sections.map(s => (
