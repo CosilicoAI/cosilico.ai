@@ -1,0 +1,16 @@
+id,label,segment,region,pricing_model,assumptions,low,base,high,notes
+cust_policyengine,PolicyEngine Nonprofit,Flagship,US/UK,Hosted+SLA,"Base fee + support; shared roadmap",0,0,0,"Grant-funded; non-revenue oriented; may fund platform indirectly"
+cust_myfriendben,MyFriendBen,Fintech,US,API+MAUs,"Assume X MAUs, Y runs/user, $/1k runs","=X*Y*price*0.5","=X*Y*price","=X*Y*price*1.5","Fill X,Y,price; validate with team"
+cust_benefitnav,Benefit Navigator,Fintech,US,API+MAUs,"Assume X MAUs, Y runs/user, $/1k runs","","","",""
+cust_impactica,Impactica (Navvy),Civic/Student,US,API+MAUs,"Pilot → platform","","","",""
+cust_mirza,Mirza,Fintech/Advisory,UK,API+Seats,"Seats for advisory + API bundles","","","",""
+cust_taxproject,The Tax Project,Media/Research,US,Hosted or API,"Runs for calculators; sponsorship","","","",""
+cust_accounting,Accounting Firms,Accounting,US/UK,Seats+API+Hosted,"Tiered by firm size, attach rate","","","",""
+cust_tax_consult,Tax Consultancies,Consulting,US/UK,Project+Platform,"Per-project platform fee","","","",""
+cust_gov,Government Agencies,Policy Teams,US,Hosted+SLA,"Instance per agency; support hours","","","","Procurement cycles"
+cust_gov_ops,Gov Program Operators,Benefits Ops,US/UK,Private Deployments,"Eligibility/adjudication system integration","","","",""
+cust_ai,AI Companies,AI,Global,Usage API,"RAG + structured rules; high variance","","","",""
+cust_research,Research Institutes,Academia,Global,Institutional,"Campus-wide license or group instance","","","",""
+cust_fintech,Fintech Apps,Fintech,US,API+MAUs,"Multiple small-to-medium apps","","","",""
+
+# Guidance: replace blanks with numeric scenarios. Use spreadsheet to evaluate. Keep assumptions concise and add source links in docs/research/sources.md.
