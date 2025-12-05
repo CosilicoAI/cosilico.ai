@@ -752,6 +752,11 @@ export default function ThesisPage() {
                 <div className="market-size">$18.5B → $36.7B<Cite id={19} /></div>
                 <p>Cross-border payments: $31.6T → $50T by 2032. 45% of jurisdictions expect tax complexity to increase.</p>
               </div>
+              <div className="market-card">
+                <h3>Policy Research</h3>
+                <div className="market-size">$2B+</div>
+                <p>Think tanks, government agencies, academics. Legislative scoring, distributional analysis, reform modeling.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -930,7 +935,7 @@ export default function ThesisPage() {
             <h3>Used By</h3>
             <div className="user-grid">
               <div className="user-card">
-                <h4>UK Treasury</h4>
+                <h4>UK Government</h4>
                 <p>Policy costing for budget proposals</p>
               </div>
               <div className="user-card">
@@ -977,7 +982,7 @@ export default function ThesisPage() {
               <h3>Max Ghenis</h3>
               <p className="team-role">Founder & CEO</p>
               <ul>
-                <li>Founded PolicyEngine — models used by UK Treasury, US Congress</li>
+                <li>Founded PolicyEngine — models used by UK Government, US Congress</li>
                 <li>Former Google data scientist</li>
                 <li>MIT economics, UC Berkeley statistics</li>
                 <li>Led team that encoded US federal + 50 states + UK + Canada</li>
