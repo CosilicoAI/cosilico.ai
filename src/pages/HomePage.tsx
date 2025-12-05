@@ -91,7 +91,7 @@ export default function HomePage() {
               Calculate taxes and benefits for any household.
               Every formula traced to statute.
             </p>
-            <code>cosilico.calculate(household)</code>
+            <code>cosilico.calculate(<br/>&nbsp;&nbsp;household<br/>)</code>
           </div>
           <div className="product-card">
             <div className="product-icon">
@@ -105,7 +105,7 @@ export default function HomePage() {
               Synthetic populations calibrated to reality.
               Predict attributes you don't observe.
             </p>
-            <code>cosilico.predict(partial_household)</code>
+            <code>cosilico.predict(<br/>&nbsp;&nbsp;partial_household<br/>)</code>
           </div>
           <div className="product-card">
             <div className="product-icon">
@@ -117,9 +117,9 @@ export default function HomePage() {
             <h3>Scenarios</h3>
             <p>
               Run policy reforms at population scale.
-              Distributional impacts in milliseconds.
+              Distributional impacts in seconds.
             </p>
-            <code>cosilico.simulate(reform, population)</code>
+            <code>cosilico.simulate(<br/>&nbsp;&nbsp;reform,<br/>&nbsp;&nbsp;population<br/>)</code>
           </div>
         </div>
       </section>
