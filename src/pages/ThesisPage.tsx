@@ -713,6 +713,12 @@ export default function ThesisPage() {
               <div className="scale-item">New legislation <span className="scale-mult">Realtime</span></div>
             </div>
           </div>
+
+          <div className="encoding-technical">
+            <a href="https://github.com/CosilicoAI/cosilico-engine/blob/master/docs/AI_ENCODING.md" target="_blank" rel="noopener noreferrer" className="technical-link">
+              Technical Deep Dive: Reward Functions, Oracle Stack, Agent Architecture →
+            </a>
+          </div>
         </div>
       </section>
 
