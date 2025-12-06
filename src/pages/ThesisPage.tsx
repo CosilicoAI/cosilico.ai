@@ -949,6 +949,29 @@ export default function ThesisPage() {
             </div>
           </div>
 
+          <div className="lighthouse-section">
+            <h3>Government as Lighthouse Customers</h3>
+            <p>Government adoption creates downstream enterprise value:</p>
+            <div className="lighthouse-grid">
+              <div className="lighthouse-card">
+                <h4>Credibility Signal</h4>
+                <p>"If HM Treasury trusts this for budget scoring, it's accurate enough for our risk models."</p>
+              </div>
+              <div className="lighthouse-card">
+                <h4>Regulatory Alignment</h4>
+                <p>Banks want to model what government models. Same methodology = predictable regulatory outcomes.</p>
+              </div>
+              <div className="lighthouse-card">
+                <h4>Policy Anticipation</h4>
+                <p>Run the same scenarios government runs. Know how proposed legislation affects your portfolio before it passes.</p>
+              </div>
+              <div className="lighthouse-card">
+                <h4>Compliance Defense</h4>
+                <p>"We used the same methodology as [agency]" is a strong regulatory position.</p>
+              </div>
+            </div>
+          </div>
+
           <div className="traction-coverage">
             <h3>Geographic Coverage</h3>
             <div className="coverage-grid">

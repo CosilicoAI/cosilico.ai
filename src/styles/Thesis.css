@@ -1595,3 +1595,48 @@
     flex-direction: column;
   }
 }
+
+/* Lighthouse Customers Section */
+.lighthouse-section {
+  margin-top: 40px;
+  padding: 32px;
+  background: var(--color-bg-elevated);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.lighthouse-section h3 {
+  margin: 0 0 8px;
+  color: var(--color-text);
+}
+
+.lighthouse-section > p {
+  margin: 0 0 24px;
+  color: var(--color-text-muted);
+}
+
+.lighthouse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.lighthouse-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.lighthouse-card h4 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--color-accent);
+}
+
+.lighthouse-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
