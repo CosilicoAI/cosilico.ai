@@ -282,53 +282,61 @@ export default function ArchitecturePage() {
             </div>
           </div>
 
-          <div className="rl-feedback-loop">
-            <svg viewBox="0 0 400 80" className="feedback-svg">
-              <path d="M350 10 L350 50 L50 50 L50 10"
-                    stroke="currentColor" strokeWidth="2" fill="none"
-                    strokeDasharray="5,5" />
-              <polygon points="50,10 45,20 55,20" fill="currentColor" />
-            </svg>
-            <div className="feedback-labels">
-              <span className="feedback-label reward">REWARD SIGNAL</span>
+          <div className="rl-cycle-wrapper">
+            <div className="rl-cycle-arrow left">
+              <svg viewBox="0 0 60 200" className="cycle-svg">
+                <path d="M55 10 L55 180 L30 180" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+                <polygon points="30,180 40,175 40,185" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="rl-cycle-content">
+              <div className="rl-validators">
+                {VALIDATORS.map((v) => (
+                  <div
+                    key={v.id}
+                    className={`validator-card ${selectedValidator === v.id ? "selected" : ""}`}
+                    onClick={() => setSelectedValidator(v.id)}
+                  >
+                    <span className="validator-icon">{v.icon}</span>
+                    <h5>{v.title}</h5>
+                    <p>{v.short}</p>
+                  </div>
+                ))}
+              </div>
+
+              {(() => {
+                const v = VALIDATORS.find((x) => x.id === selectedValidator);
+                if (!v) return null;
+                return (
+                  <div className={`validator-detail-box ${v.id}`}>
+                    <div className="validator-detail-header">
+                      <span className="validator-detail-icon">{v.icon}</span>
+                      <span className="validator-detail-title">{v.boxTitle}</span>
+                    </div>
+                    <p>{v.boxDesc}</p>
+                    <div className="validator-detail-metrics">
+                      {v.metrics.map((m, i) => (
+                        <div key={i} className="validator-metric">
+                          <span className="metric-value">{m.value}</span>
+                          <span className="metric-label">{m.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
+
+              <div className="reward-signal-label">
+                <span className="feedback-label reward">↑ REWARD SIGNAL</span>
+              </div>
+            </div>
+            <div className="rl-cycle-arrow right">
+              <svg viewBox="0 0 60 200" className="cycle-svg">
+                <path d="M5 180 L5 10 L30 10" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+                <polygon points="30,10 20,5 20,15" fill="currentColor" />
+              </svg>
             </div>
           </div>
-
-          <div className="rl-validators">
-            {VALIDATORS.map((v) => (
-              <div
-                key={v.id}
-                className={`validator-card ${selectedValidator === v.id ? "selected" : ""}`}
-                onClick={() => setSelectedValidator(v.id)}
-              >
-                <span className="validator-icon">{v.icon}</span>
-                <h5>{v.title}</h5>
-                <p>{v.short}</p>
-              </div>
-            ))}
-          </div>
-
-          {(() => {
-            const v = VALIDATORS.find((x) => x.id === selectedValidator);
-            if (!v) return null;
-            return (
-              <div className={`validator-detail-box ${v.id}`}>
-                <div className="validator-detail-header">
-                  <span className="validator-detail-icon">{v.icon}</span>
-                  <span className="validator-detail-title">{v.boxTitle}</span>
-                </div>
-                <p>{v.boxDesc}</p>
-                <div className="validator-detail-metrics">
-                  {v.metrics.map((m, i) => (
-                    <div key={i} className="validator-metric">
-                      <span className="metric-value">{m.value}</span>
-                      <span className="metric-label">{m.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })()}
         </div>
 
         <div className="rl-explanation">
