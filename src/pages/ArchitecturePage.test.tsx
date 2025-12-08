@@ -24,7 +24,7 @@ describe("ArchitecturePage", () => {
   test("shows code sample when statute section is selected", () => {
     render(<ArchitecturePage />);
     // Default selection is 32/a/1
-    expect(screen.getByText(/module statute.26.32.a.1/)).toBeInTheDocument();
+    expect(screen.getByText(/variable earned_income_credit/)).toBeInTheDocument();
   });
 
   test("renders indexing demo section", () => {

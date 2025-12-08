@@ -63,9 +63,6 @@ export const CODE_SAMPLES: Record<string, { code: string; type: string }> = {
     type: "cosilico",
     code: `# statute/26/32/a/1/earned_income_credit.cosilico
 
-module statute.26.32.a.1
-version "2024.1"
-
 references {
   is_eligible: statute/26/32/c/1/A/i/is_eligible_individual
   initial_credit: statute/26/32/a/2/A/initial_credit_amount
@@ -87,9 +84,6 @@ variable earned_income_credit {
   "32/a/2/A": {
     type: "cosilico",
     code: `# statute/26/32/a/2/A/initial_credit_amount.cosilico
-
-module statute.26.32.a.2.A
-version "2024.1"
 
 references {
   earned_income: statute/26/32/c/2/A/earned_income
@@ -113,9 +107,6 @@ variable initial_credit_amount {
   "32/a/2/B": {
     type: "cosilico",
     code: `# statute/26/32/a/2/B/credit_reduction_amount.cosilico
-
-module statute.26.32.a.2.B
-version "2024.1"
 
 references {
   earned_income: statute/26/32/c/2/A/earned_income
@@ -141,9 +132,6 @@ variable credit_reduction_amount {
   "32/c/3/A": {
     type: "cosilico",
     code: `# statute/26/32/c/3/A/qualifying_child.cosilico
-
-module statute.26.32.c.3.A
-version "2024.1"
 
 references {
   age: core/person/age
