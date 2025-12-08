@@ -58,12 +58,11 @@ export const STATUTE_TREE: TreeNode = {
   ],
 };
 
-export const CODE_SAMPLES: Record<string, { code: string; type: string }> = {
+export const CODE_SAMPLES: Record<string, { code: string; type: string; file: string }> = {
   "32/a/1": {
     type: "cosilico",
-    code: `# statute/26/32/a/1/earned_income_credit.cosilico
-
-references {
+    file: "earned_income_credit.cosilico",
+    code: `references {
   is_eligible: statute/26/32/c/1/A/i/is_eligible_individual
   initial_credit: statute/26/32/a/2/A/initial_credit_amount
   reduction: statute/26/32/a/2/B/credit_reduction_amount
@@ -83,9 +82,8 @@ variable earned_income_credit {
   },
   "32/a/2/A": {
     type: "cosilico",
-    code: `# statute/26/32/a/2/A/initial_credit_amount.cosilico
-
-references {
+    file: "initial_credit_amount.cosilico",
+    code: `references {
   earned_income: statute/26/32/c/2/A/earned_income
   credit_percentage: statute/26/32/b/1/credit_percentage
   earned_income_amount: statute/26/32/b/2/A/earned_income_amount
@@ -106,9 +104,8 @@ variable initial_credit_amount {
   },
   "32/a/2/B": {
     type: "cosilico",
-    code: `# statute/26/32/a/2/B/credit_reduction_amount.cosilico
-
-references {
+    file: "credit_reduction_amount.cosilico",
+    code: `references {
   earned_income: statute/26/32/c/2/A/earned_income
   adjusted_gross_income: statute/26/62/a/adjusted_gross_income
   phaseout_percentage: statute/26/32/b/1/phaseout_percentage
@@ -131,13 +128,12 @@ variable credit_reduction_amount {
   },
   "32/c/3/A": {
     type: "cosilico",
-    code: `# statute/26/32/c/3/A/qualifying_child.cosilico
-
-references {
+    file: "qualifying_child.cosilico",
+    code: `references {
   age: core/person/age
   is_dependent: statute/26/152/is_dependent
-  max_age: statute/26/32/c/3/A/params/max_age
-  max_age_student: statute/26/32/c/3/A/params/max_age_student
+  max_age: statute/26/32/c/3/A/max_age
+  max_age_student: statute/26/32/c/3/A/max_age_student
   is_student: statute/26/152/d/2/is_full_time_student
 }
 
@@ -162,19 +158,15 @@ variable num_eitc_qualifying_children {
   dtype Integer
 
   formula {
-    # Sum over all Person members of this TaxUnit
     return sum(members, is_eitc_qualifying_child)
   }
 }`,
   },
   "32/b/1": {
     type: "yaml",
-    code: `# statute/26/32/b/1/credit_percentage.yaml
-
-credit_percentage:
+    file: "credit_percentage.yaml",
+    code: `credit_percentage:
   description: Credit percentages by number of qualifying children
-
-  # These rates are NOT indexed - they're fixed in statute
   values:
     by_num_qualifying_children:
       0: 0.0765   # 7.65%
@@ -192,9 +184,8 @@ phaseout_percentage:
   },
   "32/b/2/A": {
     type: "yaml",
-    code: `# statute/26/32/b/2/A/amounts.yaml
-
-earned_income_amount:
+    file: "amounts.yaml",
+    code: `earned_income_amount:
   indexing_rule: statute/26/32/j/1/indexing_rule
 
   base:
@@ -207,7 +198,7 @@ earned_income_amount:
 
   published:
     - effective_from: 2024-01-01
-      source: "Rev. Proc. 2023-34"
+      source: Rev. Proc. 2023-34
       by_num_qualifying_children:
         0: 7840
         1: 12390
@@ -216,9 +207,8 @@ earned_income_amount:
   },
   "32/j/1": {
     type: "yaml",
-    code: `# statute/26/32/j/1/indexing_rule.yaml
-
-indexing_rule:
+    file: "indexing_rule.yaml",
+    code: `indexing_rule:
   description: EITC cost-of-living adjustment
 
   method:
@@ -232,23 +222,20 @@ indexing_rule:
   },
   "32/j/2": {
     type: "yaml",
-    code: `# statute/26/32/j/2/rounding_rules.yaml
-
-rounding_rules:
-  # (A) General rule for amounts in (b)(2)
+    file: "rounding_rules.yaml",
+    code: `rounding_rules:
   general:
     applies_to:
       - earned_income_amount
       - phaseout_amount
       - joint_return_adjustment
     rule: round_down_to_nearest
-    amount: 10  # Nearest $10
+    amount: 10
 
-  # (B) Special rule for disqualified income
   disqualified_income:
     applies_to:
       - disqualified_income_limit
     rule: round_down_to_nearest
-    amount: 50  # Nearest $50`,
+    amount: 50`,
   },
 };

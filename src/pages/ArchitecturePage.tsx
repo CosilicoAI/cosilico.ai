@@ -183,12 +183,9 @@ export default function ArchitecturePage() {
             <div className="code-header">
               <div className="code-path-group">
                 <span className="code-icon">📄</span>
-                {selected ? (
+                {selected && selectedCode ? (
                   <>
-                    <span className="code-path">statute/26/{selected}/</span>
-                    <span className={`code-type ${selectedCode?.type}`}>
-                      .{selectedCode?.type}
-                    </span>
+                    <span className="code-path">statute/26/{selected}/{selectedCode.file}</span>
                   </>
                 ) : (
                   <span className="code-path">Select a section...</span>
