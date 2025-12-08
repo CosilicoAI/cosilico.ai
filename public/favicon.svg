@@ -2,26 +2,26 @@
   <!-- Back crystal - simulation (filled) -->
   <polygon
     points="13,6 19,10 19,16 13,20 7,16 7,10"
-    fill="#6366f1"
+    fill="#00d4ff"
     opacity="0.4"
   />
   <polygon
     points="13,6 19,10 19,16 13,20 7,16 7,10"
     fill="none"
-    stroke="#6366f1"
+    stroke="#00d4ff"
     stroke-width="1.5"
   />
 
   <!-- Front crystal - society -->
   <polygon
     points="19,12 25,16 25,22 19,26 13,22 13,16"
-    fill="#818cf8"
+    fill="#40e8ff"
     opacity="0.2"
   />
   <polygon
     points="19,12 25,16 25,22 19,26 13,22 13,16"
     fill="none"
-    stroke="#818cf8"
+    stroke="#40e8ff"
     stroke-width="1.5"
   />
 </svg>
