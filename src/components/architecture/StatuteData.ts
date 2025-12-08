@@ -63,7 +63,6 @@ variable earned_income_credit {
   entity TaxUnit
   period Year
   dtype Money
-  reference "26 USC § 32(a)(1)"
 
   formula {
     if not is_eligible then
@@ -90,7 +89,6 @@ variable initial_credit_amount {
   entity TaxUnit
   period Year
   dtype Money
-  reference "26 USC § 32(a)(2)(A)"
 
   formula {
     let rate = credit_percentage[num_qualifying_children]
@@ -118,7 +116,6 @@ variable credit_reduction_amount {
   entity TaxUnit
   period Year
   dtype Money
-  reference "26 USC § 32(a)(2)(B)"
 
   formula {
     let income = max(adjusted_gross_income, earned_income)
@@ -133,7 +130,6 @@ variable credit_reduction_amount {
     code: `# statute/26/32/b/1/credit_percentage.yaml
 
 credit_percentage:
-  reference: "26 USC § 32(b)(1)"
   description: Credit percentages by number of qualifying children
 
   # These rates are NOT indexed - they're fixed in statute
@@ -145,7 +141,6 @@ credit_percentage:
       3: 0.45     # 45%
 
 phaseout_percentage:
-  reference: "26 USC § 32(b)(1)"
   values:
     by_num_qualifying_children:
       0: 0.0765
@@ -158,7 +153,6 @@ phaseout_percentage:
     code: `# statute/26/32/b/2/A/amounts.yaml
 
 earned_income_amount:
-  reference: "26 USC § 32(b)(2)(A)"
   indexing_rule: statute/26/32/j/1/indexing_rule
 
   base:
@@ -184,12 +178,6 @@ earned_income_amount:
 
 indexing_rule:
   description: EITC cost-of-living adjustment
-  reference: "26 USC § 32(j)(1)"
-
-  applies_to:
-    - statute/26/32/b/2/A/earned_income_amount
-    - statute/26/32/b/2/A/phaseout_amount
-    - statute/26/32/i/1/disqualified_income_limit
 
   method:
     type: cost_of_living_adjustment
@@ -197,7 +185,6 @@ indexing_rule:
     base_year: 2015
 
   rounding:
-    reference: "26 USC § 32(j)(2)(A)"
     rule: round_down_to_nearest
     amount: 10`,
   },
@@ -206,8 +193,6 @@ indexing_rule:
     code: `# statute/26/32/j/2/rounding_rules.yaml
 
 rounding_rules:
-  reference: "26 USC § 32(j)(2)"
-
   # (A) General rule for amounts in (b)(2)
   general:
     applies_to:
