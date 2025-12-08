@@ -6,6 +6,7 @@ export interface TreeNode {
   file?: string;
   indexed?: boolean;
   isIndexingRule?: boolean;
+  isTest?: boolean;
   children?: TreeNode[];
 }
 
@@ -48,7 +49,8 @@ export function StatuteTree({
         <span className="tree-label">{node.label}</span>
         {node.indexed && <span className="tree-badge indexed">indexed</span>}
         {node.isIndexingRule && <span className="tree-badge indexing">CPI</span>}
-        {hasFile && !node.indexed && !node.isIndexingRule && (
+        {node.isTest && <span className="tree-badge test">test</span>}
+        {hasFile && !node.indexed && !node.isIndexingRule && !node.isTest && (
           <span className="tree-file">{node.file}</span>
         )}
       </div>

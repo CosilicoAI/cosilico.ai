@@ -10,6 +10,7 @@ export const STATUTE_TREE: TreeNode = {
       label: "(a) Allowance",
       children: [
         { id: "32/a/1", label: "(1) Credit Amount", file: "earned_income_credit.cosilico" },
+        { id: "32/a/1/test", label: "↳ Tests", file: "earned_income_credit_test.yaml", isTest: true },
         {
           id: "32/a/2",
           label: "(2) Components",
@@ -25,10 +26,17 @@ export const STATUTE_TREE: TreeNode = {
       label: "(c) Definitions",
       children: [
         {
+          id: "32/c/1",
+          label: "(1) Eligible Individual",
+          children: [
+            { id: "32/c/1/A", label: "(A) Income Test", file: "income_eligible.cosilico" },
+          ],
+        },
+        {
           id: "32/c/3",
           label: "(3) Qualifying Child",
           children: [
-            { id: "32/c/3/A", label: "(A) Age Test", file: "is_qualifying_child.cosilico" },
+            { id: "32/c/3/A", label: "(A) Age Test", file: "qualifying_child.cosilico" },
           ],
         },
       ],
@@ -237,5 +245,67 @@ phaseout_percentage:
       - disqualified_income_limit
     rule: round_down_to_nearest
     amount: 50`,
+  },
+  "32/a/1/test": {
+    type: "yaml",
+    file: "earned_income_credit_test.yaml",
+    code: `# Tests live alongside formulas as sibling files
+tests:
+  - name: "Single filer, no children, low income"
+    period: 2024
+    inputs:
+      tax_unit.earned_income: 8000
+      tax_unit.adjusted_gross_income: 8000
+      tax_unit.num_qualifying_children: 0
+      tax_unit.filing_status: single
+    outputs:
+      tax_unit.earned_income_credit: 612
+
+  - name: "Single filer, two children, phase-in"
+    period: 2024
+    inputs:
+      tax_unit.earned_income: 15000
+      tax_unit.adjusted_gross_income: 15000
+      tax_unit.num_qualifying_children: 2
+    outputs:
+      tax_unit.earned_income_credit: 6000
+
+  - name: "Joint filer, three children, phase-out"
+    period: 2024
+    inputs:
+      tax_unit.earned_income: 45000
+      tax_unit.adjusted_gross_income: 48000
+      tax_unit.num_qualifying_children: 3
+      tax_unit.filing_status: joint
+    outputs:
+      tax_unit.earned_income_credit: 4521`,
+  },
+  "32/c/1/A": {
+    type: "cosilico",
+    file: "income_eligible.cosilico",
+    code: `references {
+  # Access parent entity (TaxUnit) attributes from Person
+  tax_unit.adjusted_gross_income: statute/26/62/a/adjusted_gross_income
+  tax_unit.investment_income: statute/26/32/i/investment_income
+  disqualified_income_limit: statute/26/32/i/2/disqualified_income_limit
+  eitc_income_limit: statute/26/32/b/2/A/eitc_income_limit
+  num_qualifying_children: statute/26/32/c/3/A/num_qualifying_children
+}
+
+# Person-level eligibility based on TaxUnit income
+variable is_income_eligible {
+  entity Person
+  period Year
+  dtype Boolean
+
+  formula {
+    # Access parent TaxUnit's income via tax_unit prefix
+    if tax_unit.investment_income > disqualified_income_limit then
+      return false
+
+    let income_limit = eitc_income_limit[tax_unit.num_qualifying_children]
+    return tax_unit.adjusted_gross_income <= income_limit
+  }
+}`,
   },
 };
