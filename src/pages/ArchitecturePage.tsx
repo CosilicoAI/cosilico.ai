@@ -10,28 +10,49 @@ const VALIDATORS = [
     icon: "✓",
     title: "Syntax Valid",
     short: "DSL parses without errors",
-    details: "The generated code must be valid Cosilico DSL. Parser checks module declarations, variable definitions, formula syntax, and type annotations.",
+    boxTitle: "DSL Parser Validation",
+    boxDesc: "Generated code must be valid Cosilico DSL. The parser checks module declarations, variable definitions, formula syntax, type annotations, and entity/period specifications.",
+    metrics: [
+      { value: "100%", label: "parse rate required" },
+      { value: "<1s", label: "validation time" },
+    ],
   },
   {
     id: "refs",
     icon: "🔗",
     title: "References Resolve",
     short: "All statute paths exist",
-    details: "Every reference in the code (e.g., statute/26/32/b/1/credit_percentage) must point to an existing variable or parameter in the codebase.",
+    boxTitle: "Reference Graph Validation",
+    boxDesc: "Every reference in the code must resolve to an existing variable or parameter. The engine builds a dependency graph and verifies all statute paths exist in the codebase.",
+    metrics: [
+      { value: "0", label: "dangling refs allowed" },
+      { value: "DAG", label: "no circular deps" },
+    ],
   },
   {
     id: "tests",
     icon: "🧪",
     title: "Unit Tests",
     short: "Edge cases and known scenarios pass",
-    details: "Hand-written test cases covering edge cases, boundary conditions, and known IRS examples. Ensures the formula logic is correct.",
+    boxTitle: "Test Suite Validation",
+    boxDesc: "Hand-written test cases covering edge cases, boundary conditions, and known IRS examples from publications. Each variable must pass its associated test scenarios.",
+    metrics: [
+      { value: "100+", label: "test cases per variable" },
+      { value: "IRS", label: "official examples" },
+    ],
   },
   {
     id: "pe",
     icon: "🎯",
     title: "PolicyEngine Match",
     short: "Results align with PE microsimulation",
-    details: "The ultimate validation: compile the DSL to Python and run against PolicyEngine's microsimulation. Results must match within $0.01 across 50k+ synthetic households.",
+    boxTitle: "PolicyEngine as Ground Truth",
+    boxDesc: "The ultimate validation: compile DSL to Python and run against PolicyEngine's battle-tested microsimulation. Results must match across thousands of synthetic households.",
+    metrics: [
+      { value: "50k+", label: "test households" },
+      { value: "99.9%", label: "match threshold" },
+      { value: "$0.01", label: "max deviation" },
+    ],
     highlight: true,
   },
 ];
@@ -41,7 +62,7 @@ export default function ArchitecturePage() {
   const [expanded, setExpanded] = useState<Set<string>>(
     new Set(["32", "32/a", "32/a/2", "32/c", "32/c/3", "32/b", "32/b/2", "32/j"])
   );
-  const [expandedValidator, setExpandedValidator] = useState<string | null>(null);
+  const [selectedValidator, setSelectedValidator] = useState<string>("pe");
 
   const toggleExpanded = (id: string) => {
     const next = new Set(expanded);
@@ -51,10 +72,6 @@ export default function ArchitecturePage() {
       next.add(id);
     }
     setExpanded(next);
-  };
-
-  const toggleValidator = (id: string) => {
-    setExpandedValidator(expandedValidator === id ? null : id);
   };
 
   const selectedCode = selected ? CODE_SAMPLES[selected] : null;
@@ -281,51 +298,37 @@ export default function ArchitecturePage() {
             {VALIDATORS.map((v) => (
               <div
                 key={v.id}
-                className={`validator-card ${v.highlight ? "highlight" : ""} ${expandedValidator === v.id ? "expanded" : ""}`}
-                onClick={() => toggleValidator(v.id)}
+                className={`validator-card ${selectedValidator === v.id ? "selected" : ""}`}
+                onClick={() => setSelectedValidator(v.id)}
               >
                 <span className="validator-icon">{v.icon}</span>
                 <h5>{v.title}</h5>
                 <p>{v.short}</p>
-                {expandedValidator === v.id && (
-                  <div className="validator-details">
-                    {v.details}
-                  </div>
-                )}
-                <span className="validator-expand-hint">
-                  {expandedValidator === v.id ? "−" : "+"}
-                </span>
               </div>
             ))}
           </div>
 
-          <div className="pe-integration">
-            <div className="pe-box">
-              <div className="pe-header">
-                <span className="pe-logo">PE</span>
-                <span className="pe-title">PolicyEngine as Ground Truth</span>
-              </div>
-              <p>
-                PolicyEngine's battle-tested microsimulation provides the reward signal.
-                Generated DSL code is compiled and run against thousands of household scenarios—
-                outputs must match PE's calculations within tolerance.
-              </p>
-              <div className="pe-metrics">
-                <div className="pe-metric">
-                  <span className="metric-value">50k+</span>
-                  <span className="metric-label">test households</span>
+          {(() => {
+            const v = VALIDATORS.find((x) => x.id === selectedValidator);
+            if (!v) return null;
+            return (
+              <div className={`validator-detail-box ${v.id}`}>
+                <div className="validator-detail-header">
+                  <span className="validator-detail-icon">{v.icon}</span>
+                  <span className="validator-detail-title">{v.boxTitle}</span>
                 </div>
-                <div className="pe-metric">
-                  <span className="metric-value">99.9%</span>
-                  <span className="metric-label">match threshold</span>
-                </div>
-                <div className="pe-metric">
-                  <span className="metric-value">$0.01</span>
-                  <span className="metric-label">max deviation</span>
+                <p>{v.boxDesc}</p>
+                <div className="validator-detail-metrics">
+                  {v.metrics.map((m, i) => (
+                    <div key={i} className="validator-metric">
+                      <span className="metric-value">{m.value}</span>
+                      <span className="metric-label">{m.label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </div>
+            );
+          })()}
         </div>
 
         <div className="rl-explanation">

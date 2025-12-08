@@ -958,36 +958,39 @@
 }
 
 .rl-feedback-loop {
-  position: relative;
-  height: 60px;
-  margin: 0 auto 30px;
-  max-width: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px auto 30px;
+  padding: 16px 0;
 }
 
 .feedback-svg {
-  width: 100%;
-  height: 60px;
-  color: var(--arch-green);
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: none;
 }
 
 .feedback-labels {
-  position: relative;
-  z-index: 1;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.feedback-labels::before,
+.feedback-labels::after {
+  content: "";
+  width: 80px;
+  height: 2px;
+  background: var(--arch-green);
+  opacity: 0.5;
 }
 
 .feedback-label {
   font-family: var(--arch-font-display);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 4px;
+  white-space: nowrap;
 }
 
 .feedback-label.reward {
@@ -1005,7 +1008,7 @@
 
 .validator-card {
   background: var(--arch-surface);
-  border: 1px solid var(--arch-border-dim);
+  border: 2px solid var(--arch-border-dim);
   border-radius: 8px;
   padding: 16px;
   text-align: center;
@@ -1019,13 +1022,9 @@
   transform: translateY(-2px);
 }
 
-.validator-card.highlight {
-  border-color: var(--arch-green);
-  background: var(--arch-green-glow);
-}
-
-.validator-card.expanded {
+.validator-card.selected {
   border-color: var(--arch-accent);
+  background: var(--arch-accent-glow);
 }
 
 .validator-icon {
@@ -1047,75 +1046,56 @@
   margin: 0;
 }
 
-.validator-details {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--arch-border-dim);
-  font-size: 0.75rem;
-  color: var(--arch-text);
-  text-align: left;
-  line-height: 1.5;
-}
-
-.validator-expand-hint {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  font-size: 0.9rem;
-  color: var(--arch-text-muted);
-  font-weight: 300;
-}
-
-/* PolicyEngine Integration */
-.pe-integration {
-  margin-bottom: 40px;
-}
-
-.pe-box {
+/* Validator Detail Box */
+.validator-detail-box {
   background: linear-gradient(135deg, var(--arch-bg-card) 0%, var(--arch-surface) 100%);
-  border: 1px solid var(--arch-green);
+  border: 1px solid var(--arch-accent);
   border-radius: 12px;
   padding: 24px;
+  margin-bottom: 40px;
+  transition: all 0.3s ease;
 }
 
-.pe-header {
+.validator-detail-box.pe {
+  border-color: var(--arch-green);
+}
+
+.validator-detail-box.pe .metric-value {
+  color: var(--arch-green);
+}
+
+.validator-detail-header {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.pe-logo {
-  background: var(--arch-green);
-  color: var(--arch-bg);
-  font-family: var(--arch-font-display);
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 6px 10px;
-  border-radius: 4px;
+.validator-detail-icon {
+  font-size: 1.5rem;
 }
 
-.pe-title {
+.validator-detail-title {
   font-family: var(--arch-font-display);
   font-size: 1rem;
   font-weight: 600;
   color: var(--arch-text);
 }
 
-.pe-box > p {
+.validator-detail-box > p {
   font-size: 0.9rem;
   color: var(--arch-text-dim);
   line-height: 1.6;
   margin-bottom: 20px;
 }
 
-.pe-metrics {
+.validator-detail-metrics {
   display: flex;
   gap: 32px;
   flex-wrap: wrap;
 }
 
-.pe-metric {
+.validator-metric {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -1125,7 +1105,7 @@
   font-family: var(--arch-font-display);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--arch-green);
+  color: var(--arch-accent);
 }
 
 .metric-label {
