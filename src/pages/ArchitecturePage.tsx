@@ -4,11 +4,44 @@ import { StatuteTree } from "../components/architecture/StatuteTree";
 import { IndexingDemo } from "../components/architecture/IndexingDemo";
 import { STATUTE_TREE, CODE_SAMPLES } from "../components/architecture/StatuteData";
 
+const VALIDATORS = [
+  {
+    id: "syntax",
+    icon: "✓",
+    title: "Syntax Valid",
+    short: "DSL parses without errors",
+    details: "The generated code must be valid Cosilico DSL. Parser checks module declarations, variable definitions, formula syntax, and type annotations.",
+  },
+  {
+    id: "refs",
+    icon: "🔗",
+    title: "References Resolve",
+    short: "All statute paths exist",
+    details: "Every reference in the code (e.g., statute/26/32/b/1/credit_percentage) must point to an existing variable or parameter in the codebase.",
+  },
+  {
+    id: "tests",
+    icon: "🧪",
+    title: "Unit Tests",
+    short: "Edge cases and known scenarios pass",
+    details: "Hand-written test cases covering edge cases, boundary conditions, and known IRS examples. Ensures the formula logic is correct.",
+  },
+  {
+    id: "pe",
+    icon: "🎯",
+    title: "PolicyEngine Match",
+    short: "Results align with PE microsimulation",
+    details: "The ultimate validation: compile the DSL to Python and run against PolicyEngine's microsimulation. Results must match within $0.01 across 50k+ synthetic households.",
+    highlight: true,
+  },
+];
+
 export default function ArchitecturePage() {
   const [selected, setSelected] = useState<string | null>("32/a/1");
   const [expanded, setExpanded] = useState<Set<string>>(
     new Set(["32", "32/a", "32/a/2", "32/c", "32/c/3", "32/b", "32/b/2", "32/j"])
   );
+  const [expandedValidator, setExpandedValidator] = useState<string | null>(null);
 
   const toggleExpanded = (id: string) => {
     const next = new Set(expanded);
@@ -18,6 +51,10 @@ export default function ArchitecturePage() {
       next.add(id);
     }
     setExpanded(next);
+  };
+
+  const toggleValidator = (id: string) => {
+    setExpandedValidator(expandedValidator === id ? null : id);
   };
 
   const selectedCode = selected ? CODE_SAMPLES[selected] : null;
@@ -241,26 +278,25 @@ export default function ArchitecturePage() {
           </div>
 
           <div className="rl-validators">
-            <div className="validator-card">
-              <span className="validator-icon">✓</span>
-              <h5>Syntax Valid</h5>
-              <p>DSL parses without errors</p>
-            </div>
-            <div className="validator-card">
-              <span className="validator-icon">🔗</span>
-              <h5>References Resolve</h5>
-              <p>All statute paths exist</p>
-            </div>
-            <div className="validator-card">
-              <span className="validator-icon">🧪</span>
-              <h5>Unit Tests</h5>
-              <p>Edge cases and known scenarios pass</p>
-            </div>
-            <div className="validator-card highlight">
-              <span className="validator-icon">🎯</span>
-              <h5>PolicyEngine Match</h5>
-              <p>Results align with PE microsimulation</p>
-            </div>
+            {VALIDATORS.map((v) => (
+              <div
+                key={v.id}
+                className={`validator-card ${v.highlight ? "highlight" : ""} ${expandedValidator === v.id ? "expanded" : ""}`}
+                onClick={() => toggleValidator(v.id)}
+              >
+                <span className="validator-icon">{v.icon}</span>
+                <h5>{v.title}</h5>
+                <p>{v.short}</p>
+                {expandedValidator === v.id && (
+                  <div className="validator-details">
+                    {v.details}
+                  </div>
+                )}
+                <span className="validator-expand-hint">
+                  {expandedValidator === v.id ? "−" : "+"}
+                </span>
+              </div>
+            ))}
           </div>
 
           <div className="pe-integration">
