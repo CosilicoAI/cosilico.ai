@@ -195,6 +195,135 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
+      {/* RL Training Section */}
+      <section className="arch-rl">
+        <div className="section-header">
+          <span className="section-label">AI-POWERED</span>
+          <h2>Reinforcement Learning Encoding</h2>
+          <p>AI agents learn to translate legal text into executable code through iterative refinement.</p>
+        </div>
+
+        <div className="rl-diagram">
+          <div className="rl-flow">
+            <div className="rl-node input">
+              <div className="rl-icon">📜</div>
+              <h4>Legal Text</h4>
+              <p>Statute sections, regulations, IRS guidance</p>
+            </div>
+
+            <div className="rl-arrow">→</div>
+
+            <div className="rl-node agent">
+              <div className="rl-icon">🤖</div>
+              <h4>DSL Agent</h4>
+              <p>LLM with domain-specific prompting</p>
+            </div>
+
+            <div className="rl-arrow">→</div>
+
+            <div className="rl-node output">
+              <div className="rl-icon">⚡</div>
+              <h4>Cosilico DSL</h4>
+              <p>Executable statute-organized code</p>
+            </div>
+          </div>
+
+          <div className="rl-feedback-loop">
+            <svg viewBox="0 0 400 80" className="feedback-svg">
+              <path d="M350 10 L350 50 L50 50 L50 10"
+                    stroke="currentColor" strokeWidth="2" fill="none"
+                    strokeDasharray="5,5" />
+              <polygon points="50,10 45,20 55,20" fill="currentColor" />
+            </svg>
+            <div className="feedback-labels">
+              <span className="feedback-label reward">REWARD SIGNAL</span>
+            </div>
+          </div>
+
+          <div className="rl-validators">
+            <div className="validator-card">
+              <span className="validator-icon">✓</span>
+              <h5>Syntax Valid</h5>
+              <p>DSL parses without errors</p>
+            </div>
+            <div className="validator-card">
+              <span className="validator-icon">🔗</span>
+              <h5>References Resolve</h5>
+              <p>All statute paths exist</p>
+            </div>
+            <div className="validator-card">
+              <span className="validator-icon">🧪</span>
+              <h5>Unit Tests</h5>
+              <p>Edge cases and known scenarios pass</p>
+            </div>
+            <div className="validator-card highlight">
+              <span className="validator-icon">🎯</span>
+              <h5>PolicyEngine Match</h5>
+              <p>Results align with PE microsimulation</p>
+            </div>
+          </div>
+
+          <div className="pe-integration">
+            <div className="pe-box">
+              <div className="pe-header">
+                <span className="pe-logo">PE</span>
+                <span className="pe-title">PolicyEngine as Ground Truth</span>
+              </div>
+              <p>
+                PolicyEngine's battle-tested microsimulation provides the reward signal.
+                Generated DSL code is compiled and run against thousands of household scenarios—
+                outputs must match PE's calculations within tolerance.
+              </p>
+              <div className="pe-metrics">
+                <div className="pe-metric">
+                  <span className="metric-value">50k+</span>
+                  <span className="metric-label">test households</span>
+                </div>
+                <div className="pe-metric">
+                  <span className="metric-value">99.9%</span>
+                  <span className="metric-label">match threshold</span>
+                </div>
+                <div className="pe-metric">
+                  <span className="metric-value">$0.01</span>
+                  <span className="metric-label">max deviation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="rl-explanation">
+          <div className="rl-step">
+            <div className="step-number">1</div>
+            <div className="step-content">
+              <h4>Generate</h4>
+              <p>Agent reads legal text and produces DSL code following statute-path conventions.</p>
+            </div>
+          </div>
+          <div className="rl-step">
+            <div className="step-number">2</div>
+            <div className="step-content">
+              <h4>Validate</h4>
+              <p>Multi-stage validators check syntax, references, test cases, and audit alignment.</p>
+            </div>
+          </div>
+          <div className="rl-step">
+            <div className="step-number">3</div>
+            <div className="step-content">
+              <h4>Reward</h4>
+              <p>Composite score drives prompt evolution—successful patterns propagate.</p>
+            </div>
+          </div>
+          <div className="rl-step">
+            <div className="step-number">4</div>
+            <div className="step-content">
+              <h4>Iterate</h4>
+              <p>System prompts evolve via tournament selection, improving encoding quality over time.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Multi-Repo Architecture */}
       <section className="arch-repos">
         <div className="section-header">

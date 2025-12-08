@@ -891,6 +891,257 @@
 }
 
 /* ============================================
+   RL TRAINING SECTION
+   ============================================ */
+
+.arch-rl {
+  padding: 80px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rl-diagram {
+  margin-top: 40px;
+}
+
+.rl-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.rl-node {
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  min-width: 160px;
+  transition: all 0.2s ease;
+}
+
+.rl-node:hover {
+  border-color: var(--arch-accent);
+  transform: translateY(-2px);
+}
+
+.rl-node.agent {
+  border-color: var(--arch-accent);
+  background: var(--arch-accent-glow);
+}
+
+.rl-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.rl-node h4 {
+  font-family: var(--arch-font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.rl-node p {
+  font-size: 0.75rem;
+  color: var(--arch-text-dim);
+  margin: 0;
+}
+
+.rl-arrow {
+  font-size: 1.5rem;
+  color: var(--arch-accent);
+  font-weight: 300;
+}
+
+.rl-feedback-loop {
+  position: relative;
+  height: 80px;
+  margin: 0 auto 30px;
+  max-width: 500px;
+}
+
+.feedback-svg {
+  width: 100%;
+  height: 80px;
+  color: var(--arch-green);
+}
+
+.feedback-labels {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.feedback-label {
+  font-family: var(--arch-font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.feedback-label.reward {
+  background: var(--arch-green-glow);
+  color: var(--arch-green);
+}
+
+.rl-validators {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.validator-card {
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border-dim);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.validator-card:hover {
+  border-color: var(--arch-border);
+}
+
+.validator-card.highlight {
+  border-color: var(--arch-green);
+  background: var(--arch-green-glow);
+}
+
+.validator-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.validator-card h5 {
+  font-family: var(--arch-font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.validator-card p {
+  font-size: 0.7rem;
+  color: var(--arch-text-dim);
+  margin: 0;
+}
+
+/* PolicyEngine Integration */
+.pe-integration {
+  margin-bottom: 40px;
+}
+
+.pe-box {
+  background: linear-gradient(135deg, var(--arch-bg-card) 0%, var(--arch-surface) 100%);
+  border: 1px solid var(--arch-green);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.pe-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pe-logo {
+  background: var(--arch-green);
+  color: var(--arch-bg);
+  font-family: var(--arch-font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.pe-title {
+  font-family: var(--arch-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--arch-text);
+}
+
+.pe-box > p {
+  font-size: 0.9rem;
+  color: var(--arch-text-dim);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.pe-metrics {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.pe-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-value {
+  font-family: var(--arch-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--arch-green);
+}
+
+.metric-label {
+  font-size: 0.7rem;
+  color: var(--arch-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* RL Steps */
+.rl-explanation {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.rl-step {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border-dim);
+  border-radius: 8px;
+}
+
+.rl-step .step-number {
+  font-family: var(--arch-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--arch-accent);
+  line-height: 1;
+}
+
+.step-content h4 {
+  font-family: var(--arch-font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.step-content p {
+  font-size: 0.8rem;
+  color: var(--arch-text-dim);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ============================================
    REPOS SECTION
    ============================================ */
 
