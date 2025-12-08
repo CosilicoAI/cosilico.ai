@@ -7,8 +7,7 @@ import ArchitecturePage from "./pages/ArchitecturePage";
 
 function App() {
   const isThesisPage = window.location.pathname === "/thesis";
-  const isArchPage = window.location.pathname === "/architecture";
-  const hideNav = isThesisPage || isArchPage;
+  const hideNav = isThesisPage;
 
   return (
     <BrowserRouter>

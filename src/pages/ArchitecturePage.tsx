@@ -455,6 +455,7 @@ export default function ArchitecturePage() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }
