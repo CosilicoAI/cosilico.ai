@@ -42,6 +42,21 @@ describe("ArchitecturePage", () => {
     expect(screen.getByText("cosilico-uk")).toBeInTheDocument();
   });
 
+  test("renders comparison section with OpenFisca and Catala", () => {
+    render(<ArchitecturePage />);
+    expect(screen.getByText("How Cosilico Compares")).toBeInTheDocument();
+    expect(screen.getByText("OpenFisca")).toBeInTheDocument();
+    expect(screen.getByText("Catala")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /openfisca.org/i })).toHaveAttribute(
+      "href",
+      "https://openfisca.org"
+    );
+    expect(screen.getByRole("link", { name: /catala-lang.org/i })).toHaveAttribute(
+      "href",
+      "https://catala-lang.org"
+    );
+  });
+
   test("renders CTA section with GitHub link", () => {
     render(<ArchitecturePage />);
     expect(screen.getByText("Explore the Source")).toBeInTheDocument();

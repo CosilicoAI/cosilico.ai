@@ -437,6 +437,87 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
+      {/* Comparison */}
+      <section className="arch-comparison">
+        <div className="section-header">
+          <span className="section-label">LANDSCAPE</span>
+          <h2>How Cosilico Compares</h2>
+          <p>Different approaches to encoding tax and benefit rules.</p>
+        </div>
+
+        <div className="comparison-table">
+          <div className="comparison-header">
+            <div className="comparison-cell header-feature">Feature</div>
+            <div className="comparison-cell header-system">Cosilico</div>
+            <div className="comparison-cell header-system">OpenFisca</div>
+            <div className="comparison-cell header-system">Catala</div>
+            <div className="comparison-cell header-system">Proprietary</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Citation-based paths</div>
+            <div className="comparison-cell yes">✓ statute/26/32/a</div>
+            <div className="comparison-cell no">✗ arbitrary names</div>
+            <div className="comparison-cell partial">◐ manual refs</div>
+            <div className="comparison-cell no">✗ internal IDs</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Indexing built-in</div>
+            <div className="comparison-cell yes">✓ automatic</div>
+            <div className="comparison-cell no">✗ manual</div>
+            <div className="comparison-cell no">✗ manual</div>
+            <div className="comparison-cell partial">◐ varies</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">RL-based authoring</div>
+            <div className="comparison-cell yes">✓ LLM + validation</div>
+            <div className="comparison-cell no">✗ manual only</div>
+            <div className="comparison-cell no">✗ manual only</div>
+            <div className="comparison-cell no">✗ manual only</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Multi-target compile</div>
+            <div className="comparison-cell yes">✓ Py / JS / WASM / SQL</div>
+            <div className="comparison-cell partial">◐ Python only</div>
+            <div className="comparison-cell partial">◐ limited</div>
+            <div className="comparison-cell partial">◐ varies</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Open source</div>
+            <div className="comparison-cell yes">✓ Apache 2.0</div>
+            <div className="comparison-cell yes">✓ AGPL</div>
+            <div className="comparison-cell yes">✓ Apache 2.0</div>
+            <div className="comparison-cell no">✗ proprietary</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Production microsim</div>
+            <div className="comparison-cell yes">✓ via PolicyEngine</div>
+            <div className="comparison-cell yes">✓ multiple countries</div>
+            <div className="comparison-cell no">✗ research phase</div>
+            <div className="comparison-cell yes">✓ established</div>
+          </div>
+        </div>
+
+        <div className="comparison-notes">
+          <div className="comparison-note">
+            <strong>OpenFisca:</strong> Battle-tested Python framework used by governments worldwide. Cosilico builds on PolicyEngine, which extends OpenFisca with enhanced microsimulation.
+            <a href="https://openfisca.org" target="_blank" rel="noopener noreferrer" className="source-link">openfisca.org</a>
+          </div>
+          <div className="comparison-note">
+            <strong>Catala:</strong> Academic DSL from Inria focused on legal correctness proofs. Excels at formal verification but limited tooling.
+            <a href="https://catala-lang.org" target="_blank" rel="noopener noreferrer" className="source-link">catala-lang.org</a>
+          </div>
+          <div className="comparison-note">
+            <strong>Proprietary:</strong> Tax software vendors (Intuit, H&R Block, Thomson Reuters) use closed-source engines without statute traceability.
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="arch-cta">
         <div className="cta-content">

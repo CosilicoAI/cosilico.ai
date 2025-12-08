@@ -1307,6 +1307,159 @@
 }
 
 /* ============================================
+   COMPARISON SECTION
+   ============================================ */
+
+.arch-comparison {
+  padding: 80px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.comparison-table {
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.comparison-header,
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, 1fr);
+  border-bottom: 1px solid var(--arch-border-dim);
+}
+
+.comparison-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-cell {
+  padding: 16px 20px;
+  font-family: var(--arch-font-display);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.comparison-header .comparison-cell {
+  background: var(--arch-surface);
+  font-weight: 600;
+  color: var(--arch-text);
+  border-bottom: 1px solid var(--arch-border);
+}
+
+.comparison-cell.header-feature {
+  color: var(--arch-text-muted);
+}
+
+.comparison-cell.header-system {
+  justify-content: center;
+  text-align: center;
+}
+
+.comparison-cell.feature {
+  color: var(--arch-text);
+  font-weight: 500;
+}
+
+.comparison-cell.yes {
+  color: var(--arch-green);
+  justify-content: center;
+  text-align: center;
+}
+
+.comparison-cell.no {
+  color: var(--arch-red);
+  justify-content: center;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.comparison-cell.partial {
+  color: var(--arch-amber);
+  justify-content: center;
+  text-align: center;
+}
+
+.comparison-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comparison-note {
+  padding: 16px 20px;
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border-dim);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--arch-text-dim);
+  line-height: 1.6;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.comparison-note strong {
+  color: var(--arch-text);
+  font-weight: 600;
+}
+
+.source-link {
+  font-family: var(--arch-font-display);
+  font-size: 0.75rem;
+  color: var(--arch-accent);
+  text-decoration: none;
+  padding: 2px 8px;
+  background: var(--arch-accent-glow);
+  border-radius: 4px;
+  margin-left: auto;
+  transition: all 0.2s ease;
+}
+
+.source-link:hover {
+  background: var(--arch-accent);
+  color: var(--arch-bg);
+}
+
+@media (max-width: 900px) {
+  .comparison-header,
+  .comparison-row {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-cell {
+    border-bottom: 1px solid var(--arch-border-dim);
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  .comparison-cell.feature {
+    background: var(--arch-surface);
+    font-weight: 600;
+  }
+
+  .comparison-cell::before {
+    display: none;
+  }
+
+  .comparison-header {
+    display: none;
+  }
+
+  .comparison-row .comparison-cell:not(.feature)::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--arch-text-muted);
+    min-width: 100px;
+    margin-right: 16px;
+  }
+}
+
+/* ============================================
    CTA SECTION
    ============================================ */
 
