@@ -7,7 +7,7 @@ import { STATUTE_TREE, CODE_SAMPLES } from "../components/architecture/StatuteDa
 export default function ArchitecturePage() {
   const [selected, setSelected] = useState<string | null>("32/a/1");
   const [expanded, setExpanded] = useState<Set<string>>(
-    new Set(["32", "32/a", "32/a/2", "32/b", "32/b/2", "32/j"])
+    new Set(["32", "32/a", "32/a/2", "32/c", "32/c/3", "32/b", "32/b/2", "32/j"])
   );
 
   const toggleExpanded = (id: string) => {

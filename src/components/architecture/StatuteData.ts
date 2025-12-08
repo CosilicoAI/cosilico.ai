@@ -21,6 +21,19 @@ export const STATUTE_TREE: TreeNode = {
       ],
     },
     {
+      id: "32/c",
+      label: "(c) Definitions",
+      children: [
+        {
+          id: "32/c/3",
+          label: "(3) Qualifying Child",
+          children: [
+            { id: "32/c/3/A", label: "(A) Age Test", file: "is_qualifying_child.cosilico" },
+          ],
+        },
+      ],
+    },
+    {
       id: "32/b",
       label: "(b) Parameters",
       children: [
@@ -122,6 +135,47 @@ variable credit_reduction_amount {
     let rate = phaseout_percentage[num_qualifying_children]
     let threshold = phaseout_amount[num_qualifying_children]
     return max(0, rate * (income - threshold))
+  }
+}`,
+  },
+  "32/c/3/A": {
+    type: "cosilico",
+    code: `# statute/26/32/c/3/A/qualifying_child.cosilico
+
+module statute.26.32.c.3.A
+version "2024.1"
+
+references {
+  age: core/person/age
+  is_dependent: statute/26/152/is_dependent
+  max_age: statute/26/32/c/3/A/params/max_age
+  max_age_student: statute/26/32/c/3/A/params/max_age_student
+  is_student: statute/26/152/d/2/is_full_time_student
+}
+
+# Person-level: Is this person a qualifying child?
+variable is_eitc_qualifying_child {
+  entity Person
+  period Year
+  dtype Boolean
+
+  formula {
+    if not is_dependent then return false
+    if age < max_age then return true
+    if is_student and age < max_age_student then return true
+    return false
+  }
+}
+
+# TaxUnit-level: Count qualifying children across members
+variable num_eitc_qualifying_children {
+  entity TaxUnit
+  period Year
+  dtype Integer
+
+  formula {
+    # Sum over all Person members of this TaxUnit
+    return sum(members, is_eitc_qualifying_child)
   }
 }`,
   },
