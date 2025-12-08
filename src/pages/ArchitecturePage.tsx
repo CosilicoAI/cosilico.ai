@@ -318,20 +318,10 @@ export default function ArchitecturePage() {
             );
           })()}
 
-          <div className="rl-feedback-arrow">
-            <svg viewBox="0 0 800 60" className="feedback-arrow-svg">
-              <defs>
-                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                  <polygon points="0 0, 10 3.5, 0 7" fill="currentColor" />
-                </marker>
-              </defs>
-              <path d="M750 50 C750 30, 400 10, 50 30 L50 10"
-                    stroke="currentColor" strokeWidth="2" fill="none"
-                    strokeDasharray="6,4" markerEnd="url(#arrowhead)" />
-            </svg>
-            <div className="feedback-arrow-label">
-              <span className="feedback-label reward">REWARD → PROMPT EVOLUTION</span>
-            </div>
+          <div className="rl-feedback-loop">
+            <div className="feedback-loop-line" />
+            <span className="feedback-label reward">⟳ FEEDBACK LOOP</span>
+            <div className="feedback-loop-line" />
           </div>
         </div>
 
