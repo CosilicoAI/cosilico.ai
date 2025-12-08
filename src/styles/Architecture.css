@@ -461,6 +461,11 @@
   color: #a855f7;
 }
 
+.tree-badge.integration {
+  background: rgba(236, 72, 153, 0.15);
+  color: #ec4899;
+}
+
 .tree-children {
   margin-left: 12px;
   border-left: 1px solid var(--arch-border-dim);

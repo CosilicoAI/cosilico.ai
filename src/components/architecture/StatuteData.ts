@@ -10,7 +10,8 @@ export const STATUTE_TREE: TreeNode = {
       label: "(a) Allowance",
       children: [
         { id: "32/a/1", label: "(1) Credit Amount", file: "earned_income_credit.cosilico" },
-        { id: "32/a/1/test", label: "↳ Tests", file: "earned_income_credit_test.yaml", isTest: true },
+        { id: "32/a/1/test", label: "↳ Unit Tests", file: "earned_income_credit_test.yaml", isTest: true },
+        { id: "32/a/1/integration", label: "↳ Integration", file: "eitc_integration_test.yaml", isIntegrationTest: true },
         {
           id: "32/a/2",
           label: "(2) Components",
@@ -95,7 +96,7 @@ variable earned_income_credit {
   earned_income: statute/26/32/c/2/A/earned_income
   credit_percentage: statute/26/32/b/1/credit_percentage
   earned_income_amount: statute/26/32/b/2/A/earned_income_amount
-  num_qualifying_children: statute/26/32/c/3/A/num_qualifying_children
+  count_qualifying_children: statute/26/32/c/3/A/count_qualifying_children
 }
 
 variable initial_credit_amount {
@@ -104,8 +105,8 @@ variable initial_credit_amount {
   dtype Money
 
   formula {
-    let rate = credit_percentage[num_qualifying_children]
-    let cap = earned_income_amount[num_qualifying_children]
+    let rate = credit_percentage[count_qualifying_children]
+    let cap = earned_income_amount[count_qualifying_children]
     return rate * min(earned_income, cap)
   }
 }`,
@@ -118,7 +119,7 @@ variable initial_credit_amount {
   adjusted_gross_income: statute/26/62/a/adjusted_gross_income
   phaseout_percentage: statute/26/32/b/1/phaseout_percentage
   phaseout_amount: statute/26/32/b/2/A/phaseout_amount
-  num_qualifying_children: statute/26/32/c/3/A/num_qualifying_children
+  count_qualifying_children: statute/26/32/c/3/A/count_qualifying_children
 }
 
 variable credit_reduction_amount {
@@ -128,8 +129,8 @@ variable credit_reduction_amount {
 
   formula {
     let income = max(adjusted_gross_income, earned_income)
-    let rate = phaseout_percentage[num_qualifying_children]
-    let threshold = phaseout_amount[num_qualifying_children]
+    let rate = phaseout_percentage[count_qualifying_children]
+    let threshold = phaseout_amount[count_qualifying_children]
     return max(0, rate * (income - threshold))
   }
 }`,
@@ -160,7 +161,7 @@ variable is_eitc_qualifying_child {
 }
 
 # TaxUnit-level: Count qualifying children across members
-variable num_eitc_qualifying_children {
+variable count_eitc_qualifying_children {
   entity TaxUnit
   period Year
   dtype Integer
@@ -176,7 +177,7 @@ variable num_eitc_qualifying_children {
     code: `credit_percentage:
   description: Credit percentages by number of qualifying children
   values:
-    by_num_qualifying_children:
+    by_count_qualifying_children:
       0: 0.0765   # 7.65%
       1: 0.34     # 34%
       2: 0.40     # 40%
@@ -184,7 +185,7 @@ variable num_eitc_qualifying_children {
 
 phaseout_percentage:
   values:
-    by_num_qualifying_children:
+    by_count_qualifying_children:
       0: 0.0765
       1: 0.1598
       2: 0.2106
@@ -198,20 +199,20 @@ phaseout_percentage:
 
   base:
     year: 2015
-    by_num_qualifying_children:
-      0: 6580
-      1: 9880
-      2: 13870
-      3: 13870
+    by_count_qualifying_children:
+      0: 6_580
+      1: 9_880
+      2: 13_870
+      3: 13_870
 
   published:
     - effective_from: 2024-01-01
       source: Rev. Proc. 2023-34
-      by_num_qualifying_children:
-        0: 7840
-        1: 12390
-        2: 17400
-        3: 17400`,
+      by_count_qualifying_children:
+        0: 7_840
+        1: 12_390
+        2: 17_400
+        3: 17_400`,
   },
   "32/j/1": {
     type: "yaml",
@@ -249,36 +250,73 @@ phaseout_percentage:
   "32/a/1/test": {
     type: "yaml",
     file: "earned_income_credit_test.yaml",
-    code: `# Tests live alongside formulas as sibling files
+    code: `# Unit tests: mock dependencies, test formula logic in isolation
 tests:
-  - name: "Single filer, no children, low income"
-    period: 2024
+  - name: "Eligible with positive credit"
     inputs:
-      tax_unit.earned_income: 8000
-      tax_unit.adjusted_gross_income: 8000
-      tax_unit.num_qualifying_children: 0
-      tax_unit.filing_status: single
+      is_eligible: true
+      initial_credit: 1_000
+      reduction: 200
     outputs:
-      tax_unit.earned_income_credit: 612
+      earned_income_credit: 800
 
-  - name: "Single filer, two children, phase-in"
-    period: 2024
+  - name: "Ineligible returns zero"
     inputs:
-      tax_unit.earned_income: 15000
-      tax_unit.adjusted_gross_income: 15000
-      tax_unit.num_qualifying_children: 2
+      is_eligible: false
+      initial_credit: 1_000
+      reduction: 200
     outputs:
-      tax_unit.earned_income_credit: 6000
+      earned_income_credit: 0
 
-  - name: "Joint filer, three children, phase-out"
-    period: 2024
+  - name: "Reduction exceeds credit"
     inputs:
-      tax_unit.earned_income: 45000
-      tax_unit.adjusted_gross_income: 48000
-      tax_unit.num_qualifying_children: 3
-      tax_unit.filing_status: joint
+      is_eligible: true
+      initial_credit: 500
+      reduction: 800
     outputs:
-      tax_unit.earned_income_credit: 4521`,
+      earned_income_credit: 0`,
+  },
+  "32/a/1/integration": {
+    type: "yaml",
+    file: "eitc_integration_test.yaml",
+    code: `# Integration tests: full household, all calculations run
+tests:
+  - name: "Single mom, two kids, $25k wages"
+    period: 2024
+    persons:
+      - id: mom
+        age: 32
+        earned_income: 25_000
+      - id: child1
+        age: 8
+        is_dependent_of: mom
+      - id: child2
+        age: 5
+        is_dependent_of: mom
+    tax_units:
+      - members: [mom, child1, child2]
+        filing_status: head_of_household
+    outputs:
+      tax_unit.earned_income_credit: 6_604
+      tax_unit.count_qualifying_children: 2
+
+  - name: "Married couple, high income, phased out"
+    period: 2024
+    persons:
+      - id: spouse1
+        age: 45
+        earned_income: 55_000
+      - id: spouse2
+        age: 43
+        earned_income: 30_000
+      - id: child
+        age: 12
+        is_dependent_of: spouse1
+    tax_units:
+      - members: [spouse1, spouse2, child]
+        filing_status: married_filing_jointly
+    outputs:
+      tax_unit.earned_income_credit: 0`,
   },
   "32/c/1/A": {
     type: "cosilico",
@@ -289,7 +327,7 @@ tests:
   tax_unit.investment_income: statute/26/32/i/investment_income
   disqualified_income_limit: statute/26/32/i/2/disqualified_income_limit
   eitc_income_limit: statute/26/32/b/2/A/eitc_income_limit
-  num_qualifying_children: statute/26/32/c/3/A/num_qualifying_children
+  count_qualifying_children: statute/26/32/c/3/A/count_qualifying_children
 }
 
 # Person-level eligibility based on TaxUnit income
@@ -303,9 +341,10 @@ variable is_income_eligible {
     if tax_unit.investment_income > disqualified_income_limit then
       return false
 
-    let income_limit = eitc_income_limit[tax_unit.num_qualifying_children]
-    return tax_unit.adjusted_gross_income <= income_limit
+    let limit = eitc_income_limit[tax_unit.count_qualifying_children]
+    return tax_unit.adjusted_gross_income <= limit
   }
 }`,
   },
 };
+
