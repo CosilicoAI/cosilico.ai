@@ -236,7 +236,7 @@ export default function ArchitecturePage() {
               <span className="repo-desc">Federal Tax Code</span>
             </div>
             <div className="repo-box jurisdiction ca">
-              <div className="repo-flag">☀️</div>
+              <div className="repo-flag">🐻</div>
               <h4>cosilico-us-ca</h4>
               <code>statute/rtc/...</code>
               <span className="repo-desc">California R&T Code</span>
