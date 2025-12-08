@@ -42,18 +42,20 @@ describe("ArchitecturePage", () => {
     expect(screen.getByText("cosilico-uk")).toBeInTheDocument();
   });
 
-  test("renders comparison section with OpenFisca and Catala", () => {
+  test("renders comparison section with frameworks", () => {
     render(<ArchitecturePage />);
     expect(screen.getByText("How Cosilico Compares")).toBeInTheDocument();
+    expect(screen.getByText("PolicyEngine")).toBeInTheDocument();
     expect(screen.getByText("OpenFisca")).toBeInTheDocument();
-    expect(screen.getByText("Catala")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /openfisca.org/i })).toHaveAttribute(
+    expect(screen.getByText("Tax-Calculator")).toBeInTheDocument();
+    expect(screen.getByText("TAXSIM")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /policyengine.org/i })).toHaveAttribute(
       "href",
-      "https://openfisca.org"
+      "https://policyengine.org"
     );
-    expect(screen.getByRole("link", { name: /catala-lang.org/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /taxsim.nber.org/i })).toHaveAttribute(
       "href",
-      "https://catala-lang.org"
+      "https://taxsim.nber.org"
     );
   });
 

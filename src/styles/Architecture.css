@@ -1327,7 +1327,7 @@
 .comparison-header,
 .comparison-row {
   display: grid;
-  grid-template-columns: 1.5fr repeat(4, 1fr);
+  grid-template-columns: 1.5fr repeat(5, 1fr);
   border-bottom: 1px solid var(--arch-border-dim);
 }
 

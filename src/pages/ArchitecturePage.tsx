@@ -449,71 +449,83 @@ export default function ArchitecturePage() {
           <div className="comparison-header">
             <div className="comparison-cell header-feature">Feature</div>
             <div className="comparison-cell header-system">Cosilico</div>
+            <div className="comparison-cell header-system">PolicyEngine</div>
             <div className="comparison-cell header-system">OpenFisca</div>
-            <div className="comparison-cell header-system">Catala</div>
-            <div className="comparison-cell header-system">Proprietary</div>
+            <div className="comparison-cell header-system">Tax-Calculator</div>
+            <div className="comparison-cell header-system">TAXSIM</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Citation-based paths</div>
             <div className="comparison-cell yes">✓ statute/26/32/a</div>
             <div className="comparison-cell no">✗ arbitrary names</div>
-            <div className="comparison-cell partial">◐ manual refs</div>
-            <div className="comparison-cell no">✗ internal IDs</div>
+            <div className="comparison-cell no">✗ arbitrary names</div>
+            <div className="comparison-cell no">✗ arbitrary names</div>
+            <div className="comparison-cell no">✗ none</div>
           </div>
 
           <div className="comparison-row">
-            <div className="comparison-cell feature">Indexing built-in</div>
-            <div className="comparison-cell yes">✓ automatic</div>
+            <div className="comparison-cell feature">Automatic indexing</div>
+            <div className="comparison-cell yes">✓ three-tier resolution</div>
+            <div className="comparison-cell partial">◐ parameter files</div>
             <div className="comparison-cell no">✗ manual</div>
-            <div className="comparison-cell no">✗ manual</div>
-            <div className="comparison-cell partial">◐ varies</div>
+            <div className="comparison-cell partial">◐ JSON parameters</div>
+            <div className="comparison-cell no">✗ hard-coded</div>
           </div>
 
           <div className="comparison-row">
-            <div className="comparison-cell feature">RL-based authoring</div>
-            <div className="comparison-cell yes">✓ LLM + validation</div>
+            <div className="comparison-cell feature">AI-assisted authoring</div>
+            <div className="comparison-cell yes">✓ RL + validation</div>
+            <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
           </div>
 
           <div className="comparison-row">
-            <div className="comparison-cell feature">Multi-target compile</div>
-            <div className="comparison-cell yes">✓ Py / JS / WASM / SQL</div>
-            <div className="comparison-cell partial">◐ Python only</div>
-            <div className="comparison-cell partial">◐ limited</div>
-            <div className="comparison-cell partial">◐ varies</div>
+            <div className="comparison-cell feature">Benefits + taxes</div>
+            <div className="comparison-cell yes">✓ integrated</div>
+            <div className="comparison-cell yes">✓ integrated</div>
+            <div className="comparison-cell yes">✓ integrated</div>
+            <div className="comparison-cell no">✗ taxes only</div>
+            <div className="comparison-cell no">✗ taxes only</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Microsimulation</div>
+            <div className="comparison-cell yes">✓ built-in</div>
+            <div className="comparison-cell yes">✓ US + UK + Canada</div>
+            <div className="comparison-cell yes">✓ multiple countries</div>
+            <div className="comparison-cell yes">✓ US federal</div>
+            <div className="comparison-cell yes">✓ US federal + states</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Open source</div>
             <div className="comparison-cell yes">✓ Apache 2.0</div>
             <div className="comparison-cell yes">✓ AGPL</div>
-            <div className="comparison-cell yes">✓ Apache 2.0</div>
-            <div className="comparison-cell no">✗ proprietary</div>
-          </div>
-
-          <div className="comparison-row">
-            <div className="comparison-cell feature">Production microsim</div>
-            <div className="comparison-cell yes">✓ via PolicyEngine</div>
-            <div className="comparison-cell yes">✓ multiple countries</div>
-            <div className="comparison-cell no">✗ research phase</div>
-            <div className="comparison-cell yes">✓ established</div>
+            <div className="comparison-cell yes">✓ AGPL</div>
+            <div className="comparison-cell yes">✓ MIT</div>
+            <div className="comparison-cell partial">◐ source available</div>
           </div>
         </div>
 
         <div className="comparison-notes">
           <div className="comparison-note">
-            <strong>OpenFisca:</strong> Battle-tested Python framework used by governments worldwide. Cosilico builds on PolicyEngine, which extends OpenFisca with enhanced microsimulation.
+            <strong>PolicyEngine:</strong> OpenFisca-based US, UK, and Canada microsimulation with enhanced parameters, calibrated microdata, and web interface. Cosilico uses PE as ground truth for RL validation.
+            <a href="https://policyengine.org" target="_blank" rel="noopener noreferrer" className="source-link">policyengine.org</a>
+          </div>
+          <div className="comparison-note">
+            <strong>OpenFisca:</strong> Python framework for tax-benefit systems used by France, New Zealand, and others. Foundation for PolicyEngine.
             <a href="https://openfisca.org" target="_blank" rel="noopener noreferrer" className="source-link">openfisca.org</a>
           </div>
           <div className="comparison-note">
-            <strong>Catala:</strong> Academic DSL from Inria focused on legal correctness proofs. Excels at formal verification but limited tooling.
-            <a href="https://catala-lang.org" target="_blank" rel="noopener noreferrer" className="source-link">catala-lang.org</a>
+            <strong>Tax-Calculator:</strong> PSL's open-source Python model of the US federal individual income and payroll tax system. JSON-based parameters.
+            <a href="https://taxcalc.pslmodels.org" target="_blank" rel="noopener noreferrer" className="source-link">taxcalc.pslmodels.org</a>
           </div>
           <div className="comparison-note">
-            <strong>Proprietary:</strong> Tax software vendors (Intuit, H&R Block, Thomson Reuters) use closed-source engines without statute traceability.
+            <strong>TAXSIM:</strong> NBER's federal + state income tax calculator. Fortran-based, used widely in economics research since 1983.
+            <a href="https://taxsim.nber.org" target="_blank" rel="noopener noreferrer" className="source-link">taxsim.nber.org</a>
           </div>
         </div>
       </section>
