@@ -354,6 +354,150 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
+      {/* Law Archive Section */}
+      <section className="arch-lawarchive">
+        <div className="section-header">
+          <span className="section-label">DATA LAYER</span>
+          <h2>Law Archive: Single Source of Truth</h2>
+          <p>
+            Raw statute text, structured rules, and encoded formulas live together.
+            The AI reads from and writes to the same archive.
+          </p>
+        </div>
+
+        <div className="lawarchive-diagram">
+          <div className="la-flow">
+            <div className="la-source">
+              <div className="la-box sources">
+                <h4>Official Sources</h4>
+                <div className="source-list">
+                  <span className="source-item">📜 USLM XML (uscode.house.gov)</span>
+                  <span className="source-item">📋 eCFR (regulations)</span>
+                  <span className="source-item">🏛️ State codes</span>
+                </div>
+              </div>
+              <div className="la-arrow">↓</div>
+            </div>
+
+            <div className="la-archive">
+              <div className="la-box archive">
+                <div className="archive-header">
+                  <span className="archive-icon">🗄️</span>
+                  <h4>cosilico-lawarchive</h4>
+                </div>
+                <div className="archive-layers">
+                  <div className="archive-layer">
+                    <span className="layer-label">Raw Text</span>
+                    <code>"The credit under this section..."</code>
+                  </div>
+                  <div className="archive-layer">
+                    <span className="layer-label">Structured Rules</span>
+                    <code>{`{ "type": "phase_in", "rate": 0.34 }`}</code>
+                  </div>
+                  <div className="archive-layer">
+                    <span className="layer-label">Encoded Formula</span>
+                    <code>return max(0, earned_income * rate)</code>
+                  </div>
+                </div>
+                <div className="archive-index">
+                  Indexed by: <code>citation + vintage + application_date</code>
+                </div>
+              </div>
+            </div>
+
+            <div className="la-consumers">
+              <div className="la-arrow">↓</div>
+              <div className="consumer-row">
+                <div className="la-box consumer">
+                  <span className="consumer-icon">🤖</span>
+                  <h5>AI Encoder</h5>
+                  <p>Reads law, writes code</p>
+                </div>
+                <div className="la-box consumer">
+                  <span className="consumer-icon">⚙️</span>
+                  <h5>Engine</h5>
+                  <p>Compiles formulas</p>
+                </div>
+                <div className="la-box consumer">
+                  <span className="consumer-icon">💻</span>
+                  <h5>CLI</h5>
+                  <p>pull / push / sync</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bitemporal-section">
+          <h3>Bi-Temporal Model: Vintage + Application Date</h3>
+          <p className="bitemporal-intro">
+            The law specifies <em>when rules apply</em>, not just <em>what the rules are</em>.
+            A single vintage (e.g., TCJA) defines different formulas for different years.
+          </p>
+
+          <div className="bitemporal-example">
+            <div className="vintage-card">
+              <div className="vintage-header">
+                <span className="vintage-badge">TCJA</span>
+                <span className="vintage-date">Vintage: 2017-12-22</span>
+              </div>
+              <div className="vintage-rules">
+                <div className="rule-row">
+                  <span className="rule-period">2018-2025</span>
+                  <span className="rule-formula">Refundable = min($1,400, 15% × (EI - $2,500))</span>
+                </div>
+                <div className="rule-row sunset">
+                  <span className="rule-period">2026+</span>
+                  <span className="rule-formula">Refundable = 15% × (EI - $3,000) <span className="sunset-tag">sunset</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div className="vintage-card arpa">
+              <div className="vintage-header">
+                <span className="vintage-badge">ARPA</span>
+                <span className="vintage-date">Vintage: 2021-03-11</span>
+              </div>
+              <div className="vintage-rules">
+                <div className="rule-row">
+                  <span className="rule-period">2021 only</span>
+                  <span className="rule-formula">Refundable = 100% (fully refundable)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bitemporal-query">
+            <code className="query-example">
+              lawarchive.get_formula("ctc_refundable", vintage="2017-12-22", application_date="2030-01-01")
+              <span className="query-result">→ ctc_refundable__tcja_sunset</span>
+            </code>
+          </div>
+        </div>
+
+        <div className="cli-workflow">
+          <h3>Developer Workflow</h3>
+          <div className="cli-steps">
+            <div className="cli-step">
+              <code>lawarchive pull "26 USC 32"</code>
+              <span className="cli-desc">Download statute + encoding locally</span>
+            </div>
+            <div className="cli-step">
+              <code>claude "update the phase-out logic"</code>
+              <span className="cli-desc">AI or human edits the DSL</span>
+            </div>
+            <div className="cli-step">
+              <code>lawarchive validate ./26/32/</code>
+              <span className="cli-desc">Check syntax, types, tests</span>
+            </div>
+            <div className="cli-step">
+              <code>lawarchive push ./26/32/</code>
+              <span className="cli-desc">Upload with provenance tracking</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Multi-Repo Architecture */}
       <section className="arch-repos">
         <div className="section-header">

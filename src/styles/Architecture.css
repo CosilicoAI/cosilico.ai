@@ -1595,6 +1595,357 @@
 }
 
 /* ============================================
+   LAW ARCHIVE SECTION
+   ============================================ */
+
+.arch-lawarchive {
+  padding: 80px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.lawarchive-diagram {
+  margin: 48px 0;
+}
+
+.la-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.la-source,
+.la-archive,
+.la-consumers {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.la-arrow {
+  font-size: 24px;
+  color: var(--arch-accent);
+  opacity: 0.6;
+}
+
+.la-box {
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  padding: 20px 24px;
+}
+
+.la-box.sources {
+  max-width: 400px;
+  text-align: center;
+}
+
+.la-box.sources h4 {
+  margin: 0 0 12px 0;
+  font-size: 0.9rem;
+  color: var(--arch-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.source-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.source-item {
+  font-size: 0.85rem;
+  color: var(--arch-text);
+}
+
+.la-box.archive {
+  max-width: 600px;
+  width: 100%;
+  border-color: var(--arch-accent);
+  box-shadow: 0 0 30px var(--arch-accent-glow);
+}
+
+.archive-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--arch-border);
+}
+
+.archive-icon {
+  font-size: 1.5rem;
+}
+
+.archive-header h4 {
+  margin: 0;
+  font-family: var(--arch-font-display);
+  color: var(--arch-accent);
+}
+
+.archive-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.archive-layer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  background: var(--arch-surface);
+  border-radius: 4px;
+}
+
+.layer-label {
+  font-size: 0.75rem;
+  color: var(--arch-text-muted);
+  text-transform: uppercase;
+  min-width: 120px;
+}
+
+.archive-layer code {
+  font-family: var(--arch-font-display);
+  font-size: 0.8rem;
+  color: var(--arch-green);
+}
+
+.archive-index {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--arch-text-dim);
+  text-align: center;
+}
+
+.archive-index code {
+  font-family: var(--arch-font-display);
+  color: var(--arch-amber);
+}
+
+.consumer-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.la-box.consumer {
+  text-align: center;
+  min-width: 140px;
+}
+
+.consumer-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.la-box.consumer h5 {
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;
+}
+
+.la-box.consumer p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--arch-text-dim);
+}
+
+/* Bi-temporal Section */
+.bitemporal-section {
+  margin-top: 60px;
+  padding: 40px;
+  background: var(--arch-bg-elevated);
+  border-radius: 12px;
+  border: 1px solid var(--arch-border);
+}
+
+.bitemporal-section h3 {
+  font-family: var(--arch-font-display);
+  font-size: 1.3rem;
+  margin: 0 0 12px 0;
+  color: var(--arch-accent);
+}
+
+.bitemporal-intro {
+  color: var(--arch-text-dim);
+  margin-bottom: 32px;
+}
+
+.bitemporal-intro em {
+  color: var(--arch-amber);
+  font-style: normal;
+}
+
+.bitemporal-example {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.vintage-card {
+  flex: 1;
+  min-width: 280px;
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vintage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--arch-surface);
+  border-bottom: 1px solid var(--arch-border);
+}
+
+.vintage-badge {
+  font-family: var(--arch-font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  background: var(--arch-purple-glow);
+  color: var(--arch-purple);
+  border-radius: 4px;
+}
+
+.vintage-card.arpa .vintage-badge {
+  background: var(--arch-green-glow);
+  color: var(--arch-green);
+}
+
+.vintage-date {
+  font-size: 0.75rem;
+  color: var(--arch-text-muted);
+}
+
+.vintage-rules {
+  padding: 16px;
+}
+
+.rule-row {
+  display: flex;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--arch-border-dim);
+}
+
+.rule-row:last-child {
+  border-bottom: none;
+}
+
+.rule-period {
+  font-family: var(--arch-font-display);
+  font-size: 0.8rem;
+  color: var(--arch-text-muted);
+  min-width: 80px;
+}
+
+.rule-formula {
+  font-size: 0.85rem;
+  color: var(--arch-text);
+}
+
+.rule-row.sunset .rule-formula {
+  color: var(--arch-text-dim);
+}
+
+.sunset-tag {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  background: var(--arch-amber-glow);
+  color: var(--arch-amber);
+  border-radius: 3px;
+  margin-left: 8px;
+}
+
+.bitemporal-query {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--arch-bg-card);
+  border-radius: 6px;
+  border-left: 3px solid var(--arch-accent);
+}
+
+.query-example {
+  font-family: var(--arch-font-display);
+  font-size: 0.85rem;
+  color: var(--arch-text-dim);
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.query-result {
+  display: block;
+  margin-top: 8px;
+  color: var(--arch-green);
+}
+
+/* CLI Workflow */
+.cli-workflow {
+  margin-top: 48px;
+}
+
+.cli-workflow h3 {
+  font-family: var(--arch-font-display);
+  font-size: 1.1rem;
+  margin: 0 0 20px 0;
+  color: var(--arch-text);
+}
+
+.cli-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cli-step {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 16px;
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 6px;
+}
+
+.cli-step code {
+  font-family: var(--arch-font-display);
+  font-size: 0.85rem;
+  color: var(--arch-accent);
+  min-width: 300px;
+}
+
+.cli-desc {
+  font-size: 0.85rem;
+  color: var(--arch-text-dim);
+}
+
+@media (max-width: 768px) {
+  .bitemporal-example {
+    flex-direction: column;
+  }
+
+  .cli-step {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cli-step code {
+    min-width: auto;
+  }
+}
+
+/* ============================================
    CTA SECTION
    ============================================ */
 
