@@ -37,6 +37,9 @@
   --arch-green-glow: rgba(0, 255, 159, 0.15);
   --arch-amber: #ffb800;
   --arch-amber-glow: rgba(255, 184, 0, 0.15);
+  --arch-purple: #a855f7;
+  --arch-purple-dim: #7c3aed;
+  --arch-purple-glow: rgba(168, 85, 247, 0.15);
   --arch-red: #ff4060;
 
   background: var(--arch-bg);
@@ -1314,6 +1317,128 @@
 
 .comment {
   color: var(--arch-text-muted);
+}
+
+/* New Full Repo Diagram */
+.repo-diagram-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 40px;
+}
+
+.repo-tier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  width: 100%;
+  position: relative;
+}
+
+.tier-label {
+  font-family: var(--arch-font-display);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--arch-text-muted);
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+  padding: 4px 12px;
+  background: var(--arch-surface);
+  border-radius: 4px;
+}
+
+.repo-tier.orchestrator .repo-box.main {
+  border-color: var(--arch-green);
+  background: linear-gradient(135deg, var(--arch-bg-card) 0%, rgba(76, 175, 80, 0.08) 100%);
+  min-width: 300px;
+}
+
+.repo-tier.countries {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.repo-pair {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.repo-box.rules {
+  border-left: 3px solid var(--arch-amber);
+  min-width: 160px;
+}
+
+.repo-box.data {
+  border-left: 3px solid var(--arch-purple);
+  min-width: 180px;
+}
+
+.repo-type {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.65rem;
+  color: var(--arch-text-muted);
+  font-style: italic;
+}
+
+.repo-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.repo-tier.infrastructure .repo-box {
+  min-width: 160px;
+}
+
+.repo-box.data-core {
+  border-color: var(--arch-purple-dim);
+}
+
+.repo-box.ai {
+  border-color: var(--arch-accent-dim);
+  background: linear-gradient(135deg, var(--arch-bg-card) 0%, rgba(0, 229, 255, 0.05) 100%);
+}
+
+.repo-connector.vertical {
+  width: 2px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--arch-border) 0%, var(--arch-accent-dim) 50%, var(--arch-border) 100%);
+  position: relative;
+}
+
+.repo-connector.vertical::before,
+.repo-connector.vertical::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--arch-accent-dim);
+}
+
+.repo-connector.vertical::before {
+  top: -4px;
+}
+
+.repo-connector.vertical::after {
+  bottom: -4px;
+}
+
+/* Two structure blocks side by side */
+.repo-structure {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* ============================================

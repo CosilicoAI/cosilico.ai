@@ -358,60 +358,90 @@ export default function ArchitecturePage() {
       <section className="arch-repos">
         <div className="section-header">
           <span className="section-label">ECOSYSTEM</span>
-          <h2>Multi-Jurisdiction Architecture</h2>
-          <p>One engine. Many jurisdictions. Same structure everywhere.</p>
+          <h2>Repository Architecture</h2>
+          <p>Simulate the economy: rules, data, dynamics, and AI.</p>
         </div>
 
-        <div className="repo-diagram">
-          <div className="repo-core">
-            <div className="repo-box engine">
-              <div className="repo-icon">⚙️</div>
-              <h4>cosilico-engine</h4>
-              <p>Core simulation engine</p>
+        <div className="repo-diagram-full">
+          {/* Top: User-facing package */}
+          <div className="repo-tier orchestrator">
+            <div className="tier-label">USER INTERFACE</div>
+            <div className="repo-box main">
+              <div className="repo-icon">📦</div>
+              <h4>cosilico</h4>
+              <code>pip install cosilico</code>
               <ul>
-                <li>DSL parser & executor</li>
-                <li>Indexing system</li>
-                <li>RL training loop</li>
-                <li>Multi-target compilation</li>
+                <li>High-level simulation API</li>
+                <li>Dynamics (behavioral responses)</li>
+                <li>Scenario comparison</li>
+                <li>Reform analysis</li>
               </ul>
             </div>
           </div>
 
-          <div className="repo-arrows">
-            <svg viewBox="0 0 100 60" className="arrow-svg">
-              <path d="M50 0 L50 30 M50 30 L10 60 M50 30 L50 60 M50 30 L90 60"
-                    stroke="currentColor" strokeWidth="1" fill="none" />
-              <circle cx="10" cy="60" r="3" fill="currentColor" />
-              <circle cx="50" cy="60" r="3" fill="currentColor" />
-              <circle cx="90" cy="60" r="3" fill="currentColor" />
-            </svg>
+          <div className="repo-connector vertical" />
+
+          {/* Middle: Country packages */}
+          <div className="repo-tier countries">
+            <div className="tier-label">RULES + DATA</div>
+            <div className="repo-pair">
+              <div className="repo-box rules">
+                <div className="repo-flag">🇺🇸</div>
+                <h4>cosilico-us</h4>
+                <code>statute/26/...</code>
+                <span className="repo-type">Pure rules</span>
+              </div>
+              <div className="repo-box data">
+                <div className="repo-icon">📊</div>
+                <h4>cosilico-us-data</h4>
+                <code>datasets/cps/...</code>
+                <span className="repo-type">Microdata builder</span>
+              </div>
+            </div>
+            <div className="repo-pair">
+              <div className="repo-box rules">
+                <div className="repo-flag">🇬🇧</div>
+                <h4>cosilico-uk</h4>
+                <code>statute/FA2024/...</code>
+                <span className="repo-type">Pure rules</span>
+              </div>
+              <div className="repo-box data">
+                <div className="repo-icon">📊</div>
+                <h4>cosilico-uk-data</h4>
+                <code>datasets/frs/...</code>
+                <span className="repo-type">Microdata builder</span>
+              </div>
+            </div>
           </div>
 
-          <div className="repo-jurisdictions">
-            <div className="repo-box jurisdiction us">
-              <div className="repo-flag">🇺🇸</div>
-              <h4>cosilico-us</h4>
-              <code>statute/26/...</code>
-              <span className="repo-desc">Federal Tax Code</span>
-            </div>
-            <div className="repo-box jurisdiction ca">
-              <div className="repo-flag">🐻</div>
-              <h4>cosilico-us-ca</h4>
-              <code>statute/rtc/...</code>
-              <span className="repo-desc">California R&T Code</span>
-            </div>
-            <div className="repo-box jurisdiction uk">
-              <div className="repo-flag">🇬🇧</div>
-              <h4>cosilico-uk</h4>
-              <code>statute/FA2024/...</code>
-              <span className="repo-desc">UK Finance Acts</span>
+          <div className="repo-connector vertical" />
+
+          {/* Bottom: Core infrastructure */}
+          <div className="repo-tier infrastructure">
+            <div className="tier-label">INFRASTRUCTURE</div>
+            <div className="repo-row">
+              <div className="repo-box engine">
+                <div className="repo-icon">⚙️</div>
+                <h4>cosilico-engine</h4>
+                <span className="repo-type">DSL parser + executor</span>
+              </div>
+              <div className="repo-box data-core">
+                <div className="repo-icon">🔧</div>
+                <h4>cosilico-data</h4>
+                <span className="repo-type">Calibration + imputation</span>
+              </div>
+              <div className="repo-box ai">
+                <div className="repo-icon">🤖</div>
+                <h4>cosilico-ai</h4>
+                <span className="repo-type">RL training system</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="repo-structure">
           <div className="structure-block">
-            <div className="structure-header">Each jurisdiction repo:</div>
+            <div className="structure-header">Rules repo (cosilico-us):</div>
             <div className="structure-tree">
               <div className="tree-line">
                 <span className="folder">statute/</span>
@@ -419,15 +449,36 @@ export default function ArchitecturePage() {
               </div>
               <div className="tree-line indent">
                 <span className="folder">26/32/</span>
-                <span className="comment"># §32 EITC</span>
+                <span className="comment"># IRC §32 EITC</span>
+              </div>
+              <div className="tree-line indent">
+                <span className="folder">7/2011/</span>
+                <span className="comment"># 7 USC SNAP</span>
               </div>
               <div className="tree-line">
                 <span className="folder">regs/</span>
-                <span className="comment"># Regulations (26 CFR)</span>
+                <span className="comment"># Regulations (CFR)</span>
+              </div>
+            </div>
+          </div>
+          <div className="structure-block">
+            <div className="structure-header">Data repo (cosilico-us-data):</div>
+            <div className="structure-tree">
+              <div className="tree-line">
+                <span className="folder">datasets/</span>
+                <span className="comment"># Survey loaders</span>
+              </div>
+              <div className="tree-line indent">
+                <span className="folder">cps/</span>
+                <span className="comment"># CPS ASEC</span>
+              </div>
+              <div className="tree-line indent">
+                <span className="folder">acs/</span>
+                <span className="comment"># American Community Survey</span>
               </div>
               <div className="tree-line">
-                <span className="folder">guidance/</span>
-                <span className="comment"># IRS notices, Rev. Procs</span>
+                <span className="folder">targets/</span>
+                <span className="comment"># IRS SOI, SNAP totals</span>
               </div>
             </div>
           </div>
