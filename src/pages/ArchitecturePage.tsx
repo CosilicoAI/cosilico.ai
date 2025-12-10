@@ -479,7 +479,7 @@ export default function ArchitecturePage() {
           <h3>Developer Workflow</h3>
           <div className="cli-steps">
             <div className="cli-step">
-              <code>lawarchive pull "26 USC 32"</code>
+              <code>cosilico pull "26 USC 32"</code>
               <span className="cli-desc">Download statute + encoding locally</span>
             </div>
             <div className="cli-step">
@@ -487,11 +487,11 @@ export default function ArchitecturePage() {
               <span className="cli-desc">AI or human edits the DSL</span>
             </div>
             <div className="cli-step">
-              <code>lawarchive validate ./26/32/</code>
+              <code>cosilico validate ./26/32/</code>
               <span className="cli-desc">Check syntax, types, tests</span>
             </div>
             <div className="cli-step">
-              <code>lawarchive push ./26/32/</code>
+              <code>cosilico push ./26/32/</code>
               <span className="cli-desc">Upload with provenance tracking</span>
             </div>
           </div>
