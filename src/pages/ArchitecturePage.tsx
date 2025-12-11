@@ -32,26 +32,26 @@ const VALIDATORS = [
   {
     id: "tests",
     icon: "🧪",
-    title: "Unit Tests",
-    short: "Edge cases and known scenarios pass",
-    boxTitle: "Test Suite Validation",
-    boxDesc: "Hand-written test cases covering edge cases, boundary conditions, and known IRS examples from publications. Each variable must pass its associated test scenarios.",
+    title: "TDD Tests",
+    short: "Our tests—authoritative, statute-derived",
+    boxTitle: "Test-Driven Development",
+    boxDesc: "Hand-crafted tests constructed from statute text and IRS examples. These are OUR authoritative tests—not borrowed from external tools. Used during development to verify the encoding matches our understanding of the law. Lives in cosilico-us alongside the encoded formulas.",
     metrics: [
-      { value: "100+", label: "test cases per variable" },
-      { value: "IRS", label: "official examples" },
+      { value: "TDD", label: "test-first approach" },
+      { value: "statute", label: "derived from law" },
     ],
   },
   {
     id: "consensus",
-    icon: "🎯",
-    title: "Multi-System Consensus",
-    short: "Cross-validated against TaxAct, PolicyEngine, TAXSIM",
-    boxTitle: "Multi-System Consensus Validation",
-    boxDesc: "The ultimate validation: validate against multiple authoritative systems. TaxAct (ground truth), PolicyEngine, TAXSIM, and PSL Tax-Calculator must agree. Higher consensus = stronger reward signal. Disagreements with high AI confidence trigger upstream bug reports.",
+    icon: "📊",
+    title: "External Validation",
+    short: "Comparison with TAXSIM, PolicyEngine, others",
+    boxTitle: "External Tool Validation Report",
+    boxDesc: "Compare results against external tools (TAXSIM, PolicyEngine, TaxAct). External tools may have bugs—we report consistency AND document disagreements with statute citations. When we're confident and they disagree, we file upstream issues.",
     metrics: [
-      { value: "4+", label: "validator systems" },
-      { value: "-1 to +1", label: "reward signal" },
-      { value: "$15", label: "tolerance" },
+      { value: "4+", label: "external systems" },
+      { value: "audit", label: "disagreement reports" },
+      { value: "cite", label: "statute references" },
     ],
     highlight: true,
   },
@@ -333,8 +333,8 @@ export default function ArchitecturePage() {
           <div className="rl-step">
             <div className="step-number">2</div>
             <div className="step-content">
-              <h4>Validate</h4>
-              <p>Multi-stage validators check syntax, references, test cases, and audit alignment.</p>
+              <h4>Test & Validate</h4>
+              <p>TDD tests verify statute compliance. External validation compares against other systems, documenting any disagreements.</p>
             </div>
           </div>
           <div className="rl-step">
