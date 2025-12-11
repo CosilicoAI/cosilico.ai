@@ -42,16 +42,16 @@ const VALIDATORS = [
     ],
   },
   {
-    id: "pe",
+    id: "consensus",
     icon: "🎯",
-    title: "PolicyEngine Match",
-    short: "Results align with PE microsimulation",
-    boxTitle: "PolicyEngine as Ground Truth",
-    boxDesc: "The ultimate validation: compile DSL to Python and run against PolicyEngine's battle-tested microsimulation. Results must match across thousands of synthetic households.",
+    title: "Multi-System Consensus",
+    short: "Cross-validated against TaxAct, PolicyEngine, TAXSIM",
+    boxTitle: "Multi-System Consensus Validation",
+    boxDesc: "The ultimate validation: validate against multiple authoritative systems. TaxAct (ground truth), PolicyEngine, TAXSIM, and PSL Tax-Calculator must agree. Higher consensus = stronger reward signal. Disagreements with high AI confidence trigger upstream bug reports.",
     metrics: [
-      { value: "50k+", label: "test households" },
-      { value: "99.9%", label: "match threshold" },
-      { value: "$0.01", label: "max deviation" },
+      { value: "4+", label: "validator systems" },
+      { value: "-1 to +1", label: "reward signal" },
+      { value: "$15", label: "tolerance" },
     ],
     highlight: true,
   },
@@ -62,7 +62,7 @@ export default function ArchitecturePage() {
   const [expanded, setExpanded] = useState<Set<string>>(
     new Set(["32", "32/a", "32/a/2", "32/c", "32/c/3", "32/b", "32/b/2", "32/j"])
   );
-  const [selectedValidator, setSelectedValidator] = useState<string>("pe");
+  const [selectedValidator, setSelectedValidator] = useState<string>("consensus");
 
   const toggleExpanded = (id: string) => {
     const next = new Set(expanded);
@@ -360,8 +360,8 @@ export default function ArchitecturePage() {
           <span className="section-label">DATA LAYER</span>
           <h2>Law Archive: Single Source of Truth</h2>
           <p>
-            Raw statute text, structured rules, and encoded formulas live together.
-            The AI reads from and writes to the same archive.
+            Raw statute text, IRS guidance PDFs, and encoded formulas—all versioned and served via API.
+            Daily crawlers detect changes. Every document has a stable ID.
           </p>
         </div>
 
@@ -372,35 +372,39 @@ export default function ArchitecturePage() {
                 <h4>Official Sources</h4>
                 <div className="source-list">
                   <span className="source-item">📜 USLM XML (uscode.house.gov)</span>
-                  <span className="source-item">📋 eCFR (regulations)</span>
-                  <span className="source-item">🏛️ State codes</span>
+                  <span className="source-item">📋 IRS Rev. Procs (irs.gov)</span>
+                  <span className="source-item">🏛️ State codes + guidance</span>
+                </div>
+                <div className="source-crawler">
+                  <span className="crawler-badge">🔄 Daily crawler</span>
+                  <span className="crawler-desc">Detects changes via content hash</span>
                 </div>
               </div>
               <div className="la-arrow">↓</div>
             </div>
 
             <div className="la-archive">
-              <div className="la-box archive">
+              <div className="la-box archive storage-arch">
                 <div className="archive-header">
                   <span className="archive-icon">🗄️</span>
                   <h4>cosilico-lawarchive</h4>
                 </div>
-                <div className="archive-layers">
-                  <div className="archive-layer">
-                    <span className="layer-label">Raw Text</span>
-                    <code>"The credit under this section..."</code>
+                <div className="storage-split">
+                  <div className="storage-component">
+                    <span className="storage-icon">☁️</span>
+                    <h5>Cloudflare R2</h5>
+                    <p>PDFs, HTML snapshots</p>
+                    <code className="storage-path">us/guidance/irs/rp-23-34.pdf</code>
                   </div>
-                  <div className="archive-layer">
-                    <span className="layer-label">Structured Rules</span>
-                    <code>{`{ "type": "phase_in", "rate": 0.34 }`}</code>
-                  </div>
-                  <div className="archive-layer">
-                    <span className="layer-label">Encoded Formula</span>
-                    <code>return max(0, earned_income * rate)</code>
+                  <div className="storage-component">
+                    <span className="storage-icon">🐘</span>
+                    <h5>Supabase Postgres</h5>
+                    <p>Metadata, versions, refs</p>
+                    <code className="storage-path">sources → versions → refs</code>
                   </div>
                 </div>
                 <div className="archive-index">
-                  Indexed by: <code>citation + vintage + application_date</code>
+                  Path = ID: <code>us/guidance/irs/rp-23-34</code> (matches cosilico-us)
                 </div>
               </div>
             </div>
@@ -408,6 +412,11 @@ export default function ArchitecturePage() {
             <div className="la-consumers">
               <div className="la-arrow">↓</div>
               <div className="consumer-row">
+                <div className="la-box consumer api-consumer">
+                  <span className="consumer-icon">🌐</span>
+                  <h5>REST API</h5>
+                  <p>GET /v1/us/guidance/irs/rp-23-34</p>
+                </div>
                 <div className="la-box consumer">
                   <span className="consumer-icon">🤖</span>
                   <h5>AI Encoder</h5>
@@ -417,11 +426,6 @@ export default function ArchitecturePage() {
                   <span className="consumer-icon">⚙️</span>
                   <h5>Engine</h5>
                   <p>Compiles formulas</p>
-                </div>
-                <div className="la-box consumer">
-                  <span className="consumer-icon">💻</span>
-                  <h5>CLI</h5>
-                  <p>pull / push / sync</p>
                 </div>
               </div>
             </div>
@@ -476,23 +480,23 @@ export default function ArchitecturePage() {
         </div>
 
         <div className="cli-workflow">
-          <h3>Developer Workflow</h3>
+          <h3>API Access Patterns</h3>
           <div className="cli-steps">
             <div className="cli-step">
-              <code>cosilico pull "26 USC 32"</code>
-              <span className="cli-desc">Download statute + encoding locally</span>
+              <code>GET /v1/us/guidance/irs/rp-23-34</code>
+              <span className="cli-desc">Latest version of document</span>
             </div>
             <div className="cli-step">
-              <code>claude "update the phase-out logic"</code>
-              <span className="cli-desc">AI or human edits the DSL</span>
+              <code>GET /v1/us/guidance/irs/rp-23-34?as_of=2024-06-15</code>
+              <span className="cli-desc">Version that was current on that date</span>
             </div>
             <div className="cli-step">
-              <code>cosilico validate ./26/32/</code>
-              <span className="cli-desc">Check syntax, types, tests</span>
+              <code>GET /v1/us/guidance/irs/rp-23-34/versions</code>
+              <span className="cli-desc">All versions with content hashes</span>
             </div>
             <div className="cli-step">
-              <code>cosilico push ./26/32/</code>
-              <span className="cli-desc">Upload with provenance tracking</span>
+              <code>GET /v1/us/guidance/irs?applies_to_year=2024&variable=eitc</code>
+              <span className="cli-desc">Find document for tax year + variable</span>
             </div>
           </div>
         </div>
@@ -578,6 +582,11 @@ export default function ArchitecturePage() {
                 <div className="repo-icon">🤖</div>
                 <h4>cosilico-ai</h4>
                 <span className="repo-type">RL training system</span>
+              </div>
+              <div className="repo-box validators">
+                <div className="repo-icon">✓</div>
+                <h4>cosilico-validators</h4>
+                <span className="repo-type">Multi-system consensus</span>
               </div>
             </div>
           </div>
@@ -667,11 +676,20 @@ export default function ArchitecturePage() {
 
           <div className="comparison-row">
             <div className="comparison-cell feature">AI-assisted authoring</div>
-            <div className="comparison-cell yes">✓ RL + validation</div>
+            <div className="comparison-cell yes">✓ RL + multi-system consensus</div>
             <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Cross-system validation</div>
+            <div className="comparison-cell yes">✓ consensus engine</div>
+            <div className="comparison-cell partial">◐ vs TAXSIM</div>
+            <div className="comparison-cell no">✗ none</div>
+            <div className="comparison-cell no">✗ none</div>
+            <div className="comparison-cell no">✗ TaxAct-aligned</div>
           </div>
 
           <div className="comparison-row">

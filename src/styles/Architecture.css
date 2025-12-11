@@ -1727,6 +1727,82 @@
   color: var(--arch-amber);
 }
 
+/* Storage Architecture (R2 + Supabase) */
+.source-crawler {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--arch-border-dim);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.crawler-badge {
+  background: var(--arch-purple-glow);
+  color: var(--arch-purple);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: var(--arch-font-display);
+}
+
+.crawler-desc {
+  font-size: 0.8rem;
+  color: var(--arch-text-dim);
+}
+
+.storage-arch {
+  max-width: 700px;
+}
+
+.storage-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.storage-component {
+  background: var(--arch-surface);
+  padding: 16px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.storage-component .storage-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.storage-component h5 {
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;
+  color: var(--arch-text);
+}
+
+.storage-component p {
+  margin: 0 0 8px 0;
+  font-size: 0.8rem;
+  color: var(--arch-text-dim);
+}
+
+.storage-component .storage-path {
+  display: block;
+  font-family: var(--arch-font-display);
+  font-size: 0.7rem;
+  color: var(--arch-green);
+  background: var(--arch-bg-card);
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.api-consumer p {
+  font-family: var(--arch-font-display);
+  font-size: 0.7rem;
+  color: var(--arch-green);
+}
+
 .consumer-row {
   display: flex;
   gap: 16px;
