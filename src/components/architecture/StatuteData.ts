@@ -9,15 +9,15 @@ export const STATUTE_TREE: TreeNode = {
       id: "32/a",
       label: "(a) Allowance",
       children: [
-        { id: "32/a/1", label: "(1) Credit Amount", file: "earned_income_credit.cosilico" },
+        { id: "32/a/1", label: "(1) Credit Amount", file: "earned_income_credit.cos" },
         { id: "32/a/1/test", label: "↳ Unit Tests", file: "earned_income_credit_test.yaml", isTest: true },
         { id: "32/a/1/integration", label: "↳ Integration", file: "eitc_integration_test.yaml", isIntegrationTest: true },
         {
           id: "32/a/2",
           label: "(2) Components",
           children: [
-            { id: "32/a/2/A", label: "(A) Phase-in", file: "initial_credit_amount.cosilico" },
-            { id: "32/a/2/B", label: "(B) Phase-out", file: "credit_reduction_amount.cosilico" },
+            { id: "32/a/2/A", label: "(A) Phase-in", file: "initial_credit_amount.cos" },
+            { id: "32/a/2/B", label: "(B) Phase-out", file: "credit_reduction_amount.cos" },
           ],
         },
       ],
@@ -30,14 +30,14 @@ export const STATUTE_TREE: TreeNode = {
           id: "32/c/1",
           label: "(1) Eligible Individual",
           children: [
-            { id: "32/c/1/A", label: "(A) Income Test", file: "income_eligible.cosilico" },
+            { id: "32/c/1/A", label: "(A) Income Test", file: "income_eligible.cos" },
           ],
         },
         {
           id: "32/c/3",
           label: "(3) Qualifying Child",
           children: [
-            { id: "32/c/3/A", label: "(A) Age Test", file: "qualifying_child.cosilico" },
+            { id: "32/c/3/A", label: "(A) Age Test", file: "qualifying_child.cos" },
           ],
         },
       ],
@@ -70,7 +70,7 @@ export const STATUTE_TREE: TreeNode = {
 export const CODE_SAMPLES: Record<string, { code: string; type: string; file: string }> = {
   "32/a/1": {
     type: "cosilico",
-    file: "earned_income_credit.cosilico",
+    file: "earned_income_credit.cos",
     code: `references {
   is_eligible: statute/26/32/c/1/A/i/is_eligible_individual
   initial_credit: statute/26/32/a/2/A/initial_credit_amount
@@ -91,7 +91,7 @@ variable earned_income_credit {
   },
   "32/a/2/A": {
     type: "cosilico",
-    file: "initial_credit_amount.cosilico",
+    file: "initial_credit_amount.cos",
     code: `references {
   earned_income: statute/26/32/c/2/A/earned_income
   credit_percentage: statute/26/32/b/1/credit_percentage
@@ -113,7 +113,7 @@ variable initial_credit_amount {
   },
   "32/a/2/B": {
     type: "cosilico",
-    file: "credit_reduction_amount.cosilico",
+    file: "credit_reduction_amount.cos",
     code: `references {
   earned_income: statute/26/32/c/2/A/earned_income
   adjusted_gross_income: statute/26/62/a/adjusted_gross_income
@@ -137,7 +137,7 @@ variable credit_reduction_amount {
   },
   "32/c/3/A": {
     type: "cosilico",
-    file: "qualifying_child.cosilico",
+    file: "qualifying_child.cos",
     code: `references {
   age: core/person/age
   is_dependent: statute/26/152/is_dependent
@@ -320,7 +320,7 @@ tests:
   },
   "32/c/1/A": {
     type: "cosilico",
-    file: "income_eligible.cosilico",
+    file: "income_eligible.cos",
     code: `references {
   # Access parent entity (TaxUnit) attributes from Person
   tax_unit.adjusted_gross_income: statute/26/62/a/adjusted_gross_income

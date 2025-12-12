@@ -4,6 +4,7 @@ import "./App.css";
 import HomePage from "./pages/HomePage";
 import ThesisPage from "./pages/ThesisPage";
 import ArchitecturePage from "./pages/ArchitecturePage";
+import CosilicoPipeline from "./components/CosilicoPipeline";
 
 function App() {
   const isThesisPage = window.location.pathname === "/thesis";
@@ -20,6 +21,7 @@ function App() {
                 cosilico
               </a>
               <div className="nav-links">
+                <a href="/demo">Demo</a>
                 <a href="/architecture">Architecture</a>
                 <a href="https://docs.cosilico.ai">Docs</a>
                 <a href="https://github.com/PolicyEngine">GitHub</a>
@@ -30,6 +32,7 @@ function App() {
         )}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/demo" element={<CosilicoPipeline />} />
           <Route path="/thesis" element={<ThesisPage />} />
           <Route path="/architecture" element={<ArchitecturePage />} />
         </Routes>
