@@ -1,13 +1,16 @@
 /**
- * EITC Calculator (TY 2025) - Auto-generated from Cosilico DSL
+ * EITC Calculator (TY 2025) - Generated from cosilico-compile/examples/eitc.cos
  *
  * This code runs entirely in the browser with full citation
  * chain - every value traces back to authoritative law.
  *
- * Sources:
- *   - 26 USC 32
- *   - 26 USC 32(b)(1)
- *   - Rev. Proc. 2024-40
+ * Source: cosilico-compile/examples/eitc.cos
+ * Regenerate with: cosilico-compile compile eitc.cos --typescript
+ *
+ * Citations:
+ *   - 26 USC 32 (statutory formula)
+ *   - 26 USC 32(b)(1) (credit/phaseout percentages)
+ *   - Rev. Proc. 2024-40 (TY2025 inflation adjustments)
  */
 
 // Parameters from statute and guidance
