@@ -32,26 +32,26 @@ const VALIDATORS = [
   {
     id: "tests",
     icon: "🧪",
-    title: "Unit Tests",
-    short: "Edge cases and known scenarios pass",
-    boxTitle: "Test Suite Validation",
-    boxDesc: "Hand-written test cases covering edge cases, boundary conditions, and known IRS examples from publications. Each variable must pass its associated test scenarios.",
+    title: "TDD Tests",
+    short: "Our tests—authoritative, statute-derived",
+    boxTitle: "Test-Driven Development",
+    boxDesc: "Hand-crafted tests constructed from statute text and IRS examples. These are OUR authoritative tests—not borrowed from external tools. Used during development to verify the encoding matches our understanding of the law. Lives in cosilico-us alongside the encoded formulas.",
     metrics: [
-      { value: "100+", label: "test cases per variable" },
-      { value: "IRS", label: "official examples" },
+      { value: "TDD", label: "test-first approach" },
+      { value: "statute", label: "derived from law" },
     ],
   },
   {
-    id: "pe",
-    icon: "🎯",
-    title: "PolicyEngine Match",
-    short: "Results align with PE microsimulation",
-    boxTitle: "PolicyEngine as Ground Truth",
-    boxDesc: "The ultimate validation: compile DSL to Python and run against PolicyEngine's battle-tested microsimulation. Results must match across thousands of synthetic households.",
+    id: "consensus",
+    icon: "📊",
+    title: "External Validation",
+    short: "Comparison with TAXSIM, PolicyEngine, others",
+    boxTitle: "External Tool Validation Report",
+    boxDesc: "Compare results against external tools (TAXSIM, PolicyEngine, TaxAct). External tools may have bugs—we report consistency AND document disagreements with statute citations. When we're confident and they disagree, we file upstream issues.",
     metrics: [
-      { value: "50k+", label: "test households" },
-      { value: "99.9%", label: "match threshold" },
-      { value: "$0.01", label: "max deviation" },
+      { value: "4+", label: "external systems" },
+      { value: "audit", label: "disagreement reports" },
+      { value: "cite", label: "statute references" },
     ],
     highlight: true,
   },
@@ -62,7 +62,7 @@ export default function ArchitecturePage() {
   const [expanded, setExpanded] = useState<Set<string>>(
     new Set(["32", "32/a", "32/a/2", "32/c", "32/c/3", "32/b", "32/b/2", "32/j"])
   );
-  const [selectedValidator, setSelectedValidator] = useState<string>("pe");
+  const [selectedValidator, setSelectedValidator] = useState<string>("consensus");
 
   const toggleExpanded = (id: string) => {
     const next = new Set(expanded);
@@ -183,12 +183,9 @@ export default function ArchitecturePage() {
             <div className="code-header">
               <div className="code-path-group">
                 <span className="code-icon">📄</span>
-                {selected ? (
+                {selected && selectedCode ? (
                   <>
-                    <span className="code-path">statute/26/{selected}/</span>
-                    <span className={`code-type ${selectedCode?.type}`}>
-                      .{selectedCode?.type}
-                    </span>
+                    <span className="code-path">statute/26/{selected}/{selectedCode.file}</span>
                   </>
                 ) : (
                   <span className="code-path">Select a section...</span>
@@ -336,8 +333,8 @@ export default function ArchitecturePage() {
           <div className="rl-step">
             <div className="step-number">2</div>
             <div className="step-content">
-              <h4>Validate</h4>
-              <p>Multi-stage validators check syntax, references, test cases, and audit alignment.</p>
+              <h4>Test & Validate</h4>
+              <p>TDD tests verify statute compliance. External validation compares against other systems, documenting any disagreements.</p>
             </div>
           </div>
           <div className="rl-step">
@@ -357,64 +354,247 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
+      {/* Law Archive Section */}
+      <section className="arch-lawarchive">
+        <div className="section-header">
+          <span className="section-label">DATA LAYER</span>
+          <h2>Law Archive: Single Source of Truth</h2>
+          <p>
+            Raw statute text, IRS guidance PDFs, and encoded formulas—all versioned and served via API.
+            Daily crawlers detect changes. Every document has a stable ID.
+          </p>
+        </div>
+
+        <div className="lawarchive-diagram">
+          <div className="la-flow">
+            <div className="la-source">
+              <div className="la-box sources">
+                <h4>Official Sources</h4>
+                <div className="source-list">
+                  <span className="source-item">📜 USLM XML (uscode.house.gov)</span>
+                  <span className="source-item">📋 IRS Rev. Procs (irs.gov)</span>
+                  <span className="source-item">🏛️ State codes + guidance</span>
+                </div>
+                <div className="source-crawler">
+                  <span className="crawler-badge">🔄 Daily crawler</span>
+                  <span className="crawler-desc">Detects changes via content hash</span>
+                </div>
+              </div>
+              <div className="la-arrow">↓</div>
+            </div>
+
+            <div className="la-archive">
+              <div className="la-box archive storage-arch">
+                <div className="archive-header">
+                  <span className="archive-icon">🗄️</span>
+                  <h4>cosilico-lawarchive</h4>
+                </div>
+                <div className="storage-split">
+                  <div className="storage-component">
+                    <span className="storage-icon">☁️</span>
+                    <h5>Cloudflare R2</h5>
+                    <p>PDFs, HTML snapshots</p>
+                    <code className="storage-path">us/guidance/irs/rp-23-34.pdf</code>
+                  </div>
+                  <div className="storage-component">
+                    <span className="storage-icon">🐘</span>
+                    <h5>Supabase Postgres</h5>
+                    <p>Metadata, versions, refs</p>
+                    <code className="storage-path">sources → versions → refs</code>
+                  </div>
+                </div>
+                <div className="archive-index">
+                  Path = ID: <code>us/guidance/irs/rp-23-34</code> (matches cosilico-us)
+                </div>
+              </div>
+            </div>
+
+            <div className="la-consumers">
+              <div className="la-arrow">↓</div>
+              <div className="consumer-row">
+                <div className="la-box consumer api-consumer">
+                  <span className="consumer-icon">🌐</span>
+                  <h5>REST API</h5>
+                  <p>GET /v1/us/guidance/irs/rp-23-34</p>
+                </div>
+                <div className="la-box consumer">
+                  <span className="consumer-icon">🤖</span>
+                  <h5>AI Encoder</h5>
+                  <p>Reads law, writes code</p>
+                </div>
+                <div className="la-box consumer">
+                  <span className="consumer-icon">⚙️</span>
+                  <h5>Engine</h5>
+                  <p>Compiles formulas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bitemporal-section">
+          <h3>Bi-Temporal Model: Vintage + Application Date</h3>
+          <p className="bitemporal-intro">
+            The law specifies <em>when rules apply</em>, not just <em>what the rules are</em>.
+            A single vintage (e.g., TCJA) defines different formulas for different years.
+          </p>
+
+          <div className="bitemporal-example">
+            <div className="vintage-card">
+              <div className="vintage-header">
+                <span className="vintage-badge">TCJA</span>
+                <span className="vintage-date">Vintage: 2017-12-22</span>
+              </div>
+              <div className="vintage-rules">
+                <div className="rule-row">
+                  <span className="rule-period">2018-2025</span>
+                  <span className="rule-formula">Refundable = min($1,400, 15% × (EI - $2,500))</span>
+                </div>
+                <div className="rule-row sunset">
+                  <span className="rule-period">2026+</span>
+                  <span className="rule-formula">Refundable = 15% × (EI - $3,000) <span className="sunset-tag">sunset</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div className="vintage-card arpa">
+              <div className="vintage-header">
+                <span className="vintage-badge">ARPA</span>
+                <span className="vintage-date">Vintage: 2021-03-11</span>
+              </div>
+              <div className="vintage-rules">
+                <div className="rule-row">
+                  <span className="rule-period">2021 only</span>
+                  <span className="rule-formula">Refundable = 100% (fully refundable)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bitemporal-query">
+            <code className="query-example">
+              lawarchive.get_formula("ctc_refundable", vintage="2017-12-22", application_date="2030-01-01")
+              <span className="query-result">→ ctc_refundable__tcja_sunset</span>
+            </code>
+          </div>
+        </div>
+
+        <div className="cli-workflow">
+          <h3>API Access Patterns</h3>
+          <div className="cli-steps">
+            <div className="cli-step">
+              <code>GET /v1/us/guidance/irs/rp-23-34</code>
+              <span className="cli-desc">Latest version of document</span>
+            </div>
+            <div className="cli-step">
+              <code>GET /v1/us/guidance/irs/rp-23-34?as_of=2024-06-15</code>
+              <span className="cli-desc">Version that was current on that date</span>
+            </div>
+            <div className="cli-step">
+              <code>GET /v1/us/guidance/irs/rp-23-34/versions</code>
+              <span className="cli-desc">All versions with content hashes</span>
+            </div>
+            <div className="cli-step">
+              <code>GET /v1/us/guidance/irs?applies_to_year=2024&variable=eitc</code>
+              <span className="cli-desc">Find document for tax year + variable</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Multi-Repo Architecture */}
       <section className="arch-repos">
         <div className="section-header">
           <span className="section-label">ECOSYSTEM</span>
-          <h2>Multi-Jurisdiction Architecture</h2>
-          <p>One engine. Many jurisdictions. Same structure everywhere.</p>
+          <h2>Repository Architecture</h2>
+          <p>Simulate the economy: rules, data, dynamics, and AI.</p>
         </div>
 
-        <div className="repo-diagram">
-          <div className="repo-core">
-            <div className="repo-box engine">
-              <div className="repo-icon">⚙️</div>
-              <h4>cosilico-engine</h4>
-              <p>Core simulation engine</p>
+        <div className="repo-diagram-full">
+          {/* Top: User-facing package */}
+          <div className="repo-tier orchestrator">
+            <div className="tier-label">USER INTERFACE</div>
+            <div className="repo-box main">
+              <div className="repo-icon">📦</div>
+              <h4>cosilico</h4>
+              <code>pip install cosilico</code>
               <ul>
-                <li>DSL parser & executor</li>
-                <li>Indexing system</li>
-                <li>RL training loop</li>
-                <li>Multi-target compilation</li>
+                <li>High-level simulation API</li>
+                <li>Dynamics (behavioral responses)</li>
+                <li>Scenario comparison</li>
+                <li>Reform analysis</li>
               </ul>
             </div>
           </div>
 
-          <div className="repo-arrows">
-            <svg viewBox="0 0 100 60" className="arrow-svg">
-              <path d="M50 0 L50 30 M50 30 L10 60 M50 30 L50 60 M50 30 L90 60"
-                    stroke="currentColor" strokeWidth="1" fill="none" />
-              <circle cx="10" cy="60" r="3" fill="currentColor" />
-              <circle cx="50" cy="60" r="3" fill="currentColor" />
-              <circle cx="90" cy="60" r="3" fill="currentColor" />
-            </svg>
+          <div className="repo-connector vertical" />
+
+          {/* Middle: Country packages */}
+          <div className="repo-tier countries">
+            <div className="tier-label">RULES + DATA</div>
+            <div className="repo-pair">
+              <div className="repo-box rules">
+                <div className="repo-flag">🇺🇸</div>
+                <h4>cosilico-us</h4>
+                <code>statute/26/...</code>
+                <span className="repo-type">Pure rules</span>
+              </div>
+              <div className="repo-box data">
+                <div className="repo-icon">📊</div>
+                <h4>cosilico-us-data</h4>
+                <code>datasets/cps/...</code>
+                <span className="repo-type">Microdata builder</span>
+              </div>
+            </div>
+            <div className="repo-pair">
+              <div className="repo-box rules">
+                <div className="repo-flag">🇬🇧</div>
+                <h4>cosilico-uk</h4>
+                <code>statute/FA2024/...</code>
+                <span className="repo-type">Pure rules</span>
+              </div>
+              <div className="repo-box data">
+                <div className="repo-icon">📊</div>
+                <h4>cosilico-uk-data</h4>
+                <code>datasets/frs/...</code>
+                <span className="repo-type">Microdata builder</span>
+              </div>
+            </div>
           </div>
 
-          <div className="repo-jurisdictions">
-            <div className="repo-box jurisdiction us">
-              <div className="repo-flag">🇺🇸</div>
-              <h4>cosilico-us</h4>
-              <code>statute/26/...</code>
-              <span className="repo-desc">Federal Tax Code</span>
-            </div>
-            <div className="repo-box jurisdiction ca">
-              <div className="repo-flag">🐻</div>
-              <h4>cosilico-us-ca</h4>
-              <code>statute/rtc/...</code>
-              <span className="repo-desc">California R&T Code</span>
-            </div>
-            <div className="repo-box jurisdiction uk">
-              <div className="repo-flag">🇬🇧</div>
-              <h4>cosilico-uk</h4>
-              <code>statute/FA2024/...</code>
-              <span className="repo-desc">UK Finance Acts</span>
+          <div className="repo-connector vertical" />
+
+          {/* Bottom: Core infrastructure */}
+          <div className="repo-tier infrastructure">
+            <div className="tier-label">INFRASTRUCTURE</div>
+            <div className="repo-row">
+              <div className="repo-box engine">
+                <div className="repo-icon">⚙️</div>
+                <h4>cosilico-engine</h4>
+                <span className="repo-type">DSL parser + executor</span>
+              </div>
+              <div className="repo-box data-core">
+                <div className="repo-icon">🔧</div>
+                <h4>cosilico-data</h4>
+                <span className="repo-type">Calibration + imputation</span>
+              </div>
+              <div className="repo-box ai">
+                <div className="repo-icon">🤖</div>
+                <h4>cosilico-ai</h4>
+                <span className="repo-type">RL training system</span>
+              </div>
+              <div className="repo-box validators">
+                <div className="repo-icon">✓</div>
+                <h4>cosilico-validators</h4>
+                <span className="repo-type">Multi-system consensus</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="repo-structure">
           <div className="structure-block">
-            <div className="structure-header">Each jurisdiction repo:</div>
+            <div className="structure-header">Rules repo (cosilico-us):</div>
             <div className="structure-tree">
               <div className="tree-line">
                 <span className="folder">statute/</span>
@@ -422,15 +602,36 @@ export default function ArchitecturePage() {
               </div>
               <div className="tree-line indent">
                 <span className="folder">26/32/</span>
-                <span className="comment"># §32 EITC</span>
+                <span className="comment"># IRC §32 EITC</span>
+              </div>
+              <div className="tree-line indent">
+                <span className="folder">7/2011/</span>
+                <span className="comment"># 7 USC SNAP</span>
               </div>
               <div className="tree-line">
                 <span className="folder">regs/</span>
-                <span className="comment"># Regulations (26 CFR)</span>
+                <span className="comment"># Regulations (CFR)</span>
+              </div>
+            </div>
+          </div>
+          <div className="structure-block">
+            <div className="structure-header">Data repo (cosilico-us-data):</div>
+            <div className="structure-tree">
+              <div className="tree-line">
+                <span className="folder">datasets/</span>
+                <span className="comment"># Survey loaders</span>
+              </div>
+              <div className="tree-line indent">
+                <span className="folder">cps/</span>
+                <span className="comment"># CPS ASEC</span>
+              </div>
+              <div className="tree-line indent">
+                <span className="folder">acs/</span>
+                <span className="comment"># American Community Survey</span>
               </div>
               <div className="tree-line">
-                <span className="folder">guidance/</span>
-                <span className="comment"># IRS notices, Rev. Procs</span>
+                <span className="folder">targets/</span>
+                <span className="comment"># IRS SOI, SNAP totals</span>
               </div>
             </div>
           </div>
@@ -449,71 +650,92 @@ export default function ArchitecturePage() {
           <div className="comparison-header">
             <div className="comparison-cell header-feature">Feature</div>
             <div className="comparison-cell header-system">Cosilico</div>
+            <div className="comparison-cell header-system">PolicyEngine</div>
             <div className="comparison-cell header-system">OpenFisca</div>
-            <div className="comparison-cell header-system">Catala</div>
-            <div className="comparison-cell header-system">Proprietary</div>
+            <div className="comparison-cell header-system">Tax-Calculator</div>
+            <div className="comparison-cell header-system">TAXSIM</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Citation-based paths</div>
             <div className="comparison-cell yes">✓ statute/26/32/a</div>
             <div className="comparison-cell no">✗ arbitrary names</div>
-            <div className="comparison-cell partial">◐ manual refs</div>
-            <div className="comparison-cell no">✗ internal IDs</div>
+            <div className="comparison-cell no">✗ arbitrary names</div>
+            <div className="comparison-cell no">✗ arbitrary names</div>
+            <div className="comparison-cell no">✗ none</div>
           </div>
 
           <div className="comparison-row">
-            <div className="comparison-cell feature">Indexing built-in</div>
-            <div className="comparison-cell yes">✓ automatic</div>
+            <div className="comparison-cell feature">Automatic indexing</div>
+            <div className="comparison-cell yes">✓ three-tier resolution</div>
+            <div className="comparison-cell partial">◐ parameter files</div>
             <div className="comparison-cell no">✗ manual</div>
-            <div className="comparison-cell no">✗ manual</div>
-            <div className="comparison-cell partial">◐ varies</div>
+            <div className="comparison-cell partial">◐ JSON parameters</div>
+            <div className="comparison-cell no">✗ hard-coded</div>
           </div>
 
           <div className="comparison-row">
-            <div className="comparison-cell feature">RL-based authoring</div>
-            <div className="comparison-cell yes">✓ LLM + validation</div>
+            <div className="comparison-cell feature">AI-assisted authoring</div>
+            <div className="comparison-cell yes">✓ RL + multi-system consensus</div>
+            <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
             <div className="comparison-cell no">✗ manual only</div>
           </div>
 
           <div className="comparison-row">
-            <div className="comparison-cell feature">Multi-target compile</div>
-            <div className="comparison-cell yes">✓ Py / JS / WASM / SQL</div>
-            <div className="comparison-cell partial">◐ Python only</div>
-            <div className="comparison-cell partial">◐ limited</div>
-            <div className="comparison-cell partial">◐ varies</div>
+            <div className="comparison-cell feature">Cross-system validation</div>
+            <div className="comparison-cell yes">✓ consensus engine</div>
+            <div className="comparison-cell partial">◐ vs TAXSIM</div>
+            <div className="comparison-cell no">✗ none</div>
+            <div className="comparison-cell no">✗ none</div>
+            <div className="comparison-cell no">✗ TaxAct-aligned</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Benefits + taxes</div>
+            <div className="comparison-cell yes">✓ integrated</div>
+            <div className="comparison-cell yes">✓ integrated</div>
+            <div className="comparison-cell yes">✓ integrated</div>
+            <div className="comparison-cell no">✗ taxes only</div>
+            <div className="comparison-cell no">✗ taxes only</div>
+          </div>
+
+          <div className="comparison-row">
+            <div className="comparison-cell feature">Microsimulation</div>
+            <div className="comparison-cell yes">✓ built-in</div>
+            <div className="comparison-cell yes">✓ US + UK + Canada</div>
+            <div className="comparison-cell yes">✓ multiple countries</div>
+            <div className="comparison-cell yes">✓ US federal</div>
+            <div className="comparison-cell yes">✓ US federal + states</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Open source</div>
             <div className="comparison-cell yes">✓ Apache 2.0</div>
             <div className="comparison-cell yes">✓ AGPL</div>
-            <div className="comparison-cell yes">✓ Apache 2.0</div>
-            <div className="comparison-cell no">✗ proprietary</div>
-          </div>
-
-          <div className="comparison-row">
-            <div className="comparison-cell feature">Production microsim</div>
-            <div className="comparison-cell yes">✓ via PolicyEngine</div>
-            <div className="comparison-cell yes">✓ multiple countries</div>
-            <div className="comparison-cell no">✗ research phase</div>
-            <div className="comparison-cell yes">✓ established</div>
+            <div className="comparison-cell yes">✓ AGPL</div>
+            <div className="comparison-cell yes">✓ MIT</div>
+            <div className="comparison-cell partial">◐ source available</div>
           </div>
         </div>
 
         <div className="comparison-notes">
           <div className="comparison-note">
-            <strong>OpenFisca:</strong> Battle-tested Python framework used by governments worldwide. Cosilico builds on PolicyEngine, which extends OpenFisca with enhanced microsimulation.
+            <strong>PolicyEngine:</strong> OpenFisca-based US, UK, and Canada microsimulation with enhanced parameters, calibrated microdata, and web interface. Cosilico uses PE as ground truth for RL validation.
+            <a href="https://policyengine.org" target="_blank" rel="noopener noreferrer" className="source-link">policyengine.org</a>
+          </div>
+          <div className="comparison-note">
+            <strong>OpenFisca:</strong> Python framework for tax-benefit systems used by France, New Zealand, and others. Foundation for PolicyEngine.
             <a href="https://openfisca.org" target="_blank" rel="noopener noreferrer" className="source-link">openfisca.org</a>
           </div>
           <div className="comparison-note">
-            <strong>Catala:</strong> Academic DSL from Inria focused on legal correctness proofs. Excels at formal verification but limited tooling.
-            <a href="https://catala-lang.org" target="_blank" rel="noopener noreferrer" className="source-link">catala-lang.org</a>
+            <strong>Tax-Calculator:</strong> PSL's open-source Python model of the US federal individual income and payroll tax system. JSON-based parameters.
+            <a href="https://taxcalc.pslmodels.org" target="_blank" rel="noopener noreferrer" className="source-link">taxcalc.pslmodels.org</a>
           </div>
           <div className="comparison-note">
-            <strong>Proprietary:</strong> Tax software vendors (Intuit, H&R Block, Thomson Reuters) use closed-source engines without statute traceability.
+            <strong>TAXSIM:</strong> NBER's federal + state income tax calculator. Fortran-based, used widely in economics research since 1983.
+            <a href="https://taxsim.nber.org" target="_blank" rel="noopener noreferrer" className="source-link">taxsim.nber.org</a>
           </div>
         </div>
       </section>

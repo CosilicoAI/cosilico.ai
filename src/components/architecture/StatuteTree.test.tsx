@@ -10,7 +10,7 @@ const mockTree: TreeNode = {
       id: "32/a",
       label: "(a) Allowance",
       children: [
-        { id: "32/a/1", label: "(1) Credit Amount", file: "earned_income_credit.cosilico" },
+        { id: "32/a/1", label: "(1) Credit Amount", file: "earned_income_credit.cos" },
       ],
     },
   ],
@@ -111,6 +111,6 @@ describe("StatuteTree", () => {
         onToggle={jest.fn()}
       />
     );
-    expect(screen.getByText("earned_income_credit.cosilico")).toBeInTheDocument();
+    expect(screen.getByText("earned_income_credit.cos")).toBeInTheDocument();
   });
 });

@@ -40,6 +40,18 @@ interface Competitor {
   sourceId?: number;
 }
 
+interface PricingComp {
+  category: string;
+  competitors: {
+    name: string;
+    pricing: string;
+    notes: string;
+    sourceId?: number;
+  }[];
+  cosilicoPricing: string;
+  cosilicoAdvantage: string;
+}
+
 // All sources in one place - every claim must be corroborated
 const sources: Source[] = [
   {
@@ -182,6 +194,55 @@ const sources: Source[] = [
     year: 2024,
     url: "https://www.polarismarketresearch.com/industry-analysis/financial-planning-software-market",
   },
+  {
+    id: 21,
+    author: "TaxCloud",
+    title: "TaxJar Pricing: How Much Does TaxJar Cost?",
+    year: 2024,
+    url: "https://taxcloud.com/blog/taxjar-pricing-how-much-does-taxjar-cost/",
+  },
+  {
+    id: 22,
+    author: "TaxCloud",
+    title: "Avalara Pricing: How Much Does Avalara Cost in 2025?",
+    year: 2024,
+    url: "https://taxcloud.com/blog/avalara-pricing/",
+  },
+  {
+    id: 23,
+    author: "NBER",
+    title: "TAXSIM",
+    year: 2024,
+    url: "https://www.nber.org/research/data/taxsim",
+  },
+  {
+    id: 24,
+    author: "Cognism",
+    title: "Clearbit Pricing 2026: Full Cost Breakdown Explained",
+    year: 2024,
+    url: "https://www.cognism.com/blog/clearbit-pricing",
+  },
+  {
+    id: 25,
+    author: "FullEnrich",
+    title: "FullContact Pricing and Plans: Is It Worth It?",
+    year: 2024,
+    url: "https://fullenrich.com/content/full-contact-pricing",
+  },
+  {
+    id: 26,
+    author: "Itexus",
+    title: "Experian API: Integration, Use Cases & Costs",
+    year: 2024,
+    url: "https://itexus.com/experian-api-integration-use-cases-costs/",
+  },
+  {
+    id: 27,
+    author: "Snowflake",
+    title: "Paid Listings Pricing Models",
+    year: 2024,
+    url: "https://other-docs.snowflake.com/en/collaboration/provider-listings-pricing-model",
+  },
 ];
 
 const nodes: Node[] = [
@@ -291,6 +352,49 @@ const competitors: Competitor[] = [
     openSource: false,
     notes: "Acquired for $8.4B. Sales tax only—no income tax.",
     sourceId: 7,
+  },
+];
+
+const pricingComps: PricingComp[] = [
+  {
+    category: "Tax Calculations",
+    competitors: [
+      { name: "TAXSIM (NBER)", pricing: "Free", notes: "Academic only, federal 1960-2023, states 1977-2018, no commercial API", sourceId: 23 },
+      { name: "TaxJar", pricing: "~$0.10/calc", notes: "$99/mo for 200 orders, API calls count as 1/10 order, Pro plan required", sourceId: 21 },
+      { name: "Avalara", pricing: "Not public", notes: "Requires sales call, reported 30%+ more expensive than competitors", sourceId: 22 },
+    ],
+    cosilicoPricing: "$0.003/call",
+    cosilicoAdvantage: "30x cheaper than TaxJar. Commercial API unlike TAXSIM.",
+  },
+  {
+    category: "Predictions / Enrichment",
+    competitors: [
+      { name: "Experian", pricing: "$0.50-2/record", notes: "Identity/credit focus, not household economic attributes", sourceId: 26 },
+      { name: "Clearbit", pricing: "$0.09-0.10/record", notes: "Now HubSpot-only, deprecated standalone API, enterprise = $80k+/yr", sourceId: 24 },
+      { name: "FullContact", pricing: "$0.05-0.10/call", notes: "$99-499/mo plans, credit-based, marketing data focus", sourceId: 25 },
+    ],
+    cosilicoPricing: "$0.008/call",
+    cosilicoAdvantage: "5-10x cheaper. Economic/tax attributes vs. marketing data.",
+  },
+  {
+    category: "Microsimulation",
+    competitors: [
+      { name: "TAXSIM", pricing: "Free", notes: "Limited to tax calcs, no benefits, no distributional analysis", sourceId: 23 },
+      { name: "Tax Policy Center", pricing: "N/A", notes: "Internal only, no external access" },
+      { name: "JCT/CBO", pricing: "N/A", notes: "Government only, not commercially available" },
+    ],
+    cosilicoPricing: "$0.50/1M household-reforms",
+    cosilicoAdvantage: "No commercial competitor. First API for population-scale policy simulation.",
+  },
+  {
+    category: "Data Downloads",
+    competitors: [
+      { name: "Census/IPUMS", pricing: "Free", notes: "Raw data, requires extensive processing" },
+      { name: "Snowflake Marketplace", pricing: "$0.01-0.05/query", notes: "Varies by provider, usage-based", sourceId: 27 },
+      { name: "Commercial providers", pricing: "$0.10+/record", notes: "Typically per-record, not per-GB" },
+    ],
+    cosilicoPricing: "$0.10/GB",
+    cosilicoAdvantage: "Processed, calibrated data. Real-time economic signals included.",
   },
 ];
 
@@ -825,6 +929,46 @@ export default function ThesisPage() {
                 <p>{c.notes}</p>
               </div>
             ))}
+          </div>
+
+          <div className="pricing-comparison">
+            <h3>Competitive Pricing Analysis</h3>
+            <p>Our pricing is informed by extensive market research across each product category.</p>
+
+            {pricingComps.map(pc => (
+              <div key={pc.category} className="pricing-comp-category">
+                <h4>{pc.category}</h4>
+                <div className="pricing-comp-table">
+                  <div className="pricing-comp-row pricing-comp-header">
+                    <span>Competitor</span>
+                    <span>Pricing</span>
+                    <span>Notes</span>
+                  </div>
+                  {pc.competitors.map(comp => (
+                    <div key={comp.name} className="pricing-comp-row">
+                      <span>{comp.name}{comp.sourceId && <Cite id={comp.sourceId} />}</span>
+                      <span className="pricing-value">{comp.pricing}</span>
+                      <span className="pricing-notes">{comp.notes}</span>
+                    </div>
+                  ))}
+                  <div className="pricing-comp-row pricing-comp-cosilico">
+                    <span><strong>Cosilico</strong></span>
+                    <span className="pricing-value cosilico-price">{pc.cosilicoPricing}</span>
+                    <span className="pricing-notes cosilico-advantage">{pc.cosilicoAdvantage}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <div className="pricing-philosophy">
+              <h4>Open Source + Paid Insights</h4>
+              <p>
+                Everything is open source—the rules engine, datasets, even the AI generator.
+                You're not paying for code; you're paying for <strong>computed insights</strong>:
+                predictions from calibrated models, simulations at population scale, and freshness
+                from real-time economic signals.
+              </p>
+            </div>
           </div>
         </div>
       </section>
