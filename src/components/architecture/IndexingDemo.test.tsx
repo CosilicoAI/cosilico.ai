@@ -6,7 +6,7 @@ describe("IndexingDemo", () => {
   test("renders parameter resolver header", () => {
     render(<IndexingDemo />);
     expect(screen.getByText("PARAMETER RESOLVER")).toBeInTheDocument();
-    expect(screen.getByText("● LIVE")).toBeInTheDocument();
+    expect(screen.getByText("● DEMO")).toBeInTheDocument();
   });
 
   test("shows 2024 as default year", () => {

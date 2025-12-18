@@ -67,8 +67,7 @@ export default function HomePage() {
                 <span className="stat-label">poverty reduction</span>
               </div>
               <div className="result-meta">
-                <a href="https://docs.cosilico.ai/methodology">See methodology</a>
-                <a href="https://docs.cosilico.ai/playground">Run your own</a>
+                <span className="demo-note">Sample output — API coming soon</span>
               </div>
             </div>
           )}

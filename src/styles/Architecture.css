@@ -620,6 +620,10 @@
   color: var(--arch-green);
 }
 
+.demo-status.demo {
+  color: #f59e0b;
+}
+
 .demo-body {
   padding: 24px;
 }
