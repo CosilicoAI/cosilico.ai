@@ -114,6 +114,26 @@ export default function PricingPage() {
               <li>Budget scoring</li>
             </ul>
           </div>
+
+          <div className="pricing-card">
+            <div className="pricing-card-header">
+              <h3>Law Archive API</h3>
+              <div className="price">
+                <span className="price-value">$0.01</span>
+                <span className="price-unit">per query</span>
+              </div>
+            </div>
+            <p className="pricing-description">
+              Structured US statute text with historical versions. All 54 titles of the US Code.
+            </p>
+            <code>GET /v1/sections/26/32</code>
+            <ul className="pricing-features">
+              <li>Full US Code (USLM XML → JSON)</li>
+              <li>Historical versions (as_of dates)</li>
+              <li>Full-text search</li>
+              <li>State codes (CA, NY, TX+)</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -192,6 +212,16 @@ export default function PricingPage() {
             <span>Journalists</span>
             <span>Playground + Rules</span>
             <span>Fact-checking, embedded calculators</span>
+          </div>
+          <div className="use-case-row">
+            <span>Legal tech</span>
+            <span>Law Archive</span>
+            <span>Contract analysis, compliance tools</span>
+          </div>
+          <div className="use-case-row">
+            <span>AI companies</span>
+            <span>Law Archive + Rules</span>
+            <span>RAG for legal assistants</span>
           </div>
         </div>
       </section>
