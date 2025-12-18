@@ -33,9 +33,9 @@ describe("ArchitecturePage", () => {
     expect(screen.getByText("PARAMETER RESOLVER")).toBeInTheDocument();
   });
 
-  test("renders multi-jurisdiction architecture section", () => {
+  test("renders repository architecture section", () => {
     render(<ArchitecturePage />);
-    expect(screen.getByText("Multi-Jurisdiction Architecture")).toBeInTheDocument();
+    expect(screen.getByText("Repository Architecture")).toBeInTheDocument();
     // Use getAllByText since "cosilico-engine" appears in both the terminal and the repo diagram
     expect(screen.getAllByText("cosilico-engine").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("cosilico-us")).toBeInTheDocument();
