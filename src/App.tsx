@@ -6,11 +6,12 @@ import ThesisPage from "./pages/ThesisPage";
 import ArchitecturePage from "./pages/ArchitecturePage";
 import PricingPage from "./pages/PricingPage";
 import StructurePage from "./pages/StructurePage";
+import PlaygroundPage from "./pages/PlaygroundPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 function App() {
   const pathname = window.location.pathname;
-  const hideNav = pathname === "/thesis" || pathname === "/structure";
+  const hideNav = pathname === "/thesis" || pathname === "/structure" || pathname === "/playground";
 
   return (
     <BrowserRouter>
@@ -23,7 +24,7 @@ function App() {
                 cosilico
               </a>
               <div className="nav-links">
-                <a href="/demo">Demo</a>
+                <a href="/playground">Playground</a>
                 <a href="/architecture">Architecture</a>
                 <a href="https://docs.cosilico.ai">Docs</a>
                 <a href="https://github.com/PolicyEngine">GitHub</a>
@@ -39,6 +40,7 @@ function App() {
           <Route path="/architecture" element={<ArchitecturePage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/structure" element={<StructurePage />} />
+          <Route path="/playground" element={<PlaygroundPage />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -218,7 +218,7 @@ export default function PricingPage() {
           <a href="https://docs.cosilico.ai" className="btn-primary">
             Get API Key
           </a>
-          <a href="/" className="btn-secondary">
+          <a href="/playground" className="btn-secondary">
             Try the Playground
           </a>
         </div>
