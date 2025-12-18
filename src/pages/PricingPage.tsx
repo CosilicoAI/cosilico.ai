@@ -144,26 +144,6 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Free Tier */}
-      <section className="pricing-free">
-        <h2>Free Tier</h2>
-        <div className="free-box">
-          <div className="free-amount">
-            <span className="free-value">100</span>
-            <span className="free-label">calls/month</span>
-          </div>
-          <div className="free-details">
-            <p>
-              Evaluate the APIs and build prototypes.
-              No credit card required.
-            </p>
-            <p className="free-note">
-              Then pay-as-you-go. No commitments, no minimums.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Use Cases */}
       <section className="pricing-use-cases">
         <h2>Who pays for what</h2>
@@ -210,7 +190,7 @@ export default function PricingPage() {
           </div>
           <div className="use-case-row">
             <span>Journalists</span>
-            <span>Free tier</span>
+            <span>Playground + Rules</span>
             <span>Fact-checking, embedded calculators</span>
           </div>
         </div>
@@ -232,14 +212,14 @@ export default function PricingPage() {
 
       {/* CTA */}
       <section className="pricing-cta">
-        <h2>Start querying</h2>
-        <p>100 free calls. No credit card.</p>
+        <h2>Start building</h2>
+        <p>Pay-as-you-go. No minimums, no commitments.</p>
         <div className="cta-buttons">
           <a href="https://docs.cosilico.ai" className="btn-primary">
             Get API Key
           </a>
           <a href="/" className="btn-secondary">
-            Learn More
+            Try the Playground
           </a>
         </div>
       </section>
