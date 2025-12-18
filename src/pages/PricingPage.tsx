@@ -38,7 +38,7 @@ export default function PricingPage() {
             <div className="pricing-card-header">
               <h3>Rules API</h3>
               <div className="price">
-                <span className="price-value">$0.003</span>
+                <span className="price-value">$0.02</span>
                 <span className="price-unit">per call</span>
               </div>
             </div>
@@ -59,7 +59,7 @@ export default function PricingPage() {
             <div className="pricing-card-header">
               <h3>Predictions API</h3>
               <div className="price">
-                <span className="price-value">$0.008</span>
+                <span className="price-value">$0.05</span>
                 <span className="price-unit">per call</span>
               </div>
             </div>
@@ -79,7 +79,7 @@ export default function PricingPage() {
             <div className="pricing-card-header">
               <h3>Full Profile</h3>
               <div className="price">
-                <span className="price-value">$0.01</span>
+                <span className="price-value">$0.06</span>
                 <span className="price-unit">per call</span>
               </div>
             </div>
@@ -99,7 +99,7 @@ export default function PricingPage() {
             <div className="pricing-card-header">
               <h3>Simulations API</h3>
               <div className="price">
-                <span className="price-value">$0.50</span>
+                <span className="price-value">$1</span>
                 <span className="price-unit">per 1M household-reforms</span>
               </div>
             </div>
