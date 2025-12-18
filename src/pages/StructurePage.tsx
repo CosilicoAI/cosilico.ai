@@ -82,7 +82,7 @@ export default function StructurePage() {
 
         <div className="org-card org-pe">
           <div className="org-header">
-            <img src="https://policyengine.org/static/media/policyengine-logo.svg" alt="" className="org-logo" />
+            <img src="https://raw.githubusercontent.com/PolicyEngine/policyengine-app/master/src/images/logos/policyengine/blue.png" alt="" className="org-logo" />
             <h2>PolicyEngine</h2>
             <span className="org-type">501(c)(3) Nonprofit</span>
           </div>
