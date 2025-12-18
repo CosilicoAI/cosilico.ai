@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Playground.css";
 
+type PlaygroundMode = "calculator" | "lawarchive";
+
 interface HouseholdInput {
   income: number;
   state: string;
@@ -130,7 +132,73 @@ function formatPercent(value: number): string {
   return (value * 100).toFixed(1) + "%";
 }
 
+// Mock Law Archive data
+const SAMPLE_STATUTES = [
+  { citation: "26 USC 32", title: "Earned income", section: "32", title_num: 26 },
+  { citation: "26 USC 24", title: "Child tax credit", section: "24", title_num: 26 },
+  { citation: "26 USC 1", title: "Tax imposed", section: "1", title_num: 26 },
+  { citation: "26 USC 61", title: "Gross income defined", section: "61", title_num: 26 },
+  { citation: "7 USC 2017", title: "Value of allotment", section: "2017", title_num: 7 },
+];
+
+const MOCK_STATUTE_TEXT: Record<string, { title: string; text: string; subsections: string[] }> = {
+  "26/32": {
+    title: "§ 32. Earned income",
+    text: `(a) Allowance of credit
+
+(1) In general
+In the case of an eligible individual, there shall be allowed as a credit against the tax imposed by this subtitle for the taxable year an amount equal to the credit percentage of so much of the taxpayer's earned income for the taxable year as does not exceed the earned income amount.
+
+(2) Limitation
+The amount of the credit allowable to a taxpayer under paragraph (1) for any taxable year shall not exceed the excess (if any) of—
+  (A) the credit percentage of the earned income amount, over
+  (B) the phaseout percentage of so much of the adjusted gross income (or, if greater, the earned income) of the taxpayer for the taxable year as exceeds the phaseout amount.
+
+(b) Percentages and amounts
+For purposes of subsection (a)—
+
+(1) Percentages
+The credit percentage and the phaseout percentage shall be determined as follows:
+
+  In the case of an eligible individual with:
+  • 1 qualifying child: credit 34%, phaseout 15.98%
+  • 2 qualifying children: credit 40%, phaseout 21.06%
+  • 3 or more qualifying children: credit 45%, phaseout 21.06%
+  • No qualifying children: credit 7.65%, phaseout 7.65%`,
+    subsections: ["(a) Allowance of credit", "(b) Percentages and amounts", "(c) Definitions and special rules", "(d) Married individuals", "(i) Denial of credit for individuals having excessive investment income"],
+  },
+  "26/24": {
+    title: "§ 24. Child tax credit",
+    text: `(a) Allowance of credit
+There shall be allowed as a credit against the tax imposed by this subtitle for the taxable year with respect to each qualifying child of the taxpayer for which the taxpayer is allowed a deduction under section 151 an amount equal to $1,000.
+
+(b) Limitations
+(1) Limitation based on adjusted gross income
+The amount of the credit allowable under subsection (a) shall be reduced (but not below zero) by $50 for each $1,000 (or fraction thereof) by which the taxpayer's modified adjusted gross income exceeds the threshold amount.`,
+    subsections: ["(a) Allowance of credit", "(b) Limitations", "(c) Qualifying child", "(d) Portion of credit refundable"],
+  },
+  "26/1": {
+    title: "§ 1. Tax imposed",
+    text: `(a) Married individuals filing joint returns and surviving spouses
+There is hereby imposed on the taxable income of—
+(1) every married individual (as defined in section 7703) who makes a single return jointly with his spouse under section 6013, and
+(2) every surviving spouse (as defined in section 2(a)),
+a tax determined in accordance with the following table...
+
+(b) Heads of households
+There is hereby imposed on the taxable income of every head of a household (as defined in section 2(b)) a tax determined in accordance with the following table...
+
+(c) Unmarried individuals (other than surviving spouses and heads of households)
+There is hereby imposed on the taxable income of every individual (other than a surviving spouse as defined in section 2(a) or the head of a household as defined in section 2(b)) who is not a married individual (as defined in section 7703) a tax determined in accordance with the following table...`,
+    subsections: ["(a) Married individuals filing joint returns", "(b) Heads of households", "(c) Unmarried individuals", "(d) Married individuals filing separate returns", "(e) Estates and trusts"],
+  },
+};
+
 export default function PlaygroundPage() {
+  // Mode toggle
+  const [mode, setMode] = useState<PlaygroundMode>("calculator");
+
+  // Calculator state
   const [input, setInput] = useState<HouseholdInput>({
     income: 65000,
     state: "CA",
@@ -138,11 +206,17 @@ export default function PlaygroundPage() {
     numDependents: 0,
     age: 35,
   });
-
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [activeTab, setActiveTab] = useState<"summary" | "api" | "citations">("summary");
   const [isCalculating, setIsCalculating] = useState(false);
 
+  // Law Archive state
+  const [lawQuery, setLawQuery] = useState("");
+  const [selectedStatute, setSelectedStatute] = useState<string | null>("26/32");
+  const [lawActiveTab, setLawActiveTab] = useState<"text" | "api" | "versions">("text");
+  const [searchResults, setSearchResults] = useState(SAMPLE_STATUTES);
+
+  // Calculator effect
   useEffect(() => {
     setIsCalculating(true);
     const timer = setTimeout(() => {
@@ -151,6 +225,22 @@ export default function PlaygroundPage() {
     }, 150);
     return () => clearTimeout(timer);
   }, [input]);
+
+  // Law Archive search effect
+  useEffect(() => {
+    if (lawQuery.trim() === "") {
+      setSearchResults(SAMPLE_STATUTES);
+    } else {
+      const filtered = SAMPLE_STATUTES.filter(
+        (s) =>
+          s.citation.toLowerCase().includes(lawQuery.toLowerCase()) ||
+          s.title.toLowerCase().includes(lawQuery.toLowerCase())
+      );
+      setSearchResults(filtered);
+    }
+  }, [lawQuery]);
+
+  const currentStatute = selectedStatute ? MOCK_STATUTE_TEXT[selectedStatute] : null;
 
   const apiRequest = {
     endpoint: "POST /calculate",
@@ -205,6 +295,20 @@ export default function PlaygroundPage() {
           <img src="/cosilico-logo-dark.svg" alt="" />
           <span>cosilico</span>
         </a>
+        <div className="mode-toggle">
+          <button
+            className={mode === "calculator" ? "active" : ""}
+            onClick={() => setMode("calculator")}
+          >
+            Rules Calculator
+          </button>
+          <button
+            className={mode === "lawarchive" ? "active" : ""}
+            onClick={() => setMode("lawarchive")}
+          >
+            Law Archive
+          </button>
+        </div>
         <div className="playground-badge">
           <span className="badge-dot"></span>
           API Playground
@@ -212,6 +316,8 @@ export default function PlaygroundPage() {
       </header>
 
       <div className="playground-container">
+        {mode === "calculator" ? (
+          <>
         {/* Input Panel */}
         <aside className="input-panel">
           <div className="panel-header">
@@ -524,6 +630,164 @@ export default function PlaygroundPage() {
             )}
           </div>
         </main>
+          </>
+        ) : (
+          <>
+            {/* Law Archive - Search Panel */}
+            <aside className="input-panel law-archive-panel">
+              <div className="panel-header">
+                <h2>Search Statutes</h2>
+                <span className="panel-hint">Query the US Code by citation or keyword</span>
+              </div>
+
+              <div className="input-group">
+                <label htmlFor="law-search">
+                  <span className="label-text">Search</span>
+                </label>
+                <input
+                  type="text"
+                  id="law-search"
+                  className="law-search-input"
+                  placeholder="e.g., 26 USC 32 or &quot;earned income&quot;"
+                  value={lawQuery}
+                  onChange={(e) => setLawQuery(e.target.value)}
+                />
+              </div>
+
+              <div className="statute-list">
+                {searchResults.map((statute) => (
+                  <button
+                    key={`${statute.title_num}/${statute.section}`}
+                    className={`statute-item ${selectedStatute === `${statute.title_num}/${statute.section}` ? "active" : ""}`}
+                    onClick={() => setSelectedStatute(`${statute.title_num}/${statute.section}`)}
+                  >
+                    <span className="statute-citation">{statute.citation}</span>
+                    <span className="statute-title">{statute.title}</span>
+                  </button>
+                ))}
+                {searchResults.length === 0 && (
+                  <div className="no-results">No matching statutes found</div>
+                )}
+              </div>
+
+              <div className="api-hint">
+                <code>GET /v1/sections/{"{title}"}/{"{section}"}</code>
+                <span>~20ms response time</span>
+              </div>
+            </aside>
+
+            {/* Law Archive - Results Panel */}
+            <main className="results-panel law-results">
+              <div className="results-tabs">
+                <button
+                  className={lawActiveTab === "text" ? "active" : ""}
+                  onClick={() => setLawActiveTab("text")}
+                >
+                  Statute Text
+                </button>
+                <button
+                  className={lawActiveTab === "api" ? "active" : ""}
+                  onClick={() => setLawActiveTab("api")}
+                >
+                  API Response
+                </button>
+                <button
+                  className={lawActiveTab === "versions" ? "active" : ""}
+                  onClick={() => setLawActiveTab("versions")}
+                >
+                  Historical Versions
+                </button>
+              </div>
+
+              <div className="results-content">
+                {lawActiveTab === "text" && currentStatute && (
+                  <div className="statute-view">
+                    <h2 className="statute-heading">{currentStatute.title}</h2>
+                    <div className="statute-meta">
+                      <span className="meta-item">Title 26 — Internal Revenue Code</span>
+                      <span className="meta-item">Current through 2024</span>
+                    </div>
+                    <div className="statute-toc">
+                      <h4>Subsections</h4>
+                      <ul>
+                        {currentStatute.subsections.map((sub, i) => (
+                          <li key={i}>{sub}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <pre className="statute-text">{currentStatute.text}</pre>
+                  </div>
+                )}
+
+                {lawActiveTab === "text" && !currentStatute && (
+                  <div className="empty-state">
+                    <p>Select a statute from the list to view its text.</p>
+                  </div>
+                )}
+
+                {lawActiveTab === "api" && selectedStatute && (
+                  <div className="api-view">
+                    <div className="code-block request">
+                      <div className="code-header">
+                        <span className="method get">GET</span>
+                        <span className="endpoint">/v1/sections/{selectedStatute}</span>
+                      </div>
+                      <pre>{JSON.stringify({ as_of: "2024-01-01" }, null, 2)}</pre>
+                    </div>
+                    <div className="code-block response">
+                      <div className="code-header">
+                        <span className="status">200 OK</span>
+                        <span className="time">18ms</span>
+                      </div>
+                      <pre>{JSON.stringify({
+                        title: selectedStatute?.split("/")[0],
+                        section: selectedStatute?.split("/")[1],
+                        heading: currentStatute?.title || "",
+                        text: currentStatute?.text.slice(0, 200) + "...",
+                        effective_date: "2024-01-01",
+                        source: "uslm",
+                        subsections: currentStatute?.subsections || [],
+                      }, null, 2)}</pre>
+                    </div>
+                  </div>
+                )}
+
+                {lawActiveTab === "versions" && (
+                  <div className="versions-view">
+                    <p className="versions-intro">
+                      Access any historical version of this statute using the <code>as_of</code> parameter.
+                    </p>
+                    <div className="version-list">
+                      <div className="version-item current">
+                        <span className="version-date">2024-01-01</span>
+                        <span className="version-label">Current</span>
+                        <span className="version-note">Tax Cuts and Jobs Act adjustments</span>
+                      </div>
+                      <div className="version-item">
+                        <span className="version-date">2021-03-11</span>
+                        <span className="version-label">American Rescue Plan</span>
+                        <span className="version-note">Temporary EITC expansion</span>
+                      </div>
+                      <div className="version-item">
+                        <span className="version-date">2017-12-22</span>
+                        <span className="version-label">TCJA</span>
+                        <span className="version-note">Major restructuring</span>
+                      </div>
+                      <div className="version-item">
+                        <span className="version-date">2010-03-23</span>
+                        <span className="version-label">ACA</span>
+                        <span className="version-note">Healthcare-related amendments</span>
+                      </div>
+                    </div>
+                    <div className="api-example">
+                      <code>GET /v1/sections/26/32?as_of=2017-12-22</code>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </main>
+          </>
+        )}
       </div>
 
       {/* Footer CTA */}
