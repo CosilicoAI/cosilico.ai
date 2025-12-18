@@ -37,7 +37,7 @@ export function IndexingDemo() {
     <div className="indexing-demo">
       <div className="demo-header">
         <span className="demo-title">PARAMETER RESOLVER</span>
-        <span className="demo-status online">● LIVE</span>
+        <span className="demo-status demo">● DEMO</span>
       </div>
 
       <div className="demo-body">

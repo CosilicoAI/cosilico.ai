@@ -93,6 +93,16 @@
   50% { opacity: 0.4; }
 }
 
+/* Demo badge styling */
+.badge-dot.demo {
+  background: #f59e0b;
+}
+
+.playground-badge:has(.badge-dot.demo) {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+}
+
 /* ============================================
    MAIN CONTAINER
    ============================================ */

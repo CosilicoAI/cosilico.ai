@@ -310,8 +310,8 @@ export default function PlaygroundPage() {
           </button>
         </div>
         <div className="playground-badge">
-          <span className="badge-dot"></span>
-          API Playground
+          <span className="badge-dot demo"></span>
+          Demo — Sample Data
         </div>
       </header>
 
