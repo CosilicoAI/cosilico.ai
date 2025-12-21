@@ -638,6 +638,213 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
+      {/* Microdata Architecture */}
+      <section className="arch-microdata">
+        <div className="section-header">
+          <span className="section-label">MICRODATA</span>
+          <h2>Hierarchical Probabilistic Microdata</h2>
+          <p>
+            Next-generation synthetic population with full uncertainty quantification.
+            Integrates multiple data sources via normalizing flows, not sequential imputation.
+          </p>
+        </div>
+
+        <div className="microdata-architecture">
+          {/* Entity Hierarchy */}
+          <div className="microdata-entities">
+            <h3>Entity-Agnostic Design</h3>
+            <p className="entities-intro">
+              Universal entities (Person, Household) in core. Country-specific entities (TaxUnit, BenefitUnit) via configuration.
+            </p>
+            <div className="entity-hierarchy">
+              <div className="entity-level nation">
+                <span className="entity-label">Nation</span>
+              </div>
+              <div className="entity-connector" />
+              <div className="entity-level state">
+                <span className="entity-label">State / CD / County</span>
+              </div>
+              <div className="entity-connector" />
+              <div className="entity-level household">
+                <span className="entity-label">Household</span>
+                <span className="entity-note">weight, geography</span>
+              </div>
+              <div className="entity-connector" />
+              <div className="entity-split">
+                <div className="entity-level group">
+                  <span className="entity-label">Tax Unit</span>
+                  <span className="entity-note">US-specific</span>
+                </div>
+                <div className="entity-level group">
+                  <span className="entity-label">SPM Unit</span>
+                  <span className="entity-note">poverty calc</span>
+                </div>
+              </div>
+              <div className="entity-connector" />
+              <div className="entity-level person">
+                <span className="entity-label">Person</span>
+                <span className="entity-note">universal</span>
+              </div>
+              <div className="entity-connector" />
+              <div className="entity-level record">
+                <span className="entity-label">Records</span>
+                <span className="entity-note">W-2, 1099, K-1</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Data Flow */}
+          <div className="microdata-flow">
+            <h3>Joint Generative Model</h3>
+            <p className="flow-intro">
+              Instead of sequential QRF imputation (where order affects results),
+              we train a single normalizing flow on all sources simultaneously.
+            </p>
+            <div className="data-flow-diagram">
+              <div className="flow-sources">
+                <div className="flow-source">
+                  <span className="source-icon">📊</span>
+                  <span>CPS ASEC</span>
+                  <span className="source-vars">demographics</span>
+                </div>
+                <div className="flow-source">
+                  <span className="source-icon">💰</span>
+                  <span>IRS PUF</span>
+                  <span className="source-vars">tax variables</span>
+                </div>
+                <div className="flow-source">
+                  <span className="source-icon">🏠</span>
+                  <span>ACS</span>
+                  <span className="source-vars">geography</span>
+                </div>
+              </div>
+              <div className="flow-arrow">↓</div>
+              <div className="flow-model">
+                <span className="model-icon">🌊</span>
+                <span className="model-name">Hierarchical Normalizing Flow</span>
+                <span className="model-detail">learns joint distribution</span>
+              </div>
+              <div className="flow-arrow">↓</div>
+              <div className="flow-output">
+                <span className="output-icon">👥</span>
+                <span className="output-name">Synthetic Population</span>
+                <span className="output-detail">full attribute set + uncertainty</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Calibration */}
+          <div className="microdata-calibration">
+            <h3>Bayesian Calibration</h3>
+            <div className="calibration-targets">
+              <div className="target-tier">
+                <span className="tier-priority">P1</span>
+                <span className="tier-name">Administrative</span>
+                <span className="tier-sources">IRS SOI, SSA, CMS</span>
+              </div>
+              <div className="target-tier">
+                <span className="tier-priority">P2</span>
+                <span className="tier-name">Survey (1-year)</span>
+                <span className="tier-sources">CPS ASEC, ACS 1-year</span>
+              </div>
+              <div className="target-tier">
+                <span className="tier-priority">P3</span>
+                <span className="tier-name">Model-based</span>
+                <span className="tier-sources">SAIPE, MRP estimates</span>
+              </div>
+            </div>
+            <div className="calibration-method">
+              <span className="method-step">1. Entropy Balancing</span>
+              <span className="method-arrow">→</span>
+              <span className="method-step">2. L0 Regularization</span>
+              <span className="method-arrow">→</span>
+              <span className="method-step">3. SMC Updates</span>
+            </div>
+          </div>
+
+          {/* Temporal */}
+          <div className="microdata-temporal">
+            <h3>Temporal Dynamics</h3>
+            <div className="temporal-layers">
+              <div className="temporal-layer yearly">
+                <span className="layer-icon">📅</span>
+                <span className="layer-name">Yearly Panel</span>
+                <ul>
+                  <li>AR(1) income growth</li>
+                  <li>Employment transitions</li>
+                  <li>Life events (birth, marriage)</li>
+                </ul>
+              </div>
+              <div className="temporal-layer intrayear">
+                <span className="layer-icon">📆</span>
+                <span className="layer-name">Intrayear</span>
+                <ul>
+                  <li>Income volatility (SDE)</li>
+                  <li>Benefit eligibility windows</li>
+                  <li>Capital gains jumps</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Implementation Status */}
+        <div className="microdata-status">
+          <h3>Implementation Status</h3>
+          <div className="status-grid">
+            <div className="status-item done">
+              <span className="status-icon">✓</span>
+              <span className="status-label">Core Entities</span>
+              <span className="status-detail">Person, Household, TaxUnit, Geography, Periods</span>
+            </div>
+            <div className="status-item done">
+              <span className="status-icon">✓</span>
+              <span className="status-label">CPS Data Loader</span>
+              <span className="status-detail">Download, parse, cache CPS ASEC</span>
+            </div>
+            <div className="status-item done">
+              <span className="status-icon">✓</span>
+              <span className="status-label">L0 Regularization</span>
+              <span className="status-detail">HardConcrete gates with PolicyEngine fix</span>
+            </div>
+            <div className="status-item done">
+              <span className="status-icon">✓</span>
+              <span className="status-label">Multi-Resolution</span>
+              <span className="status-detail">Browser (2K) to Full (330M) records</span>
+            </div>
+            <div className="status-item progress">
+              <span className="status-icon">◐</span>
+              <span className="status-label">SOI Targets</span>
+              <span className="status-detail">Defining calibration targets from IRS data</span>
+            </div>
+            <div className="status-item pending">
+              <span className="status-icon">○</span>
+              <span className="status-label">Generative Model</span>
+              <span className="status-detail">TabDDPM or normalizing flow training</span>
+            </div>
+            <div className="status-item pending">
+              <span className="status-icon">○</span>
+              <span className="status-label">CPS/PUF Fusion</span>
+              <span className="status-detail">Joint model for multiple data sources</span>
+            </div>
+            <div className="status-item pending">
+              <span className="status-icon">○</span>
+              <span className="status-label">Temporal Dynamics</span>
+              <span className="status-detail">Panel AR(1) + intrayear SDE</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="microdata-cta">
+          <a href="https://github.com/CosilicoAI/cosilico-microdata" className="btn-secondary" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            cosilico-microdata
+          </a>
+        </div>
+      </section>
+
       {/* Comparison */}
       <section className="arch-comparison">
         <div className="section-header">
