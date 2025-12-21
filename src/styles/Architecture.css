@@ -1,20 +1,19 @@
 /*
  * Architecture Page - "Terminal Futurism meets Legal Blueprint"
  *
- * Typography: IBM Plex Mono (display) + Space Grotesk (body)
+ * Typography: Uses global design tokens (Geist + Crimson Pro + JetBrains Mono)
  * Grid: Blueprint-style background with precise alignments
  * Motion: Typewriter effects, terminal cursor blinks, smooth reveals
  */
-
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ============================================
    PAGE FOUNDATION
    ============================================ */
 
 .architecture-page {
-  --arch-font-display: 'IBM Plex Mono', monospace;
-  --arch-font-body: 'Space Grotesk', sans-serif;
+  /* Use global font tokens - see _tokens.css */
+  --arch-font-display: var(--font-display);
+  --arch-font-body: var(--font-body);
 
   --arch-bg: #0a0a0f;
   --arch-bg-elevated: #12121a;

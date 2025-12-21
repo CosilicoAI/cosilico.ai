@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
@@ -12,6 +13,8 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
+    "@vanilla-extract/css": "^1.18.0",
+    "@vanilla-extract/webpack-plugin": "^2.3.25",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^6.30.2",
@@ -20,10 +23,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
+    "lint:css": "stylelint 'src/**/*.css'",
     "serve:build": "http-server ./build -p 3000 -s",
     "e2e": "npm run build && PLAYWRIGHT_SERVED= npm run playwright:test",
     "playwright:test": "playwright test",
@@ -53,6 +57,9 @@
   "devDependencies": {
     "@modelcontextprotocol/sdk": "^1.17.4",
     "@playwright/test": "^1.55.0",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^39.0.1",
+    "stylelint-declaration-strict-value": "^1.10.11"
   }
 }

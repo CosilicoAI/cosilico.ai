@@ -1,0 +1,37 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "plugins": ["stylelint-declaration-strict-value"],
+  "ignoreFiles": ["src/App.css", "src/index.css"],
+  "rules": {
+    "scale-unlimited/declaration-strict-value": [
+      ["/^font-family$/"],
+      {
+        "ignoreValues": ["inherit", "initial", "unset", "revert"],
+        "disableFix": true,
+        "message": "Use design tokens: var(--font-display), var(--font-body), or var(--font-mono). See src/styles/_tokens.css"
+      }
+    ],
+    "import-notation": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "custom-property-empty-line-before": null,
+    "keyframes-name-pattern": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-block-single-line-max-declarations": null,
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "color-function-alias-notation": null,
+    "color-hex-length": null,
+    "font-family-name-quotes": null,
+    "value-keyword-case": null,
+    "property-no-vendor-prefix": null,
+    "value-no-vendor-prefix": null,
+    "rule-empty-line-before": null,
+    "media-feature-range-notation": null,
+    "shorthand-property-no-redundant-values": null,
+    "declaration-property-value-keyword-no-deprecated": null,
+    "declaration-property-value-no-unknown": null
+  }
+}

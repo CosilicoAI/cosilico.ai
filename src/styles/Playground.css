@@ -21,8 +21,9 @@
   --pg-tax-red: #ff6b6b;
   --pg-benefit-green: #4ade80;
   --pg-take-home: #60a5fa;
-  --pg-font-display: 'DM Sans', -apple-system, sans-serif;
-  --pg-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --pg-font-display: var(--font-display);
+  --pg-font-body: var(--font-body);
+  --pg-font-mono: var(--font-mono);
 }
 
 /* ============================================
@@ -36,6 +37,8 @@
   font-family: var(--pg-font-display);
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================
