@@ -11,7 +11,7 @@ export default function StructurePage() {
       {/* Top nav with logo */}
       <nav className="structure-top-nav">
         <a href="/" className="structure-logo">
-          <img src="/cosilico-logo-dark.svg" alt="" className="structure-logo-icon" />
+          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className="structure-logo-icon" />
           cosilico
         </a>
       </nav>
@@ -53,7 +53,7 @@ export default function StructurePage() {
       <section className="structure-diagram">
         <div className="org-card org-cosilico">
           <div className="org-header">
-            <img src="/cosilico-logo-dark.svg" alt="" className="org-logo" />
+            <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className="org-logo" />
             <h2>Cosilico</h2>
             <span className="org-type">For-Profit (C-Corp)</span>
           </div>
@@ -82,7 +82,7 @@ export default function StructurePage() {
 
         <div className="org-card org-pe">
           <div className="org-header">
-            <img src="https://raw.githubusercontent.com/PolicyEngine/policyengine-app/master/src/images/logos/policyengine/blue.png" alt="" className="org-logo" />
+            <img src="https://raw.githubusercontent.com/PolicyEngine/policyengine-app/master/src/images/logos/policyengine/blue.png" alt="PolicyEngine logo" className="org-logo" />
             <h2>PolicyEngine</h2>
             <span className="org-type">501(c)(3) Nonprofit</span>
           </div>

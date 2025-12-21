@@ -260,6 +260,11 @@
   color: var(--pg-accent);
 }
 
+.button-group button:focus-visible {
+  outline: 2px solid var(--pg-accent);
+  outline-offset: 2px;
+}
+
 /* API Hint */
 .api-hint {
   margin-top: auto;
@@ -321,6 +326,11 @@
 .results-tabs button.active {
   background: var(--pg-bg-input);
   color: var(--pg-text);
+}
+
+.results-tabs button:focus-visible {
+  outline: 2px solid var(--pg-accent);
+  outline-offset: 2px;
 }
 
 /* Results Content */
@@ -808,6 +818,11 @@
 .mode-toggle button.active {
   background: var(--pg-bg-panel);
   color: var(--pg-accent);
+}
+
+.mode-toggle button:focus-visible {
+  outline: 2px solid var(--pg-accent);
+  outline-offset: 2px;
 }
 
 /* ============================================
