@@ -224,8 +224,26 @@ body {
   color: var(--color-text);
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a:focus::after {
   width: 100%;
+}
+
+.nav-links a:focus {
+  color: var(--color-text);
+  outline: none;
+}
+
+.nav-links a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.nav-logo:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
 }
 
 /* Mobile nav */

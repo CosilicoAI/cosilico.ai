@@ -1,0 +1,45 @@
+/*
+ * Cosilico Design Tokens
+ *
+ * IMPORTANT: All pages MUST use these tokens for typography.
+ * Do NOT define custom font variables in page stylesheets.
+ *
+ * Typography: Geist (display) + Crimson Pro (body) + JetBrains Mono (code)
+ *
+ * Usage in page stylesheets:
+ *   font-family: var(--font-display);  ✓
+ *   font-family: 'Custom Font';        ✗ (will fail stylelint)
+ */
+
+/*
+ * Note: Tokens are defined in :root in App.css
+ * This file serves as documentation and can be imported
+ * for reference. The actual values cascade from :root.
+ *
+ * Available tokens:
+ *
+ * TYPOGRAPHY
+ *   --font-display: Geist (headings, UI elements)
+ *   --font-body: Crimson Pro (body text, paragraphs)
+ *   --font-mono: JetBrains Mono (code, technical content)
+ *
+ * COLORS
+ *   --color-bg, --color-bg-elevated, --color-bg-card, --color-surface
+ *   --color-border, --color-border-subtle, --color-border-glow
+ *   --color-text, --color-text-secondary, --color-text-muted, --color-text-faint
+ *   --color-accent, --color-accent-bright, --color-accent-dim, --color-accent-glow
+ *   --color-amber, --color-amber-glow
+ *   --color-success, --color-warning, --color-error
+ *
+ * SPACING
+ *   --space-xs (4px), --space-sm (8px), --space-md (16px), --space-lg (24px)
+ *   --space-xl (32px), --space-2xl (48px), --space-3xl (64px), --space-4xl (96px)
+ *
+ * BORDER RADIUS
+ *   --radius-sm (4px), --radius-md (8px), --radius-lg (12px)
+ *   --radius-xl (16px), --radius-2xl (24px)
+ *
+ * TRANSITIONS
+ *   --ease-out, --ease-spring
+ *   --duration-fast (150ms), --duration-normal (250ms), --duration-slow (400ms)
+ */

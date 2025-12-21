@@ -1,20 +1,19 @@
 /*
  * Architecture Page - "Terminal Futurism meets Legal Blueprint"
  *
- * Typography: IBM Plex Mono (display) + Space Grotesk (body)
+ * Typography: Uses global design tokens (Geist + Crimson Pro + JetBrains Mono)
  * Grid: Blueprint-style background with precise alignments
  * Motion: Typewriter effects, terminal cursor blinks, smooth reveals
  */
-
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ============================================
    PAGE FOUNDATION
    ============================================ */
 
 .architecture-page {
-  --arch-font-display: 'IBM Plex Mono', monospace;
-  --arch-font-body: 'Space Grotesk', sans-serif;
+  /* Use global font tokens - see _tokens.css */
+  --arch-font-display: var(--font-display);
+  --arch-font-body: var(--font-body);
 
   --arch-bg: #0a0a0f;
   --arch-bg-elevated: #12121a;
@@ -2088,4 +2087,399 @@
 .btn-secondary:hover {
   border-color: var(--arch-accent);
   color: var(--arch-accent);
+}
+
+/* ============================================
+   MICRODATA ARCHITECTURE SECTION
+   ============================================ */
+
+.arch-microdata {
+  padding: 80px 64px;
+  background: linear-gradient(180deg, var(--arch-bg) 0%, var(--arch-bg-elevated) 100%);
+}
+
+.microdata-architecture {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.microdata-entities,
+.microdata-flow,
+.microdata-calibration,
+.microdata-temporal {
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.microdata-entities h3,
+.microdata-flow h3,
+.microdata-calibration h3,
+.microdata-temporal h3 {
+  font-family: var(--arch-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--arch-accent);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.entities-intro,
+.flow-intro {
+  color: var(--arch-text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+/* Entity Hierarchy */
+.entity-hierarchy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.entity-level {
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: center;
+  min-width: 160px;
+}
+
+.entity-level.nation { border-color: var(--arch-purple); }
+.entity-level.state { border-color: var(--arch-amber); }
+.entity-level.household { border-color: var(--arch-green); }
+.entity-level.group { border-color: var(--arch-accent-dim); }
+.entity-level.person { border-color: var(--arch-accent); }
+.entity-level.record { border-color: var(--arch-text-dim); }
+
+.entity-label {
+  font-family: var(--arch-font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: block;
+}
+
+.entity-note {
+  font-size: 0.7rem;
+  color: var(--arch-text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+.entity-connector {
+  width: 2px;
+  height: 12px;
+  background: var(--arch-border);
+}
+
+.entity-split {
+  display: flex;
+  gap: 12px;
+}
+
+/* Data Flow */
+.data-flow-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.flow-sources {
+  display: flex;
+  gap: 16px;
+}
+
+.flow-source {
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.source-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.source-vars {
+  font-size: 0.7rem;
+  color: var(--arch-text-muted);
+  display: block;
+}
+
+.flow-arrow {
+  font-size: 1.5rem;
+  color: var(--arch-accent);
+}
+
+.flow-model {
+  background: linear-gradient(135deg, var(--arch-accent-glow), var(--arch-purple-glow));
+  border: 1px solid var(--arch-accent);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+}
+
+.model-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.model-name {
+  font-family: var(--arch-font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.model-detail {
+  font-size: 0.75rem;
+  color: var(--arch-text-dim);
+}
+
+.flow-output {
+  background: var(--arch-green-glow);
+  border: 1px solid var(--arch-green);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+}
+
+.output-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+.output-name { font-family: var(--arch-font-display); font-weight: 600; font-size: 0.9rem; display: block; }
+.output-detail { font-size: 0.75rem; color: var(--arch-text-dim); }
+
+/* Calibration */
+.calibration-targets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.target-tier {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--arch-surface);
+  border-radius: 6px;
+}
+
+.tier-priority {
+  background: var(--arch-accent);
+  color: var(--arch-bg);
+  font-family: var(--arch-font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.tier-name {
+  font-weight: 500;
+  font-size: 0.85rem;
+  flex: 1;
+}
+
+.tier-sources {
+  font-size: 0.75rem;
+  color: var(--arch-text-dim);
+}
+
+.calibration-method {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.method-step {
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: var(--arch-font-display);
+  font-size: 0.8rem;
+}
+
+.method-arrow {
+  color: var(--arch-accent);
+}
+
+/* Temporal */
+.temporal-layers {
+  display: flex;
+  gap: 16px;
+}
+
+.temporal-layer {
+  flex: 1;
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.temporal-layer.yearly { border-color: var(--arch-amber); }
+.temporal-layer.intrayear { border-color: var(--arch-purple); }
+
+.layer-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.layer-name {
+  font-family: var(--arch-font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.temporal-layer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.temporal-layer li {
+  font-size: 0.8rem;
+  color: var(--arch-text-dim);
+  padding: 4px 0;
+  padding-left: 16px;
+  position: relative;
+}
+
+.temporal-layer li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--arch-accent);
+}
+
+/* Microdata Status */
+.microdata-status {
+  grid-column: 1 / -1;
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.microdata-status h3 {
+  font-family: var(--arch-font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--arch-text);
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border-dim);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.status-item.done {
+  border-color: #22c55e40;
+}
+
+.status-item.progress {
+  border-color: #eab30840;
+}
+
+.status-item.pending {
+  opacity: 0.6;
+}
+
+.status-icon {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.status-item.done .status-icon {
+  color: #22c55e;
+}
+
+.status-item.progress .status-icon {
+  color: #eab308;
+}
+
+.status-item.pending .status-icon {
+  color: var(--arch-text-muted);
+}
+
+.status-label {
+  font-family: var(--arch-font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--arch-text);
+}
+
+.status-detail {
+  font-size: 0.7rem;
+  color: var(--arch-text-muted);
+  line-height: 1.4;
+}
+
+.microdata-cta {
+  margin-top: 32px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .microdata-architecture {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-sources {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .temporal-layers {
+    flex-direction: column;
+  }
+
+  .status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .arch-microdata {
+    padding: 60px 24px;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
 }
