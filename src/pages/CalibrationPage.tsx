@@ -1,0 +1,414 @@
+import React, { useState, useEffect } from "react";
+import "../styles/Calibration.css";
+
+interface Metric {
+  name: string;
+  category: string;
+  cps_value: number;
+  soi_value: number;
+  pct_error: number;
+  unit: string;
+  statute_ref: string;
+}
+
+interface CoverageGap {
+  variable: string;
+  component: string;
+  statute_ref: string;
+  impact: string;
+  notes: string;
+  soi_amount?: number;
+}
+
+interface RawSurveyStats {
+  n_persons: number;
+  n_tax_units: number;
+  n_households: number;
+  total_person_weight: number;
+  total_tax_unit_weight: number;
+}
+
+interface BaselineData {
+  cps_year: number;
+  soi_year: number;
+  metrics: Metric[];
+  coverage_gaps: CoverageGap[];
+  summary: {
+    n_metrics: number;
+    mean_abs_error: number;
+    max_abs_error: number;
+    worst_metric: string;
+  };
+  raw_survey_stats: RawSurveyStats;
+}
+
+const METRIC_LABELS: Record<string, string> = {
+  total_returns: "Total Returns",
+  total_agi: "Total AGI",
+  returns_single: "Single Filers",
+  returns_married_joint: "Married Filing Jointly",
+  returns_married_separate: "Married Filing Separately",
+  returns_head_of_household: "Head of Household",
+  returns_qualifying_widow: "Qualifying Widow(er)",
+};
+
+function formatNumber(value: number, unit: string): string {
+  if (unit === "dollars") {
+    if (value >= 1_000_000_000_000) {
+      return `$${(value / 1_000_000_000_000).toFixed(1)}T`;
+    }
+    if (value >= 1_000_000_000) {
+      return `$${(value / 1_000_000_000).toFixed(1)}B`;
+    }
+    return `$${(value / 1_000_000).toFixed(1)}M`;
+  }
+  if (value >= 1_000_000) {
+    return `${(value / 1_000_000).toFixed(1)}M`;
+  }
+  return value.toLocaleString();
+}
+
+function getErrorClass(pctError: number): string {
+  const absError = Math.abs(pctError);
+  if (absError < 0.05) return "error-low";
+  if (absError < 0.15) return "error-medium";
+  return "error-high";
+}
+
+function getErrorLabel(pctError: number): string {
+  const absError = Math.abs(pctError);
+  if (absError < 0.05) return "CALIBRATED";
+  if (absError < 0.15) return "MODERATE GAP";
+  return "SIGNIFICANT GAP";
+}
+
+function getImpactClass(impact: string): string {
+  switch (impact) {
+    case "high": return "impact-high";
+    case "medium": return "impact-medium";
+    case "low": return "impact-low";
+    default: return "";
+  }
+}
+
+export default function CalibrationPage() {
+  const [data, setData] = useState<BaselineData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+  useEffect(() => {
+    fetch("/data/baseline_comparison.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load baseline data");
+        return res.json();
+      })
+      .then((json) => {
+        setData(json);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="calibration-page">
+        <div className="blueprint-grid" />
+        <div className="loading-state">Loading baseline comparison...</div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="calibration-page">
+        <div className="blueprint-grid" />
+        <div className="error-state">Error: {error || "No data available"}</div>
+      </div>
+    );
+  }
+
+  const filteredMetrics = data.metrics.filter(
+    (m) => selectedCategory === "all" || m.category === selectedCategory
+  );
+
+  const totalReturnsGap = data.metrics.find((m) => m.name === "total_returns");
+  const totalAgiGap = data.metrics.find((m) => m.name === "total_agi");
+
+  const returnsError = totalReturnsGap?.pct_error ?? 0;
+  const agiError = totalAgiGap?.pct_error ?? 0;
+  const highImpactGaps = data.coverage_gaps.filter((g) => g.impact === "high").length;
+
+  return (
+    <div className="calibration-page">
+      <div className="blueprint-grid" />
+      <div className="scanlines" />
+
+      {/* Hero Section */}
+      <section className="calib-hero">
+        <div className="hero-terminal">
+          <div className="terminal-bar">
+            <span className="terminal-dot red" />
+            <span className="terminal-dot yellow" />
+            <span className="terminal-dot green" />
+            <span className="terminal-title">cosilico-microdata</span>
+          </div>
+          <div className="terminal-content">
+            <div className="type-line">
+              <span className="prompt">$</span>
+              <span className="command">cosilico</span>
+              <span className="flag">calibrate</span>
+              <span className="arg">--baseline</span>
+              <span className="arg">--compare soi</span>
+            </div>
+          </div>
+        </div>
+
+        <h1>
+          <span className="hero-prefix">BASELINE</span>
+          <span className="hero-main">Calibration Dashboard</span>
+        </h1>
+        <p className="calib-subtitle">
+          Comparing CPS ASEC {data.cps_year} against IRS SOI {data.soi_year}.<br />
+          Real survey data. Documented gaps.
+        </p>
+
+        <div className="survey-stats">
+          <div className="stat">
+            <span className="stat-value">{data.raw_survey_stats.n_persons.toLocaleString()}</span>
+            <span className="stat-label">Sample Persons</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">{data.raw_survey_stats.n_tax_units.toLocaleString()}</span>
+            <span className="stat-label">Tax Units</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">{formatNumber(data.raw_survey_stats.total_person_weight, "count")}</span>
+            <span className="stat-label">Population</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Summary Cards */}
+      <section className="calib-summary">
+        <div className="section-header">
+          <span className="section-label">OVERVIEW</span>
+          <h2>Baseline Gap Summary</h2>
+        </div>
+
+        <div className="summary-grid">
+          <div className={`summary-card ${getErrorClass(returnsError)}`}>
+            <div className="card-header">
+              <span className="card-icon">📊</span>
+              <span className="card-label">Total Returns</span>
+            </div>
+            <div className="card-comparison">
+              <div className="comparison-value">
+                <span className="value-label">CPS</span>
+                <span className="value-number">{formatNumber(totalReturnsGap?.cps_value || 0, "count")}</span>
+              </div>
+              <div className="comparison-arrow">→</div>
+              <div className="comparison-value target">
+                <span className="value-label">SOI</span>
+                <span className="value-number">{formatNumber(totalReturnsGap?.soi_value || 0, "count")}</span>
+              </div>
+            </div>
+            <div className="card-error">
+              <div className="error-bar-container">
+                <div className="error-bar" style={{ width: `${Math.min(Math.abs(returnsError) * 200, 100)}%` }} />
+              </div>
+              <span className="error-value">{(returnsError * 100).toFixed(1)}%</span>
+            </div>
+            <div className="card-badge">{getErrorLabel(returnsError)}</div>
+          </div>
+
+          <div className={`summary-card ${getErrorClass(agiError)}`}>
+            <div className="card-header">
+              <span className="card-icon">💰</span>
+              <span className="card-label">Total AGI</span>
+            </div>
+            <div className="card-comparison">
+              <div className="comparison-value">
+                <span className="value-label">CPS</span>
+                <span className="value-number">{formatNumber(totalAgiGap?.cps_value || 0, "dollars")}</span>
+              </div>
+              <div className="comparison-arrow">→</div>
+              <div className="comparison-value target">
+                <span className="value-label">SOI</span>
+                <span className="value-number">{formatNumber(totalAgiGap?.soi_value || 0, "dollars")}</span>
+              </div>
+            </div>
+            <div className="card-error">
+              <div className="error-bar-container">
+                <div className="error-bar" style={{ width: `${Math.min(Math.abs(agiError) * 200, 100)}%` }} />
+              </div>
+              <span className="error-value">{(agiError * 100).toFixed(1)}%</span>
+            </div>
+            <div className="card-badge">{getErrorLabel(agiError)}</div>
+          </div>
+
+          <div className="summary-card status-card">
+            <div className="card-header">
+              <span className="card-icon">⚠️</span>
+              <span className="card-label">Coverage Status</span>
+            </div>
+            <div className="status-indicators">
+              <div className="status-item">
+                <span className="status-count">{highImpactGaps}</span>
+                <span className="status-label">High Impact Gaps</span>
+              </div>
+              <div className="status-item">
+                <span className="status-count">{data.coverage_gaps.length}</span>
+                <span className="status-label">Total Gaps</span>
+              </div>
+            </div>
+            <div className="card-badge status">UNCALIBRATED</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Metrics Table */}
+      <section className="calib-metrics">
+        <div className="section-header">
+          <span className="section-label">DETAILED</span>
+          <h2>Metric Comparison</h2>
+        </div>
+
+        <div className="category-tabs">
+          <button className={selectedCategory === "all" ? "active" : ""} onClick={() => setSelectedCategory("all")}>
+            All Metrics
+          </button>
+          <button className={selectedCategory === "aggregate" ? "active" : ""} onClick={() => setSelectedCategory("aggregate")}>
+            Aggregates
+          </button>
+          <button className={selectedCategory === "by_filing_status" ? "active" : ""} onClick={() => setSelectedCategory("by_filing_status")}>
+            Filing Status
+          </button>
+        </div>
+
+        <div className="metrics-table">
+          <div className="table-header">
+            <div className="col-metric">Metric</div>
+            <div className="col-cps">CPS Value</div>
+            <div className="col-soi">SOI Target</div>
+            <div className="col-gap">Gap</div>
+            <div className="col-statute">Statute</div>
+          </div>
+
+          {filteredMetrics.map((metric) => (
+            <div key={metric.name} className={`table-row ${getErrorClass(metric.pct_error)}`}>
+              <div className="col-metric">
+                <span className="metric-name">{METRIC_LABELS[metric.name] || metric.name}</span>
+                <span className="metric-category">{metric.category}</span>
+              </div>
+              <div className="col-cps">{formatNumber(metric.cps_value, metric.unit)}</div>
+              <div className="col-soi">{formatNumber(metric.soi_value, metric.unit)}</div>
+              <div className="col-gap">
+                <div className="gap-visual">
+                  <div className="gap-bar-bg">
+                    <div
+                      className="gap-bar-fill"
+                      style={{ width: `${Math.min(Math.abs(metric.pct_error) * 100, 100)}%` }}
+                    />
+                  </div>
+                  <span className="gap-value">{(metric.pct_error * 100).toFixed(1)}%</span>
+                </div>
+              </div>
+              <div className="col-statute">
+                <code>{metric.statute_ref}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Coverage Gaps */}
+      <section className="calib-gaps">
+        <div className="section-header">
+          <span className="section-label">DOCUMENTATION</span>
+          <h2>Known Coverage Gaps</h2>
+          <p>Components missing from CPS that SOI captures via tax returns.</p>
+        </div>
+
+        <div className="gaps-grid">
+          {data.coverage_gaps.map((gap, i) => (
+            <div key={i} className={`gap-card ${getImpactClass(gap.impact)}`}>
+              <div className="gap-header">
+                <span className={`impact-badge ${gap.impact}`}>{gap.impact.toUpperCase()}</span>
+                <span className="gap-variable">{gap.variable}</span>
+              </div>
+              <h4 className="gap-component">{gap.component.replace(/_/g, " ")}</h4>
+              <p className="gap-notes">{gap.notes}</p>
+              <div className="gap-statute">
+                <code>{gap.statute_ref}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Pipeline */}
+      <section className="calib-methodology">
+        <div className="section-header">
+          <span className="section-label">APPROACH</span>
+          <h2>Calibration Pipeline</h2>
+        </div>
+
+        <div className="pipeline-steps">
+          <div className="pipeline-step current">
+            <div className="step-number">1</div>
+            <div className="step-content">
+              <h4>Baseline Measurement</h4>
+              <p>Document raw gaps between survey and administrative data.</p>
+              <span className="step-status active">CURRENT</span>
+            </div>
+          </div>
+          <div className="pipeline-connector" />
+          <div className="pipeline-step">
+            <div className="step-number">2</div>
+            <div className="step-content">
+              <h4>Single-Margin Raking</h4>
+              <p>Adjust weights to match total returns and AGI.</p>
+              <span className="step-status">NEXT</span>
+            </div>
+          </div>
+          <div className="pipeline-connector" />
+          <div className="pipeline-step">
+            <div className="step-number">3</div>
+            <div className="step-content">
+              <h4>Multi-Margin IPF</h4>
+              <p>Iterative proportional fitting for all margins.</p>
+              <span className="step-status">PENDING</span>
+            </div>
+          </div>
+          <div className="pipeline-connector" />
+          <div className="pipeline-step">
+            <div className="step-number">4</div>
+            <div className="step-content">
+              <h4>L0 Regularization</h4>
+              <p>Control record sparsity with HardConcrete gates.</p>
+              <span className="step-status">PENDING</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="calib-cta">
+        <div className="cta-content">
+          <h2>Explore the Source</h2>
+          <p>Calibration framework is open source.</p>
+          <div className="cta-buttons">
+            <a href="https://github.com/CosilicoAI/cosilico-microdata" className="btn-primary" target="_blank" rel="noopener noreferrer">
+              View on GitHub
+            </a>
+            <a href="/architecture" className="btn-secondary">Architecture Docs</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

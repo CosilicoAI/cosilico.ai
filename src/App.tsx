@@ -7,6 +7,7 @@ import ArchitecturePage from "./pages/ArchitecturePage";
 import PricingPage from "./pages/PricingPage";
 import StructurePage from "./pages/StructurePage";
 import PlaygroundPage from "./pages/PlaygroundPage";
+import CalibrationPage from "./pages/CalibrationPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 const FULL_PAGE_ROUTES = ["/thesis", "/structure", "/playground"];
@@ -42,6 +43,7 @@ function AppContent() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/structure" element={<StructurePage />} />
         <Route path="/playground" element={<PlaygroundPage />} />
+        <Route path="/calibration" element={<CalibrationPage />} />
       </Routes>
     </div>
   );
