@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../styles/Thesis.css";
-import { sources, competitors, pricingComps, Source } from "../data/thesis";
+import { sources, competitors, pricingComps } from "../data/thesis";
 
 type Section = "problem" | "gap" | "simulation" | "encoding" | "markets" | "competition" | "model" | "traction" | "team" | "risks" | "ask";
 
