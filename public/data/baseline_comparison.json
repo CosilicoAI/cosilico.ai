@@ -1,0 +1,161 @@
+{
+  "cps_year": 2023,
+  "soi_year": 2021,
+  "metrics": [
+    {
+      "name": "total_returns",
+      "category": "aggregate",
+      "cps_value": 133352601.98,
+      "soi_value": 153774296.0,
+      "pct_error": -0.13280304024282444,
+      "unit": "count",
+      "statute_ref": "26 USC \u00a7 6012 - Returns required"
+    },
+    {
+      "name": "total_agi",
+      "category": "aggregate",
+      "cps_value": 11760534493725.4,
+      "soi_value": 14447858000000.0,
+      "pct_error": -0.18600151706049434,
+      "unit": "dollars",
+      "statute_ref": "26 USC \u00a7 62(a) - Adjusted gross income defined"
+    },
+    {
+      "name": "returns_single",
+      "category": "by_filing_status",
+      "cps_value": 70731303.28,
+      "soi_value": 76854234.0,
+      "pct_error": -0.07966940012699884,
+      "unit": "count",
+      "statute_ref": "26 USC \u00a7 1, \u00a7 2 - Filing status"
+    },
+    {
+      "name": "returns_married_joint",
+      "category": "by_filing_status",
+      "cps_value": 62621298.699999996,
+      "soi_value": 54478234.0,
+      "pct_error": 0.14947372743396922,
+      "unit": "count",
+      "statute_ref": "26 USC \u00a7 1, \u00a7 2 - Filing status"
+    },
+    {
+      "name": "returns_married_separate",
+      "category": "by_filing_status",
+      "cps_value": 0,
+      "soi_value": 3547823.0,
+      "pct_error": -1.0,
+      "unit": "count",
+      "statute_ref": "26 USC \u00a7 1, \u00a7 2 - Filing status"
+    },
+    {
+      "name": "returns_head_of_household",
+      "category": "by_filing_status",
+      "cps_value": 0,
+      "soi_value": 17847234.0,
+      "pct_error": -1.0,
+      "unit": "count",
+      "statute_ref": "26 USC \u00a7 1, \u00a7 2 - Filing status"
+    },
+    {
+      "name": "returns_qualifying_widow",
+      "category": "by_filing_status",
+      "cps_value": 0,
+      "soi_value": 1046771.0,
+      "pct_error": -1.0,
+      "unit": "count",
+      "statute_ref": "26 USC \u00a7 1, \u00a7 2 - Filing status"
+    }
+  ],
+  "summary": {
+    "n_metrics": 7,
+    "mean_abs_error": 0.5068496692663267,
+    "max_abs_error": 1.0,
+    "worst_metric": "returns_married_separate"
+  },
+  "coverage_gaps": [
+    {
+      "variable": "filing_status",
+      "component": "head_of_household",
+      "statute_ref": "26 USC \u00a7 2(b)",
+      "impact": "medium",
+      "notes": "Requires determining if taxpayer maintains household for qualifying person. CPS has household relationships but determining HoH status requires assumptions."
+    },
+    {
+      "variable": "filing_status",
+      "component": "qualifying_widow",
+      "statute_ref": "26 USC \u00a7 2(a)",
+      "impact": "low",
+      "notes": "Requires spouse death within 2 years AND dependent child. CPS doesn't track year of spouse's death."
+    },
+    {
+      "variable": "is_dependent",
+      "component": "support_test",
+      "statute_ref": "26 USC \u00a7 152(c)(1)(D), \u00a7 152(d)(1)(C)",
+      "impact": "medium",
+      "notes": "CPS doesn't track who provides >50% support."
+    },
+    {
+      "variable": "is_dependent",
+      "component": "joint_return_test",
+      "statute_ref": "26 USC \u00a7 152(c)(1)(E)",
+      "impact": "low",
+      "notes": "Can't determine if dependent filed joint return."
+    },
+    {
+      "variable": "ctc_qualifying_children",
+      "component": "citizenship_test",
+      "statute_ref": "26 USC \u00a7 24(c)(2)",
+      "impact": "low",
+      "notes": "Child must be US citizen/national/resident. CPS has citizenship but we don't filter on it."
+    },
+    {
+      "variable": "ctc_qualifying_children",
+      "component": "ssn_requirement",
+      "statute_ref": "26 USC \u00a7 24(h)(7)",
+      "impact": "low",
+      "notes": "Child must have SSN. Not in CPS."
+    },
+    {
+      "variable": "adjusted_gross_income",
+      "component": "capital_gains",
+      "statute_ref": "26 USC \u00a7 61(a)(3), \u00a7 1222",
+      "impact": "high",
+      "notes": "CPS does not collect capital gains. SOI 2021: ~$1.2T. Major source of income for top brackets."
+    },
+    {
+      "variable": "adjusted_gross_income",
+      "component": "ira_deduction",
+      "statute_ref": "26 USC \u00a7 62(a)(7)",
+      "impact": "medium",
+      "notes": "Above-the-line IRA deduction not in CPS. Our proxy will overstate AGI by this amount."
+    },
+    {
+      "variable": "adjusted_gross_income",
+      "component": "student_loan_interest",
+      "statute_ref": "26 USC \u00a7 62(a)(17)",
+      "impact": "low",
+      "notes": "Student loan interest deduction not in CPS."
+    },
+    {
+      "variable": "adjusted_gross_income",
+      "component": "self_employment_tax_deduction",
+      "statute_ref": "26 USC \u00a7 62(a)(1)",
+      "impact": "medium",
+      "notes": "Deductible portion of SE tax not calculable from CPS."
+    },
+    {
+      "variable": "adjusted_gross_income",
+      "component": "interest_dividends_underreporting",
+      "statute_ref": "26 USC \u00a7 61(a)(4), (7)",
+      "impact": "medium",
+      "notes": "CPS interest/dividends underreported by ~40% vs SOI."
+    }
+  ],
+  "raw_survey_stats": {
+    "n_persons": 146133,
+    "n_tax_units": 56839,
+    "n_households": 88978,
+    "total_person_weight": 329748006.1900001,
+    "total_tax_unit_weight": 133352601.98
+  }
+}
