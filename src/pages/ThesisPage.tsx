@@ -299,7 +299,7 @@ export default function ThesisPage() {
         <div className="thesis-content">
           <h2>3. The Simulation</h2>
           <p>
-            We're building the shared substrate—a simulation that anyone can query (and more importantly, any AI). Decisions grounded in the same reality. Three APIs. One model of society.
+            We're building the shared substrate—a simulation that anyone can query (and more importantly, any AI). Decisions grounded in the same reality. Five APIs. One model of society.
           </p>
         </div>
 
