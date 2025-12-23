@@ -1,6 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Calibration.css";
 
+interface SourceSummary {
+  source: string;
+  display_name: string;
+  count: number;
+  variables: number;
+  year_min: number;
+  year_max: number;
+  years: number[];
+  is_projection: boolean;
+}
+
+interface YearSummary {
+  year: number;
+  count: number;
+  sources: string[];
+}
+
+interface JurisdictionSummary {
+  jurisdiction: string;
+  count: number;
+  sources: string[];
+}
+
+interface TargetsSummary {
+  total_targets: number;
+  total_strata: number;
+  sources: SourceSummary[];
+  years: YearSummary[];
+  jurisdictions: JurisdictionSummary[];
+}
+
 interface Metric {
   name: string;
   category: string;
@@ -93,18 +124,25 @@ function getImpactClass(impact: string): string {
 
 export default function CalibrationPage() {
   const [data, setData] = useState<BaselineData | null>(null);
+  const [targetsSummary, setTargetsSummary] = useState<TargetsSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   useEffect(() => {
-    fetch("/data/baseline_comparison.json")
-      .then((res) => {
+    Promise.all([
+      fetch("/data/baseline_comparison.json").then((res) => {
         if (!res.ok) throw new Error("Failed to load baseline data");
         return res.json();
-      })
-      .then((json) => {
-        setData(json);
+      }),
+      fetch("/data/targets_summary.json").then((res) => {
+        if (!res.ok) throw new Error("Failed to load targets summary");
+        return res.json();
+      }),
+    ])
+      .then(([baselineJson, targetsJson]) => {
+        setData(baselineJson);
+        setTargetsSummary(targetsJson);
         setLoading(false);
       })
       .catch((err) => {
@@ -396,16 +434,88 @@ export default function CalibrationPage() {
         </div>
       </section>
 
+      {/* Data Sources */}
+      {targetsSummary && (
+        <section className="calib-sources">
+          <div className="section-header">
+            <span className="section-label">TARGETS DATABASE</span>
+            <h2>Administrative Data Sources</h2>
+            <p>
+              {targetsSummary.total_targets.toLocaleString()} calibration targets across{" "}
+              {targetsSummary.total_strata} strata from {targetsSummary.sources.length} sources.
+            </p>
+          </div>
+
+          <div className="sources-grid">
+            {targetsSummary.sources.map((source) => (
+              <div
+                key={source.source}
+                className={`source-card ${source.is_projection ? "projection" : "historical"}`}
+              >
+                <div className="source-header">
+                  <span className={`source-badge ${source.is_projection ? "projection" : "historical"}`}>
+                    {source.is_projection ? "PROJECTION" : "HISTORICAL"}
+                  </span>
+                  <span className="source-name">{source.display_name}</span>
+                </div>
+                <div className="source-stats">
+                  <div className="source-stat">
+                    <span className="stat-value">{source.count}</span>
+                    <span className="stat-label">Targets</span>
+                  </div>
+                  <div className="source-stat">
+                    <span className="stat-value">{source.variables}</span>
+                    <span className="stat-label">Variables</span>
+                  </div>
+                  <div className="source-stat">
+                    <span className="stat-value">
+                      {source.year_min === source.year_max
+                        ? source.year_min
+                        : `${source.year_min}-${source.year_max}`}
+                    </span>
+                    <span className="stat-label">Years</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="jurisdiction-summary">
+            <h4>Coverage by Jurisdiction</h4>
+            <div className="jurisdiction-bars">
+              {targetsSummary.jurisdictions.map((j) => (
+                <div key={j.jurisdiction} className="jurisdiction-bar">
+                  <span className="jurisdiction-name">
+                    {j.jurisdiction.toUpperCase().replace("-", " ")}
+                  </span>
+                  <div className="bar-container">
+                    <div
+                      className="bar-fill"
+                      style={{
+                        width: `${(j.count / targetsSummary.total_targets) * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <span className="jurisdiction-count">{j.count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* CTA */}
       <section className="calib-cta">
         <div className="cta-content">
           <h2>Explore the Source</h2>
           <p>Calibration framework is open source.</p>
           <div className="cta-buttons">
-            <a href="https://github.com/CosilicoAI/cosilico-microdata" className="btn-primary" target="_blank" rel="noopener noreferrer">
-              View on GitHub
+            <a href="https://github.com/CosilicoAI/cosilico-data-sources" className="btn-primary" target="_blank" rel="noopener noreferrer">
+              Data Sources
             </a>
-            <a href="/architecture" className="btn-secondary">Architecture Docs</a>
+            <a href="https://github.com/CosilicoAI/cosilico-microdata" className="btn-secondary" target="_blank" rel="noopener noreferrer">
+              Microdata
+            </a>
           </div>
         </div>
       </section>
