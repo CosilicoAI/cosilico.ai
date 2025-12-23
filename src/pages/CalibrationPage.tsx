@@ -128,6 +128,7 @@ export default function CalibrationPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -304,6 +305,308 @@ export default function CalibrationPage() {
               </div>
             </div>
             <div className="card-badge status">UNCALIBRATED</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Validation Status - PolicyEngine Comparison */}
+      <section className="calib-validation">
+        <div className="section-header">
+          <span className="section-label">BENCHMARKING</span>
+          <h2>Validation vs PolicyEngine</h2>
+          <p>Comparing our calibration target coverage against PolicyEngine-US-Data's comprehensive approach</p>
+        </div>
+
+        <div className="validation-overview">
+          <div className="validation-headline">
+            <div className="headline-stat our-targets">
+              <span className="stat-number">205</span>
+              <span className="stat-desc">Our Targets</span>
+            </div>
+            <div className="headline-vs">vs</div>
+            <div className="headline-stat pe-targets">
+              <span className="stat-number">2,813</span>
+              <span className="stat-desc">PolicyEngine Targets</span>
+            </div>
+          </div>
+          <div className="validation-progress-wrapper">
+            <div className="validation-progress-bar">
+              <div className="progress-fill" style={{ width: "7.3%" }}>
+                <span className="progress-label">7.3% Coverage</span>
+              </div>
+            </div>
+            <div className="validation-gap-stat">Gap: 2,608 targets</div>
+          </div>
+        </div>
+
+        <div className="category-coverage-grid">
+          <div className="coverage-category">
+            <div className="coverage-header">
+              <div className="coverage-icon">💰</div>
+              <h4>IRS SOI Tax</h4>
+            </div>
+            <div className="coverage-stats">
+              <div className="coverage-numbers">
+                <span className="our-count">80</span>
+                <span className="divider">/</span>
+                <span className="pe-count">500</span>
+              </div>
+              <div className="coverage-bar">
+                <div className="bar-fill" style={{ width: "16%" }}></div>
+              </div>
+              <div className="coverage-pct">16% covered</div>
+            </div>
+            <button
+              className={`coverage-expand ${expandedCategory === 'tax' ? 'active' : ''}`}
+              onClick={() => setExpandedCategory(expandedCategory === 'tax' ? null : 'tax')}
+            >
+              {expandedCategory === 'tax' ? '▼' : '▶'} See what's missing
+            </button>
+            {expandedCategory === 'tax' && (
+              <div className="coverage-gaps">
+                <div className="gap-item">
+                  <span className="gap-name">Income by Source</span>
+                  <span className="gap-desc">Interest, dividends, capital gains, partnership income</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">EITC by Child Count</span>
+                  <span className="gap-desc">Stratified EITC targets (0, 1, 2, 3+ children)</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">Deductions Detail</span>
+                  <span className="gap-desc">Medical, SALT, QBI deduction targets</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">State Coverage</span>
+                  <span className="gap-desc">All 50 states + DC (we have 5 states)</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="coverage-category">
+            <div className="coverage-header">
+              <div className="coverage-icon">👥</div>
+              <h4>Demographics</h4>
+            </div>
+            <div className="coverage-stats">
+              <div className="coverage-numbers">
+                <span className="our-count">50</span>
+                <span className="divider">/</span>
+                <span className="pe-count">900</span>
+              </div>
+              <div className="coverage-bar">
+                <div className="bar-fill" style={{ width: "5.6%" }}></div>
+              </div>
+              <div className="coverage-pct">5.6% covered</div>
+            </div>
+            <button
+              className={`coverage-expand ${expandedCategory === 'demographics' ? 'active' : ''}`}
+              onClick={() => setExpandedCategory(expandedCategory === 'demographics' ? null : 'demographics')}
+            >
+              {expandedCategory === 'demographics' ? '▼' : '▶'} See what's missing
+            </button>
+            {expandedCategory === 'demographics' && (
+              <div className="coverage-gaps">
+                <div className="gap-item">
+                  <span className="gap-name">Age Granularity</span>
+                  <span className="gap-desc">18 age brackets (we have 5 broad groups)</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">Congressional Districts</span>
+                  <span className="gap-desc">436 district-level targets (we have state only)</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">Race/Ethnicity</span>
+                  <span className="gap-desc">Demographic distributions by race</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="coverage-category">
+            <div className="coverage-header">
+              <div className="coverage-icon">🏥</div>
+              <h4>Benefit Programs</h4>
+            </div>
+            <div className="coverage-stats">
+              <div className="coverage-numbers">
+                <span className="our-count">75</span>
+                <span className="divider">/</span>
+                <span className="pe-count">800</span>
+              </div>
+              <div className="coverage-bar">
+                <div className="bar-fill" style={{ width: "9.4%" }}></div>
+              </div>
+              <div className="coverage-pct">9.4% covered</div>
+            </div>
+            <button
+              className={`coverage-expand ${expandedCategory === 'benefits' ? 'active' : ''}`}
+              onClick={() => setExpandedCategory(expandedCategory === 'benefits' ? null : 'benefits')}
+            >
+              {expandedCategory === 'benefits' ? '▼' : '▶'} See what's missing
+            </button>
+            {expandedCategory === 'benefits' && (
+              <div className="coverage-gaps">
+                <div className="gap-item">
+                  <span className="gap-name">Medicaid Enrollment</span>
+                  <span className="gap-desc">State + congressional district enrollment counts</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">SSI Participation</span>
+                  <span className="gap-desc">Supplemental Security Income targets</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">SNAP State Coverage</span>
+                  <span className="gap-desc">All states (we have 10 states)</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">TANF Programs</span>
+                  <span className="gap-desc">Temporary Assistance for Needy Families</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="coverage-category">
+            <div className="coverage-header">
+              <div className="coverage-icon">🏥</div>
+              <h4>Healthcare</h4>
+            </div>
+            <div className="coverage-stats">
+              <div className="coverage-numbers">
+                <span className="our-count">0</span>
+                <span className="divider">/</span>
+                <span className="pe-count">300</span>
+              </div>
+              <div className="coverage-bar">
+                <div className="bar-fill" style={{ width: "0%" }}></div>
+              </div>
+              <div className="coverage-pct">0% covered</div>
+            </div>
+            <button
+              className={`coverage-expand ${expandedCategory === 'healthcare' ? 'active' : ''}`}
+              onClick={() => setExpandedCategory(expandedCategory === 'healthcare' ? null : 'healthcare')}
+            >
+              {expandedCategory === 'healthcare' ? '▼' : '▶'} See what's missing
+            </button>
+            {expandedCategory === 'healthcare' && (
+              <div className="coverage-gaps">
+                <div className="gap-item">
+                  <span className="gap-name">Insurance Enrollment</span>
+                  <span className="gap-desc">Public/private insurance coverage patterns</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">ACA Marketplace</span>
+                  <span className="gap-desc">Exchange enrollment and subsidy data</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">Healthcare Spending</span>
+                  <span className="gap-desc">Medical expenditure patterns</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="coverage-category">
+            <div className="coverage-header">
+              <div className="coverage-icon">📊</div>
+              <h4>Tax Expenditures</h4>
+            </div>
+            <div className="coverage-stats">
+              <div className="coverage-numbers">
+                <span className="our-count">0</span>
+                <span className="divider">/</span>
+                <span className="pe-count">300</span>
+              </div>
+              <div className="coverage-bar">
+                <div className="bar-fill" style={{ width: "0%" }}></div>
+              </div>
+              <div className="coverage-pct">0% covered</div>
+            </div>
+            <button
+              className={`coverage-expand ${expandedCategory === 'tax_expenditures' ? 'active' : ''}`}
+              onClick={() => setExpandedCategory(expandedCategory === 'tax_expenditures' ? null : 'tax_expenditures')}
+            >
+              {expandedCategory === 'tax_expenditures' ? '▼' : '▶'} See what's missing
+            </button>
+            {expandedCategory === 'tax_expenditures' && (
+              <div className="coverage-gaps">
+                <div className="gap-item">
+                  <span className="gap-name">Treasury Estimates</span>
+                  <span className="gap-desc">Annual tax expenditure totals</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">JCT Estimates</span>
+                  <span className="gap-desc">Joint Committee on Taxation provision costs</span>
+                </div>
+                <div className="gap-item">
+                  <span className="gap-name">Cross-Validation</span>
+                  <span className="gap-desc">Independent verification of credit/deduction totals</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="comparison-table">
+          <h4>Detailed Comparison</h4>
+          <div className="table-wrapper">
+            <table className="pe-comparison-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>PE Targets</th>
+                  <th>Our Targets</th>
+                  <th>Gap</th>
+                  <th>Coverage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>IRS SOI Tax</strong></td>
+                  <td>500</td>
+                  <td>80</td>
+                  <td className="gap-negative">-420</td>
+                  <td><span className="coverage-badge low">16%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Demographics</strong></td>
+                  <td>900</td>
+                  <td>50</td>
+                  <td className="gap-negative">-850</td>
+                  <td><span className="coverage-badge very-low">5.6%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Benefit Programs</strong></td>
+                  <td>800</td>
+                  <td>75</td>
+                  <td className="gap-negative">-725</td>
+                  <td><span className="coverage-badge low">9.4%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Healthcare</strong></td>
+                  <td>300</td>
+                  <td>0</td>
+                  <td className="gap-negative">-300</td>
+                  <td><span className="coverage-badge none">0%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Tax Expenditures</strong></td>
+                  <td>300</td>
+                  <td>0</td>
+                  <td className="gap-negative">-300</td>
+                  <td><span className="coverage-badge none">0%</span></td>
+                </tr>
+                <tr className="total-row">
+                  <td><strong>TOTAL</strong></td>
+                  <td><strong>2,813</strong></td>
+                  <td><strong>205</strong></td>
+                  <td className="gap-negative"><strong>-2,608</strong></td>
+                  <td><span className="coverage-badge very-low"><strong>7.3%</strong></span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
