@@ -953,6 +953,55 @@ $$ LANGUAGE SQL;`}
               </div>
             </div>
           </div>
+
+          {/* Variable Resolution Flow */}
+          <div className="microdata-variable-flow">
+            <h3>Variable Resolution: Survey → Statute</h3>
+            <p className="flow-intro">
+              Primary inputs only. Derived values (like "num_qualifying_children") are computed
+              in the rules engine based on statutory definitions—not extracted from survey data.
+            </p>
+            <div className="variable-flow-diagram">
+              <div className="flow-stage">
+                <div className="stage-box survey">
+                  <span className="stage-icon">📊</span>
+                  <span className="stage-name">CPS ASEC</span>
+                  <code className="stage-var">A_AGE</code>
+                </div>
+                <div className="stage-arrow">→</div>
+                <div className="stage-box downloader">
+                  <span className="stage-icon">⬇️</span>
+                  <span className="stage-name">download_cps.py</span>
+                  <code className="stage-var">age</code>
+                </div>
+                <div className="stage-arrow">→</div>
+                <div className="stage-box microsim">
+                  <span className="stage-icon">⚙️</span>
+                  <span className="stage-name">microsim.py</span>
+                  <code className="stage-var">inputs["age"]</code>
+                </div>
+                <div className="stage-arrow">→</div>
+                <div className="stage-box statute">
+                  <span className="stage-icon">📜</span>
+                  <span className="stage-name">cosilico-us</span>
+                  <code className="stage-var">age &lt; 19</code>
+                </div>
+              </div>
+            </div>
+            <div className="variable-flow-principle">
+              <div className="principle-item">
+                <span className="principle-icon">✓</span>
+                <span className="principle-text"><strong>Primary inputs</strong>: age, income, relationship codes, tax_unit_id</span>
+              </div>
+              <div className="principle-item">
+                <span className="principle-icon">✗</span>
+                <span className="principle-text"><strong>NOT extracted</strong>: num_qualifying_children, eitc_amount, tax_liability</span>
+              </div>
+              <div className="principle-reason">
+                Definitions vary by program (EITC §32(c)(3) vs CTC §24). The rules engine is the source of truth.
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Implementation Status */}

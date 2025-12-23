@@ -2373,6 +2373,147 @@
   color: var(--arch-accent);
 }
 
+/* Variable Flow */
+.microdata-variable-flow {
+  grid-column: 1 / -1;
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.microdata-variable-flow h3 {
+  font-family: var(--arch-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--arch-accent);
+  margin-bottom: 12px;
+}
+
+.microdata-variable-flow .flow-intro {
+  font-size: 0.85rem;
+  color: var(--arch-text-dim);
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.variable-flow-diagram {
+  background: var(--arch-surface);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.variable-flow-diagram .flow-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.variable-flow-diagram .stage-box {
+  background: var(--arch-bg-card);
+  border: 1px solid var(--arch-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  text-align: center;
+  min-width: 140px;
+}
+
+.variable-flow-diagram .stage-box.survey {
+  border-color: var(--arch-purple);
+}
+
+.variable-flow-diagram .stage-box.downloader {
+  border-color: var(--arch-amber);
+}
+
+.variable-flow-diagram .stage-box.microsim {
+  border-color: var(--arch-green);
+}
+
+.variable-flow-diagram .stage-box.statute {
+  border-color: var(--arch-accent);
+}
+
+.variable-flow-diagram .stage-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.variable-flow-diagram .stage-name {
+  font-family: var(--arch-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--arch-text-dim);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.variable-flow-diagram .stage-var {
+  font-family: var(--arch-font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.8rem;
+  color: var(--arch-text);
+  background: var(--arch-surface);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.variable-flow-diagram .stage-arrow {
+  font-size: 1.2rem;
+  color: var(--arch-accent);
+  font-weight: bold;
+}
+
+.variable-flow-principle {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.variable-flow-principle .principle-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.variable-flow-principle .principle-icon {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.variable-flow-principle .principle-text {
+  font-size: 0.85rem;
+  color: var(--arch-text-dim);
+}
+
+.variable-flow-principle .principle-text strong {
+  color: var(--arch-text);
+}
+
+.variable-flow-principle .principle-reason {
+  font-size: 0.8rem;
+  color: var(--arch-text-muted);
+  font-style: italic;
+  padding-left: 28px;
+  margin-top: 4px;
+}
+
+@media (max-width: 700px) {
+  .variable-flow-diagram .flow-stage {
+    flex-direction: column;
+  }
+
+  .variable-flow-diagram .stage-arrow {
+    transform: rotate(90deg);
+  }
+}
+
 /* Microdata Status */
 .microdata-status {
   grid-column: 1 / -1;
