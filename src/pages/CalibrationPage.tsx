@@ -393,14 +393,78 @@ export default function CalibrationPage() {
         <div className="section-header">
           <span className="section-label">APPROACH</span>
           <h2>Calibration Pipeline</h2>
+          <p>Connecting microdata to administrative targets through reweighting</p>
+        </div>
+
+        <div className="pipeline-flow">
+          <div className="pipeline-stage">
+            <div className="stage-header">
+              <div className="stage-icon">📊</div>
+              <h4>Microdata</h4>
+            </div>
+            <div className="stage-details">
+              <p className="stage-source">CPS ASEC / FRS</p>
+              <p className="stage-count">~200k records</p>
+              <p className="stage-desc">Survey data with original weights</p>
+            </div>
+          </div>
+
+          <div className="pipeline-arrow">→</div>
+
+          <div className="pipeline-stage">
+            <div className="stage-header">
+              <div className="stage-icon">🎯</div>
+              <h4>Targets DB</h4>
+            </div>
+            <div className="stage-details">
+              <p className="stage-source">SQLite</p>
+              <p className="stage-count">~1000 targets</p>
+              <p className="stage-desc">Administrative totals by stratum</p>
+            </div>
+          </div>
+
+          <div className="pipeline-arrow">→</div>
+
+          <div className="pipeline-stage">
+            <div className="stage-header">
+              <div className="stage-icon">⚖️</div>
+              <h4>Calibrated Weights</h4>
+            </div>
+            <div className="stage-details">
+              <p className="stage-source">Parquet</p>
+              <p className="stage-count">weights.parquet</p>
+              <p className="stage-desc">Reweighted to match targets</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="pipeline-methods">
+          <h4>Calibration Methods</h4>
+          <div className="methods-grid">
+            <div className="method-card">
+              <div className="method-name">Entropy Minimization</div>
+              <div className="method-desc">Minimize KL divergence from original weights</div>
+              <div className="method-use">Default method, smooth adjustments</div>
+            </div>
+            <div className="method-card">
+              <div className="method-name">Raking</div>
+              <div className="method-desc">Iterative proportional fitting</div>
+              <div className="method-use">Many margin constraints</div>
+            </div>
+            <div className="method-card">
+              <div className="method-name">Linear Regression</div>
+              <div className="method-desc">Linear regression adjustment</div>
+              <div className="method-use">Few constraints, fast</div>
+            </div>
+          </div>
         </div>
 
         <div className="pipeline-steps">
           <div className="pipeline-step current">
             <div className="step-number">1</div>
             <div className="step-content">
-              <h4>Baseline Measurement</h4>
-              <p>Document raw gaps between survey and administrative data.</p>
+              <h4>Load Microdata</h4>
+              <p>Import survey data with original weights and select variables.</p>
               <span className="step-status active">CURRENT</span>
             </div>
           </div>
@@ -408,8 +472,8 @@ export default function CalibrationPage() {
           <div className="pipeline-step">
             <div className="step-number">2</div>
             <div className="step-content">
-              <h4>Single-Margin Raking</h4>
-              <p>Adjust weights to match total returns and AGI.</p>
+              <h4>Query Targets</h4>
+              <p>Retrieve administrative totals from targets database.</p>
               <span className="step-status">NEXT</span>
             </div>
           </div>
@@ -417,8 +481,8 @@ export default function CalibrationPage() {
           <div className="pipeline-step">
             <div className="step-number">3</div>
             <div className="step-content">
-              <h4>Multi-Margin IPF</h4>
-              <p>Iterative proportional fitting for all margins.</p>
+              <h4>Build Constraints</h4>
+              <p>Map targets to microdata aggregations.</p>
               <span className="step-status">PENDING</span>
             </div>
           </div>
@@ -426,8 +490,17 @@ export default function CalibrationPage() {
           <div className="pipeline-step">
             <div className="step-number">4</div>
             <div className="step-content">
-              <h4>L0 Regularization</h4>
-              <p>Control record sparsity with HardConcrete gates.</p>
+              <h4>Calibrate</h4>
+              <p>Adjust weights to satisfy constraints.</p>
+              <span className="step-status">PENDING</span>
+            </div>
+          </div>
+          <div className="pipeline-connector" />
+          <div className="pipeline-step">
+            <div className="step-number">5</div>
+            <div className="step-content">
+              <h4>Validate & Export</h4>
+              <p>Check calibration quality and export weights.</p>
               <span className="step-status">PENDING</span>
             </div>
           </div>
@@ -435,74 +508,183 @@ export default function CalibrationPage() {
       </section>
 
       {/* Data Sources */}
-      {targetsSummary && (
-        <section className="calib-sources">
-          <div className="section-header">
-            <span className="section-label">TARGETS DATABASE</span>
-            <h2>Administrative Data Sources</h2>
-            <p>
-              {targetsSummary.total_targets.toLocaleString()} calibration targets across{" "}
-              {targetsSummary.total_strata} strata from {targetsSummary.sources.length} sources.
-            </p>
-          </div>
+      <section className="calib-sources">
+        <div className="section-header">
+          <span className="section-label">DATA SOURCES</span>
+          <h2>Administrative Targets</h2>
+          <p>
+            {targetsSummary ? (
+              <>
+                {targetsSummary.total_targets.toLocaleString()} calibration targets across{" "}
+                {targetsSummary.total_strata} strata from {targetsSummary.sources.length} sources.
+              </>
+            ) : (
+              "Comprehensive administrative data for calibration and validation"
+            )}
+          </p>
+        </div>
 
-          <div className="sources-grid">
-            {targetsSummary.sources.map((source) => (
-              <div
-                key={source.source}
-                className={`source-card ${source.is_projection ? "projection" : "historical"}`}
-              >
-                <div className="source-header">
-                  <span className={`source-badge ${source.is_projection ? "projection" : "historical"}`}>
-                    {source.is_projection ? "PROJECTION" : "HISTORICAL"}
-                  </span>
-                  <span className="source-name">{source.display_name}</span>
-                </div>
-                <div className="source-stats">
-                  <div className="source-stat">
-                    <span className="stat-value">{source.count}</span>
-                    <span className="stat-label">Targets</span>
+        <div className="sources-overview">
+          <h4>Available Data Sources</h4>
+          <div className="sources-list">
+            <div className="source-detail us-source">
+              <div className="source-detail-header">
+                <span className="source-flag">🇺🇸</span>
+                <h5>IRS Statistics of Income (SOI)</h5>
+                <span className="source-jurisdiction">United States</span>
+              </div>
+              <div className="source-detail-content">
+                <p className="source-description">
+                  State-level individual income tax data from Forms 1040.
+                  National and state totals with AGI bracket stratification.
+                </p>
+                <div className="source-features">
+                  <div className="feature">
+                    <span className="feature-label">Historic Table 2:</span>
+                    <span className="feature-value">1996-2022, all 50 states + DC</span>
                   </div>
-                  <div className="source-stat">
-                    <span className="stat-value">{source.variables}</span>
-                    <span className="stat-label">Variables</span>
+                  <div className="feature">
+                    <span className="feature-label">Variables:</span>
+                    <span className="feature-value">Returns, AGI, wages, dividends, tax liability</span>
                   </div>
-                  <div className="source-stat">
-                    <span className="stat-value">
-                      {source.year_min === source.year_max
-                        ? source.year_min
-                        : `${source.year_min}-${source.year_max}`}
-                    </span>
-                    <span className="stat-label">Years</span>
+                  <div className="feature">
+                    <span className="feature-label">AGI Brackets:</span>
+                    <span className="feature-value">18 brackets from &lt;$1 to $10M+</span>
+                  </div>
+                  <div className="feature">
+                    <span className="feature-label">Credits:</span>
+                    <span className="feature-value">EITC, CTC, ACTC by state</span>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
 
-          <div className="jurisdiction-summary">
-            <h4>Coverage by Jurisdiction</h4>
-            <div className="jurisdiction-bars">
-              {targetsSummary.jurisdictions.map((j) => (
-                <div key={j.jurisdiction} className="jurisdiction-bar">
-                  <span className="jurisdiction-name">
-                    {j.jurisdiction.toUpperCase().replace("-", " ")}
-                  </span>
-                  <div className="bar-container">
-                    <div
-                      className="bar-fill"
-                      style={{
-                        width: `${(j.count / targetsSummary.total_targets) * 100}%`,
-                      }}
-                    />
+            <div className="source-detail us-source">
+              <div className="source-detail-header">
+                <span className="source-flag">🇺🇸</span>
+                <h5>Census Bureau CPS ASEC</h5>
+                <span className="source-jurisdiction">United States</span>
+              </div>
+              <div className="source-detail-content">
+                <p className="source-description">
+                  Current Population Survey Annual Social and Economic Supplement.
+                  Monthly microdata with comprehensive income and benefit variables.
+                </p>
+                <div className="source-features">
+                  <div className="feature">
+                    <span className="feature-label">Coverage:</span>
+                    <span className="feature-value">~200k individuals, monthly updates</span>
                   </div>
-                  <span className="jurisdiction-count">{j.count}</span>
+                  <div className="feature">
+                    <span className="feature-label">Variables:</span>
+                    <span className="feature-value">Income, benefits, employment, demographics</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="source-detail uk-source">
+              <div className="source-detail-header">
+                <span className="source-flag">🇬🇧</span>
+                <h5>OBR Economic Forecasts</h5>
+                <span className="source-jurisdiction">United Kingdom</span>
+              </div>
+              <div className="source-detail-content">
+                <p className="source-description">
+                  Office for Budget Responsibility fiscal projections.
+                  National-level economic and tax/benefit aggregates.
+                </p>
+                <div className="source-features">
+                  <div className="feature">
+                    <span className="feature-label">Type:</span>
+                    <span className="feature-value">Projections, updated quarterly</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="source-detail uk-source">
+              <div className="source-detail-header">
+                <span className="source-flag">🇬🇧</span>
+                <h5>ONS Family Resources Survey</h5>
+                <span className="source-jurisdiction">United Kingdom</span>
+              </div>
+              <div className="source-detail-content">
+                <p className="source-description">
+                  Office for National Statistics household survey.
+                  Income, benefits, housing, and household composition.
+                </p>
+                <div className="source-features">
+                  <div className="feature">
+                    <span className="feature-label">Coverage:</span>
+                    <span className="feature-value">Annual, comprehensive household data</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {targetsSummary && (
+          <>
+            <div className="sources-grid">
+              {targetsSummary.sources.map((source) => (
+                <div
+                  key={source.source}
+                  className={`source-card ${source.is_projection ? "projection" : "historical"}`}
+                >
+                  <div className="source-header">
+                    <span className={`source-badge ${source.is_projection ? "projection" : "historical"}`}>
+                      {source.is_projection ? "PROJECTION" : "HISTORICAL"}
+                    </span>
+                    <span className="source-name">{source.display_name}</span>
+                  </div>
+                  <div className="source-stats">
+                    <div className="source-stat">
+                      <span className="stat-value">{source.count}</span>
+                      <span className="stat-label">Targets</span>
+                    </div>
+                    <div className="source-stat">
+                      <span className="stat-value">{source.variables}</span>
+                      <span className="stat-label">Variables</span>
+                    </div>
+                    <div className="source-stat">
+                      <span className="stat-value">
+                        {source.year_min === source.year_max
+                          ? source.year_min
+                          : `${source.year_min}-${source.year_max}`}
+                      </span>
+                      <span className="stat-label">Years</span>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-      )}
+
+            <div className="jurisdiction-summary">
+              <h4>Coverage by Jurisdiction</h4>
+              <div className="jurisdiction-bars">
+                {targetsSummary.jurisdictions.map((j) => (
+                  <div key={j.jurisdiction} className="jurisdiction-bar">
+                    <span className="jurisdiction-name">
+                      {j.jurisdiction.toUpperCase().replace("-", " ")}
+                    </span>
+                    <div className="bar-container">
+                      <div
+                        className="bar-fill"
+                        style={{
+                          width: `${(j.count / targetsSummary.total_targets) * 100}%`,
+                        }}
+                      />
+                    </div>
+                    <span className="jurisdiction-count">{j.count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </section>
 
       {/* CTA */}
       <section className="calib-cta">

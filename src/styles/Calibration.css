@@ -393,6 +393,115 @@
 /* Data Sources Section */
 .calib-sources { padding: 60px 24px !important; }
 
+.sources-overview {
+  margin-bottom: 48px;
+}
+
+.sources-overview h4 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--calib-text-dim);
+  margin-bottom: 24px;
+}
+
+.sources-list {
+  display: grid;
+  gap: 20px;
+}
+
+.source-detail {
+  background: var(--calib-bg-elevated);
+  border: 1px solid var(--calib-border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.source-detail:hover {
+  border-color: var(--calib-border-bright);
+  transform: translateY(-2px);
+}
+
+.source-detail.us-source {
+  border-left: 4px solid var(--calib-accent);
+}
+
+.source-detail.uk-source {
+  border-left: 4px solid var(--calib-green);
+}
+
+.source-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.source-flag {
+  font-size: 1.5rem;
+}
+
+.source-detail-header h5 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--calib-text);
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.source-jurisdiction {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--calib-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--calib-surface);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.source-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.source-description {
+  font-size: 0.9rem;
+  color: var(--calib-text-dim);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.source-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.feature-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--calib-accent);
+  min-width: 140px;
+}
+
+.feature-value {
+  color: var(--calib-text);
+}
+
 .sources-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
