@@ -502,6 +502,173 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
+      {/* Multi-Target Compilation */}
+      <section className="arch-compilation">
+        <div className="section-header">
+          <span className="section-label">COMPILER</span>
+          <h2>Multi-Target Code Generation</h2>
+          <p>Write rules once in DSL, compile to Python, JavaScript, WASM, and SQL.</p>
+        </div>
+
+        <div className="compilation-flow">
+          <div className="flow-stage source">
+            <div className="stage-icon">📝</div>
+            <h4>DSL Source</h4>
+            <pre className="code-sample">
+{`variable eitc(TaxUnit, Year, Money):
+  earned_income = wages + self_employment
+  phase_in = min(
+    param("eitc.max_credit"),
+    earned_income * param("eitc.phase_in_rate")
+  )
+  return phase_in`}
+            </pre>
+          </div>
+
+          <div className="flow-arrow-down">↓ Parse → Analyze → Optimize</div>
+
+          <div className="flow-targets">
+            <div className="target-card python">
+              <div className="target-header">
+                <span className="target-icon">🐍</span>
+                <h5>Python (NumPy)</h5>
+                <span className="target-status">✓ Working</span>
+              </div>
+              <pre className="target-code">
+{`def eitc(inputs, params):
+    earned_income = (
+        inputs['wages'] +
+        inputs['self_employment']
+    )
+    phase_in = np.minimum(
+        params['eitc.max_credit'],
+        earned_income * params['eitc.phase_in_rate']
+    )
+    return phase_in`}
+              </pre>
+              <div className="target-use-case">Microsimulation</div>
+            </div>
+
+            <div className="target-card javascript">
+              <div className="target-header">
+                <span className="target-icon">⚡</span>
+                <h5>JavaScript</h5>
+                <span className="target-status">✓ Working</span>
+              </div>
+              <pre className="target-code">
+{`function eitc(inputs, params) {
+  const earned_income =
+    inputs.wages +
+    inputs.self_employment;
+  const phase_in = Math.min(
+    params['eitc.max_credit'],
+    earned_income * params['eitc.phase_in_rate']
+  );
+  return phase_in;
+}`}
+              </pre>
+              <div className="target-use-case">Browser / Cloudflare Edge</div>
+            </div>
+
+            <div className="target-card wasm">
+              <div className="target-header">
+                <span className="target-icon">⚙️</span>
+                <h5>WebAssembly</h5>
+                <span className="target-status">○ Planned</span>
+              </div>
+              <pre className="target-code">
+{`(func $eitc (param $wages f64)
+             (param $se f64)
+             (result f64)
+  (local $ei f64)
+  (local.set $ei
+    (f64.add (local.get $wages)
+             (local.get $se)))
+  ...)`}
+              </pre>
+              <div className="target-use-case">Native performance</div>
+            </div>
+
+            <div className="target-card sql">
+              <div className="target-header">
+                <span className="target-icon">🗄️</span>
+                <h5>SQL</h5>
+                <span className="target-status">○ Planned</span>
+              </div>
+              <pre className="target-code">
+{`CREATE FUNCTION eitc(
+  wages DECIMAL,
+  self_employment DECIMAL
+) RETURNS DECIMAL AS $$
+  SELECT LEAST(
+    eitc_max_credit,
+    (wages + self_employment) * eitc_phase_in_rate
+  )
+$$ LANGUAGE SQL;`}
+              </pre>
+              <div className="target-use-case">Batch processing</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="validation-strategy">
+          <h3>Two-Phase Validation Strategy</h3>
+          <div className="validation-phases">
+            <div className="phase-card phase-1">
+              <div className="phase-header">
+                <span className="phase-number">1</span>
+                <h4>Reference Validation</h4>
+                <span className="phase-frequency">Once per variable</span>
+              </div>
+              <p>Validate against PolicyEngine (reference implementation) to ensure correctness.</p>
+              <pre className="phase-code">
+{`cosilico validate eitc \\
+  --reference policyengine-us \\
+  --cases 1000`}
+              </pre>
+              <div className="phase-checks">
+                <span className="check">✓ Test 1000 random cases</span>
+                <span className="check">✓ Compare outputs with PolicyEngine</span>
+                <span className="check">✓ Flag any discrepancies</span>
+              </div>
+            </div>
+
+            <div className="phase-card phase-2">
+              <div className="phase-header">
+                <span className="phase-number">2</span>
+                <h4>Cross-Compilation Consistency</h4>
+                <span className="phase-frequency">Continuous (CI)</span>
+              </div>
+              <p>Ensure ALL compilation targets produce identical results for the same inputs.</p>
+              <div className="cross-compile-diagram">
+                <div className="cc-source">DSL Source</div>
+                <div className="cc-arrows">
+                  <div className="cc-arrow">→ Python</div>
+                  <div className="cc-arrow">→ JavaScript</div>
+                  <div className="cc-arrow">→ WASM</div>
+                  <div className="cc-arrow">→ SQL</div>
+                </div>
+                <div className="cc-constraint">Must all produce identical output</div>
+              </div>
+              <div className="phase-checks">
+                <span className="check">✓ Same inputs → same outputs</span>
+                <span className="check">✓ Floating point precision handled consistently</span>
+                <span className="check">✓ Edge cases match exactly</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="validation-benefits">
+            <h4>Why This Strategy Works</h4>
+            <ul>
+              <li><strong>Bug fixes validated once</strong> — Fix a bug, validate against PolicyEngine, done.</li>
+              <li><strong>New targets inherit correctness</strong> — Just prove they match existing targets.</li>
+              <li><strong>CI is fast</strong> — Cross-compilation tests don't require PolicyEngine.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* Multi-Repo Architecture */}
       <section className="arch-repos">
         <div className="section-header">

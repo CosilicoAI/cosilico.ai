@@ -76,7 +76,7 @@ export default function HomePage() {
 
       {/* What We Offer */}
       <section className="products">
-        <h2>Three APIs. One simulation.</h2>
+        <h2>Five APIs. One simulation.</h2>
         <div className="product-grid">
           <div className="product-card">
             <div className="product-icon">
@@ -119,6 +119,36 @@ export default function HomePage() {
               Distributional impacts in seconds.
             </p>
             <code>cosilico.simulate(<br/>&nbsp;&nbsp;reform,<br/>&nbsp;&nbsp;population<br/>)</code>
+          </div>
+          <div className="product-card">
+            <div className="product-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 8v4l3 3" />
+                <path d="M3 12h2M19 12h2" />
+              </svg>
+            </div>
+            <h3>Full Profile</h3>
+            <p>
+              Partial household in, complete financial profile out.
+              Predictions plus calculations combined.
+            </p>
+            <code>cosilico.profile(<br/>&nbsp;&nbsp;partial_household<br/>)</code>
+          </div>
+          <div className="product-card">
+            <div className="product-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+                <path d="M8 7h8M8 11h8M8 15h5" />
+              </svg>
+            </div>
+            <h3>Law Archive</h3>
+            <p>
+              Structured US statute text with historical versions.
+              All 54 titles of the US Code.
+            </p>
+            <code>cosilico.statute(<br/>&nbsp;&nbsp;"26/32"<br/>)</code>
           </div>
         </div>
       </section>

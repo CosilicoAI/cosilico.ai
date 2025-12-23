@@ -1,0 +1,701 @@
+{
+  "generated_at": "1766452526.103674",
+  "total_targets": 530,
+  "total_strata": 68,
+  "sources": [
+    {
+      "source": "bls",
+      "display_name": "BLS",
+      "count": 18,
+      "variables": 6,
+      "year_min": 2021,
+      "year_max": 2023,
+      "years": [
+        2021,
+        2022,
+        2023
+      ],
+      "is_projection": false
+    },
+    {
+      "source": "census-acs",
+      "display_name": "CENSUS ACS",
+      "count": 81,
+      "variables": 2,
+      "year_min": 2021,
+      "year_max": 2023,
+      "years": [
+        2021,
+        2022,
+        2023
+      ],
+      "is_projection": false
+    },
+    {
+      "source": "dwp",
+      "display_name": "DWP",
+      "count": 20,
+      "variables": 10,
+      "year_min": 2021,
+      "year_max": 2022,
+      "years": [
+        2021,
+        2022
+      ],
+      "is_projection": false
+    },
+    {
+      "source": "hmrc",
+      "display_name": "HMRC",
+      "count": 16,
+      "variables": 6,
+      "year_min": 2021,
+      "year_max": 2022,
+      "years": [
+        2021,
+        2022
+      ],
+      "is_projection": false
+    },
+    {
+      "source": "irs-soi",
+      "display_name": "IRS SOI",
+      "count": 90,
+      "variables": 2,
+      "year_min": 2020,
+      "year_max": 2021,
+      "years": [
+        2020,
+        2021
+      ],
+      "is_projection": false
+    },
+    {
+      "source": "ssa",
+      "display_name": "SSA",
+      "count": 30,
+      "variables": 6,
+      "year_min": 2021,
+      "year_max": 2023,
+      "years": [
+        2021,
+        2022,
+        2023
+      ],
+      "is_projection": false
+    },
+    {
+      "source": "usda-snap",
+      "display_name": "USDA SNAP",
+      "count": 99,
+      "variables": 3,
+      "year_min": 2021,
+      "year_max": 2023,
+      "years": [
+        2021,
+        2022,
+        2023
+      ],
+      "is_projection": false
+    },
+    {
+      "source": "cbo",
+      "display_name": "CBO",
+      "count": 110,
+      "variables": 10,
+      "year_min": 2024,
+      "year_max": 2034,
+      "years": [
+        2024,
+        2025,
+        2026,
+        2027,
+        2028,
+        2029,
+        2030,
+        2031,
+        2032,
+        2033,
+        2034
+      ],
+      "is_projection": true
+    },
+    {
+      "source": "obr",
+      "display_name": "OBR",
+      "count": 66,
+      "variables": 11,
+      "year_min": 2024,
+      "year_max": 2029,
+      "years": [
+        2024,
+        2025,
+        2026,
+        2027,
+        2028,
+        2029
+      ],
+      "is_projection": true
+    }
+  ],
+  "years": [
+    {
+      "year": 2020,
+      "count": 45,
+      "sources": [
+        "irs-soi"
+      ]
+    },
+    {
+      "year": 2021,
+      "count": 139,
+      "sources": [
+        "bls",
+        "census-acs",
+        "dwp",
+        "hmrc",
+        "irs-soi",
+        "ssa",
+        "usda-snap"
+      ]
+    },
+    {
+      "year": 2022,
+      "count": 94,
+      "sources": [
+        "bls",
+        "census-acs",
+        "dwp",
+        "hmrc",
+        "ssa",
+        "usda-snap"
+      ]
+    },
+    {
+      "year": 2023,
+      "count": 76,
+      "sources": [
+        "bls",
+        "census-acs",
+        "ssa",
+        "usda-snap"
+      ]
+    },
+    {
+      "year": 2024,
+      "count": 21,
+      "sources": [
+        "cbo",
+        "obr"
+      ]
+    },
+    {
+      "year": 2025,
+      "count": 21,
+      "sources": [
+        "cbo",
+        "obr"
+      ]
+    },
+    {
+      "year": 2026,
+      "count": 21,
+      "sources": [
+        "cbo",
+        "obr"
+      ]
+    },
+    {
+      "year": 2027,
+      "count": 21,
+      "sources": [
+        "cbo",
+        "obr"
+      ]
+    },
+    {
+      "year": 2028,
+      "count": 21,
+      "sources": [
+        "cbo",
+        "obr"
+      ]
+    },
+    {
+      "year": 2029,
+      "count": 21,
+      "sources": [
+        "cbo",
+        "obr"
+      ]
+    },
+    {
+      "year": 2030,
+      "count": 10,
+      "sources": [
+        "cbo"
+      ]
+    },
+    {
+      "year": 2031,
+      "count": 10,
+      "sources": [
+        "cbo"
+      ]
+    },
+    {
+      "year": 2032,
+      "count": 10,
+      "sources": [
+        "cbo"
+      ]
+    },
+    {
+      "year": 2033,
+      "count": 10,
+      "sources": [
+        "cbo"
+      ]
+    },
+    {
+      "year": 2034,
+      "count": 10,
+      "sources": [
+        "cbo"
+      ]
+    }
+  ],
+  "jurisdictions": [
+    {
+      "jurisdiction": "uk",
+      "count": 102,
+      "sources": [
+        "dwp",
+        "hmrc",
+        "obr"
+      ]
+    },
+    {
+      "jurisdiction": "us",
+      "count": 244,
+      "sources": [
+        "bls",
+        "cbo",
+        "census-acs",
+        "usda-snap"
+      ]
+    },
+    {
+      "jurisdiction": "us-federal",
+      "count": 184,
+      "sources": [
+        "cbo",
+        "irs-soi",
+        "ssa",
+        "usda-snap"
+      ]
+    }
+  ],
+  "sample_targets": [
+    {
+      "stratum": "US All Filers",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 153774296.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US All Filers",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 14447858000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI under_1",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 13276584.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI under_1",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": -82458000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 1_to_5k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 8848458.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 1_to_5k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 28547000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 5k_to_10k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 8844285.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 5k_to_10k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 66458000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 10k_to_15k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 9547842.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 10k_to_15k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 119547000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 15k_to_20k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 8857890.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 15k_to_20k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 155478000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 20k_to_25k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 8146626.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 20k_to_25k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 183547000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 25k_to_30k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 7253485.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 25k_to_30k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 199875000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 30k_to_40k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 12547123.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 30k_to_40k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 437548000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 40k_to_50k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 10347252.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 40k_to_50k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 465478000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 50k_to_75k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 18892456.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 50k_to_75k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 1175478000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 75k_to_100k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 13857425.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 75k_to_100k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 1198547000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 100k_to_200k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 21758943.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 100k_to_200k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 3047856000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 200k_to_500k",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 8547823.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 200k_to_500k",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 2547896000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 500k_to_1m",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 1847234.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 500k_to_1m",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 1247856000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 1m_to_1_5m",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 478234.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 1m_to_1_5m",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 578965000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 1_5m_to_2m",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 198523.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 1_5m_to_2m",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 345678000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 2m_to_5m",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 324567.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 2m_to_5m",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 947856000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 5m_to_10m",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 89234.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 5m_to_10m",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 612458000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 10m_plus",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 57812.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 10m_plus",
+      "variable": "adjusted_gross_income",
+      "year": 2021,
+      "value": 1171148000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers Single",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 76854234.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers Married Joint",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 54478234.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers Married Separate",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 3547823.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers Head Of Household",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 17847234.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers Qualifying Widow",
+      "variable": "tax_unit_count",
+      "year": 2021,
+      "value": 1046771.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US All Filers",
+      "variable": "tax_unit_count",
+      "year": 2020,
+      "value": 150344285.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US All Filers",
+      "variable": "adjusted_gross_income",
+      "year": 2020,
+      "value": 12534856000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI under_1",
+      "variable": "tax_unit_count",
+      "year": 2020,
+      "value": 14547234.0,
+      "type": "count",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI under_1",
+      "variable": "adjusted_gross_income",
+      "year": 2020,
+      "value": -98765000000.0,
+      "type": "amount",
+      "source": "irs-soi"
+    },
+    {
+      "stratum": "US Filers AGI 1_to_5k",
+      "variable": "tax_unit_count",
+      "year": 2020,
+      "value": 9234567.0,
+      "type": "count",
+      "source": "irs-soi"
+    }
+  ]
+}

@@ -9,10 +9,12 @@ test.describe('Cosilico homepage', () => {
     await expect(page.getByRole('heading', { name: /We simulate/i })).toBeVisible();
 
     // Products section
-    await expect(page.getByRole('heading', { name: 'Three APIs. One simulation.' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Five APIs. One simulation.' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Rules' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Data' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Scenarios' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Full Profile' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Law Archive' })).toBeVisible();
 
     // Screenshot
     const image = await page.screenshot({ fullPage: true });
