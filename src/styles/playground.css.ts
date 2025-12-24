@@ -409,6 +409,7 @@ export const netLabel = style({
 
 export const netValue = style({
   display: 'block',
+  fontFamily: vars.font.mono,
   fontSize: '3.5rem',
   fontWeight: 700,
   color: vars.color.text,
@@ -546,6 +547,7 @@ globalStyle(`${detailCard} h3`, {
 });
 
 export const detailTotal = style({
+  fontFamily: vars.font.mono,
   fontSize: '2rem',
   fontWeight: 700,
   letterSpacing: '-0.02em',
