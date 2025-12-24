@@ -1,20 +1,21 @@
 import React from "react";
-import "../styles/Pricing.css";
+import * as styles from "../styles/pricing.css";
 
 export default function PricingPage() {
   return (
-    <div className="pricing">
+    <div className={styles.pricing}>
+      <div className={styles.gridBg} />
       {/* Hero */}
-      <section className="pricing-hero">
+      <section className={styles.pricingHero}>
         <h1>Pricing</h1>
-        <p className="pricing-subtitle">
+        <p className={styles.pricingSubtitle}>
           Open source infrastructure. Pay for insights.
         </p>
       </section>
 
       {/* Philosophy */}
-      <section className="pricing-philosophy">
-        <div className="philosophy-content">
+      <section className={styles.pricingPhilosophy}>
+        <div className={styles.philosophyContent}>
           <h2>Everything is open source</h2>
           <p>
             The rules engine, the datasets, the generator—all free to download and run yourself.
@@ -29,25 +30,25 @@ export default function PricingPage() {
       </section>
 
       {/* API Pricing */}
-      <section className="pricing-apis">
+      <section className={styles.pricingApis}>
         <h2>API Pricing</h2>
-        <p className="section-subtitle">Simple per-call pricing. No tiers, no complexity.</p>
+        <p className={styles.sectionSubtitle}>Simple per-call pricing. No tiers, no complexity.</p>
 
-        <div className="pricing-grid">
-          <div className="pricing-card">
-            <div className="pricing-card-header">
+        <div className={styles.pricingGrid}>
+          <div className={styles.pricingCard}>
+            <div className={styles.pricingCardHeader}>
               <h3>Rules API</h3>
-              <div className="price">
-                <span className="price-value">$0.02</span>
-                <span className="price-unit">per call</span>
+              <div className={styles.price}>
+                <span className={styles.priceValue}>$0.02</span>
+                <span className={styles.priceUnit}>per call</span>
               </div>
             </div>
-            <p className="pricing-description">
+            <p className={styles.pricingDescription}>
               Calculate taxes and benefits for a complete household.
               Every formula traced to statute.
             </p>
             <code>POST /calculate</code>
-            <ul className="pricing-features">
+            <ul className={styles.pricingFeatures}>
               <li>Federal + state income taxes</li>
               <li>100+ benefit programs</li>
               <li>Marginal rates & phase-outs</li>
@@ -55,19 +56,19 @@ export default function PricingPage() {
             </ul>
           </div>
 
-          <div className="pricing-card">
-            <div className="pricing-card-header">
+          <div className={styles.pricingCard}>
+            <div className={styles.pricingCardHeader}>
               <h3>Predictions API</h3>
-              <div className="price">
-                <span className="price-value">$0.05</span>
-                <span className="price-unit">per call</span>
+              <div className={styles.price}>
+                <span className={styles.priceValue}>$0.05</span>
+                <span className={styles.priceUnit}>per call</span>
               </div>
             </div>
-            <p className="pricing-description">
+            <p className={styles.pricingDescription}>
               Complete a partial household profile using locally-calibrated models.
             </p>
             <code>POST /predict</code>
-            <ul className="pricing-features">
+            <ul className={styles.pricingFeatures}>
               <li>Impute missing attributes</li>
               <li>County-level calibration</li>
               <li>Real-time economic signals</li>
@@ -75,19 +76,19 @@ export default function PricingPage() {
             </ul>
           </div>
 
-          <div className="pricing-card featured">
-            <div className="pricing-card-header">
+          <div className={`${styles.pricingCard} ${styles.featured}`}>
+            <div className={styles.pricingCardHeader}>
               <h3>Full Profile</h3>
-              <div className="price">
-                <span className="price-value">$0.06</span>
-                <span className="price-unit">per call</span>
+              <div className={styles.price}>
+                <span className={styles.priceValue}>$0.06</span>
+                <span className={styles.priceUnit}>per call</span>
               </div>
             </div>
-            <p className="pricing-description">
+            <p className={styles.pricingDescription}>
               Partial household in → complete financial profile + tax/benefit calculations out.
             </p>
             <code>POST /profile</code>
-            <ul className="pricing-features">
+            <ul className={styles.pricingFeatures}>
               <li>Predictions + Rules combined</li>
               <li>Full financial picture</li>
               <li>Tax liability & effective rates</li>
@@ -95,19 +96,19 @@ export default function PricingPage() {
             </ul>
           </div>
 
-          <div className="pricing-card">
-            <div className="pricing-card-header">
+          <div className={styles.pricingCard}>
+            <div className={styles.pricingCardHeader}>
               <h3>Simulations API</h3>
-              <div className="price">
-                <span className="price-value">$1</span>
-                <span className="price-unit">per 1M household-reforms</span>
+              <div className={styles.price}>
+                <span className={styles.priceValue}>$1</span>
+                <span className={styles.priceUnit}>per 1M household-reforms</span>
               </div>
             </div>
-            <p className="pricing-description">
+            <p className={styles.pricingDescription}>
               Run policy reforms at population scale. Distributional impacts in seconds.
             </p>
             <code>POST /simulate</code>
-            <ul className="pricing-features">
+            <ul className={styles.pricingFeatures}>
               <li>Population-wide analysis</li>
               <li>Custom reform definitions</li>
               <li>Distributional breakdowns</li>
@@ -115,19 +116,19 @@ export default function PricingPage() {
             </ul>
           </div>
 
-          <div className="pricing-card">
-            <div className="pricing-card-header">
+          <div className={styles.pricingCard}>
+            <div className={styles.pricingCardHeader}>
               <h3>Law Archive API</h3>
-              <div className="price">
-                <span className="price-value">$0.01</span>
-                <span className="price-unit">per query</span>
+              <div className={styles.price}>
+                <span className={styles.priceValue}>$0.01</span>
+                <span className={styles.priceUnit}>per query</span>
               </div>
             </div>
-            <p className="pricing-description">
+            <p className={styles.pricingDescription}>
               Structured US statute text with historical versions. All 54 titles of the US Code.
             </p>
             <code>GET /v1/sections/26/32</code>
-            <ul className="pricing-features">
+            <ul className={styles.pricingFeatures}>
               <li>Full US Code (USLM XML → JSON)</li>
               <li>Historical versions (as_of dates)</li>
               <li>Full-text search</li>
@@ -138,18 +139,18 @@ export default function PricingPage() {
       </section>
 
       {/* Data Pricing */}
-      <section className="pricing-data">
+      <section className={styles.pricingData}>
         <h2>Data Downloads</h2>
-        <p className="section-subtitle">
+        <p className={styles.sectionSubtitle}>
           All datasets available. Pay for bandwidth, not access.
         </p>
 
-        <div className="data-pricing-box">
-          <div className="data-price">
-            <span className="price-value">$0.10</span>
-            <span className="price-unit">per GB</span>
+        <div className={styles.dataPricingBox}>
+          <div className={styles.dataPrice}>
+            <span className={styles.priceValue}>$0.10</span>
+            <span className={styles.priceUnit}>per GB</span>
           </div>
-          <div className="data-details">
+          <div className={styles.dataDetails}>
             <p>
               Download calibrated microdata, synthetic populations, and economic forecasts.
               Updated monthly with CPS, daily with economic signals.
@@ -165,60 +166,60 @@ export default function PricingPage() {
       </section>
 
       {/* Use Cases */}
-      <section className="pricing-use-cases">
+      <section className={styles.pricingUseCases}>
         <h2>Who pays for what</h2>
-        <div className="use-case-table">
-          <div className="use-case-row header">
+        <div className={styles.useCaseTable}>
+          <div className={`${styles.useCaseRow} ${styles.header}`}>
             <span>Customer</span>
             <span>Products</span>
             <span>Use case</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Benefit apps</span>
             <span>Full Profile</span>
             <span>Partial user info → eligibility check</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Tax software</span>
             <span>Rules + Predictions</span>
             <span>Liability estimates from partial data</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>AI assistants</span>
             <span>Full Profile</span>
             <span>"What benefits can I get?"</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Fintech</span>
             <span>Predictions</span>
             <span>Customer profile completion</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Marketers</span>
             <span>Full Profile</span>
             <span>Segment by tax burden + benefits → WTP</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Researchers</span>
             <span>Simulations + Data</span>
             <span>Reform modeling at scale</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Government</span>
             <span>Simulations + Enterprise</span>
             <span>Bill scoring, outreach targeting</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Journalists</span>
             <span>Playground + Rules</span>
             <span>Fact-checking, embedded calculators</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Legal tech</span>
             <span>Law Archive</span>
             <span>Contract analysis, compliance tools</span>
           </div>
-          <div className="use-case-row">
+          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>AI companies</span>
             <span>Law Archive + Rules</span>
             <span>RAG for legal assistants</span>
@@ -227,28 +228,28 @@ export default function PricingPage() {
       </section>
 
       {/* Enterprise */}
-      <section className="pricing-enterprise">
-        <div className="enterprise-box">
+      <section className={styles.pricingEnterprise}>
+        <div className={styles.enterpriseBox}>
           <h2>Enterprise</h2>
           <p>
             Custom contracts for SLAs, support, and dedicated infrastructure.
             Same unit pricing—just with guarantees.
           </p>
-          <a href="mailto:hello@cosilico.ai" className="btn-primary">
+          <a href="mailto:hello@cosilico.ai" className={styles.btnPrimary}>
             Talk to us
           </a>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="pricing-cta">
+      <section className={styles.pricingCta}>
         <h2>Start building</h2>
         <p>Pay-as-you-go. No minimums, no commitments.</p>
-        <div className="cta-buttons">
-          <a href="https://docs.cosilico.ai" className="btn-primary">
+        <div className={styles.ctaButtons}>
+          <a href="https://docs.cosilico.ai" className={styles.btnPrimary}>
             Get API Key
           </a>
-          <a href="/playground" className="btn-secondary">
+          <a href="/playground" className={styles.btnSecondary}>
             Try the Playground
           </a>
         </div>

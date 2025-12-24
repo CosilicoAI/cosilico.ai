@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CosilicoPipeline.css';
+import * as styles from './cosilicoPipeline.css';
 import { calculate as calculateEITCFromEngine, PARAMS, CalculatorResult } from '../lib/eitc-calculator';
 
 interface SourceDocument {
@@ -181,84 +181,84 @@ const CosilicoPipeline: React.FC = () => {
   const getTabIndex = (id: TabId) => TABS.findIndex(t => t.id === id);
 
   return (
-    <div className="pipeline-page">
-      <div className="pipeline-container">
-        <header className="pipeline-header">
-          <h1 className="pipeline-title">
+    <div className={styles.pipelinePage}>
+      <div className={styles.pipelineContainer}>
+        <header className={styles.pipelineHeader}>
+          <h1 className={styles.pipelineTitle}>
             From <span>law</span> to calculation
           </h1>
-          <p className="pipeline-subtitle">
+          <p className={styles.pipelineSubtitle}>
             Every value traced to its authoritative source
           </p>
         </header>
 
         {/* Flow Indicator */}
-        <div className="flow-indicator">
+        <div className={styles.flowIndicator}>
           {TABS.map((tab, i) => (
             <React.Fragment key={tab.id}>
               <div
-                className={`flow-step ${
-                  activeTab === tab.id ? 'active' : getTabIndex(activeTab) > i ? 'completed' : ''
+                className={`${styles.flowStep} ${
+                  activeTab === tab.id ? styles.flowStepActive : getTabIndex(activeTab) > i ? styles.flowStepCompleted : ''
                 }`}
                 onClick={() => setActiveTab(tab.id)}
                 style={{ cursor: 'pointer' }}
               >
-                <span className="flow-step-icon">{i + 1}</span>
+                <span className={styles.flowStepIcon}>{i + 1}</span>
                 {tab.label}
               </div>
-              {i < TABS.length - 1 && <span className="flow-arrow">→</span>}
+              {i < TABS.length - 1 && <span className={styles.flowArrow}>→</span>}
             </React.Fragment>
           ))}
         </div>
 
         {/* Tab Navigation */}
-        <nav className="pipeline-tabs">
+        <nav className={styles.pipelineTabs}>
           {TABS.map((tab, i) => (
             <button
               key={tab.id}
-              className={`pipeline-tab ${activeTab === tab.id ? 'active' : ''}`}
+              className={`${styles.pipelineTab} ${activeTab === tab.id ? styles.pipelineTabActive : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
-              <span className="tab-number">{i + 1}</span>
+              <span className={styles.tabNumber}>{i + 1}</span>
               {tab.label}
             </button>
           ))}
         </nav>
 
-        <div className="pipeline-content" key={activeTab}>
+        <div className={styles.pipelineContent} key={activeTab}>
           {activeTab === 'source' && (
             <div className="source-panel">
-              <div className="panel-header">
+              <div className={styles.panelHeader}>
                 <h3>{EITC_SOURCE.citation}</h3>
-                <div className="meta-row">
-                  <span className="meta-item">
+                <div className={styles.metaRow}>
+                  <span className={styles.metaItem}>
                     <strong>Path:</strong> <code>lawarchive://{EITC_SOURCE.path}</code>
                   </span>
-                  <span className="meta-item">
+                  <span className={styles.metaItem}>
                     <strong>Effective:</strong> {EITC_SOURCE.effectiveDate}
                   </span>
-                  <span className="meta-item">
+                  <span className={styles.metaItem}>
                     <strong>Format:</strong> {EITC_SOURCE.format}
                   </span>
                 </div>
               </div>
 
-              <div className="action-row">
-                <a href={EITC_SOURCE.sourceUrl} target="_blank" rel="noopener noreferrer" className="action-link">
+              <div className={styles.actionRow}>
+                <a href={EITC_SOURCE.sourceUrl} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
                   View on uscode.house.gov
                 </a>
-                <a href={EITC_SOURCE.rawUrl} target="_blank" rel="noopener noreferrer" className="action-link">
+                <a href={EITC_SOURCE.rawUrl} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
                   Download Raw XML
                 </a>
-                <a href={`${EITC_SOURCE.rawUrl.replace('original.xml', 'canonical.json')}`} target="_blank" rel="noopener noreferrer" className="action-link">
+                <a href={`${EITC_SOURCE.rawUrl.replace('original.xml', 'canonical.json')}`} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
                   View Canonical JSON
                 </a>
               </div>
 
-              <div className="code-block">
-                <div className="code-block-header">
-                  <span className="code-block-title">Statute Text</span>
-                  <div className="code-block-dots">
+              <div className={styles.codeBlock}>
+                <div className={styles.codeBlockHeader}>
+                  <span className={styles.codeBlockTitle}>Statute Text</span>
+                  <div className={styles.codeBlockDots}>
                     <span></span>
                     <span></span>
                     <span></span>
@@ -271,28 +271,28 @@ const CosilicoPipeline: React.FC = () => {
 
           {activeTab === 'encoding' && (
             <div className="encoding-panel">
-              <div className="panel-header">
+              <div className={styles.panelHeader}>
                 <h3>Variable: <code>{EITC_ENCODING.variable}</code></h3>
-                <div className="meta-row">
-                  <span className="meta-item">
+                <div className={styles.metaRow}>
+                  <span className={styles.metaItem}>
                     <strong>Citation:</strong> {EITC_ENCODING.citation}
                   </span>
-                  <span className="meta-item">
+                  <span className={styles.metaItem}>
                     <strong>Source:</strong> <code>lawarchive://{EITC_ENCODING.sourcePath}</code>
                   </span>
                 </div>
               </div>
 
-              <div className="action-row">
-                <a href={EITC_ENCODING.repoUrl} target="_blank" rel="noopener noreferrer" className="action-link">
+              <div className={styles.actionRow}>
+                <a href={EITC_ENCODING.repoUrl} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
                   View on GitHub
                 </a>
               </div>
 
-              <div className="code-block">
-                <div className="code-block-header">
-                  <span className="code-block-title">credit.cos</span>
-                  <div className="code-block-dots">
+              <div className={styles.codeBlock}>
+                <div className={styles.codeBlockHeader}>
+                  <span className={styles.codeBlockTitle}>credit.cos</span>
+                  <div className={styles.codeBlockDots}>
                     <span></span>
                     <span></span>
                     <span></span>
@@ -301,7 +301,7 @@ const CosilicoPipeline: React.FC = () => {
                 <pre>{EITC_ENCODING.formulaCode}</pre>
               </div>
 
-              <div className="info-box">
+              <div className={styles.infoBox}>
                 <h4>How it works</h4>
                 <ul>
                   <li><strong>source</strong> block links to lawarchive document for provenance</li>
@@ -315,14 +315,14 @@ const CosilicoPipeline: React.FC = () => {
 
           {activeTab === 'params' && (
             <div className="params-panel">
-              <div className="panel-header">
+              <div className={styles.panelHeader}>
                 <h3>Tax Year 2025</h3>
-                <div className="engine-badge" style={{ marginTop: '12px' }}>
+                <div className={styles.engineBadge} style={{ marginTop: '12px' }}>
                   Parameters from <code>cosilico-compile</code>
                 </div>
               </div>
 
-              <div className="params-sources">
+              <div className={styles.paramsSources}>
                 <h4>Authoritative Sources</h4>
                 <ul>
                   <li>Statute: 26 USC 32(b)(1) - fixed percentages</li>
@@ -330,8 +330,8 @@ const CosilicoPipeline: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="params-grid">
-                <div className="param-table">
+              <div className={styles.paramsGrid}>
+                <div className={styles.paramTable}>
                   <h4>Credit Percentages (32(b)(1))</h4>
                   <table>
                     <thead>
@@ -353,7 +353,7 @@ const CosilicoPipeline: React.FC = () => {
                   </table>
                 </div>
 
-                <div className="param-table">
+                <div className={styles.paramTable}>
                   <h4>Maximum Credits (Rev. Proc. 2024-40)</h4>
                   <table>
                     <thead>
@@ -379,11 +379,11 @@ const CosilicoPipeline: React.FC = () => {
           )}
 
           {activeTab === 'calculate' && (
-            <div className="calc-panel">
+            <div className={styles.calcPanel}>
               <h3>Calculate EITC</h3>
 
-              <div className="calc-grid">
-                <div className={`input-field ${errors.earnedIncome ? 'has-error' : ''}`}>
+              <div className={styles.calcGrid}>
+                <div className={`${styles.inputField} ${errors.earnedIncome ? styles.inputFieldError : ''}`}>
                   <label>Earned Income</label>
                   <input
                     type="number"
@@ -394,9 +394,9 @@ const CosilicoPipeline: React.FC = () => {
                       setResult(null);
                     }}
                   />
-                  {errors.earnedIncome && <span className="error-msg">{errors.earnedIncome}</span>}
+                  {errors.earnedIncome && <span className={styles.errorMsg}>{errors.earnedIncome}</span>}
                 </div>
-                <div className={`input-field ${errors.agi ? 'has-error' : ''}`}>
+                <div className={`${styles.inputField} ${errors.agi ? styles.inputFieldError : ''}`}>
                   <label>AGI</label>
                   <input
                     type="number"
@@ -407,9 +407,9 @@ const CosilicoPipeline: React.FC = () => {
                       setResult(null);
                     }}
                   />
-                  {errors.agi && <span className="error-msg">{errors.agi}</span>}
+                  {errors.agi && <span className={styles.errorMsg}>{errors.agi}</span>}
                 </div>
-                <div className="input-field">
+                <div className={styles.inputField}>
                   <label>Qualifying Children</label>
                   <select value={numChildren} onChange={(e) => {
                     setNumChildren(Number(e.target.value));
@@ -420,7 +420,7 @@ const CosilicoPipeline: React.FC = () => {
                     ))}
                   </select>
                 </div>
-                <div className="input-field">
+                <div className={styles.inputField}>
                   <label>Filing Status</label>
                   <select value={filingStatus} onChange={(e) => {
                     setFilingStatus(e.target.value as 'single' | 'joint');
@@ -433,7 +433,7 @@ const CosilicoPipeline: React.FC = () => {
               </div>
 
               <button
-                className="calc-button"
+                className={styles.calcButton}
                 onClick={calculateEITC}
                 disabled={Object.keys(errors).some(k => errors[k as keyof ValidationErrors])}
               >
@@ -441,17 +441,17 @@ const CosilicoPipeline: React.FC = () => {
               </button>
 
               {result !== null && (
-                <div className="calc-result">
-                  <div className="result-header">
-                    <span className="result-label">EITC Amount</span>
-                    <span className="result-amount">${result.eitc.toLocaleString()}</span>
+                <div className={styles.calcResult}>
+                  <div className={styles.resultHeader}>
+                    <span className={styles.resultLabel}>EITC Amount</span>
+                    <span className={styles.resultAmount}>${result.eitc.toLocaleString()}</span>
                   </div>
 
-                  <div className="engine-badge">
+                  <div className={styles.engineBadge}>
                     Calculated by <code>cosilico-compile</code>
                   </div>
 
-                  <div className="citation-chain">
+                  <div className={styles.citationChain}>
                     <h5>Citation Chain</h5>
                     <ol>
                       <li>

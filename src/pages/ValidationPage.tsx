@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ValidationResults } from "../types/validation";
-import "../styles/Validation.css";
+import * as styles from "../styles/validation.css";
 
 export default function ValidationPage() {
   const [data, setData] = useState<ValidationResults | null>(null);
@@ -36,16 +36,18 @@ export default function ValidationPage() {
 
   if (loading) {
     return (
-      <div className="validation-page">
-        <div className="loading">Loading validation results...</div>
+      <div className={styles.validationPage}>
+        <div className={styles.gridBg} />
+        <div className={styles.loading}>Loading validation results...</div>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="validation-page">
-        <div className="error">
+      <div className={styles.validationPage}>
+        <div className={styles.gridBg} />
+        <div className={styles.error}>
           {error || "No validation data available"}
         </div>
       </div>
@@ -62,79 +64,80 @@ export default function ValidationPage() {
   };
 
   return (
-    <div className="validation-page">
+    <div className={styles.validationPage}>
+      <div className={styles.gridBg} />
       {/* Header */}
-      <header className="validation-header">
-        <div className="header-content">
-          <h1>Validation Dashboard</h1>
-          <p className="subtitle">
+      <header className={styles.validationHeader}>
+        <div className={styles.headerContent}>
+          <h1 className={styles.headerTitle}>Validation Dashboard</h1>
+          <p className={styles.subtitle}>
             Cosilico accuracy vs. PolicyEngine and TAXSIM
           </p>
-          <div className="header-meta">
-            <span className="meta-item">
+          <div className={styles.headerMeta}>
+            <span className={styles.metaItem}>
               <strong>Data:</strong> {data.dataSource}
             </span>
-            <span className="meta-item">
-              <strong>Commit:</strong> <code>{data.commit}</code>
+            <span className={styles.metaItem}>
+              <strong>Commit:</strong> <code className={styles.metaItemCode}>{data.commit}</code>
             </span>
-            <span className="meta-item">
+            <span className={styles.metaItem}>
               <strong>Updated:</strong> {new Date(data.timestamp).toLocaleDateString()}
             </span>
             {data.isSampleData && (
-              <span className="meta-item sample-badge">Sample Data</span>
+              <span className={`${styles.metaItem} ${styles.sampleBadge}`}>Sample Data</span>
             )}
           </div>
         </div>
       </header>
 
       {/* Overall Stats */}
-      <section className="overall-stats">
-        <div className="stat-card">
-          <div className="stat-value">{formatNumber(data.overall.totalHouseholds)}</div>
-          <div className="stat-label">Total Households</div>
+      <section className={styles.overallStats}>
+        <div className={styles.statCard}>
+          <div className={styles.statValue}>{formatNumber(data.overall.totalHouseholds)}</div>
+          <div className={styles.statLabel}>Total Households</div>
         </div>
-        <div className="stat-card highlight">
-          <div className="stat-value">{formatPercent(data.overall.matchRate)}</div>
-          <div className="stat-label">Aggregate Match Rate</div>
+        <div className={`${styles.statCard} ${styles.statCardHighlight}`}>
+          <div className={styles.statValue}>{formatPercent(data.overall.matchRate)}</div>
+          <div className={styles.statLabel}>Aggregate Match Rate</div>
         </div>
-        <div className="stat-card">
-          <div className="stat-value">${data.overall.meanAbsoluteError.toFixed(2)}</div>
-          <div className="stat-label">Mean Absolute Error</div>
+        <div className={styles.statCard}>
+          <div className={styles.statValue}>${data.overall.meanAbsoluteError.toFixed(2)}</div>
+          <div className={styles.statLabel}>Mean Absolute Error</div>
         </div>
         {data.overall.speed && (
-          <div className="stat-card">
-            <div className="stat-value">{formatSpeed(data.overall.speed.speedup)}</div>
-            <div className="stat-label">Speed vs PolicyEngine</div>
+          <div className={styles.statCard}>
+            <div className={styles.statValue}>{formatSpeed(data.overall.speed.speedup)}</div>
+            <div className={styles.statLabel}>Speed vs PolicyEngine</div>
           </div>
         )}
       </section>
 
       {/* Performance Metrics */}
       {data.overall.speed && (
-        <section className="speed-section">
-          <h2>Performance</h2>
-          <div className="speed-grid">
-            <div className="speed-card">
-              <div className="speed-header">Cosilico</div>
-              <div className="speed-metric">
-                <span className="speed-value">
+        <section className={styles.speedSection}>
+          <h2 className={styles.sectionTitle}>Performance</h2>
+          <div className={styles.speedGrid}>
+            <div className={styles.speedCard}>
+              <div className={styles.speedHeader}>Cosilico</div>
+              <div className={styles.speedMetric}>
+                <span className={styles.speedValue}>
                   {formatThroughput(data.overall.speed.cosilicoThroughput)}
                 </span>
-                <span className="speed-label">throughput</span>
+                <span className={styles.speedLabel}>throughput</span>
               </div>
-              <div className="speed-detail">
+              <div className={styles.speedDetail}>
                 {data.overall.speed.cosilicoTotalMs.toFixed(0)}ms total
               </div>
             </div>
-            <div className="speed-card">
-              <div className="speed-header">PolicyEngine</div>
-              <div className="speed-metric">
-                <span className="speed-value">
+            <div className={styles.speedCard}>
+              <div className={styles.speedHeader}>PolicyEngine</div>
+              <div className={styles.speedMetric}>
+                <span className={styles.speedValue}>
                   {formatThroughput(data.overall.speed.peThroughput)}
                 </span>
-                <span className="speed-label">throughput</span>
+                <span className={styles.speedLabel}>throughput</span>
               </div>
-              <div className="speed-detail">
+              <div className={styles.speedDetail}>
                 {data.overall.speed.peTotalMs.toFixed(0)}ms total
               </div>
             </div>
@@ -143,24 +146,26 @@ export default function ValidationPage() {
       )}
 
       {/* Validators */}
-      <section className="validators-section">
-        <h2>Validators</h2>
-        <div className="validators-grid">
+      <section className={styles.validatorsSection}>
+        <h2 className={styles.sectionTitle}>Validators</h2>
+        <div className={styles.validatorsGrid}>
           {data.validators.map((validator) => (
             <div
               key={validator.name}
-              className={`validator-card ${validator.available ? "available" : "unavailable"}`}
+              className={`${styles.validatorCard} ${
+                validator.available ? styles.validatorCardAvailable : styles.validatorCardUnavailable
+              }`}
             >
-              <div className="validator-name">{validator.name}</div>
-              <div className="validator-version">v{validator.version}</div>
-              <div className="validator-status">
+              <div className={styles.validatorName}>{validator.name}</div>
+              <div className={styles.validatorVersion}>v{validator.version}</div>
+              <div className={styles.validatorStatus}>
                 {validator.available ? (
                   <>
-                    <span className="status-icon">✓</span>
+                    <span className={styles.statusIcon}>✓</span>
                     <span>{formatNumber(validator.householdsCovered)} households</span>
                   </>
                 ) : (
-                  <span className="status-icon">—</span>
+                  <span className={styles.statusIcon}>—</span>
                 )}
               </div>
             </div>
@@ -169,44 +174,44 @@ export default function ValidationPage() {
       </section>
 
       {/* Per-Variable Results */}
-      <section className="sections-list">
-        <h2>Per-Variable Results</h2>
-        <div className="sections-grid">
+      <section className={styles.sectionsList}>
+        <h2 className={styles.sectionTitle}>Per-Variable Results</h2>
+        <div className={styles.sectionsGrid}>
           {data.sections.map((section) => (
-            <div key={section.variable} className="section-card">
-              <div className="section-header">
-                <div className="section-title">
-                  <h3>{section.title}</h3>
-                  <code className="section-code">{section.section}</code>
+            <div key={section.variable} className={styles.sectionCard}>
+              <div className={styles.sectionHeader}>
+                <div className={styles.sectionTitleContainer}>
+                  <h3 className={styles.sectionTitleText}>{section.title}</h3>
+                  <code className={styles.sectionCode}>{section.section}</code>
                 </div>
-                <div className="section-variable">
-                  <code>{section.variable}</code>
+                <div>
+                  <code className={styles.sectionVariable}>{section.variable}</code>
                 </div>
               </div>
 
-              <div className="section-stats">
-                <div className="section-stat">
-                  <span className="section-stat-label">Match Rate</span>
-                  <span className="section-stat-value">
+              <div className={styles.sectionStats}>
+                <div className={styles.sectionStat}>
+                  <span className={styles.sectionStatLabel}>Match Rate</span>
+                  <span className={styles.sectionStatValue}>
                     {formatPercent(section.summary.matchRate)}
                   </span>
                 </div>
-                <div className="section-stat">
-                  <span className="section-stat-label">Households</span>
-                  <span className="section-stat-value">
+                <div className={styles.sectionStat}>
+                  <span className={styles.sectionStatLabel}>Households</span>
+                  <span className={styles.sectionStatValue}>
                     {formatNumber(section.households)}
                   </span>
                 </div>
-                <div className="section-stat">
-                  <span className="section-stat-label">MAE</span>
-                  <span className="section-stat-value">
+                <div className={styles.sectionStat}>
+                  <span className={styles.sectionStatLabel}>MAE</span>
+                  <span className={styles.sectionStatValue}>
                     ${section.summary.meanAbsoluteError.toFixed(2)}
                   </span>
                 </div>
                 {section.speed && (
-                  <div className="section-stat">
-                    <span className="section-stat-label">Speedup</span>
-                    <span className="section-stat-value">
+                  <div className={styles.sectionStat}>
+                    <span className={styles.sectionStatLabel}>Speedup</span>
+                    <span className={styles.sectionStatValue}>
                       {formatSpeed(section.speed.speedup)}
                     </span>
                   </div>
@@ -214,19 +219,19 @@ export default function ValidationPage() {
               </div>
 
               {section.validatorBreakdown && (
-                <div className="validator-breakdown">
+                <div className={styles.validatorBreakdown}>
                   {section.validatorBreakdown.policyengine && (
-                    <div className="breakdown-item">
-                      <span className="breakdown-name">PolicyEngine</span>
-                      <span className="breakdown-rate">
+                    <div className={styles.breakdownItem}>
+                      <span className={styles.breakdownName}>PolicyEngine</span>
+                      <span className={styles.breakdownRate}>
                         {formatPercent(section.validatorBreakdown.policyengine.rate)}
                       </span>
                     </div>
                   )}
                   {section.validatorBreakdown.taxsim && (
-                    <div className="breakdown-item">
-                      <span className="breakdown-name">TAXSIM</span>
-                      <span className="breakdown-rate">
+                    <div className={styles.breakdownItem}>
+                      <span className={styles.breakdownName}>TAXSIM</span>
+                      <span className={styles.breakdownRate}>
                         {formatPercent(section.validatorBreakdown.taxsim.rate)}
                       </span>
                     </div>
@@ -235,24 +240,24 @@ export default function ValidationPage() {
               )}
 
               {section.mismatches && section.mismatches.length > 0 && (
-                <details className="mismatches">
-                  <summary>
+                <details className={styles.mismatches}>
+                  <summary className={styles.mismatchesSummary}>
                     {section.mismatches.length} mismatch type
                     {section.mismatches.length !== 1 ? "s" : ""}
                   </summary>
-                  <ul className="mismatch-list">
+                  <ul className={styles.mismatchList}>
                     {section.mismatches.map((mismatch, idx) => (
-                      <li key={idx} className="mismatch-item">
-                        <div className="mismatch-header">
-                          <strong>{mismatch.description}</strong>
-                          <span className="mismatch-count">
+                      <li key={idx} className={styles.mismatchItem}>
+                        <div className={styles.mismatchHeader}>
+                          <strong className={styles.mismatchHeaderStrong}>{mismatch.description}</strong>
+                          <span className={styles.mismatchCount}>
                             {formatNumber(mismatch.count)} cases
                           </span>
                         </div>
-                        <p className="mismatch-explanation">
+                        <p className={styles.mismatchExplanation}>
                           {mismatch.explanation}
                         </p>
-                        <cite className="mismatch-citation">
+                        <cite className={styles.mismatchCitation}>
                           {mismatch.citation}
                         </cite>
                         {mismatch.upstreamIssue && (
@@ -260,7 +265,7 @@ export default function ValidationPage() {
                             href={mismatch.upstreamIssue}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mismatch-issue"
+                            className={styles.mismatchIssue}
                           >
                             Upstream issue →
                           </a>

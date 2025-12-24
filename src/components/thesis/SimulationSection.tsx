@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Cite } from "./Citation";
 import { Node } from "./types";
 import { nodes, edges } from "./graphData";
+import * as styles from "../../styles/thesis.css";
 
 export function SimulationSection() {
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
@@ -21,18 +22,18 @@ export function SimulationSection() {
 
   return (
     <>
-      <div className="thesis-content">
+      <div className={styles.thesisContent}>
         <h2>3. The Simulation</h2>
         <p>
           We're building the shared substrate—a simulation that anyone can query (and more importantly, any AI). Decisions grounded in the same reality. Five APIs. One model of society.
         </p>
       </div>
 
-      <div className="graph-container">
-        <svg className="graph-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-          <text x="20" y="8" className="column-label">Markets</text>
-          <text x="50" y="8" className="column-label">Products</text>
-          <text x="80" y="8" className="column-label">Customers</text>
+      <div className={styles.graphContainer}>
+        <svg className={styles.graphSvg} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+          <text x="20" y="8" className={styles.columnLabel}>Markets</text>
+          <text x="50" y="8" className={styles.columnLabel}>Products</text>
+          <text x="80" y="8" className={styles.columnLabel}>Customers</text>
 
           {edges.map((edge) => {
             const from = nodes.find((n) => n.id === edge.from);
@@ -46,7 +47,7 @@ export function SimulationSection() {
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                className={`graph-edge ${highlightedEdges.includes(edgeId) ? "highlighted" : ""}`}
+                className={highlightedEdges.includes(edgeId) ? `${styles.graphEdge} ${styles.graphEdgeHighlighted}` : styles.graphEdge}
               />
             );
           })}
@@ -54,12 +55,20 @@ export function SimulationSection() {
           {nodes.map((node) => (
             <g
               key={node.id}
-              className={`graph-node ${node.type} ${selectedNode?.id === node.id ? "selected" : ""}`}
               onClick={() => handleNodeClick(node)}
               style={{ cursor: "pointer" }}
             >
-              <circle cx={node.x} cy={node.y} r="4" />
-              <text x={node.x} y={node.y + 7} className="node-label">
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r="4"
+                className={
+                  selectedNode?.id === node.id
+                    ? `${styles.graphNodeCircle} ${node.type === 'product' ? styles.graphNodeProduct : node.type === 'customer' ? styles.graphNodeCustomer : styles.graphNodeMarket}`
+                    : `${styles.graphNodeCircle} ${node.type === 'product' ? styles.graphNodeProduct : node.type === 'customer' ? styles.graphNodeCustomer : styles.graphNodeMarket}`
+                }
+              />
+              <text x={node.x} y={node.y + 7} className={styles.nodeLabel}>
                 {node.label}
               </text>
             </g>
@@ -67,20 +76,20 @@ export function SimulationSection() {
         </svg>
 
         {selectedNode && (
-          <div className="node-detail">
+          <div className={styles.nodeDetail}>
             <h3>{selectedNode.label}</h3>
             <p>{selectedNode.description}</p>
             {selectedNode.metrics && (
-              <div className="node-metric">{selectedNode.metrics}</div>
+              <div className={styles.nodeMetric}>{selectedNode.metrics}</div>
             )}
             {selectedNode.sourceId && <Cite id={selectedNode.sourceId} />}
           </div>
         )}
       </div>
 
-      <div className="thesis-content">
-        <div className="platform-details">
-          <div className="platform-card">
+      <div className={styles.thesisContent}>
+        <div className={styles.platformDetails}>
+          <div className={styles.platformCard}>
             <h3>Rules API</h3>
             <p>Deterministic tax and benefit calculations from statute.</p>
             <ul>
@@ -91,7 +100,7 @@ export function SimulationSection() {
             </ul>
             <code>cosilico.calculate(household, variables)</code>
           </div>
-          <div className="platform-card">
+          <div className={styles.platformCard}>
             <h3>Data API</h3>
             <p>Statistical predictions for attributes you don't observe.</p>
             <ul>
@@ -102,7 +111,7 @@ export function SimulationSection() {
             </ul>
             <code>cosilico.predict(partial_household)</code>
           </div>
-          <div className="platform-card">
+          <div className={styles.platformCard}>
             <h3>Simulation API</h3>
             <p>Population-scale policy modeling.</p>
             <ul>

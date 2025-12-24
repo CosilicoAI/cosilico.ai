@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../styles/Thesis.css";
+import * as styles from "../styles/thesis.css";
 import { Section } from "../components/thesis/types";
 import { ProblemSection } from "../components/thesis/ProblemSection";
 import { GapSection } from "../components/thesis/GapSection";
@@ -50,21 +50,22 @@ export default function ThesisPage() {
   };
 
   return (
-    <div className="thesis">
+    <div className={styles.thesis}>
+      <div className={styles.gridBg} />
       {/* Top nav with logo */}
-      <nav className="thesis-top-nav">
-        <a href="/" className="thesis-logo">
-          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className="thesis-logo-icon" />
+      <nav className={styles.thesisTopNav}>
+        <a href="/" className={styles.thesisLogo}>
+          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.thesisLogoIcon} />
           cosilico
         </a>
       </nav>
 
       {/* Progress nav */}
-      <nav className="thesis-nav">
+      <nav className={styles.thesisNav}>
         {sections.map(s => (
           <button
             key={s}
-            className={activeSection === s ? "active" : ""}
+            className={activeSection === s ? `${styles.navButton} ${styles.navButtonActive}` : styles.navButton}
             onClick={() => scrollTo(s)}
           >
             {s.charAt(0).toUpperCase() + s.slice(1)}
@@ -73,87 +74,87 @@ export default function ThesisPage() {
       </nav>
 
       {/* Hero */}
-      <section className="thesis-hero">
-        <p className="thesis-label">Research Prospectus</p>
-        <h1>Society, in Silico</h1>
-        <p className="thesis-subtitle">
+      <section className={styles.thesisHero}>
+        <p className={styles.thesisLabel}>Research Prospectus</p>
+        <h1 className={styles.heroTitle}>Society, in Silico</h1>
+        <p className={styles.thesisSubtitle}>
           We're building the simulation of the economy that everyone can query.
         </p>
-        <p className="thesis-meta">
+        <p className={styles.thesisMeta}>
           Every claim in this document is corroborated with a primary source.
           <br />Hover over citations to see details. Click to open.
         </p>
       </section>
 
       {/* Problem */}
-      <section className="thesis-section" ref={setRef("problem")}>
+      <section className={styles.thesisSection} ref={setRef("problem")}>
         <ProblemSection />
       </section>
 
       {/* Gap */}
-      <section className="thesis-section" ref={setRef("gap")}>
+      <section className={styles.thesisSection} ref={setRef("gap")}>
         <GapSection />
       </section>
 
       {/* Platform */}
-      <section className="thesis-section" ref={setRef("simulation")}>
+      <section className={styles.thesisSection} ref={setRef("simulation")}>
         <SimulationSection />
       </section>
 
       {/* AI Encoding */}
-      <section className="thesis-section" ref={setRef("encoding")}>
+      <section className={styles.thesisSection} ref={setRef("encoding")}>
         <EncodingSection />
       </section>
 
       {/* Markets */}
-      <section className="thesis-section" ref={setRef("markets")}>
+      <section className={styles.thesisSection} ref={setRef("markets")}>
         <MarketsSection />
       </section>
 
       {/* Competition */}
-      <section className="thesis-section" ref={setRef("competition")}>
+      <section className={styles.thesisSection} ref={setRef("competition")}>
         <CompetitionSection />
       </section>
 
       {/* Model */}
-      <section className="thesis-section" ref={setRef("model")}>
+      <section className={styles.thesisSection} ref={setRef("model")}>
         <ModelSection />
       </section>
 
       {/* Traction */}
-      <section className="thesis-section" ref={setRef("traction")}>
+      <section className={styles.thesisSection} ref={setRef("traction")}>
         <TractionSection />
       </section>
 
       {/* Team */}
-      <section className="thesis-section" ref={setRef("team")}>
+      <section className={styles.thesisSection} ref={setRef("team")}>
         <TeamSection />
       </section>
 
       {/* Risks */}
-      <section className="thesis-section" ref={setRef("risks")}>
+      <section className={styles.thesisSection} ref={setRef("risks")}>
         <RisksSection />
       </section>
 
       {/* Ask */}
-      <section className="thesis-section" ref={setRef("ask")}>
+      <section className={styles.thesisSection} ref={setRef("ask")}>
         <AskSection />
       </section>
 
       {/* References */}
-      <section className="thesis-section thesis-references">
+      <section className={`${styles.thesisSection} ${styles.thesisReferences}`}>
         <ReferencesSection />
       </section>
 
       {/* CTA */}
-      <section className="thesis-cta">
+      <section className={styles.thesisCta}>
         <h2>Interested?</h2>
         <p>We're raising a seed round to turn this into production infrastructure.</p>
-        <div className="cta-buttons">
-          <a href="mailto:max@cosilico.ai" className="btn-primary">
+        <div className={styles.ctaButtons}>
+          <a href="mailto:max@cosilico.ai" className={styles.btnPrimary}>
             Get in Touch
           </a>
-          <a href="/" className="btn-secondary">
+          <a href="/" className={styles.btnSecondary}>
             ← Back to Home
           </a>
         </div>

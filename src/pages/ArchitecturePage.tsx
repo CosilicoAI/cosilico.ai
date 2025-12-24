@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Architecture.css";
+import * as styles from "../styles/architecture.css";
 import { StatuteTree } from "../components/architecture/StatuteTree";
 import { IndexingDemo } from "../components/architecture/IndexingDemo";
 import { STATUTE_TREE, CODE_SAMPLES } from "../components/architecture/StatuteData";
@@ -77,52 +77,52 @@ export default function ArchitecturePage() {
   const selectedCode = selected ? CODE_SAMPLES[selected] : null;
 
   return (
-    <div className="architecture-page">
+    <div className={styles.architecturePage}>
       {/* Blueprint Grid Background */}
-      <div className="blueprint-grid" />
+      <div className={styles.gridBg} />
 
       {/* Hero */}
-      <section className="arch-hero">
-        <div className="hero-terminal">
-          <div className="terminal-bar">
-            <span className="terminal-dot red" />
-            <span className="terminal-dot yellow" />
-            <span className="terminal-dot green" />
-            <span className="terminal-title">cosilico-engine</span>
+      <section className={styles.archHero}>
+        <div className={styles.heroTerminal}>
+          <div className={styles.terminalBar}>
+            <span className={`${styles.terminalDot} ${styles.terminalDotRed}`} />
+            <span className={`${styles.terminalDot} ${styles.terminalDotYellow}`} />
+            <span className={`${styles.terminalDot} ${styles.terminalDotGreen}`} />
+            <span className={styles.terminalTitle}>cosilico-engine</span>
           </div>
-          <div className="terminal-content">
-            <div className="type-line">
-              <span className="prompt">$</span>
-              <span className="command">cosilico</span>
-              <span className="flag">--explain</span>
-              <span className="arg">architecture</span>
+          <div className={styles.terminalContent}>
+            <div className={styles.typeLine}>
+              <span className={styles.prompt}>$</span>
+              <span className={styles.command}>cosilico</span>
+              <span className={styles.flag}>--explain</span>
+              <span className={styles.arg}>architecture</span>
             </div>
           </div>
         </div>
 
         <h1>
-          <span className="hero-prefix">WHERE</span>
-          <span className="hero-main">LAW = CODE</span>
+          <span className={styles.heroPrefix}>WHERE</span>
+          <span className={styles.heroMain}>LAW = CODE</span>
         </h1>
-        <p className="arch-subtitle">
+        <p className={styles.archSubtitle}>
           Every formula traced to statute. Every path a legal citation.
           <br />
           Inflation-indexed. Three-tier resolved. Fully auditable.
         </p>
 
-        <div className="hero-badges">
-          <span className="badge">statute-organized</span>
-          <span className="badge">multi-jurisdiction</span>
-          <span className="badge">cpi-indexed</span>
+        <div className={styles.heroBadges}>
+          <span className={styles.badge}>statute-organized</span>
+          <span className={styles.badge}>multi-jurisdiction</span>
+          <span className={styles.badge}>cpi-indexed</span>
         </div>
       </section>
 
       {/* Core Principles */}
-      <section className="arch-principles">
-        <div className="principle-grid">
-          <div className="principle-card">
-            <div className="card-number">01</div>
-            <div className="card-content">
+      <section>
+        <div className={styles.principleGrid}>
+          <div className={styles.principleCard}>
+            <div className={styles.cardNumber}>01</div>
+            <div className={styles.cardContent}>
               <h3>PATH = CITATION</h3>
               <p>
                 <code>statute/26/32/a/1/</code> maps directly to
@@ -130,9 +130,9 @@ export default function ArchitecturePage() {
               </p>
             </div>
           </div>
-          <div className="principle-card">
-            <div className="card-number">02</div>
-            <div className="card-content">
+          <div className={styles.principleCard}>
+            <div className={styles.cardNumber}>02</div>
+            <div className={styles.cardContent}>
               <h3>INDEXED BY DESIGN</h3>
               <p>
                 Dollar amounts encode the indexing <em>rule</em>, not
@@ -140,9 +140,9 @@ export default function ArchitecturePage() {
               </p>
             </div>
           </div>
-          <div className="principle-card">
-            <div className="card-number">03</div>
-            <div className="card-content">
+          <div className={styles.principleCard}>
+            <div className={styles.cardNumber}>03</div>
+            <div className={styles.cardContent}>
               <h3>LEGAL DIFF = CODE DIFF</h3>
               <p>
                 When Congress amends §32(b)(2), the git diff shows exactly what changed.
@@ -154,21 +154,21 @@ export default function ArchitecturePage() {
       </section>
 
       {/* Interactive Explorer */}
-      <section className="arch-explorer">
-        <div className="section-header">
-          <span className="section-label">INTERACTIVE</span>
+      <section>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>INTERACTIVE</span>
           <h2>Statute → Code Explorer</h2>
           <p>Navigate the tree to see how USC sections map to DSL files.</p>
         </div>
 
-        <div className="explorer-container">
-          <div className="explorer-tree">
-            <div className="tree-header">
-              <span className="tree-icon">📜</span>
-              <span className="tree-title">26 USC</span>
-              <span className="tree-subtitle">Internal Revenue Code</span>
+        <div className={styles.explorerContainer}>
+          <div className={styles.explorerTree}>
+            <div className={styles.treeHeader}>
+              <span className={styles.treeIcon}>📜</span>
+              <span className={styles.treeTitle}>26 USC</span>
+              <span className={styles.treeSubtitle}>Internal Revenue Code</span>
             </div>
-            <div className="tree-body">
+            <div className={styles.treeBody}>
               <StatuteTree
                 node={STATUTE_TREE}
                 selected={selected}
@@ -179,20 +179,20 @@ export default function ArchitecturePage() {
             </div>
           </div>
 
-          <div className="explorer-code">
-            <div className="code-header">
-              <div className="code-path-group">
-                <span className="code-icon">📄</span>
+          <div className={styles.explorerCode}>
+            <div className={styles.codeHeader}>
+              <div className={styles.codePathGroup}>
+                <span className={styles.codeIcon}>📄</span>
                 {selected && selectedCode ? (
                   <>
-                    <span className="code-path">statute/26/{selected}/{selectedCode.file}</span>
+                    <span className={styles.codePath}>statute/26/{selected}/{selectedCode.file}</span>
                   </>
                 ) : (
-                  <span className="code-path">Select a section...</span>
+                  <span className={styles.codePath}>Select a section...</span>
                 )}
               </div>
-              <div className="code-actions">
-                <button className="code-action" title="Copy">
+              <div className={styles.codeActions}>
+                <button className={styles.codeAction} title="Copy">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="9" y="9" width="13" height="13" rx="2" />
                     <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />

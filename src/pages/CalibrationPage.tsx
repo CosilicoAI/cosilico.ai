@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Calibration.css";
+import * as styles from "../styles/calibration.css";
 
 interface SourceSummary {
   source: string;
@@ -99,11 +99,11 @@ function formatNumber(value: number, unit: string): string {
   return value.toLocaleString();
 }
 
-function getErrorClass(pctError: number): string {
+function getErrorClass(pctError: number): "errorLow" | "errorMedium" | "errorHigh" {
   const absError = Math.abs(pctError);
-  if (absError < 0.05) return "error-low";
-  if (absError < 0.15) return "error-medium";
-  return "error-high";
+  if (absError < 0.05) return "errorLow";
+  if (absError < 0.15) return "errorMedium";
+  return "errorHigh";
 }
 
 function getErrorLabel(pctError: number): string {
@@ -113,13 +113,34 @@ function getErrorLabel(pctError: number): string {
   return "SIGNIFICANT GAP";
 }
 
-function getImpactClass(impact: string): string {
+function getImpactClass(impact: string): "high" | "medium" | "low" {
   switch (impact) {
-    case "high": return "impact-high";
-    case "medium": return "impact-medium";
-    case "low": return "impact-low";
-    default: return "";
+    case "high": return "high";
+    case "medium": return "medium";
+    case "low": return "low";
+    default: return "low";
   }
+}
+
+function getErrorBarClass(pctError: number): "low" | "medium" | "high" {
+  const absError = Math.abs(pctError);
+  if (absError < 0.05) return "low";
+  if (absError < 0.15) return "medium";
+  return "high";
+}
+
+function getCardBadgeClass(pctError: number): "low" | "medium" | "high" {
+  const absError = Math.abs(pctError);
+  if (absError < 0.05) return "low";
+  if (absError < 0.15) return "medium";
+  return "high";
+}
+
+function getTableRowClass(pctError: number): "low" | "medium" | "high" {
+  const absError = Math.abs(pctError);
+  if (absError < 0.05) return "low";
+  if (absError < 0.15) return "medium";
+  return "high";
 }
 
 export default function CalibrationPage() {
@@ -154,18 +175,18 @@ export default function CalibrationPage() {
 
   if (loading) {
     return (
-      <div className="calibration-page">
-        <div className="blueprint-grid" />
-        <div className="loading-state">Loading baseline comparison...</div>
+      <div className={styles.calibrationPage}>
+        <div className={styles.gridBg} />
+        <div className={styles.loadingState}>Loading baseline comparison...</div>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="calibration-page">
-        <div className="blueprint-grid" />
-        <div className="error-state">Error: {error || "No data available"}</div>
+      <div className={styles.calibrationPage}>
+        <div className={styles.gridBg} />
+        <div className={styles.errorState}>Error: {error || "No data available"}</div>
       </div>
     );
   }
@@ -182,179 +203,179 @@ export default function CalibrationPage() {
   const highImpactGaps = data.coverage_gaps.filter((g) => g.impact === "high").length;
 
   return (
-    <div className="calibration-page">
-      <div className="blueprint-grid" />
-      <div className="scanlines" />
+    <div className={styles.calibrationPage}>
+      <div className={styles.gridBg} />
+      <div className={styles.scanlines} />
 
       {/* Hero Section */}
-      <section className="calib-hero">
-        <div className="hero-terminal">
-          <div className="terminal-bar">
-            <span className="terminal-dot red" />
-            <span className="terminal-dot yellow" />
-            <span className="terminal-dot green" />
-            <span className="terminal-title">cosilico-microdata</span>
+      <section className={styles.calibHero}>
+        <div className={styles.heroTerminal}>
+          <div className={styles.terminalBar}>
+            <span className={styles.terminalDotRed} />
+            <span className={styles.terminalDotYellow} />
+            <span className={styles.terminalDotGreen} />
+            <span className={styles.terminalTitle}>cosilico-microdata</span>
           </div>
-          <div className="terminal-content">
-            <div className="type-line">
-              <span className="prompt">$</span>
-              <span className="command">cosilico</span>
-              <span className="flag">calibrate</span>
-              <span className="arg">--baseline</span>
-              <span className="arg">--compare soi</span>
+          <div className={styles.terminalContent}>
+            <div className={styles.typeLine}>
+              <span className={styles.prompt}>$</span>
+              <span className={styles.command}>cosilico</span>
+              <span className={styles.flag}>calibrate</span>
+              <span className={styles.arg}>--baseline</span>
+              <span className={styles.arg}>--compare soi</span>
             </div>
           </div>
         </div>
 
         <h1>
-          <span className="hero-prefix">BASELINE</span>
-          <span className="hero-main">Calibration Dashboard</span>
+          <span className={styles.heroPrefix}>BASELINE</span>
+          <span className={styles.heroMain}>Calibration Dashboard</span>
         </h1>
-        <p className="calib-subtitle">
+        <p className={styles.calibSubtitle}>
           Comparing CPS ASEC {data.cps_year} against IRS SOI {data.soi_year}.<br />
           Real survey data. Documented gaps.
         </p>
 
-        <div className="survey-stats">
-          <div className="stat">
-            <span className="stat-value">{data.raw_survey_stats.n_persons.toLocaleString()}</span>
-            <span className="stat-label">Sample Persons</span>
+        <div className={styles.surveyStats}>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{data.raw_survey_stats.n_persons.toLocaleString()}</span>
+            <span className={styles.statLabel}>Sample Persons</span>
           </div>
-          <div className="stat">
-            <span className="stat-value">{data.raw_survey_stats.n_tax_units.toLocaleString()}</span>
-            <span className="stat-label">Tax Units</span>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{data.raw_survey_stats.n_tax_units.toLocaleString()}</span>
+            <span className={styles.statLabel}>Tax Units</span>
           </div>
-          <div className="stat">
-            <span className="stat-value">{formatNumber(data.raw_survey_stats.total_person_weight, "count")}</span>
-            <span className="stat-label">Population</span>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{formatNumber(data.raw_survey_stats.total_person_weight, "count")}</span>
+            <span className={styles.statLabel}>Population</span>
           </div>
         </div>
       </section>
 
       {/* Summary Cards */}
-      <section className="calib-summary">
-        <div className="section-header">
-          <span className="section-label">OVERVIEW</span>
+      <section>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>OVERVIEW</span>
           <h2>Baseline Gap Summary</h2>
         </div>
 
-        <div className="summary-grid">
-          <div className={`summary-card ${getErrorClass(returnsError)}`}>
-            <div className="card-header">
-              <span className="card-icon">📊</span>
-              <span className="card-label">Total Returns</span>
+        <div className={styles.summaryGrid}>
+          <div className={styles.summaryCard[getErrorClass(returnsError)]}>
+            <div className={styles.cardHeader}>
+              <span className={styles.cardIcon}>📊</span>
+              <span className={styles.cardLabel}>Total Returns</span>
             </div>
-            <div className="card-comparison">
-              <div className="comparison-value">
-                <span className="value-label">CPS</span>
-                <span className="value-number">{formatNumber(totalReturnsGap?.cps_value || 0, "count")}</span>
+            <div className={styles.cardComparison}>
+              <div className={styles.comparisonValue}>
+                <span className={styles.valueLabel}>CPS</span>
+                <span className={styles.valueNumber}>{formatNumber(totalReturnsGap?.cps_value || 0, "count")}</span>
               </div>
-              <div className="comparison-arrow">→</div>
-              <div className="comparison-value target">
-                <span className="value-label">SOI</span>
-                <span className="value-number">{formatNumber(totalReturnsGap?.soi_value || 0, "count")}</span>
+              <div className={styles.comparisonArrow}>→</div>
+              <div className={styles.comparisonValueTarget}>
+                <span className={styles.valueLabel}>SOI</span>
+                <span className={styles.valueNumberTarget}>{formatNumber(totalReturnsGap?.soi_value || 0, "count")}</span>
               </div>
             </div>
-            <div className="card-error">
-              <div className="error-bar-container">
-                <div className="error-bar" style={{ width: `${Math.min(Math.abs(returnsError) * 200, 100)}%` }} />
+            <div className={styles.cardError}>
+              <div className={styles.errorBarContainer}>
+                <div className={styles.errorBar[getErrorBarClass(returnsError)]} style={{ width: `${Math.min(Math.abs(returnsError) * 200, 100)}%` }} />
               </div>
-              <span className="error-value">{(returnsError * 100).toFixed(1)}%</span>
+              <span className={styles.errorValue}>{(returnsError * 100).toFixed(1)}%</span>
             </div>
-            <div className="card-badge">{getErrorLabel(returnsError)}</div>
+            <div className={styles.cardBadge[getCardBadgeClass(returnsError)]}>{getErrorLabel(returnsError)}</div>
           </div>
 
-          <div className={`summary-card ${getErrorClass(agiError)}`}>
-            <div className="card-header">
-              <span className="card-icon">💰</span>
-              <span className="card-label">Total AGI</span>
+          <div className={styles.summaryCard[getErrorClass(agiError)]}>
+            <div className={styles.cardHeader}>
+              <span className={styles.cardIcon}>💰</span>
+              <span className={styles.cardLabel}>Total AGI</span>
             </div>
-            <div className="card-comparison">
-              <div className="comparison-value">
-                <span className="value-label">CPS</span>
-                <span className="value-number">{formatNumber(totalAgiGap?.cps_value || 0, "dollars")}</span>
+            <div className={styles.cardComparison}>
+              <div className={styles.comparisonValue}>
+                <span className={styles.valueLabel}>CPS</span>
+                <span className={styles.valueNumber}>{formatNumber(totalAgiGap?.cps_value || 0, "dollars")}</span>
               </div>
-              <div className="comparison-arrow">→</div>
-              <div className="comparison-value target">
-                <span className="value-label">SOI</span>
-                <span className="value-number">{formatNumber(totalAgiGap?.soi_value || 0, "dollars")}</span>
+              <div className={styles.comparisonArrow}>→</div>
+              <div className={styles.comparisonValueTarget}>
+                <span className={styles.valueLabel}>SOI</span>
+                <span className={styles.valueNumberTarget}>{formatNumber(totalAgiGap?.soi_value || 0, "dollars")}</span>
               </div>
             </div>
-            <div className="card-error">
-              <div className="error-bar-container">
-                <div className="error-bar" style={{ width: `${Math.min(Math.abs(agiError) * 200, 100)}%` }} />
+            <div className={styles.cardError}>
+              <div className={styles.errorBarContainer}>
+                <div className={styles.errorBar[getErrorBarClass(agiError)]} style={{ width: `${Math.min(Math.abs(agiError) * 200, 100)}%` }} />
               </div>
-              <span className="error-value">{(agiError * 100).toFixed(1)}%</span>
+              <span className={styles.errorValue}>{(agiError * 100).toFixed(1)}%</span>
             </div>
-            <div className="card-badge">{getErrorLabel(agiError)}</div>
+            <div className={styles.cardBadge[getCardBadgeClass(agiError)]}>{getErrorLabel(agiError)}</div>
           </div>
 
-          <div className="summary-card status-card">
-            <div className="card-header">
-              <span className="card-icon">⚠️</span>
-              <span className="card-label">Coverage Status</span>
+          <div className={styles.summaryCard.status}>
+            <div className={styles.cardHeader}>
+              <span className={styles.cardIcon}>⚠️</span>
+              <span className={styles.cardLabel}>Coverage Status</span>
             </div>
-            <div className="status-indicators">
-              <div className="status-item">
-                <span className="status-count">{highImpactGaps}</span>
-                <span className="status-label">High Impact Gaps</span>
+            <div className={styles.statusIndicators}>
+              <div className={styles.statusItem}>
+                <span className={styles.statusCount}>{highImpactGaps}</span>
+                <span className={styles.statusLabel}>High Impact Gaps</span>
               </div>
-              <div className="status-item">
-                <span className="status-count">{data.coverage_gaps.length}</span>
-                <span className="status-label">Total Gaps</span>
+              <div className={styles.statusItem}>
+                <span className={styles.statusCount}>{data.coverage_gaps.length}</span>
+                <span className={styles.statusLabel}>Total Gaps</span>
               </div>
             </div>
-            <div className="card-badge status">UNCALIBRATED</div>
+            <div className={styles.cardBadge.status}>UNCALIBRATED</div>
           </div>
         </div>
       </section>
 
       {/* Validation Status - PolicyEngine Comparison */}
-      <section className="calib-validation">
-        <div className="section-header">
-          <span className="section-label">BENCHMARKING</span>
+      <section className={styles.calibValidation}>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>BENCHMARKING</span>
           <h2>Validation vs PolicyEngine</h2>
           <p>Comparing our calibration target coverage against PolicyEngine-US-Data's comprehensive approach</p>
         </div>
 
-        <div className="validation-overview">
-          <div className="validation-headline">
-            <div className="headline-stat our-targets">
-              <span className="stat-number">205</span>
-              <span className="stat-desc">Our Targets</span>
+        <div className={styles.validationOverview}>
+          <div className={styles.validationHeadline}>
+            <div className={styles.headlineStat}>
+              <span className={styles.statNumberOur}>205</span>
+              <span className={styles.statDesc}>Our Targets</span>
             </div>
-            <div className="headline-vs">vs</div>
-            <div className="headline-stat pe-targets">
-              <span className="stat-number">2,813</span>
-              <span className="stat-desc">PolicyEngine Targets</span>
+            <div className={styles.headlineVs}>vs</div>
+            <div className={styles.headlineStat}>
+              <span className={styles.statNumberPe}>2,813</span>
+              <span className={styles.statDesc}>PolicyEngine Targets</span>
             </div>
           </div>
-          <div className="validation-progress-wrapper">
-            <div className="validation-progress-bar">
-              <div className="progress-fill" style={{ width: "7.3%" }}>
-                <span className="progress-label">7.3% Coverage</span>
+          <div className={styles.validationProgressWrapper}>
+            <div className={styles.validationProgressBar}>
+              <div className={styles.progressFill} style={{ width: "7.3%" }}>
+                <span className={styles.progressLabel}>7.3% Coverage</span>
               </div>
             </div>
-            <div className="validation-gap-stat">Gap: 2,608 targets</div>
+            <div className={styles.validationGapStat}>Gap: 2,608 targets</div>
           </div>
         </div>
 
-        <div className="category-coverage-grid">
-          <div className="coverage-category">
-            <div className="coverage-header">
-              <div className="coverage-icon">💰</div>
+        <div className={styles.categoryCoverageGrid}>
+          <div className={styles.coverageCategory}>
+            <div className={styles.coverageHeader}>
+              <div className={styles.coverageIcon}>💰</div>
               <h4>IRS SOI Tax</h4>
             </div>
-            <div className="coverage-stats">
-              <div className="coverage-numbers">
-                <span className="our-count">80</span>
-                <span className="divider">/</span>
-                <span className="pe-count">500</span>
+            <div className={styles.coverageStats}>
+              <div className={styles.coverageNumbers}>
+                <span className={styles.ourCount}>80</span>
+                <span className={styles.divider}>/</span>
+                <span className={styles.peCount}>500</span>
               </div>
-              <div className="coverage-bar">
-                <div className="bar-fill" style={{ width: "16%" }}></div>
+              <div className={styles.coverageBar}>
+                <div className={styles.barFill} style={{ width: "16%" }}></div>
               </div>
-              <div className="coverage-pct">16% covered</div>
+              <div className={styles.coveragePct}>16% covered</div>
             </div>
             <button
               className={`coverage-expand ${expandedCategory === 'tax' ? 'active' : ''}`}
@@ -363,42 +384,42 @@ export default function CalibrationPage() {
               {expandedCategory === 'tax' ? '▼' : '▶'} See what's missing
             </button>
             {expandedCategory === 'tax' && (
-              <div className="coverage-gaps">
-                <div className="gap-item">
-                  <span className="gap-name">Income by Source</span>
-                  <span className="gap-desc">Interest, dividends, capital gains, partnership income</span>
+              <div className={styles.coverageGaps}>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Income by Source</span>
+                  <span className={styles.gapDesc}>Interest, dividends, capital gains, partnership income</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">EITC by Child Count</span>
-                  <span className="gap-desc">Stratified EITC targets (0, 1, 2, 3+ children)</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>EITC by Child Count</span>
+                  <span className={styles.gapDesc}>Stratified EITC targets (0, 1, 2, 3+ children)</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">Deductions Detail</span>
-                  <span className="gap-desc">Medical, SALT, QBI deduction targets</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Deductions Detail</span>
+                  <span className={styles.gapDesc}>Medical, SALT, QBI deduction targets</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">State Coverage</span>
-                  <span className="gap-desc">All 50 states + DC (we have 5 states)</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>State Coverage</span>
+                  <span className={styles.gapDesc}>All 50 states + DC (we have 5 states)</span>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="coverage-category">
-            <div className="coverage-header">
-              <div className="coverage-icon">👥</div>
+          <div className={styles.coverageCategory}>
+            <div className={styles.coverageHeader}>
+              <div className={styles.coverageIcon}>👥</div>
               <h4>Demographics</h4>
             </div>
-            <div className="coverage-stats">
-              <div className="coverage-numbers">
-                <span className="our-count">50</span>
-                <span className="divider">/</span>
-                <span className="pe-count">900</span>
+            <div className={styles.coverageStats}>
+              <div className={styles.coverageNumbers}>
+                <span className={styles.ourCount}>50</span>
+                <span className={styles.divider}>/</span>
+                <span className={styles.peCount}>900</span>
               </div>
-              <div className="coverage-bar">
-                <div className="bar-fill" style={{ width: "5.6%" }}></div>
+              <div className={styles.coverageBar}>
+                <div className={styles.barFill} style={{ width: "5.6%" }}></div>
               </div>
-              <div className="coverage-pct">5.6% covered</div>
+              <div className={styles.coveragePct}>5.6% covered</div>
             </div>
             <button
               className={`coverage-expand ${expandedCategory === 'demographics' ? 'active' : ''}`}
@@ -407,38 +428,38 @@ export default function CalibrationPage() {
               {expandedCategory === 'demographics' ? '▼' : '▶'} See what's missing
             </button>
             {expandedCategory === 'demographics' && (
-              <div className="coverage-gaps">
-                <div className="gap-item">
-                  <span className="gap-name">Age Granularity</span>
-                  <span className="gap-desc">18 age brackets (we have 5 broad groups)</span>
+              <div className={styles.coverageGaps}>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Age Granularity</span>
+                  <span className={styles.gapDesc}>18 age brackets (we have 5 broad groups)</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">Congressional Districts</span>
-                  <span className="gap-desc">436 district-level targets (we have state only)</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Congressional Districts</span>
+                  <span className={styles.gapDesc}>436 district-level targets (we have state only)</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">Race/Ethnicity</span>
-                  <span className="gap-desc">Demographic distributions by race</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Race/Ethnicity</span>
+                  <span className={styles.gapDesc}>Demographic distributions by race</span>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="coverage-category">
-            <div className="coverage-header">
-              <div className="coverage-icon">🏥</div>
+          <div className={styles.coverageCategory}>
+            <div className={styles.coverageHeader}>
+              <div className={styles.coverageIcon}>🏥</div>
               <h4>Benefit Programs</h4>
             </div>
-            <div className="coverage-stats">
-              <div className="coverage-numbers">
-                <span className="our-count">75</span>
-                <span className="divider">/</span>
-                <span className="pe-count">800</span>
+            <div className={styles.coverageStats}>
+              <div className={styles.coverageNumbers}>
+                <span className={styles.ourCount}>75</span>
+                <span className={styles.divider}>/</span>
+                <span className={styles.peCount}>800</span>
               </div>
-              <div className="coverage-bar">
-                <div className="bar-fill" style={{ width: "9.4%" }}></div>
+              <div className={styles.coverageBar}>
+                <div className={styles.barFill} style={{ width: "9.4%" }}></div>
               </div>
-              <div className="coverage-pct">9.4% covered</div>
+              <div className={styles.coveragePct}>9.4% covered</div>
             </div>
             <button
               className={`coverage-expand ${expandedCategory === 'benefits' ? 'active' : ''}`}
@@ -447,42 +468,42 @@ export default function CalibrationPage() {
               {expandedCategory === 'benefits' ? '▼' : '▶'} See what's missing
             </button>
             {expandedCategory === 'benefits' && (
-              <div className="coverage-gaps">
-                <div className="gap-item">
-                  <span className="gap-name">Medicaid Enrollment</span>
-                  <span className="gap-desc">State + congressional district enrollment counts</span>
+              <div className={styles.coverageGaps}>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Medicaid Enrollment</span>
+                  <span className={styles.gapDesc}>State + congressional district enrollment counts</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">SSI Participation</span>
-                  <span className="gap-desc">Supplemental Security Income targets</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>SSI Participation</span>
+                  <span className={styles.gapDesc}>Supplemental Security Income targets</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">SNAP State Coverage</span>
-                  <span className="gap-desc">All states (we have 10 states)</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>SNAP State Coverage</span>
+                  <span className={styles.gapDesc}>All states (we have 10 states)</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">TANF Programs</span>
-                  <span className="gap-desc">Temporary Assistance for Needy Families</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>TANF Programs</span>
+                  <span className={styles.gapDesc}>Temporary Assistance for Needy Families</span>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="coverage-category">
-            <div className="coverage-header">
-              <div className="coverage-icon">🏥</div>
+          <div className={styles.coverageCategory}>
+            <div className={styles.coverageHeader}>
+              <div className={styles.coverageIcon}>🏥</div>
               <h4>Healthcare</h4>
             </div>
-            <div className="coverage-stats">
-              <div className="coverage-numbers">
-                <span className="our-count">0</span>
-                <span className="divider">/</span>
-                <span className="pe-count">300</span>
+            <div className={styles.coverageStats}>
+              <div className={styles.coverageNumbers}>
+                <span className={styles.ourCount}>0</span>
+                <span className={styles.divider}>/</span>
+                <span className={styles.peCount}>300</span>
               </div>
-              <div className="coverage-bar">
-                <div className="bar-fill" style={{ width: "0%" }}></div>
+              <div className={styles.coverageBar}>
+                <div className={styles.barFill} style={{ width: "0%" }}></div>
               </div>
-              <div className="coverage-pct">0% covered</div>
+              <div className={styles.coveragePct}>0% covered</div>
             </div>
             <button
               className={`coverage-expand ${expandedCategory === 'healthcare' ? 'active' : ''}`}
@@ -491,38 +512,38 @@ export default function CalibrationPage() {
               {expandedCategory === 'healthcare' ? '▼' : '▶'} See what's missing
             </button>
             {expandedCategory === 'healthcare' && (
-              <div className="coverage-gaps">
-                <div className="gap-item">
-                  <span className="gap-name">Insurance Enrollment</span>
-                  <span className="gap-desc">Public/private insurance coverage patterns</span>
+              <div className={styles.coverageGaps}>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Insurance Enrollment</span>
+                  <span className={styles.gapDesc}>Public/private insurance coverage patterns</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">ACA Marketplace</span>
-                  <span className="gap-desc">Exchange enrollment and subsidy data</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>ACA Marketplace</span>
+                  <span className={styles.gapDesc}>Exchange enrollment and subsidy data</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">Healthcare Spending</span>
-                  <span className="gap-desc">Medical expenditure patterns</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Healthcare Spending</span>
+                  <span className={styles.gapDesc}>Medical expenditure patterns</span>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="coverage-category">
-            <div className="coverage-header">
-              <div className="coverage-icon">📊</div>
+          <div className={styles.coverageCategory}>
+            <div className={styles.coverageHeader}>
+              <div className={styles.coverageIcon}>📊</div>
               <h4>Tax Expenditures</h4>
             </div>
-            <div className="coverage-stats">
-              <div className="coverage-numbers">
-                <span className="our-count">0</span>
-                <span className="divider">/</span>
-                <span className="pe-count">300</span>
+            <div className={styles.coverageStats}>
+              <div className={styles.coverageNumbers}>
+                <span className={styles.ourCount}>0</span>
+                <span className={styles.divider}>/</span>
+                <span className={styles.peCount}>300</span>
               </div>
-              <div className="coverage-bar">
-                <div className="bar-fill" style={{ width: "0%" }}></div>
+              <div className={styles.coverageBar}>
+                <div className={styles.barFill} style={{ width: "0%" }}></div>
               </div>
-              <div className="coverage-pct">0% covered</div>
+              <div className={styles.coveragePct}>0% covered</div>
             </div>
             <button
               className={`coverage-expand ${expandedCategory === 'tax_expenditures' ? 'active' : ''}`}
@@ -531,28 +552,28 @@ export default function CalibrationPage() {
               {expandedCategory === 'tax_expenditures' ? '▼' : '▶'} See what's missing
             </button>
             {expandedCategory === 'tax_expenditures' && (
-              <div className="coverage-gaps">
-                <div className="gap-item">
-                  <span className="gap-name">Treasury Estimates</span>
-                  <span className="gap-desc">Annual tax expenditure totals</span>
+              <div className={styles.coverageGaps}>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Treasury Estimates</span>
+                  <span className={styles.gapDesc}>Annual tax expenditure totals</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">JCT Estimates</span>
-                  <span className="gap-desc">Joint Committee on Taxation provision costs</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>JCT Estimates</span>
+                  <span className={styles.gapDesc}>Joint Committee on Taxation provision costs</span>
                 </div>
-                <div className="gap-item">
-                  <span className="gap-name">Cross-Validation</span>
-                  <span className="gap-desc">Independent verification of credit/deduction totals</span>
+                <div className={styles.gapItem}>
+                  <span className={styles.gapName}>Cross-Validation</span>
+                  <span className={styles.gapDesc}>Independent verification of credit/deduction totals</span>
                 </div>
               </div>
             )}
           </div>
         </div>
 
-        <div className="comparison-table">
+        <div className={styles.comparisonTable}>
           <h4>Detailed Comparison</h4>
-          <div className="table-wrapper">
-            <table className="pe-comparison-table">
+          <div className={styles.tableWrapper}>
+            <table className={styles.peComparisonTable}>
               <thead>
                 <tr>
                   <th>Category</th>
@@ -567,43 +588,43 @@ export default function CalibrationPage() {
                   <td><strong>IRS SOI Tax</strong></td>
                   <td>500</td>
                   <td>80</td>
-                  <td className="gap-negative">-420</td>
-                  <td><span className="coverage-badge low">16%</span></td>
+                  <td className={styles.gapNegative}>-420</td>
+                  <td><span className={styles.coverageBadge.low}>16%</span></td>
                 </tr>
                 <tr>
                   <td><strong>Demographics</strong></td>
                   <td>900</td>
                   <td>50</td>
-                  <td className="gap-negative">-850</td>
-                  <td><span className="coverage-badge very-low">5.6%</span></td>
+                  <td className={styles.gapNegative}>-850</td>
+                  <td><span className={styles.coverageBadge.veryLow}>5.6%</span></td>
                 </tr>
                 <tr>
                   <td><strong>Benefit Programs</strong></td>
                   <td>800</td>
                   <td>75</td>
-                  <td className="gap-negative">-725</td>
-                  <td><span className="coverage-badge low">9.4%</span></td>
+                  <td className={styles.gapNegative}>-725</td>
+                  <td><span className={styles.coverageBadge.low}>9.4%</span></td>
                 </tr>
                 <tr>
                   <td><strong>Healthcare</strong></td>
                   <td>300</td>
                   <td>0</td>
-                  <td className="gap-negative">-300</td>
-                  <td><span className="coverage-badge none">0%</span></td>
+                  <td className={styles.gapNegative}>-300</td>
+                  <td><span className={styles.coverageBadge.none}>0%</span></td>
                 </tr>
                 <tr>
                   <td><strong>Tax Expenditures</strong></td>
                   <td>300</td>
                   <td>0</td>
-                  <td className="gap-negative">-300</td>
-                  <td><span className="coverage-badge none">0%</span></td>
+                  <td className={styles.gapNegative}>-300</td>
+                  <td><span className={styles.coverageBadge.none}>0%</span></td>
                 </tr>
-                <tr className="total-row">
+                <tr className={styles.totalRow}>
                   <td><strong>TOTAL</strong></td>
                   <td><strong>2,813</strong></td>
                   <td><strong>205</strong></td>
-                  <td className="gap-negative"><strong>-2,608</strong></td>
-                  <td><span className="coverage-badge very-low"><strong>7.3%</strong></span></td>
+                  <td className={styles.gapNegative}><strong>-2,608</strong></td>
+                  <td><span className={styles.coverageBadge.veryLow}><strong>7.3%</strong></span></td>
                 </tr>
               </tbody>
             </table>
@@ -612,50 +633,50 @@ export default function CalibrationPage() {
       </section>
 
       {/* Metrics Table */}
-      <section className="calib-metrics">
-        <div className="section-header">
-          <span className="section-label">DETAILED</span>
+      <section>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>DETAILED</span>
           <h2>Metric Comparison</h2>
         </div>
 
-        <div className="category-tabs">
-          <button className={selectedCategory === "all" ? "active" : ""} onClick={() => setSelectedCategory("all")}>
+        <div className={styles.categoryTabs}>
+          <button className={selectedCategory === "all" ? styles.categoryTabActive : styles.categoryTabButton} onClick={() => setSelectedCategory("all")}>
             All Metrics
           </button>
-          <button className={selectedCategory === "aggregate" ? "active" : ""} onClick={() => setSelectedCategory("aggregate")}>
+          <button className={selectedCategory === "aggregate" ? styles.categoryTabActive : styles.categoryTabButton} onClick={() => setSelectedCategory("aggregate")}>
             Aggregates
           </button>
-          <button className={selectedCategory === "by_filing_status" ? "active" : ""} onClick={() => setSelectedCategory("by_filing_status")}>
+          <button className={selectedCategory === "by_filing_status" ? styles.categoryTabActive : styles.categoryTabButton} onClick={() => setSelectedCategory("by_filing_status")}>
             Filing Status
           </button>
         </div>
 
-        <div className="metrics-table">
-          <div className="table-header">
+        <div className={styles.metricsTable}>
+          <div className={styles.tableHeader}>
             <div className="col-metric">Metric</div>
-            <div className="col-cps">CPS Value</div>
-            <div className="col-soi">SOI Target</div>
+            <div className={styles.colCps}>CPS Value</div>
+            <div className={styles.colSoi}>SOI Target</div>
             <div className="col-gap">Gap</div>
             <div className="col-statute">Statute</div>
           </div>
 
           {filteredMetrics.map((metric) => (
-            <div key={metric.name} className={`table-row ${getErrorClass(metric.pct_error)}`}>
+            <div key={metric.name} className={styles.tableRow[getTableRowClass(metric.pct_error)]}>
               <div className="col-metric">
-                <span className="metric-name">{METRIC_LABELS[metric.name] || metric.name}</span>
-                <span className="metric-category">{metric.category}</span>
+                <span className={styles.metricName}>{METRIC_LABELS[metric.name] || metric.name}</span>
+                <span className={styles.metricCategory}>{metric.category}</span>
               </div>
-              <div className="col-cps">{formatNumber(metric.cps_value, metric.unit)}</div>
-              <div className="col-soi">{formatNumber(metric.soi_value, metric.unit)}</div>
+              <div className={styles.colCps}>{formatNumber(metric.cps_value, metric.unit)}</div>
+              <div className={styles.colSoi}>{formatNumber(metric.soi_value, metric.unit)}</div>
               <div className="col-gap">
-                <div className="gap-visual">
-                  <div className="gap-bar-bg">
+                <div className={styles.gapVisual}>
+                  <div className={styles.gapBarBg}>
                     <div
-                      className="gap-bar-fill"
+                      className={styles.gapBarFill[getErrorBarClass(metric.pct_error)]}
                       style={{ width: `${Math.min(Math.abs(metric.pct_error) * 100, 100)}%` }}
                     />
                   </div>
-                  <span className="gap-value">{(metric.pct_error * 100).toFixed(1)}%</span>
+                  <span className={styles.gapValue}>{(metric.pct_error * 100).toFixed(1)}%</span>
                 </div>
               </div>
               <div className="col-statute">
@@ -667,23 +688,23 @@ export default function CalibrationPage() {
       </section>
 
       {/* Coverage Gaps */}
-      <section className="calib-gaps">
-        <div className="section-header">
-          <span className="section-label">DOCUMENTATION</span>
+      <section>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>DOCUMENTATION</span>
           <h2>Known Coverage Gaps</h2>
           <p>Components missing from CPS that SOI captures via tax returns.</p>
         </div>
 
-        <div className="gaps-grid">
+        <div className={styles.gapsGrid}>
           {data.coverage_gaps.map((gap, i) => (
-            <div key={i} className={`gap-card ${getImpactClass(gap.impact)}`}>
-              <div className="gap-header">
-                <span className={`impact-badge ${gap.impact}`}>{gap.impact.toUpperCase()}</span>
-                <span className="gap-variable">{gap.variable}</span>
+            <div key={i} className={styles.gapCard[getImpactClass(gap.impact)]}>
+              <div className={styles.gapHeader}>
+                <span className={styles.impactBadge[gap.impact as "high" | "medium" | "low"]}>{gap.impact.toUpperCase()}</span>
+                <span className={styles.gapVariable}>{gap.variable}</span>
               </div>
-              <h4 className="gap-component">{gap.component.replace(/_/g, " ")}</h4>
-              <p className="gap-notes">{gap.notes}</p>
-              <div className="gap-statute">
+              <h4 className={styles.gapComponent}>{gap.component.replace(/_/g, " ")}</h4>
+              <p className={styles.gapNotes}>{gap.notes}</p>
+              <div className={styles.gapStatute}>
                 <code>{gap.statute_ref}</code>
               </div>
             </div>
@@ -692,17 +713,17 @@ export default function CalibrationPage() {
       </section>
 
       {/* Pipeline */}
-      <section className="calib-methodology">
-        <div className="section-header">
-          <span className="section-label">APPROACH</span>
+      <section>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>APPROACH</span>
           <h2>Calibration Pipeline</h2>
           <p>Connecting microdata to administrative targets through reweighting</p>
         </div>
 
-        <div className="pipeline-flow">
-          <div className="pipeline-stage">
-            <div className="stage-header">
-              <div className="stage-icon">📊</div>
+        <div className={styles.pipelineFlow}>
+          <div className={styles.pipelineStage}>
+            <div className={styles.stageHeader}>
+              <div className={styles.stageIcon}>📊</div>
               <h4>Microdata</h4>
             </div>
             <div className="stage-details">
@@ -712,11 +733,11 @@ export default function CalibrationPage() {
             </div>
           </div>
 
-          <div className="pipeline-arrow">→</div>
+          <div className={styles.pipelineArrow}>→</div>
 
-          <div className="pipeline-stage">
-            <div className="stage-header">
-              <div className="stage-icon">🎯</div>
+          <div className={styles.pipelineStage}>
+            <div className={styles.stageHeader}>
+              <div className={styles.stageIcon}>🎯</div>
               <h4>Targets DB</h4>
             </div>
             <div className="stage-details">
@@ -726,11 +747,11 @@ export default function CalibrationPage() {
             </div>
           </div>
 
-          <div className="pipeline-arrow">→</div>
+          <div className={styles.pipelineArrow}>→</div>
 
-          <div className="pipeline-stage">
-            <div className="stage-header">
-              <div className="stage-icon">⚖️</div>
+          <div className={styles.pipelineStage}>
+            <div className={styles.stageHeader}>
+              <div className={styles.stageIcon}>⚖️</div>
               <h4>Calibrated Weights</h4>
             </div>
             <div className="stage-details">
@@ -741,20 +762,20 @@ export default function CalibrationPage() {
           </div>
         </div>
 
-        <div className="pipeline-methods">
+        <div className={styles.pipelineMethods}>
           <h4>Calibration Methods</h4>
-          <div className="methods-grid">
-            <div className="method-card">
+          <div className={styles.methodsGrid}>
+            <div className={styles.methodCard}>
               <div className="method-name">Entropy Minimization</div>
               <div className="method-desc">Minimize KL divergence from original weights</div>
               <div className="method-use">Default method, smooth adjustments</div>
             </div>
-            <div className="method-card">
+            <div className={styles.methodCard}>
               <div className="method-name">Raking</div>
               <div className="method-desc">Iterative proportional fitting</div>
               <div className="method-use">Many margin constraints</div>
             </div>
-            <div className="method-card">
+            <div className={styles.methodCard}>
               <div className="method-name">Linear Regression</div>
               <div className="method-desc">Linear regression adjustment</div>
               <div className="method-use">Few constraints, fast</div>
@@ -762,58 +783,58 @@ export default function CalibrationPage() {
           </div>
         </div>
 
-        <div className="pipeline-steps">
-          <div className="pipeline-step current">
-            <div className="step-number">1</div>
+        <div className={styles.pipelineSteps}>
+          <div className={styles.pipelineStepCurrent}>
+            <div className={styles.stepNumber}>1</div>
             <div className="step-content">
               <h4>Load Microdata</h4>
               <p>Import survey data with original weights and select variables.</p>
-              <span className="step-status active">CURRENT</span>
+              <span className={styles.stepStatusActive}>CURRENT</span>
             </div>
           </div>
-          <div className="pipeline-connector" />
-          <div className="pipeline-step">
-            <div className="step-number">2</div>
+          <div className={styles.pipelineConnector} />
+          <div className={styles.pipelineStep}>
+            <div className={styles.stepNumber}>2</div>
             <div className="step-content">
               <h4>Query Targets</h4>
               <p>Retrieve administrative totals from targets database.</p>
-              <span className="step-status">NEXT</span>
+              <span className={styles.stepStatus}>NEXT</span>
             </div>
           </div>
-          <div className="pipeline-connector" />
-          <div className="pipeline-step">
-            <div className="step-number">3</div>
+          <div className={styles.pipelineConnector} />
+          <div className={styles.pipelineStep}>
+            <div className={styles.stepNumber}>3</div>
             <div className="step-content">
               <h4>Build Constraints</h4>
               <p>Map targets to microdata aggregations.</p>
-              <span className="step-status">PENDING</span>
+              <span className={styles.stepStatus}>PENDING</span>
             </div>
           </div>
-          <div className="pipeline-connector" />
-          <div className="pipeline-step">
-            <div className="step-number">4</div>
+          <div className={styles.pipelineConnector} />
+          <div className={styles.pipelineStep}>
+            <div className={styles.stepNumber}>4</div>
             <div className="step-content">
               <h4>Calibrate</h4>
               <p>Adjust weights to satisfy constraints.</p>
-              <span className="step-status">PENDING</span>
+              <span className={styles.stepStatus}>PENDING</span>
             </div>
           </div>
-          <div className="pipeline-connector" />
-          <div className="pipeline-step">
-            <div className="step-number">5</div>
+          <div className={styles.pipelineConnector} />
+          <div className={styles.pipelineStep}>
+            <div className={styles.stepNumber}>5</div>
             <div className="step-content">
               <h4>Validate & Export</h4>
               <p>Check calibration quality and export weights.</p>
-              <span className="step-status">PENDING</span>
+              <span className={styles.stepStatus}>PENDING</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Data Sources */}
-      <section className="calib-sources">
-        <div className="section-header">
-          <span className="section-label">DATA SOURCES</span>
+      <section>
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>DATA SOURCES</span>
           <h2>Administrative Targets</h2>
           <p>
             {targetsSummary ? (
@@ -827,100 +848,100 @@ export default function CalibrationPage() {
           </p>
         </div>
 
-        <div className="sources-overview">
+        <div className={styles.sourcesOverview}>
           <h4>Available Data Sources</h4>
-          <div className="sources-list">
-            <div className="source-detail us-source">
-              <div className="source-detail-header">
-                <span className="source-flag">🇺🇸</span>
+          <div className={styles.sourcesList}>
+            <div className={styles.sourceDetail.us}>
+              <div className={styles.sourceDetailHeader}>
+                <span className={styles.sourceFlag}>🇺🇸</span>
                 <h5>IRS Statistics of Income (SOI)</h5>
-                <span className="source-jurisdiction">United States</span>
+                <span className={styles.sourceJurisdiction}>United States</span>
               </div>
-              <div className="source-detail-content">
-                <p className="source-description">
+              <div className={styles.sourceDetailContent}>
+                <p className={styles.sourceDescription}>
                   State-level individual income tax data from Forms 1040.
                   National and state totals with AGI bracket stratification.
                 </p>
-                <div className="source-features">
-                  <div className="feature">
-                    <span className="feature-label">Historic Table 2:</span>
-                    <span className="feature-value">1996-2022, all 50 states + DC</span>
+                <div className={styles.sourceFeatures}>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>Historic Table 2:</span>
+                    <span className={styles.featureValue}>1996-2022, all 50 states + DC</span>
                   </div>
-                  <div className="feature">
-                    <span className="feature-label">Variables:</span>
-                    <span className="feature-value">Returns, AGI, wages, dividends, tax liability</span>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>Variables:</span>
+                    <span className={styles.featureValue}>Returns, AGI, wages, dividends, tax liability</span>
                   </div>
-                  <div className="feature">
-                    <span className="feature-label">AGI Brackets:</span>
-                    <span className="feature-value">18 brackets from &lt;$1 to $10M+</span>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>AGI Brackets:</span>
+                    <span className={styles.featureValue}>18 brackets from &lt;$1 to $10M+</span>
                   </div>
-                  <div className="feature">
-                    <span className="feature-label">Credits:</span>
-                    <span className="feature-value">EITC, CTC, ACTC by state</span>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>Credits:</span>
+                    <span className={styles.featureValue}>EITC, CTC, ACTC by state</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="source-detail us-source">
-              <div className="source-detail-header">
-                <span className="source-flag">🇺🇸</span>
+            <div className={styles.sourceDetail.us}>
+              <div className={styles.sourceDetailHeader}>
+                <span className={styles.sourceFlag}>🇺🇸</span>
                 <h5>Census Bureau CPS ASEC</h5>
-                <span className="source-jurisdiction">United States</span>
+                <span className={styles.sourceJurisdiction}>United States</span>
               </div>
-              <div className="source-detail-content">
-                <p className="source-description">
+              <div className={styles.sourceDetailContent}>
+                <p className={styles.sourceDescription}>
                   Current Population Survey Annual Social and Economic Supplement.
                   Monthly microdata with comprehensive income and benefit variables.
                 </p>
-                <div className="source-features">
-                  <div className="feature">
-                    <span className="feature-label">Coverage:</span>
-                    <span className="feature-value">~200k individuals, monthly updates</span>
+                <div className={styles.sourceFeatures}>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>Coverage:</span>
+                    <span className={styles.featureValue}>~200k individuals, monthly updates</span>
                   </div>
-                  <div className="feature">
-                    <span className="feature-label">Variables:</span>
-                    <span className="feature-value">Income, benefits, employment, demographics</span>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>Variables:</span>
+                    <span className={styles.featureValue}>Income, benefits, employment, demographics</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="source-detail uk-source">
-              <div className="source-detail-header">
-                <span className="source-flag">🇬🇧</span>
+            <div className={styles.sourceDetail.uk}>
+              <div className={styles.sourceDetailHeader}>
+                <span className={styles.sourceFlag}>🇬🇧</span>
                 <h5>OBR Economic Forecasts</h5>
-                <span className="source-jurisdiction">United Kingdom</span>
+                <span className={styles.sourceJurisdiction}>United Kingdom</span>
               </div>
-              <div className="source-detail-content">
-                <p className="source-description">
+              <div className={styles.sourceDetailContent}>
+                <p className={styles.sourceDescription}>
                   Office for Budget Responsibility fiscal projections.
                   National-level economic and tax/benefit aggregates.
                 </p>
-                <div className="source-features">
-                  <div className="feature">
-                    <span className="feature-label">Type:</span>
-                    <span className="feature-value">Projections, updated quarterly</span>
+                <div className={styles.sourceFeatures}>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>Type:</span>
+                    <span className={styles.featureValue}>Projections, updated quarterly</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="source-detail uk-source">
-              <div className="source-detail-header">
-                <span className="source-flag">🇬🇧</span>
+            <div className={styles.sourceDetail.uk}>
+              <div className={styles.sourceDetailHeader}>
+                <span className={styles.sourceFlag}>🇬🇧</span>
                 <h5>ONS Family Resources Survey</h5>
-                <span className="source-jurisdiction">United Kingdom</span>
+                <span className={styles.sourceJurisdiction}>United Kingdom</span>
               </div>
-              <div className="source-detail-content">
-                <p className="source-description">
+              <div className={styles.sourceDetailContent}>
+                <p className={styles.sourceDescription}>
                   Office for National Statistics household survey.
                   Income, benefits, housing, and household composition.
                 </p>
-                <div className="source-features">
-                  <div className="feature">
-                    <span className="feature-label">Coverage:</span>
-                    <span className="feature-value">Annual, comprehensive household data</span>
+                <div className={styles.sourceFeatures}>
+                  <div className={styles.feature}>
+                    <span className={styles.featureLabel}>Coverage:</span>
+                    <span className={styles.featureValue}>Annual, comprehensive household data</span>
                   </div>
                 </div>
               </div>
@@ -930,28 +951,28 @@ export default function CalibrationPage() {
 
         {targetsSummary && (
           <>
-            <div className="sources-grid">
+            <div className={styles.sourcesGrid}>
               {targetsSummary.sources.map((source) => (
                 <div
                   key={source.source}
-                  className={`source-card ${source.is_projection ? "projection" : "historical"}`}
+                  className={source.is_projection ? styles.sourceCard.projection : styles.sourceCard.historical}
                 >
-                  <div className="source-header">
-                    <span className={`source-badge ${source.is_projection ? "projection" : "historical"}`}>
+                  <div className={styles.sourceHeader}>
+                    <span className={source.is_projection ? styles.sourceBadge.projection : styles.sourceBadge.historical}>
                       {source.is_projection ? "PROJECTION" : "HISTORICAL"}
                     </span>
-                    <span className="source-name">{source.display_name}</span>
+                    <span className={styles.sourceName}>{source.display_name}</span>
                   </div>
-                  <div className="source-stats">
-                    <div className="source-stat">
+                  <div className={styles.sourceStats}>
+                    <div className={styles.sourceStat}>
                       <span className="stat-value">{source.count}</span>
                       <span className="stat-label">Targets</span>
                     </div>
-                    <div className="source-stat">
+                    <div className={styles.sourceStat}>
                       <span className="stat-value">{source.variables}</span>
                       <span className="stat-label">Variables</span>
                     </div>
-                    <div className="source-stat">
+                    <div className={styles.sourceStat}>
                       <span className="stat-value">
                         {source.year_min === source.year_max
                           ? source.year_min
@@ -964,23 +985,23 @@ export default function CalibrationPage() {
               ))}
             </div>
 
-            <div className="jurisdiction-summary">
+            <div className={styles.jurisdictionSummary}>
               <h4>Coverage by Jurisdiction</h4>
-              <div className="jurisdiction-bars">
+              <div className={styles.jurisdictionBars}>
                 {targetsSummary.jurisdictions.map((j) => (
-                  <div key={j.jurisdiction} className="jurisdiction-bar">
-                    <span className="jurisdiction-name">
+                  <div key={j.jurisdiction} className={styles.jurisdictionBar}>
+                    <span className={styles.jurisdictionName}>
                       {j.jurisdiction.toUpperCase().replace("-", " ")}
                     </span>
-                    <div className="bar-container">
+                    <div className={styles.barContainer}>
                       <div
-                        className="bar-fill"
+                        className={styles.barFill}
                         style={{
                           width: `${(j.count / targetsSummary.total_targets) * 100}%`,
                         }}
                       />
                     </div>
-                    <span className="jurisdiction-count">{j.count}</span>
+                    <span className={styles.jurisdictionCount}>{j.count}</span>
                   </div>
                 ))}
               </div>
@@ -990,15 +1011,15 @@ export default function CalibrationPage() {
       </section>
 
       {/* CTA */}
-      <section className="calib-cta">
+      <section className={styles.calibCta}>
         <div className="cta-content">
           <h2>Explore the Source</h2>
           <p>Calibration framework is open source.</p>
-          <div className="cta-buttons">
-            <a href="https://github.com/CosilicoAI/cosilico-data-sources" className="btn-primary" target="_blank" rel="noopener noreferrer">
+          <div className={styles.ctaButtons}>
+            <a href="https://github.com/CosilicoAI/cosilico-data-sources" className={styles.btnPrimary} target="_blank" rel="noopener noreferrer">
               Data Sources
             </a>
-            <a href="https://github.com/CosilicoAI/cosilico-microdata" className="btn-secondary" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/CosilicoAI/cosilico-microdata" className={styles.btnSecondary} target="_blank" rel="noopener noreferrer">
               Microdata
             </a>
           </div>

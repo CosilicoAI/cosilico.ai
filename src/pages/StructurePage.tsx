@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Structure.css";
+import * as styles from "../styles/structure.css";
 
 type Audience = "investors" | "philanthropic" | "partners";
 
@@ -7,41 +7,44 @@ export default function StructurePage() {
   const [activeAudience, setActiveAudience] = useState<Audience>("investors");
 
   return (
-    <div className="structure">
+    <div className={styles.structure}>
+      {/* Grid background */}
+      <div className={styles.gridBg} />
+
       {/* Top nav with logo */}
-      <nav className="structure-top-nav">
-        <a href="/" className="structure-logo">
-          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className="structure-logo-icon" />
+      <nav className={styles.structureTopNav}>
+        <a href="/" className={styles.structureLogo}>
+          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.structureLogoIcon} />
           cosilico
         </a>
       </nav>
 
       {/* Hero */}
-      <section className="structure-hero">
+      <section className={styles.structureHero}>
         <h1>Cosilico + PolicyEngine</h1>
-        <p className="structure-subtitle">
+        <p className={styles.structureSubtitle}>
           Two organizations, one mission: make society simulatable.
         </p>
       </section>
 
       {/* Audience selector */}
-      <section className="audience-selector">
+      <section className={styles.audienceSelector}>
         <p>I am a:</p>
-        <div className="audience-buttons">
+        <div className={styles.audienceButtons}>
           <button
-            className={activeAudience === "investors" ? "active" : ""}
+            className={activeAudience === "investors" ? styles.audienceButton.active : styles.audienceButton.default}
             onClick={() => setActiveAudience("investors")}
           >
             Investor
           </button>
           <button
-            className={activeAudience === "philanthropic" ? "active" : ""}
+            className={activeAudience === "philanthropic" ? styles.audienceButton.active : styles.audienceButton.default}
             onClick={() => setActiveAudience("philanthropic")}
           >
             Philanthropic Funder
           </button>
           <button
-            className={activeAudience === "partners" ? "active" : ""}
+            className={activeAudience === "partners" ? styles.audienceButton.active : styles.audienceButton.default}
             onClick={() => setActiveAudience("partners")}
           >
             Partner / Customer
@@ -50,14 +53,14 @@ export default function StructurePage() {
       </section>
 
       {/* Structure diagram */}
-      <section className="structure-diagram">
-        <div className="org-card org-cosilico">
-          <div className="org-header">
-            <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className="org-logo" />
+      <section className={styles.structureDiagram}>
+        <div className={styles.orgCard.cosilico}>
+          <div className={styles.orgHeader}>
+            <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.orgLogo} />
             <h2>Cosilico</h2>
-            <span className="org-type">For-Profit (C-Corp)</span>
+            <span className={styles.orgType}>For-Profit (C-Corp)</span>
           </div>
-          <div className="org-body">
+          <div className={styles.orgBody}>
             <h3>Platform & Infrastructure</h3>
             <ul>
               <li>AI statute-to-code generator</li>
@@ -66,27 +69,27 @@ export default function StructurePage() {
               <li>Dataset calibration & freshness</li>
               <li>Commercial API hosting</li>
             </ul>
-            <div className="org-model">
+            <div className={styles.orgModel}>
               <strong>Revenue:</strong> API usage, data subscriptions, enterprise contracts
             </div>
           </div>
         </div>
 
-        <div className="org-relationship">
-          <div className="relationship-arrow">
-            <span className="arrow-label top">Subcontracts</span>
-            <div className="arrow-line"></div>
-            <span className="arrow-label bottom">Research tools built on platform</span>
+        <div className={styles.orgRelationship}>
+          <div className={styles.relationshipArrow}>
+            <span className={styles.arrowLabel}>Subcontracts</span>
+            <div className={styles.arrowLine}></div>
+            <span className={styles.arrowLabel}>Research tools built on platform</span>
           </div>
         </div>
 
-        <div className="org-card org-pe">
-          <div className="org-header">
-            <img src="https://raw.githubusercontent.com/PolicyEngine/policyengine-app/master/src/images/logos/policyengine/blue.png" alt="PolicyEngine logo" className="org-logo" />
+        <div className={styles.orgCard.pe}>
+          <div className={styles.orgHeader}>
+            <img src="https://raw.githubusercontent.com/PolicyEngine/policyengine-app/master/src/images/logos/policyengine/blue.png" alt="PolicyEngine logo" className={styles.orgLogo} />
             <h2>PolicyEngine</h2>
-            <span className="org-type">501(c)(3) Nonprofit</span>
+            <span className={styles.orgType}>501(c)(3) Nonprofit</span>
           </div>
-          <div className="org-body">
+          <div className={styles.orgBody}>
             <h3>Research & Applications</h3>
             <ul>
               <li>Custom policy interactives</li>
@@ -95,7 +98,7 @@ export default function StructurePage() {
               <li>Policy education & training</li>
               <li>Public-facing tools</li>
             </ul>
-            <div className="org-model">
+            <div className={styles.orgModel}>
               <strong>Revenue:</strong> Grants, research contracts, consulting
             </div>
           </div>
@@ -103,12 +106,12 @@ export default function StructurePage() {
       </section>
 
       {/* Audience-specific content */}
-      <section className="audience-content">
+      <section className={styles.audienceContent}>
         {activeAudience === "investors" && (
-          <div className="content-panel">
+          <div className={styles.contentPanel}>
             <h2>For Investors</h2>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>Why the structure matters</h3>
               <p>
                 Cosilico is a pure <strong>platform company</strong>. We don't do services work,
@@ -121,7 +124,7 @@ export default function StructurePage() {
               </p>
             </div>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>The relationship</h3>
               <ul>
                 <li>PolicyEngine is a <strong>customer</strong> of Cosilico (uses our APIs at-cost)</li>
@@ -131,22 +134,22 @@ export default function StructurePage() {
               </ul>
             </div>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>Why this is good for you</h3>
-              <div className="benefit-grid">
-                <div className="benefit-card">
+              <div className={styles.benefitGrid}>
+                <div className={styles.benefitCard}>
                   <h4>Clean metrics</h4>
                   <p>No services revenue, no grant dependency. Pure SaaS/usage economics.</p>
                 </div>
-                <div className="benefit-card">
+                <div className={styles.benefitCard}>
                   <h4>Built-in credibility</h4>
                   <p>PolicyEngine's government users (UK Treasury, US Congress) validate the platform.</p>
                 </div>
-                <div className="benefit-card">
+                <div className={styles.benefitCard}>
                   <h4>Grant pipeline</h4>
                   <p>Foundation grants to PE can flow to Cosilico as subcontracts. Additional revenue channel.</p>
                 </div>
-                <div className="benefit-card">
+                <div className={styles.benefitCard}>
                   <h4>Mission alignment</h4>
                   <p>PE's nonprofit mission attracts talent and partners who care about impact.</p>
                 </div>
@@ -156,10 +159,10 @@ export default function StructurePage() {
         )}
 
         {activeAudience === "philanthropic" && (
-          <div className="content-panel">
+          <div className={styles.contentPanel}>
             <h2>For Philanthropic Funders</h2>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>Where your grant goes</h3>
               <p>
                 Grants go to <strong>PolicyEngine</strong>, the 501(c)(3) nonprofit.
@@ -172,7 +175,7 @@ export default function StructurePage() {
               </p>
             </div>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>Why this is better than before</h3>
               <ul>
                 <li><strong>Focus:</strong> PE focuses on research and impact, not infrastructure maintenance</li>
@@ -182,46 +185,46 @@ export default function StructurePage() {
               </ul>
             </div>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>What you fund at PolicyEngine</h3>
-              <div className="benefit-grid">
-                <div className="benefit-card">
+              <div className={styles.benefitGrid}>
+                <div className={styles.benefitCard}>
                   <h4>Custom interactives</h4>
                   <p>Interactive tools for specific policy questions: benefit take-up maps, reform calculators, etc.</p>
                 </div>
-                <div className="benefit-card">
+                <div className={styles.benefitCard}>
                   <h4>Research partnerships</h4>
                   <p>Collaborations with academics, think tanks, and government on policy analysis.</p>
                 </div>
-                <div className="benefit-card">
+                <div className={styles.benefitCard}>
                   <h4>Public education</h4>
                   <p>Accessible tools and content that help people understand policy impacts.</p>
                 </div>
-                <div className="benefit-card">
+                <div className={styles.benefitCard}>
                   <h4>Rapid response</h4>
                   <p>Quick analysis and interactives when new legislation is proposed.</p>
                 </div>
               </div>
             </div>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>Example: Benefit take-up analysis</h3>
-              <div className="example-flow">
-                <div className="flow-step">
-                  <span className="step-num">1</span>
-                  <span className="step-text">Foundation grants $X to PE for benefit take-up research</span>
+              <div className={styles.exampleFlow}>
+                <div className={styles.flowStep}>
+                  <span className={styles.stepNum}>1</span>
+                  <span className={styles.stepText}>Foundation grants $X to PE for benefit take-up research</span>
                 </div>
-                <div className="flow-step">
-                  <span className="step-num">2</span>
-                  <span className="step-text">PE defines research questions, designs interactives</span>
+                <div className={styles.flowStep}>
+                  <span className={styles.stepNum}>2</span>
+                  <span className={styles.stepText}>PE defines research questions, designs interactives</span>
                 </div>
-                <div className="flow-step">
-                  <span className="step-num">3</span>
-                  <span className="step-text">PE uses Cosilico APIs for simulations (may subcontract)</span>
+                <div className={styles.flowStep}>
+                  <span className={styles.stepNum}>3</span>
+                  <span className={styles.stepText}>PE uses Cosilico APIs for simulations (may subcontract)</span>
                 </div>
-                <div className="flow-step">
-                  <span className="step-num">4</span>
-                  <span className="step-text">PE delivers interactive map + research findings</span>
+                <div className={styles.flowStep}>
+                  <span className={styles.stepNum}>4</span>
+                  <span className={styles.stepText}>PE delivers interactive map + research findings</span>
                 </div>
               </div>
             </div>
@@ -229,52 +232,52 @@ export default function StructurePage() {
         )}
 
         {activeAudience === "partners" && (
-          <div className="content-panel">
+          <div className={styles.contentPanel}>
             <h2>For Partners & Customers</h2>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>Which organization should I work with?</h3>
-              <div className="decision-table">
-                <div className="decision-row header">
+              <div className={styles.decisionTable}>
+                <div className={styles.decisionRow.header}>
                   <span>You want...</span>
                   <span>Work with...</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>API access for tax/benefit calculations</span>
-                  <span className="org-tag cosilico">Cosilico</span>
+                  <span className={styles.orgTag.cosilico}>Cosilico</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>Predictions to complete partial customer data</span>
-                  <span className="org-tag cosilico">Cosilico</span>
+                  <span className={styles.orgTag.cosilico}>Cosilico</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>Population-scale simulations</span>
-                  <span className="org-tag cosilico">Cosilico</span>
+                  <span className={styles.orgTag.cosilico}>Cosilico</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>Dataset downloads</span>
-                  <span className="org-tag cosilico">Cosilico</span>
+                  <span className={styles.orgTag.cosilico}>Cosilico</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>Custom interactive for a specific policy question</span>
-                  <span className="org-tag pe">PolicyEngine</span>
+                  <span className={styles.orgTag.pe}>PolicyEngine</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>Research partnership on policy analysis</span>
-                  <span className="org-tag pe">PolicyEngine</span>
+                  <span className={styles.orgTag.pe}>PolicyEngine</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>Grant-funded project</span>
-                  <span className="org-tag pe">PolicyEngine</span>
+                  <span className={styles.orgTag.pe}>PolicyEngine</span>
                 </div>
-                <div className="decision-row">
+                <div className={styles.decisionRow.default}>
                   <span>Academic collaboration</span>
-                  <span className="org-tag pe">PolicyEngine</span>
+                  <span className={styles.orgTag.pe}>PolicyEngine</span>
                 </div>
               </div>
             </div>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>Pricing</h3>
               <p>
                 <strong>Cosilico</strong> charges for API usage and data.
@@ -286,7 +289,7 @@ export default function StructurePage() {
               </p>
             </div>
 
-            <div className="content-section">
+            <div className={styles.contentSection}>
               <h3>The same expertise, different delivery</h3>
               <p>
                 Both organizations are founded by the same team that built PolicyEngine's
@@ -300,11 +303,11 @@ export default function StructurePage() {
       </section>
 
       {/* FAQ */}
-      <section className="structure-faq">
+      <section className={styles.structureFaq}>
         <h2>Frequently Asked Questions</h2>
 
-        <div className="faq-grid">
-          <div className="faq-item">
+        <div className={styles.faqGrid}>
+          <div className={styles.faqItem}>
             <h4>Is PolicyEngine going away?</h4>
             <p>
               No. PolicyEngine continues as a nonprofit research organization.
@@ -313,7 +316,7 @@ export default function StructurePage() {
             </p>
           </div>
 
-          <div className="faq-item">
+          <div className={styles.faqItem}>
             <h4>Who owns what?</h4>
             <p>
               Cosilico owns the platform IP (the AI generator, simulation engine, APIs).
@@ -322,7 +325,7 @@ export default function StructurePage() {
             </p>
           </div>
 
-          <div className="faq-item">
+          <div className={styles.faqItem}>
             <h4>Is everything still open source?</h4>
             <p>
               Yes. Both organizations are committed to open source.
@@ -331,7 +334,7 @@ export default function StructurePage() {
             </p>
           </div>
 
-          <div className="faq-item">
+          <div className={styles.faqItem}>
             <h4>What about existing PolicyEngine users?</h4>
             <p>
               The public policyengine.org calculator will continue.
@@ -343,14 +346,14 @@ export default function StructurePage() {
       </section>
 
       {/* CTA */}
-      <section className="structure-cta">
+      <section className={styles.structureCta}>
         <h2>Questions?</h2>
         <p>Reach out to discuss your specific situation.</p>
-        <div className="cta-buttons">
-          <a href="mailto:max@cosilico.ai" className="btn-primary">
+        <div className={styles.ctaButtons}>
+          <a href="mailto:max@cosilico.ai" className={styles.btnPrimary}>
             Contact Max
           </a>
-          <a href="/" className="btn-secondary">
+          <a href="/" className={styles.btnSecondary}>
             Back to Home
           </a>
         </div>

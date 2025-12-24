@@ -1,4 +1,5 @@
 import React from "react";
+import * as styles from "../../styles/architecture.css";
 
 export interface TreeNode {
   id: string;
@@ -34,30 +35,30 @@ export function StatuteTree({
   const hasFile = !!node.file;
 
   return (
-    <div className="tree-node" style={{ marginLeft: depth * 16 }}>
+    <div className={styles.treeNode} style={{ marginLeft: depth * 16 }}>
       <div
-        className={`tree-item ${isSelected ? "selected" : ""} ${hasFile ? "has-file" : ""} ${node.indexed ? "indexed" : ""} ${node.isIndexingRule ? "indexing-rule" : ""}`}
+        className={`${styles.treeItem} ${isSelected ? styles.treeItemSelected : ""}`}
         onClick={() => {
           if (hasChildren) onToggle(node.id);
           if (hasFile) onSelect(node.id);
         }}
       >
         {hasChildren && (
-          <span className={`tree-toggle ${isExpanded ? "expanded" : ""}`}>
+          <span className={`${styles.treeToggle} ${isExpanded ? styles.treeToggleExpanded : ""}`}>
             ▶
           </span>
         )}
-        <span className="tree-label">{node.label}</span>
-        {node.indexed && <span className="tree-badge indexed">indexed</span>}
-        {node.isIndexingRule && <span className="tree-badge indexing">CPI</span>}
-        {node.isTest && <span className="tree-badge test">unit</span>}
-        {node.isIntegrationTest && <span className="tree-badge integration">e2e</span>}
+        <span className={styles.treeLabel}>{node.label}</span>
+        {node.indexed && <span className={`${styles.treeBadge} ${styles.treeBadgeIndexed}`}>indexed</span>}
+        {node.isIndexingRule && <span className={`${styles.treeBadge} ${styles.treeBadgeIndexing}`}>CPI</span>}
+        {node.isTest && <span className={`${styles.treeBadge} ${styles.treeBadgeTest}`}>unit</span>}
+        {node.isIntegrationTest && <span className={`${styles.treeBadge} ${styles.treeBadgeIntegration}`}>e2e</span>}
         {hasFile && !node.indexed && !node.isIndexingRule && !node.isTest && !node.isIntegrationTest && (
-          <span className="tree-file">{node.file}</span>
+          <span className={styles.treeFile}>{node.file}</span>
         )}
       </div>
       {hasChildren && isExpanded && (
-        <div className="tree-children">
+        <div className={styles.treeChildren}>
           {node.children!.map((child) => (
             <StatuteTree
               key={child.id}

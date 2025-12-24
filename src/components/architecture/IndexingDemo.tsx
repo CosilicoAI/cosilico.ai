@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import * as styles from "../../styles/architecture.css";
 
 export function IndexingDemo() {
   const [year, setYear] = useState(2024);
@@ -34,44 +35,44 @@ export function IndexingDemo() {
   }, [year, tier]);
 
   return (
-    <div className="indexing-demo">
-      <div className="demo-header">
-        <span className="demo-title">PARAMETER RESOLVER</span>
-        <span className="demo-status demo">● DEMO</span>
+    <div className={styles.indexingDemo}>
+      <div className={styles.demoHeader}>
+        <span className={styles.demoTitle}>PARAMETER RESOLVER</span>
+        <span className={`${styles.demoStatus} ${styles.demoStatusDemo}`}>● DEMO</span>
       </div>
 
-      <div className="demo-body">
-        <div className="query-builder">
-          <div className="query-line">
-            <span className="query-keyword">resolver</span>
-            <span className="query-dot">.</span>
-            <span className="query-method">get</span>
-            <span className="query-paren">(</span>
+      <div className={styles.demoBody}>
+        <div className={styles.queryBuilder}>
+          <div className={styles.queryLine}>
+            <span className={styles.queryKeyword}>resolver</span>
+            <span className={styles.queryDot}>.</span>
+            <span className={styles.queryMethod}>get</span>
+            <span className={styles.queryParen}>(</span>
           </div>
-          <div className="query-line indent">
-            <span className="query-string">"statute/26/32/b/2/A/earned_income_amount"</span>
-            <span className="query-comma">,</span>
+          <div className={`${styles.queryLine} ${styles.queryLineIndent}`}>
+            <span className={styles.queryString}>"statute/26/32/b/2/A/earned_income_amount"</span>
+            <span className={styles.queryComma}>,</span>
           </div>
-          <div className="query-line indent">
-            <span className="query-param">year</span>
-            <span className="query-colon">:</span>
-            <span className={`query-value ${isAnimating ? "flash" : ""}`}>{year}</span>
-            <span className="query-comma">,</span>
+          <div className={`${styles.queryLine} ${styles.queryLineIndent}`}>
+            <span className={styles.queryParam}>year</span>
+            <span className={styles.queryColon}>:</span>
+            <span className={`${styles.queryValue} ${isAnimating ? styles.queryValueFlash : ""}`}>{year}</span>
+            <span className={styles.queryComma}>,</span>
           </div>
-          <div className="query-line indent">
-            <span className="query-param">n_children</span>
-            <span className="query-colon">:</span>
-            <span className="query-value">0</span>
+          <div className={`${styles.queryLine} ${styles.queryLineIndent}`}>
+            <span className={styles.queryParam}>n_children</span>
+            <span className={styles.queryColon}>:</span>
+            <span className={styles.queryValue}>0</span>
           </div>
-          <div className="query-line">
-            <span className="query-paren">)</span>
+          <div className={styles.queryLine}>
+            <span className={styles.queryParen}>)</span>
           </div>
         </div>
 
-        <div className="controls-row">
-          <div className="control-group">
+        <div className={styles.controlsRow}>
+          <div className={styles.controlGroup}>
             <label>TAX_YEAR</label>
-            <div className="button-group">
+            <div className={styles.buttonGroup}>
               {[2024, 2025, 2030].map((y) => (
                 <button
                   key={y}
@@ -84,9 +85,9 @@ export function IndexingDemo() {
             </div>
           </div>
 
-          <div className="control-group">
+          <div className={styles.controlGroup}>
             <label>TIER_HINT</label>
-            <div className="button-group">
+            <div className={styles.buttonGroup}>
               {(["published", "projected", "calculated"] as const).map((t) => (
                 <button
                   key={t}
@@ -100,71 +101,71 @@ export function IndexingDemo() {
           </div>
         </div>
 
-        <div className="response-block">
-          <div className="response-header">
+        <div className={styles.responseBlock}>
+          <div className={styles.responseHeader}>
             <span>RESPONSE</span>
-            <span className="response-time">~2ms</span>
+            <span className={styles.responseTime}>~2ms</span>
           </div>
-          <div className="response-body">
-            <div className="response-line">
-              <span className="response-brace">{"{"}</span>
+          <div className={styles.responseBody}>
+            <div className={styles.responseLine}>
+              <span className={styles.responseBrace}>{"{"}</span>
             </div>
-            <div className="response-line indent">
-              <span className="response-key">"value"</span>
-              <span className="response-colon">:</span>
-              <span className={`response-number ${isAnimating ? "flash" : ""}`}>
+            <div className={`${styles.responseLine} ${styles.responseLineIndent}`}>
+              <span className={styles.responseKey}>"value"</span>
+              <span className={styles.responseColon}>:</span>
+              <span className={`${styles.responseNumber} ${isAnimating ? styles.responseNumberFlash : ""}`}>
                 {displayValue}
               </span>
-              <span className="response-comma">,</span>
+              <span className={styles.responseComma}>,</span>
             </div>
-            <div className="response-line indent">
-              <span className="response-key">"tier"</span>
-              <span className="response-colon">:</span>
-              <span className={`response-string tier-${effectiveTier}`}>
+            <div className={`${styles.responseLine} ${styles.responseLineIndent}`}>
+              <span className={styles.responseKey}>"tier"</span>
+              <span className={styles.responseColon}>:</span>
+              <span className={`${styles.responseString} ${styles[`responseStringTier${effectiveTier.charAt(0).toUpperCase() + effectiveTier.slice(1)}` as keyof typeof styles]}`}>
                 "{effectiveTier.toUpperCase()}"
               </span>
-              <span className="response-comma">,</span>
+              <span className={styles.responseComma}>,</span>
             </div>
-            <div className="response-line indent">
-              <span className="response-key">"source"</span>
-              <span className="response-colon">:</span>
-              <span className="response-string">
+            <div className={`${styles.responseLine} ${styles.responseLineIndent}`}>
+              <span className={styles.responseKey}>"source"</span>
+              <span className={styles.responseColon}>:</span>
+              <span className={styles.responseString}>
                 "{effectiveTier === "published" ? "Rev. Proc. 2023-34" : `Calculated via §32(j)`}"
               </span>
             </div>
-            <div className="response-line">
-              <span className="response-brace">{"}"}</span>
+            <div className={styles.responseLine}>
+              <span className={styles.responseBrace}>{"}"}</span>
             </div>
           </div>
         </div>
 
         {tier === "published" && yearValues.published === 0 && (
-          <div className="fallback-notice">
-            <span className="notice-icon">⚠</span>
+          <div className={styles.fallbackNotice}>
+            <span className={styles.noticeIcon}>⚠</span>
             <span>No published value for {year} — automatic fallback to PROJECTED</span>
           </div>
         )}
 
-        <div className="tier-explanation">
+        <div className={styles.tierExplanation}>
           <p>{tierDescriptions[effectiveTier]}</p>
         </div>
 
-        <div className="precedence-visual">
-          <div className="precedence-label">PRECEDENCE</div>
-          <div className="precedence-chain">
-            <div className={`precedence-node ${effectiveTier === "published" ? "active" : ""}`}>
-              <span className="node-num">1</span>
-              <span className="node-name">PUB</span>
+        <div className={styles.precedenceVisual}>
+          <div className={styles.precedenceLabel}>PRECEDENCE</div>
+          <div className={styles.precedenceChain}>
+            <div className={`${styles.precedenceNode} ${effectiveTier === "published" ? styles.precedenceNodeActive : ""}`}>
+              <span className={styles.nodeNum}>1</span>
+              <span className={styles.nodeName}>PUB</span>
             </div>
-            <div className="precedence-connector" />
-            <div className={`precedence-node ${effectiveTier === "projected" ? "active" : ""}`}>
-              <span className="node-num">2</span>
-              <span className="node-name">PRJ</span>
+            <div className={styles.precedenceConnector} />
+            <div className={`${styles.precedenceNode} ${effectiveTier === "projected" ? styles.precedenceNodeActive : ""}`}>
+              <span className={styles.nodeNum}>2</span>
+              <span className={styles.nodeName}>PRJ</span>
             </div>
-            <div className="precedence-connector" />
-            <div className={`precedence-node ${effectiveTier === "calculated" ? "active" : ""}`}>
-              <span className="node-num">3</span>
-              <span className="node-name">CAL</span>
+            <div className={styles.precedenceConnector} />
+            <div className={`${styles.precedenceNode} ${effectiveTier === "calculated" ? styles.precedenceNodeActive : ""}`}>
+              <span className={styles.nodeNum}>3</span>
+              <span className={styles.nodeName}>CAL</span>
             </div>
           </div>
         </div>

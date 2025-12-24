@@ -2,96 +2,97 @@ import React from "react";
 import { Cite } from "./Citation";
 import { CapabilityCell } from "./Icons";
 import { competitors, pricingComps } from "../../data/thesis";
+import * as styles from "../../styles/thesis.css";
 
 export function CompetitionSection() {
   return (
-    <div className="thesis-content">
+    <div className={styles.thesisContent}>
       <h2>6. Competitive Landscape</h2>
       <p>No one combines income tax + benefits + prediction + simulation.</p>
 
-      <div className="competitive-table-container">
-        <table className="competitive-table">
+      <div className={styles.competitiveTableContainer}>
+        <table className={styles.competitiveTable}>
           <thead>
             <tr>
               <th>Capability</th>
               {competitors.map(c => <th key={c.name}>{c.name}</th>)}
-              <th className="highlight-col">Cosilico</th>
+              <th className={styles.highlightCol}>Cosilico</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Income tax calculation</td>
               {competitors.map(c => <td key={c.name}><CapabilityCell value={c.incomeTax} /></td>)}
-              <td className="highlight-col"><CapabilityCell value={true} /></td>
+              <td className={styles.highlightCol}><CapabilityCell value={true} /></td>
             </tr>
             <tr>
               <td>Payroll tax (FICA, etc.)</td>
               {competitors.map(c => <td key={c.name}><CapabilityCell value={c.payrollTax} /></td>)}
-              <td className="highlight-col"><CapabilityCell value={true} /></td>
+              <td className={styles.highlightCol}><CapabilityCell value={true} /></td>
             </tr>
             <tr>
               <td>Benefits eligibility</td>
               {competitors.map(c => <td key={c.name}><CapabilityCell value={c.benefits} /></td>)}
-              <td className="highlight-col"><CapabilityCell value={true} /></td>
+              <td className={styles.highlightCol}><CapabilityCell value={true} /></td>
             </tr>
             <tr>
               <td>Attribute prediction</td>
               {competitors.map(c => <td key={c.name}><CapabilityCell value={c.prediction} /></td>)}
-              <td className="highlight-col"><CapabilityCell value={true} /></td>
+              <td className={styles.highlightCol}><CapabilityCell value={true} /></td>
             </tr>
             <tr>
               <td>Microsimulation</td>
               {competitors.map(c => <td key={c.name}><CapabilityCell value={c.simulation} /></td>)}
-              <td className="highlight-col"><CapabilityCell value={true} /></td>
+              <td className={styles.highlightCol}><CapabilityCell value={true} /></td>
             </tr>
             <tr>
               <td>Open source</td>
               {competitors.map(c => <td key={c.name}><CapabilityCell value={c.openSource} /></td>)}
-              <td className="highlight-col"><CapabilityCell value={true} /></td>
+              <td className={styles.highlightCol}><CapabilityCell value={true} /></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div className="competitor-notes">
+      <div className={styles.competitorNotes}>
         {competitors.map(c => (
-          <div key={c.name} className="competitor-note">
+          <div key={c.name} className={styles.competitorNote}>
             <h4>{c.name}{c.sourceId && <Cite id={c.sourceId} />}</h4>
             <p>{c.notes}</p>
           </div>
         ))}
       </div>
 
-      <div className="pricing-comparison">
+      <div className={styles.pricingComparison}>
         <h3>Competitive Pricing Analysis</h3>
         <p>Our pricing is informed by extensive market research across each product category.</p>
 
         {pricingComps.map(pc => (
-          <div key={pc.category} className="pricing-comp-category">
+          <div key={pc.category} className={styles.pricingCompCategory}>
             <h4>{pc.category}</h4>
-            <div className="pricing-comp-table">
-              <div className="pricing-comp-row pricing-comp-header">
+            <div className={styles.pricingCompTable}>
+              <div className={`${styles.pricingCompRow} ${styles.pricingCompHeader}`}>
                 <span>Competitor</span>
                 <span>Pricing</span>
                 <span>Notes</span>
               </div>
               {pc.competitors.map(comp => (
-                <div key={comp.name} className="pricing-comp-row">
+                <div key={comp.name} className={styles.pricingCompRow}>
                   <span>{comp.name}{comp.sourceId && <Cite id={comp.sourceId} />}</span>
-                  <span className="pricing-value">{comp.pricing}</span>
-                  <span className="pricing-notes">{comp.notes}</span>
+                  <span className={styles.pricingValue}>{comp.pricing}</span>
+                  <span className={styles.pricingNotes}>{comp.notes}</span>
                 </div>
               ))}
-              <div className="pricing-comp-row pricing-comp-cosilico">
+              <div className={`${styles.pricingCompRow} ${styles.pricingCompCosilico}`}>
                 <span><strong>Cosilico</strong></span>
-                <span className="pricing-value cosilico-price">{pc.cosilicoPricing}</span>
-                <span className="pricing-notes cosilico-advantage">{pc.cosilicoAdvantage}</span>
+                <span className={`${styles.pricingValue} ${styles.cosilicoPrice}`}>{pc.cosilicoPricing}</span>
+                <span className={`${styles.pricingNotes} ${styles.cosilicoAdvantage}`}>{pc.cosilicoAdvantage}</span>
               </div>
             </div>
           </div>
         ))}
 
-        <div className="pricing-philosophy">
+        <div className={styles.pricingPhilosophy}>
           <h4>Open Source + Paid Insights</h4>
           <p>
             Everything is open source—the rules engine, datasets, even the AI generator.

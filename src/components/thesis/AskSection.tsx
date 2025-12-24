@@ -1,40 +1,41 @@
 import React from "react";
+import * as styles from "../../styles/thesis.css";
 
 export function AskSection() {
   return (
-    <div className="thesis-content">
+    <div className={styles.thesisContent}>
       <h2>11. The Ask</h2>
 
-      <div className="ask-container">
-        <div className="ask-amount">
-          <span className="ask-label">Seed Round</span>
-          <span className="ask-value">$3-5M</span>
+      <div className={styles.askContainer}>
+        <div className={styles.askAmount}>
+          <span className={styles.askLabel}>Seed Round</span>
+          <span className={styles.askValue}>$3-5M</span>
         </div>
 
-        <div className="ask-details">
-          <div className="ask-use">
+        <div className={styles.askDetails}>
+          <div className={styles.askUse}>
             <h3>Use of Funds</h3>
-            <div className="fund-bars">
-              <div className="fund-bar">
-                <div className="fund-fill" style={{ width: "50%" }}></div>
-                <span className="fund-label">50% Engineering</span>
+            <div className={styles.fundBars}>
+              <div className={styles.fundBar}>
+                <div className={styles.fundFill} style={{ width: "50%" }}></div>
+                <span className={styles.fundLabel}>50% Engineering</span>
               </div>
-              <div className="fund-bar">
-                <div className="fund-fill" style={{ width: "25%" }}></div>
-                <span className="fund-label">25% Data/ML</span>
+              <div className={styles.fundBar}>
+                <div className={styles.fundFill} style={{ width: "25%" }}></div>
+                <span className={styles.fundLabel}>25% Data/ML</span>
               </div>
-              <div className="fund-bar">
-                <div className="fund-fill" style={{ width: "15%" }}></div>
-                <span className="fund-label">15% Go-to-Market</span>
+              <div className={styles.fundBar}>
+                <div className={styles.fundFill} style={{ width: "15%" }}></div>
+                <span className={styles.fundLabel}>15% Go-to-Market</span>
               </div>
-              <div className="fund-bar">
-                <div className="fund-fill" style={{ width: "10%" }}></div>
-                <span className="fund-label">10% Operations</span>
+              <div className={styles.fundBar}>
+                <div className={styles.fundFill} style={{ width: "10%" }}></div>
+                <span className={styles.fundLabel}>10% Operations</span>
               </div>
             </div>
           </div>
 
-          <div className="ask-milestones">
+          <div className={styles.askMilestones}>
             <h3>Milestones to Series A</h3>
             <ul>
               <li>10+ paying customers</li>
@@ -47,9 +48,9 @@ export function AskSection() {
         </div>
       </div>
 
-      <div className="ask-projections">
+      <div className={styles.askProjections}>
         <h3>Revenue Path</h3>
-        <table className="projections-table">
+        <table className={styles.projectionsTable}>
           <thead>
             <tr>
               <th>Year</th>

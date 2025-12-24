@@ -1,16 +1,17 @@
 import React from "react";
 import { Cite } from "./Citation";
+import * as styles from "../../styles/thesis.css";
 
 export function GapSection() {
   return (
-    <div className="thesis-content">
+    <div className={styles.thesisContent}>
       <h2>2. The Gap</h2>
       <p>
         Building a simulation of society requires three layers: <strong>rules</strong> (how taxes and benefits work), <strong>data</strong> (who the households are), and <strong>scenarios</strong> (what-if analysis at scale). Today, these pieces exist in fragments.
       </p>
 
-      <div className="gap-grid">
-        <div className="gap-card gap-need">
+      <div className={styles.gapGrid}>
+        <div className={`${styles.gapCard} ${styles.gapNeed}`}>
           <h3>What's Needed</h3>
           <ul>
             <li>Income tax calculation (federal + 50 states)</li>
@@ -20,7 +21,7 @@ export function GapSection() {
             <li>Audit trails with legal citations</li>
           </ul>
         </div>
-        <div className="gap-card gap-exists">
+        <div className={`${styles.gapCard} ${styles.gapExists}`}>
           <h3>What Exists</h3>
           <ul>
             <li><strong>Sales tax:</strong> Avalara ($8.4B acquisition)<Cite id={7} /></li>
@@ -31,7 +32,7 @@ export function GapSection() {
         </div>
       </div>
 
-      <p className="gap-conclusion">
+      <p className={styles.gapConclusion}>
         <strong>The gap:</strong> No one combines income tax calculation +
         benefits eligibility + prediction + simulation in a single API.
         That's what we're building.

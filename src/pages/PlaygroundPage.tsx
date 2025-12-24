@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Playground.css";
+import * as styles from "../styles/playground.css";
 import { STATES } from "../data/states";
 import { calculateTaxesAndBenefits, HouseholdInput, CalculationResult } from "../utils/taxCalculations";
 
@@ -173,47 +173,48 @@ export default function PlaygroundPage() {
   } : null;
 
   return (
-    <div className="playground">
+    <div className={styles.playground}>
+      <div className={styles.gridBg} />
       {/* Header */}
-      <header className="playground-header">
-        <a href="/" className="playground-logo">
+      <header className={styles.playgroundHeader}>
+        <a href="/" className={styles.playgroundLogo}>
           <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" />
           <span>cosilico</span>
         </a>
-        <div className="mode-toggle">
+        <div className={styles.modeToggle}>
           <button
-            className={mode === "calculator" ? "active" : ""}
+            className={`${styles.modeButton} ${mode === "calculator" ? styles.modeButtonActive : ""}`}
             onClick={() => setMode("calculator")}
           >
             Rules Calculator
           </button>
           <button
-            className={mode === "lawarchive" ? "active" : ""}
+            className={`${styles.modeButton} ${mode === "lawarchive" ? styles.modeButtonActive : ""}`}
             onClick={() => setMode("lawarchive")}
           >
             Law Archive
           </button>
         </div>
-        <div className="playground-badge">
-          <span className="badge-dot demo"></span>
+        <div className={styles.playgroundBadge}>
+          <span className={`${styles.badgeDot} ${styles.badgeDotDemo}`}></span>
           Demo — Sample Data
         </div>
       </header>
 
-      <div className="playground-container">
+      <div className={styles.playgroundContainer}>
         {mode === "calculator" ? (
           <>
         {/* Input Panel */}
-        <aside className="input-panel">
-          <div className="panel-header">
+        <aside className={styles.inputPanel}>
+          <div className={styles.panelHeader}>
             <h2>Household Profile</h2>
-            <span className="panel-hint">Adjust inputs to see real-time calculations</span>
+            <span className={styles.panelHint}>Adjust inputs to see real-time calculations</span>
           </div>
 
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label htmlFor="income">
-              <span className="label-text">Annual Income</span>
-              <span className="label-value">{formatCurrency(input.income)}</span>
+              <span className={styles.labelText}>Annual Income</span>
+              <span className={styles.labelValue}>{formatCurrency(input.income)}</span>
             </label>
             <input
               type="range"
@@ -224,15 +225,15 @@ export default function PlaygroundPage() {
               value={input.income}
               onChange={(e) => setInput({ ...input, income: Number(e.target.value) })}
             />
-            <div className="range-labels">
+            <div className={styles.rangeLabels}>
               <span>$0</span>
               <span>$500k</span>
             </div>
           </div>
 
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label htmlFor="state">
-              <span className="label-text">State</span>
+              <span className={styles.labelText}>State</span>
             </label>
             <select
               id="state"
@@ -247,11 +248,11 @@ export default function PlaygroundPage() {
             </select>
           </div>
 
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label>
-              <span className="label-text">Filing Status</span>
+              <span className={styles.labelText}>Filing Status</span>
             </label>
-            <div className="button-group">
+            <div className={styles.buttonGroup}>
               {[
                 { value: "single", label: "Single" },
                 { value: "married", label: "Married" },
@@ -268,10 +269,10 @@ export default function PlaygroundPage() {
             </div>
           </div>
 
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label htmlFor="dependents">
-              <span className="label-text">Dependents</span>
-              <span className="label-value">{input.numDependents}</span>
+              <span className={styles.labelText}>Dependents</span>
+              <span className={styles.labelValue}>{input.numDependents}</span>
             </label>
             <input
               type="range"
@@ -282,16 +283,16 @@ export default function PlaygroundPage() {
               value={input.numDependents}
               onChange={(e) => setInput({ ...input, numDependents: Number(e.target.value) })}
             />
-            <div className="range-labels">
+            <div className={styles.rangeLabels}>
               <span>0</span>
               <span>6</span>
             </div>
           </div>
 
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label htmlFor="age">
-              <span className="label-text">Age</span>
-              <span className="label-value">{input.age}</span>
+              <span className={styles.labelText}>Age</span>
+              <span className={styles.labelValue}>{input.age}</span>
             </label>
             <input
               type="range"
@@ -302,21 +303,21 @@ export default function PlaygroundPage() {
               value={input.age}
               onChange={(e) => setInput({ ...input, age: Number(e.target.value) })}
             />
-            <div className="range-labels">
+            <div className={styles.rangeLabels}>
               <span>18</span>
               <span>80</span>
             </div>
           </div>
 
-          <div className="api-hint">
+          <div className={styles.apiHint}>
             <code>POST /calculate</code>
             <span>~50ms response time</span>
           </div>
         </aside>
 
         {/* Results Panel */}
-        <main className="results-panel">
-          <div className="results-tabs">
+        <main className={styles.resultsPanel}>
+          <div className={styles.resultsTabs}>
             <button
               className={activeTab === "summary" ? "active" : ""}
               onClick={() => setActiveTab("summary")}
@@ -337,51 +338,51 @@ export default function PlaygroundPage() {
             </button>
           </div>
 
-          <div className={`results-content ${isCalculating ? "calculating" : ""}`}>
+          <div className={`${styles.resultsContent} ${isCalculating ? styles.resultsContentCalculating : ""}`}>
             {activeTab === "summary" && result && (
-              <div className="summary-view">
+              <div className={styles.summaryView}>
                 {/* Net Income Hero */}
-                <div className="net-income-hero">
-                  <span className="net-label">Net Income</span>
-                  <span className="net-value">{formatCurrency(result.net_income)}</span>
-                  <span className="net-subtext">
+                <div className={styles.netIncomeHero}>
+                  <span className={styles.netLabel}>Net Income</span>
+                  <span className={styles.netValue}>{formatCurrency(result.net_income)}</span>
+                  <span className={styles.netSubtext}>
                     after taxes and benefits
                   </span>
                 </div>
 
                 {/* Visual Breakdown */}
-                <div className="breakdown-visual">
-                  <div className="breakdown-bar">
+                <div className={styles.breakdownVisual}>
+                  <div className={styles.breakdownBar}>
                     <div
-                      className="bar-segment taxes"
+                      className={`${styles.barSegment} ${styles.barSegmentTaxes}`}
                       style={{ width: `${(result.total_tax / input.income) * 100}%` }}
                       title={`Taxes: ${formatCurrency(result.total_tax)}`}
                     />
                     <div
-                      className="bar-segment take-home"
+                      className={`${styles.barSegment} ${styles.barSegmentTakeHome}`}
                       style={{ width: `${((input.income - result.total_tax) / input.income) * 100}%` }}
                       title={`Take Home: ${formatCurrency(input.income - result.total_tax)}`}
                     />
                     {result.total_benefits > 0 && (
                       <div
-                        className="bar-segment benefits"
+                        className={`${styles.barSegment} ${styles.barSegmentBenefits}`}
                         style={{ width: `${(result.total_benefits / input.income) * 100}%` }}
                         title={`Benefits: ${formatCurrency(result.total_benefits)}`}
                       />
                     )}
                   </div>
-                  <div className="breakdown-legend">
-                    <span className="legend-item taxes">
-                      <span className="legend-dot"></span>
+                  <div className={styles.breakdownLegend}>
+                    <span className={`${styles.legendItem} ${styles.legendItemTaxes}`}>
+                      <span className={styles.legendDot}></span>
                       Taxes ({formatPercent(result.total_tax / input.income)})
                     </span>
-                    <span className="legend-item take-home">
-                      <span className="legend-dot"></span>
+                    <span className={`${styles.legendItem} ${styles.legendItemTakeHome}`}>
+                      <span className={styles.legendDot}></span>
                       Take Home
                     </span>
                     {result.total_benefits > 0 && (
-                      <span className="legend-item benefits">
-                        <span className="legend-dot"></span>
+                      <span className={`${styles.legendItem} ${styles.legendItemBenefits}`}>
+                        <span className={styles.legendDot}></span>
                         Benefits (+{formatPercent(result.total_benefits / input.income)})
                       </span>
                     )}
@@ -389,49 +390,49 @@ export default function PlaygroundPage() {
                 </div>
 
                 {/* Detail Cards */}
-                <div className="detail-grid">
-                  <div className="detail-card taxes">
+                <div className={styles.detailGrid}>
+                  <div className={`${styles.detailCard} ${styles.detailCardTaxes}`}>
                     <h3>Taxes</h3>
-                    <div className="detail-total">{formatCurrency(result.total_tax)}</div>
-                    <div className="detail-breakdown">
-                      <div className="detail-row">
+                    <div className={`${styles.detailTotal} detail-total`}>{formatCurrency(result.total_tax)}</div>
+                    <div className={styles.detailBreakdown}>
+                      <div className={styles.detailRow}>
                         <span>Federal Income Tax</span>
                         <span>{formatCurrency(result.federal_income_tax)}</span>
                       </div>
-                      <div className="detail-row">
+                      <div className={styles.detailRow}>
                         <span>State Income Tax</span>
                         <span>{formatCurrency(result.state_income_tax)}</span>
                       </div>
-                      <div className="detail-row">
+                      <div className={styles.detailRow}>
                         <span>FICA (SS + Medicare)</span>
                         <span>{formatCurrency(result.fica)}</span>
                       </div>
                     </div>
-                    <div className="detail-rates">
+                    <div className={styles.detailRates}>
                       <span>Effective: {formatPercent(result.effective_rate)}</span>
                       <span>Marginal: {formatPercent(result.marginal_rate)}</span>
                     </div>
                   </div>
 
-                  <div className="detail-card benefits">
+                  <div className={`${styles.detailCard} ${styles.detailCardBenefits}`}>
                     <h3>Benefits</h3>
-                    <div className="detail-total">{formatCurrency(result.total_benefits)}</div>
-                    <div className="detail-breakdown">
-                      <div className="detail-row">
+                    <div className={`${styles.detailTotal} detail-total`}>{formatCurrency(result.total_benefits)}</div>
+                    <div className={styles.detailBreakdown}>
+                      <div className={styles.detailRow}>
                         <span>EITC</span>
                         <span>{formatCurrency(result.eitc)}</span>
                       </div>
-                      <div className="detail-row">
+                      <div className={styles.detailRow}>
                         <span>Child Tax Credit</span>
                         <span>{formatCurrency(result.ctc)}</span>
                       </div>
-                      <div className="detail-row">
+                      <div className={styles.detailRow}>
                         <span>SNAP</span>
                         <span>{formatCurrency(result.snap)}</span>
                       </div>
                     </div>
                     {result.total_benefits === 0 && (
-                      <div className="detail-note">
+                      <div className={styles.detailNote}>
                         No benefits at this income level
                       </div>
                     )}
@@ -441,18 +442,18 @@ export default function PlaygroundPage() {
             )}
 
             {activeTab === "api" && (
-              <div className="api-view">
-                <div className="code-block request">
-                  <div className="code-header">
-                    <span className="method">POST</span>
-                    <span className="endpoint">/calculate</span>
+              <div className={styles.apiView}>
+                <div className={styles.codeBlock}>
+                  <div className={styles.codeHeader}>
+                    <span className={styles.method}>POST</span>
+                    <span className={styles.endpoint}>/calculate</span>
                   </div>
                   <pre>{JSON.stringify(apiRequest.body, null, 2)}</pre>
                 </div>
-                <div className="code-block response">
-                  <div className="code-header">
-                    <span className="status">200 OK</span>
-                    <span className="time">47ms</span>
+                <div className={styles.codeBlock}>
+                  <div className={styles.codeHeader}>
+                    <span className={styles.status}>200 OK</span>
+                    <span className={styles.time}>47ms</span>
                   </div>
                   <pre>{JSON.stringify(apiResponse?.data, null, 2)}</pre>
                 </div>
@@ -460,53 +461,53 @@ export default function PlaygroundPage() {
             )}
 
             {activeTab === "citations" && result && (
-              <div className="citations-view">
-                <p className="citations-intro">
+              <div className={styles.citationsView}>
+                <p className={styles.citationsIntro}>
                   Every calculation traces back to statute. Click any citation to view the source law.
                 </p>
-                <div className="citation-list">
-                  <div className="citation-item">
-                    <div className="citation-header">
-                      <span className="citation-label">Federal Income Tax</span>
-                      <span className="citation-value">{formatCurrency(result.federal_income_tax)}</span>
+                <div className={styles.citationList}>
+                  <div className={styles.citationItem}>
+                    <div className={styles.citationHeader}>
+                      <span className={styles.citationLabel}>Federal Income Tax</span>
+                      <span className={styles.citationValue}>{formatCurrency(result.federal_income_tax)}</span>
                     </div>
-                    <a href="https://www.law.cornell.edu/uscode/text/26/1" target="_blank" rel="noopener noreferrer" className="citation-link">
+                    <a href="https://www.law.cornell.edu/uscode/text/26/1" target="_blank" rel="noopener noreferrer" className={styles.citationLink}>
                       26 U.S.C. § 1 — Tax imposed
                     </a>
                   </div>
-                  <div className="citation-item">
-                    <div className="citation-header">
-                      <span className="citation-label">FICA</span>
-                      <span className="citation-value">{formatCurrency(result.fica)}</span>
+                  <div className={styles.citationItem}>
+                    <div className={styles.citationHeader}>
+                      <span className={styles.citationLabel}>FICA</span>
+                      <span className={styles.citationValue}>{formatCurrency(result.fica)}</span>
                     </div>
-                    <a href="https://www.law.cornell.edu/uscode/text/26/3101" target="_blank" rel="noopener noreferrer" className="citation-link">
+                    <a href="https://www.law.cornell.edu/uscode/text/26/3101" target="_blank" rel="noopener noreferrer" className={styles.citationLink}>
                       26 U.S.C. § 3101 — Rate of tax
                     </a>
                   </div>
-                  <div className="citation-item">
-                    <div className="citation-header">
-                      <span className="citation-label">EITC</span>
-                      <span className="citation-value">{formatCurrency(result.eitc)}</span>
+                  <div className={styles.citationItem}>
+                    <div className={styles.citationHeader}>
+                      <span className={styles.citationLabel}>EITC</span>
+                      <span className={styles.citationValue}>{formatCurrency(result.eitc)}</span>
                     </div>
-                    <a href="https://www.law.cornell.edu/uscode/text/26/32" target="_blank" rel="noopener noreferrer" className="citation-link">
+                    <a href="https://www.law.cornell.edu/uscode/text/26/32" target="_blank" rel="noopener noreferrer" className={styles.citationLink}>
                       26 U.S.C. § 32 — Earned income
                     </a>
                   </div>
-                  <div className="citation-item">
-                    <div className="citation-header">
-                      <span className="citation-label">Child Tax Credit</span>
-                      <span className="citation-value">{formatCurrency(result.ctc)}</span>
+                  <div className={styles.citationItem}>
+                    <div className={styles.citationHeader}>
+                      <span className={styles.citationLabel}>Child Tax Credit</span>
+                      <span className={styles.citationValue}>{formatCurrency(result.ctc)}</span>
                     </div>
-                    <a href="https://www.law.cornell.edu/uscode/text/26/24" target="_blank" rel="noopener noreferrer" className="citation-link">
+                    <a href="https://www.law.cornell.edu/uscode/text/26/24" target="_blank" rel="noopener noreferrer" className={styles.citationLink}>
                       26 U.S.C. § 24 — Child tax credit
                     </a>
                   </div>
-                  <div className="citation-item">
-                    <div className="citation-header">
-                      <span className="citation-label">SNAP</span>
-                      <span className="citation-value">{formatCurrency(result.snap)}</span>
+                  <div className={styles.citationItem}>
+                    <div className={styles.citationHeader}>
+                      <span className={styles.citationLabel}>SNAP</span>
+                      <span className={styles.citationValue}>{formatCurrency(result.snap)}</span>
                     </div>
-                    <a href="https://www.law.cornell.edu/uscode/text/7/2017" target="_blank" rel="noopener noreferrer" className="citation-link">
+                    <a href="https://www.law.cornell.edu/uscode/text/7/2017" target="_blank" rel="noopener noreferrer" className={styles.citationLink}>
                       7 U.S.C. § 2017 — Value of allotment
                     </a>
                   </div>
@@ -519,51 +520,51 @@ export default function PlaygroundPage() {
         ) : (
           <>
             {/* Law Archive - Search Panel */}
-            <aside className="input-panel law-archive-panel">
-              <div className="panel-header">
+            <aside className={`${styles.inputPanel} ${styles.lawArchivePanel}`}>
+              <div className={styles.panelHeader}>
                 <h2>Search Statutes</h2>
-                <span className="panel-hint">Query the US Code by citation or keyword</span>
+                <span className={styles.panelHint}>Query the US Code by citation or keyword</span>
               </div>
 
-              <div className="input-group">
+              <div className={styles.inputGroup}>
                 <label htmlFor="law-search">
-                  <span className="label-text">Search</span>
+                  <span className={styles.labelText}>Search</span>
                 </label>
                 <input
                   type="text"
                   id="law-search"
-                  className="law-search-input"
+                  className={styles.lawSearchInput}
                   placeholder="e.g., 26 USC 32 or &quot;earned income&quot;"
                   value={lawQuery}
                   onChange={(e) => setLawQuery(e.target.value)}
                 />
               </div>
 
-              <div className="statute-list">
+              <div className={styles.statuteList}>
                 {searchResults.map((statute) => (
                   <button
                     key={`${statute.title_num}/${statute.section}`}
-                    className={`statute-item ${selectedStatute === `${statute.title_num}/${statute.section}` ? "active" : ""}`}
+                    className={`${styles.statuteItem} ${selectedStatute === `${statute.title_num}/${statute.section}` ? styles.statuteItemActive : ""}`}
                     onClick={() => setSelectedStatute(`${statute.title_num}/${statute.section}`)}
                   >
-                    <span className="statute-citation">{statute.citation}</span>
-                    <span className="statute-title">{statute.title}</span>
+                    <span className={styles.statuteCitation}>{statute.citation}</span>
+                    <span className={styles.statuteTitle}>{statute.title}</span>
                   </button>
                 ))}
                 {searchResults.length === 0 && (
-                  <div className="no-results">No matching statutes found</div>
+                  <div className={styles.noResults}>No matching statutes found</div>
                 )}
               </div>
 
-              <div className="api-hint">
+              <div className={styles.apiHint}>
                 <code>GET /v1/sections/{"{title}"}/{"{section}"}</code>
                 <span>~20ms response time</span>
               </div>
             </aside>
 
             {/* Law Archive - Results Panel */}
-            <main className="results-panel law-results">
-              <div className="results-tabs">
+            <main className={`${styles.resultsPanel} ${styles.lawResults}`}>
+              <div className={styles.resultsTabs}>
                 <button
                   className={lawActiveTab === "text" ? "active" : ""}
                   onClick={() => setLawActiveTab("text")}
@@ -584,15 +585,15 @@ export default function PlaygroundPage() {
                 </button>
               </div>
 
-              <div className="results-content">
+              <div className={styles.resultsContent}>
                 {lawActiveTab === "text" && currentStatute && (
-                  <div className="statute-view">
-                    <h2 className="statute-heading">{currentStatute.title}</h2>
-                    <div className="statute-meta">
-                      <span className="meta-item">Title 26 — Internal Revenue Code</span>
-                      <span className="meta-item">Current through 2024</span>
+                  <div className={styles.statuteView}>
+                    <h2 className={styles.statuteHeading}>{currentStatute.title}</h2>
+                    <div className={styles.statuteMeta}>
+                      <span className={styles.metaItem}>Title 26 — Internal Revenue Code</span>
+                      <span className={styles.metaItem}>Current through 2024</span>
                     </div>
-                    <div className="statute-toc">
+                    <div className={styles.statuteToc}>
                       <h4>Subsections</h4>
                       <ul>
                         {currentStatute.subsections.map((sub, i) => (
@@ -600,29 +601,29 @@ export default function PlaygroundPage() {
                         ))}
                       </ul>
                     </div>
-                    <pre className="statute-text">{currentStatute.text}</pre>
+                    <pre className={styles.statuteText}>{currentStatute.text}</pre>
                   </div>
                 )}
 
                 {lawActiveTab === "text" && !currentStatute && (
-                  <div className="empty-state">
+                  <div className={styles.emptyState}>
                     <p>Select a statute from the list to view its text.</p>
                   </div>
                 )}
 
                 {lawActiveTab === "api" && selectedStatute && (
-                  <div className="api-view">
-                    <div className="code-block request">
-                      <div className="code-header">
-                        <span className="method get">GET</span>
-                        <span className="endpoint">/v1/sections/{selectedStatute}</span>
+                  <div className={styles.apiView}>
+                    <div className={styles.codeBlock}>
+                      <div className={styles.codeHeader}>
+                        <span className={`${styles.method} ${styles.methodGet}`}>GET</span>
+                        <span className={styles.endpoint}>/v1/sections/{selectedStatute}</span>
                       </div>
                       <pre>{JSON.stringify({ as_of: "2024-01-01" }, null, 2)}</pre>
                     </div>
-                    <div className="code-block response">
-                      <div className="code-header">
-                        <span className="status">200 OK</span>
-                        <span className="time">18ms</span>
+                    <div className={styles.codeBlock}>
+                      <div className={styles.codeHeader}>
+                        <span className={styles.status}>200 OK</span>
+                        <span className={styles.time}>18ms</span>
                       </div>
                       <pre>{JSON.stringify({
                         title: selectedStatute?.split("/")[0],
@@ -638,33 +639,33 @@ export default function PlaygroundPage() {
                 )}
 
                 {lawActiveTab === "versions" && (
-                  <div className="versions-view">
-                    <p className="versions-intro">
+                  <div className={styles.versionsView}>
+                    <p className={styles.versionsIntro}>
                       Access any historical version of this statute using the <code>as_of</code> parameter.
                     </p>
-                    <div className="version-list">
-                      <div className="version-item current">
-                        <span className="version-date">2024-01-01</span>
-                        <span className="version-label">Current</span>
-                        <span className="version-note">Tax Cuts and Jobs Act adjustments</span>
+                    <div className={styles.versionList}>
+                      <div className={`${styles.versionItem} ${styles.versionItemCurrent}`}>
+                        <span className={styles.versionDate}>2024-01-01</span>
+                        <span className={styles.versionLabel}>Current</span>
+                        <span className={styles.versionNote}>Tax Cuts and Jobs Act adjustments</span>
                       </div>
-                      <div className="version-item">
-                        <span className="version-date">2021-03-11</span>
-                        <span className="version-label">American Rescue Plan</span>
-                        <span className="version-note">Temporary EITC expansion</span>
+                      <div className={styles.versionItem}>
+                        <span className={styles.versionDate}>2021-03-11</span>
+                        <span className={styles.versionLabel}>American Rescue Plan</span>
+                        <span className={styles.versionNote}>Temporary EITC expansion</span>
                       </div>
-                      <div className="version-item">
-                        <span className="version-date">2017-12-22</span>
-                        <span className="version-label">TCJA</span>
-                        <span className="version-note">Major restructuring</span>
+                      <div className={styles.versionItem}>
+                        <span className={styles.versionDate}>2017-12-22</span>
+                        <span className={styles.versionLabel}>TCJA</span>
+                        <span className={styles.versionNote}>Major restructuring</span>
                       </div>
-                      <div className="version-item">
-                        <span className="version-date">2010-03-23</span>
-                        <span className="version-label">ACA</span>
-                        <span className="version-note">Healthcare-related amendments</span>
+                      <div className={styles.versionItem}>
+                        <span className={styles.versionDate}>2010-03-23</span>
+                        <span className={styles.versionLabel}>ACA</span>
+                        <span className={styles.versionNote}>Healthcare-related amendments</span>
                       </div>
                     </div>
-                    <div className="api-example">
+                    <div className={styles.apiExample}>
                       <code>GET /v1/sections/26/32?as_of=2017-12-22</code>
                     </div>
                   </div>
@@ -676,17 +677,17 @@ export default function PlaygroundPage() {
       </div>
 
       {/* Footer CTA */}
-      <footer className="playground-footer">
-        <div className="footer-content">
-          <div className="footer-text">
+      <footer className={styles.playgroundFooter}>
+        <div className={styles.footerContent}>
+          <div className={styles.footerText}>
             <h3>Ready to integrate?</h3>
             <p>Get your API key and start building in minutes.</p>
           </div>
-          <div className="footer-actions">
-            <a href="https://docs.cosilico.ai" className="btn-primary">
+          <div className={styles.footerActions}>
+            <a href="https://docs.cosilico.ai" className={styles.btnPrimary}>
               Get API Key
             </a>
-            <a href="/pricing" className="btn-secondary">
+            <a href="/pricing" className={styles.btnSecondary}>
               View Pricing
             </a>
           </div>
