@@ -30,8 +30,10 @@ export const modeToggleContainer = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: `${vars.space.md} ${vars.space.lg}`,
-  borderBottom: `1px solid ${vars.color.border}`,
-  background: vars.color.bgCard,
+  maxWidth: '1200px',
+  margin: '0 auto',
+  width: '100%',
+  boxSizing: 'border-box',
   '@media': {
     '(max-width: 900px)': {
       flexDirection: 'column',
@@ -115,13 +117,17 @@ export const modeButtonActive = style({
 export const playgroundContainer = style({
   flex: 1,
   display: 'grid',
-  gridTemplateColumns: '320px 1fr',
-  maxWidth: '1400px',
+  gridTemplateColumns: '340px 1fr',
+  maxWidth: '1200px',
   margin: '0 auto',
   width: '100%',
+  boxSizing: 'border-box',
+  gap: vars.space.xl,
+  padding: `${vars.space.xl} ${vars.space.lg}`,
   '@media': {
     '(max-width: 900px)': {
       gridTemplateColumns: '1fr',
+      padding: vars.space.md,
     },
   },
 });
@@ -132,16 +138,16 @@ export const playgroundContainer = style({
 
 export const inputPanel = style({
   background: vars.color.bgCard,
-  borderRight: `1px solid ${vars.color.border}`,
-  padding: '28px 24px',
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: vars.radius.xl,
+  padding: vars.space.lg,
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space.lg,
+  height: 'fit-content',
   '@media': {
     '(max-width: 900px)': {
-      borderRight: 'none',
-      borderBottom: `1px solid ${vars.color.border}`,
-      padding: '20px',
+      padding: vars.space.md,
     },
   },
 });
@@ -442,15 +448,15 @@ export const barSegment = style({
 });
 
 export const barSegmentTaxes = style({
-  background: '#ff6b6b',
+  background: vars.color.error,
 });
 
 export const barSegmentTakeHome = style({
-  background: '#60a5fa',
+  background: vars.color.accent,
 });
 
 export const barSegmentBenefits = style({
-  background: '#4ade80',
+  background: vars.color.success,
 });
 
 export const breakdownLegend = style({
@@ -482,17 +488,17 @@ export const legendDot = style({
 
 export const legendItemTaxes = style({});
 globalStyle(`${legendItemTaxes} .${legendDot}`, {
-  background: '#ff6b6b',
+  background: vars.color.error,
 });
 
 export const legendItemTakeHome = style({});
 globalStyle(`${legendItemTakeHome} .${legendDot}`, {
-  background: '#60a5fa',
+  background: vars.color.accent,
 });
 
 export const legendItemBenefits = style({});
 globalStyle(`${legendItemBenefits} .${legendDot}`, {
-  background: '#4ade80',
+  background: vars.color.success,
 });
 
 // Detail Cards
@@ -516,18 +522,18 @@ export const detailCard = style({
 
 export const detailCardTaxes = style({});
 globalStyle(`${detailCardTaxes} h3`, {
-  color: '#ff6b6b',
+  color: vars.color.error,
 });
 globalStyle(`${detailCardTaxes} .detail-total`, {
-  color: '#ff6b6b',
+  color: vars.color.error,
 });
 
 export const detailCardBenefits = style({});
 globalStyle(`${detailCardBenefits} h3`, {
-  color: '#4ade80',
+  color: vars.color.success,
 });
 globalStyle(`${detailCardBenefits} .detail-total`, {
-  color: '#4ade80',
+  color: vars.color.success,
 });
 
 globalStyle(`${detailCard} h3`, {
@@ -623,8 +629,8 @@ export const method = style({
 });
 
 export const methodGet = style({
-  background: 'rgba(96, 165, 250, 0.15)',
-  color: '#60a5fa',
+  background: vars.color.accentGlow,
+  color: vars.color.accent,
 });
 
 export const endpoint = style({
@@ -632,8 +638,8 @@ export const endpoint = style({
 });
 
 export const status = style({
-  background: 'rgba(74, 222, 128, 0.15)',
-  color: '#4ade80',
+  background: vars.color.successGlow,
+  color: vars.color.success,
   padding: '4px 10px',
   borderRadius: vars.radius.sm,
   fontWeight: 600,
