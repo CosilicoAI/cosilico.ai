@@ -1,0 +1,123 @@
+{
+  "isSampleData": true,
+  "timestamp": "2025-12-24T08:15:00Z",
+  "pluginArms": {
+    "v0.1.0": {
+      "version": "v0.1.0",
+      "successes": 5,
+      "failures": 1,
+      "totalMatchRate": 4.85,
+      "nValidations": 6,
+      "createdAt": "2025-12-24T08:00:00Z",
+      "variablesTested": [
+        "adjusted_gross_income",
+        "eitc",
+        "standard_deduction",
+        "ctc",
+        "earned_income",
+        "income_tax_before_credits"
+      ],
+      "regressionsFrom": {}
+    }
+  },
+  "sessions": [
+    {
+      "variable": "adjusted_gross_income",
+      "statuteRef": "26 USC § 62(a)",
+      "pluginVersion": "v0.1.0",
+      "timestamp": "2025-12-24T08:06:09Z",
+      "matchRate": 0.0,
+      "passed": false,
+      "status": "encoding_error",
+      "diagnosisLayer": "plugin",
+      "improvementDecisionId": "67c087f5"
+    },
+    {
+      "variable": "adjusted_gross_income",
+      "statuteRef": "26 USC § 62(a)",
+      "pluginVersion": "v0.1.0",
+      "timestamp": "2025-12-24T08:08:33Z",
+      "matchRate": 1.0,
+      "passed": true,
+      "status": "passed",
+      "diagnosisLayer": null,
+      "improvementDecisionId": null
+    },
+    {
+      "variable": "eitc",
+      "statuteRef": "26 USC § 32",
+      "pluginVersion": "v0.1.0",
+      "timestamp": "2025-12-24T08:08:57Z",
+      "matchRate": 1.0,
+      "passed": true,
+      "status": "passed",
+      "diagnosisLayer": null,
+      "improvementDecisionId": null
+    },
+    {
+      "variable": "standard_deduction",
+      "statuteRef": "26 USC § 63(c)",
+      "pluginVersion": "v0.1.0",
+      "timestamp": "2025-12-24T08:09:15Z",
+      "matchRate": 1.0,
+      "passed": true,
+      "status": "passed",
+      "diagnosisLayer": null,
+      "improvementDecisionId": null
+    },
+    {
+      "variable": "ctc",
+      "statuteRef": "26 USC § 24",
+      "pluginVersion": "v0.1.0",
+      "timestamp": "2025-12-24T08:10:30Z",
+      "matchRate": 1.0,
+      "passed": true,
+      "status": "passed",
+      "diagnosisLayer": null,
+      "improvementDecisionId": null
+    },
+    {
+      "variable": "earned_income",
+      "statuteRef": "26 USC § 32(c)(2)",
+      "pluginVersion": "v0.1.0",
+      "timestamp": "2025-12-24T08:11:00Z",
+      "matchRate": 1.0,
+      "passed": true,
+      "status": "passed",
+      "diagnosisLayer": null,
+      "improvementDecisionId": null
+    }
+  ],
+  "stats": {
+    "status": "active",
+    "totalValidations": 6,
+    "totalSuccesses": 5,
+    "overallSuccessRate": 0.833,
+    "uniqueVariablesTested": 6,
+    "pluginVersions": 1,
+    "bestVersion": {
+      "version": "v0.1.0",
+      "successRate": 0.833,
+      "nValidations": 6
+    }
+  },
+  "calibration": {
+    "nDecisions": 1,
+    "coverage": null,
+    "expectedCoverage": 0.8,
+    "calibrationError": null,
+    "meanAbsoluteError": null
+  },
+  "improvements": [
+    {
+      "id": "67c087f5",
+      "question": "How should we improve encoding of adjusted_gross_income?",
+      "context": "Current match rate: 0.0%. Diagnosis: Low match rate suggests formula logic error",
+      "createdAt": "2025-12-24T08:06:09Z",
+      "decidedAt": null,
+      "chosenOption": null,
+      "actualOutcomes": {},
+      "scoredAt": null
+    }
+  ]
+}

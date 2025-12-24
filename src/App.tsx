@@ -8,6 +8,8 @@ import PricingPage from "./pages/PricingPage";
 import StructurePage from "./pages/StructurePage";
 import PlaygroundPage from "./pages/PlaygroundPage";
 import CalibrationPage from "./pages/CalibrationPage";
+import ValidationPage from "./pages/ValidationPage";
+import PluginDashboardPage from "./pages/PluginDashboardPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 const FULL_PAGE_ROUTES = ["/thesis", "/structure", "/playground"];
@@ -27,6 +29,8 @@ function AppContent() {
             </a>
             <div className="nav-links">
               <a href="/playground">Playground</a>
+              <a href="/validation">Validation</a>
+              <a href="/plugin">Plugin</a>
               <a href="/architecture">Architecture</a>
               <a href="https://docs.cosilico.ai">Docs</a>
               <a href="https://github.com/PolicyEngine">GitHub</a>
@@ -44,6 +48,8 @@ function AppContent() {
         <Route path="/structure" element={<StructurePage />} />
         <Route path="/playground" element={<PlaygroundPage />} />
         <Route path="/calibration" element={<CalibrationPage />} />
+        <Route path="/validation" element={<ValidationPage />} />
+        <Route path="/plugin" element={<PluginDashboardPage />} />
       </Routes>
     </div>
   );

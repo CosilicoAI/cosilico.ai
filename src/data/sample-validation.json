@@ -1,0 +1,163 @@
+{
+  "isSampleData": true,
+  "timestamp": "2025-12-11T19:30:00Z",
+  "commit": "e2eeecb",
+  "dataSource": "CPS 2023 ASEC (illustrative)",
+  "householdsTotal": 156420,
+  "sections": [
+    {
+      "section": "26/24",
+      "title": "Child Tax Credit",
+      "variable": "ctc",
+      "households": 42180,
+      "testCases": [],
+      "summary": {
+        "total": 42180,
+        "matches": 41850,
+        "matchRate": 0.992,
+        "averageReward": 0.98,
+        "federalMatchRate": 0.994,
+        "meanAbsoluteError": 12.50
+      },
+      "validatorBreakdown": {
+        "policyengine": { "matches": 41920, "total": 42180, "rate": 0.994 },
+        "taxsim": { "matches": 41780, "total": 42180, "rate": 0.991 }
+      },
+      "mismatches": [
+        {
+          "description": "ACTC refundable portion edge cases",
+          "count": 245,
+          "explanation": "TAXSIM v35 returns nonrefundable CTC only; PE includes ACTC",
+          "citation": "26 USC § 24(d)(1)(B)"
+        },
+        {
+          "description": "Phaseout rounding differences",
+          "count": 85,
+          "explanation": "$1-2 differences due to rounding methodology",
+          "citation": "26 USC § 24(b)(1)"
+        }
+      ]
+    },
+    {
+      "section": "26/63",
+      "title": "Standard Deduction",
+      "variable": "standard_deduction",
+      "households": 156420,
+      "testCases": [],
+      "summary": {
+        "total": 156420,
+        "matches": 156380,
+        "matchRate": 0.9997,
+        "averageReward": 0.999,
+        "federalMatchRate": 0.9998,
+        "meanAbsoluteError": 0.50
+      },
+      "validatorBreakdown": {
+        "policyengine": { "matches": 156400, "total": 156420, "rate": 0.9999 },
+        "taxsim": { "matches": 156360, "total": 156420, "rate": 0.9996 }
+      },
+      "mismatches": [
+        {
+          "description": "Dependent standard deduction edge cases",
+          "count": 40,
+          "explanation": "Earned income + $400 formula rounding",
+          "citation": "26 USC § 63(c)(5)"
+        }
+      ]
+    },
+    {
+      "section": "26/32",
+      "title": "Earned Income Tax Credit",
+      "variable": "eitc",
+      "households": 28450,
+      "testCases": [],
+      "summary": {
+        "total": 28450,
+        "matches": 27890,
+        "matchRate": 0.980,
+        "averageReward": 0.96,
+        "federalMatchRate": 0.982,
+        "meanAbsoluteError": 45.20
+      },
+      "validatorBreakdown": {
+        "policyengine": { "matches": 28100, "total": 28450, "rate": 0.988 },
+        "taxsim": { "matches": 27680, "total": 28450, "rate": 0.973 }
+      },
+      "mismatches": [
+        {
+          "description": "Investment income disqualification",
+          "count": 320,
+          "explanation": "TAXSIM uses different investment income threshold",
+          "citation": "26 USC § 32(i)"
+        },
+        {
+          "description": "Age requirement edge cases",
+          "count": 180,
+          "explanation": "TAXSIM bug: ignores minimum age requirement for childless",
+          "citation": "26 USC § 32(c)(1)(A)(ii)(II)",
+          "upstreamIssue": "https://github.com/PSLmodels/taxsim/issues/662"
+        },
+        {
+          "description": "Phaseout slope differences",
+          "count": 60,
+          "explanation": "Rounding in phase-out calculation",
+          "citation": "26 USC § 32(a)(2)"
+        }
+      ],
+      "upstreamBugs": [
+        {
+          "validator": "taxsim",
+          "issue": "https://github.com/PSLmodels/taxsim/issues/662",
+          "description": "TAXSIM ignores age 25-64 requirement for childless EITC",
+          "testCase": "Childless filer age 23",
+          "citation": "26 USC § 32(c)(1)(A)(ii)(II): minimum age 25"
+        }
+      ]
+    },
+    {
+      "section": "7/2017",
+      "title": "SNAP Allotment",
+      "variable": "snap_allotment",
+      "households": 18920,
+      "testCases": [],
+      "summary": {
+        "total": 18920,
+        "matches": 18650,
+        "matchRate": 0.986,
+        "averageReward": 0.97,
+        "federalMatchRate": 0.986,
+        "meanAbsoluteError": 8.30
+      },
+      "validatorBreakdown": {
+        "policyengine": { "matches": 18650, "total": 18920, "rate": 0.986 }
+      },
+      "mismatches": [
+        {
+          "description": "Shelter deduction cap application",
+          "count": 180,
+          "explanation": "Edge cases with elderly/disabled shelter cap exemption",
+          "citation": "7 USC § 2014(e)(6)(C)"
+        },
+        {
+          "description": "Standard deduction by household size",
+          "count": 90,
+          "explanation": "Household size categorization differences",
+          "citation": "7 USC § 2014(e)(1)"
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "totalHouseholds": 156420,
+    "totalTests": 245970,
+    "totalMatches": 244770,
+    "matchRate": 0.995,
+    "averageReward": 0.98,
+    "meanAbsoluteError": 16.62
+  },
+  "validators": [
+    { "name": "policyengine", "available": true, "version": "1.150.0", "householdsCovered": 156420 },
+    { "name": "taxsim", "available": true, "version": "35", "householdsCovered": 71080 },
+    { "name": "taxact", "available": false }
+  ]
+}
