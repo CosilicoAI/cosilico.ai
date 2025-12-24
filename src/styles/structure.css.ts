@@ -42,6 +42,7 @@ export const structure = style({
   lineHeight: 1.7,
   position: 'relative',
   zIndex: 1,
+  paddingTop: '73px',
 });
 
 globalStyle(`${structure} section`, {

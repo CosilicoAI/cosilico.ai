@@ -4,88 +4,12 @@ import { vars } from '../theme.css';
 /**
  * Validation Dashboard Styles - Cosilico Dark Theme
  * Uses vanilla-extract CSS-in-JS with theme tokens
+ * Note: Grid background and hero section now provided by PageLayout
  */
 
 // ============================================
-// GRID BACKGROUND
+// METADATA SECTION (below hero)
 // ============================================
-
-export const gridBg = style({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  zIndex: 0,
-  pointerEvents: 'none',
-  background: `
-    linear-gradient(${vars.color.border} 1px, transparent 1px),
-    linear-gradient(90deg, ${vars.color.border} 1px, transparent 1px)
-  `,
-  backgroundSize: '32px 32px',
-  opacity: 0.3,
-  maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)',
-  WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)',
-});
-
-// ============================================
-// PAGE CONTAINER
-// ============================================
-
-export const validationPage = style({
-  position: 'relative',
-  background: vars.color.bg,
-  color: vars.color.text,
-  fontFamily: vars.font.body,
-  minHeight: '100vh',
-  zIndex: 1,
-});
-
-// ============================================
-// HEADER
-// ============================================
-
-export const validationHeader = style({
-  background: `linear-gradient(135deg, ${vars.color.bgCard} 0%, ${vars.color.surface} 100%)`,
-  borderBottom: `1px solid ${vars.color.border}`,
-  color: vars.color.text,
-  padding: vars.space['2xl'],
-  marginBottom: vars.space['2xl'],
-  position: 'relative',
-  '::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '2px',
-    background: `linear-gradient(90deg, transparent, ${vars.color.accent}, transparent)`,
-  },
-});
-
-export const headerContent = style({
-  maxWidth: '1200px',
-  margin: '0 auto',
-});
-
-export const headerTitle = style({
-  fontSize: '48px',
-  fontWeight: 700,
-  fontFamily: vars.font.display,
-  margin: `0 0 ${vars.space.md} 0`,
-  letterSpacing: '-0.02em',
-  background: `linear-gradient(135deg, ${vars.color.text}, ${vars.color.accent})`,
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-});
-
-export const subtitle = style({
-  fontSize: '20px',
-  color: vars.color.textSecondary,
-  margin: `0 0 ${vars.space.lg} 0`,
-  fontWeight: 400,
-});
 
 export const headerMeta = style({
   display: 'flex',
@@ -93,6 +17,9 @@ export const headerMeta = style({
   gap: vars.space.lg,
   fontSize: '14px',
   color: vars.color.textMuted,
+  maxWidth: '1200px',
+  margin: `0 auto ${vars.space['2xl']}`,
+  padding: `0 ${vars.space.lg}`,
 });
 
 export const metaItem = style({
@@ -584,23 +511,6 @@ export const error = style({
 // ============================================
 // RESPONSIVE
 // ============================================
-
-export const responsiveHeaderTitle = style({
-  '@media': {
-    '(max-width: 768px)': {
-      fontSize: '32px',
-    },
-  },
-});
-
-export const responsiveHeaderMeta = style({
-  '@media': {
-    '(max-width: 768px)': {
-      flexDirection: 'column',
-      gap: vars.space.md,
-    },
-  },
-});
 
 export const responsiveOverallStats = style({
   '@media': {

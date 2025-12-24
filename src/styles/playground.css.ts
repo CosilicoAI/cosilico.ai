@@ -48,35 +48,28 @@ export const playground = style({
   flexDirection: 'column',
   position: 'relative',
   zIndex: 1,
+  paddingTop: '73px', // Account for fixed nav
 });
 
 // ============================================
-// HEADER
+// MODE TOGGLE CONTAINER
 // ============================================
 
-export const playgroundHeader = style({
+export const modeToggleContainer = style({
+  gridColumn: '1 / -1',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: `${vars.space.md} ${vars.space.lg}`,
   borderBottom: `1px solid ${vars.color.border}`,
   background: vars.color.bgCard,
-});
-
-export const playgroundLogo = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  textDecoration: 'none',
-  color: vars.color.text,
-  fontWeight: 600,
-  fontSize: '1.1rem',
-  letterSpacing: '-0.02em',
-});
-
-globalStyle(`${playgroundLogo} img`, {
-  width: '24px',
-  height: '24px',
+  '@media': {
+    '(max-width: 900px)': {
+      flexDirection: 'column',
+      gap: vars.space.md,
+      padding: vars.space.md,
+    },
+  },
 });
 
 export const playgroundBadge = style({
@@ -119,11 +112,6 @@ export const modeToggle = style({
   background: vars.color.surface,
   padding: '4px',
   borderRadius: vars.radius.md,
-  '@media': {
-    '(max-width: 600px)': {
-      display: 'none',
-    },
-  },
 });
 
 export const modeButton = style({

@@ -39,6 +39,7 @@ export const thesis = style({
   fontFamily: vars.font.body,
   minHeight: '100vh',
   lineHeight: 1.7,
+  paddingTop: '73px',
 });
 
 // ============================================

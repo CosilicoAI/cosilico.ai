@@ -1,10 +1,10 @@
 import React from "react";
 import * as styles from "../styles/pricing.css";
+import PageLayout from "../components/PageLayout";
 
 export default function PricingPage() {
   return (
-    <div className={styles.pricing}>
-      <div className={styles.gridBg} />
+    <PageLayout>
       {/* Hero */}
       <section className={styles.pricingHero}>
         <h1>Pricing</h1>
@@ -254,6 +254,6 @@ export default function PricingPage() {
           </a>
         </div>
       </section>
-    </div>
+    </PageLayout>
   );
 }

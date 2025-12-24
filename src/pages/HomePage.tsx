@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/home.css";
 
 export default function HomePage() {
@@ -10,10 +11,10 @@ export default function HomePage() {
   };
 
   return (
-    <div className={styles.home}>
-      <div className={styles.gridBg} />
-      {/* Hero */}
-      <section className={styles.hero}>
+    <PageLayout>
+      <div className={styles.home}>
+        {/* Hero */}
+        <section className={styles.hero}>
         <div className={styles.heroContent}>
           <p className={styles.tagline}>Society, in silico.</p>
           <h1 className={styles.heroH1}>
@@ -237,5 +238,6 @@ export default function HomePage() {
         </div>
       </section>
     </div>
+    </PageLayout>
   );
 }

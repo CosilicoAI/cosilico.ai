@@ -24,91 +24,17 @@ const slideIn = keyframes({
 });
 
 // ============================================
-// BASE & GRID BACKGROUND
+// STATS SECTION (moved from hero)
 // ============================================
-
-export const dashboard = style({
-  fontFamily: vars.font.display,
-  background: vars.color.bg,
-  color: vars.color.text,
-  minHeight: '100vh',
-  position: 'relative',
-  overflowX: 'hidden',
-});
-
-export const gridBg = style({
-  position: 'fixed',
-  inset: 0,
-  pointerEvents: 'none',
-  zIndex: 0,
-  backgroundImage: `
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px)
-  `,
-  backgroundSize: '40px 40px',
-  maskImage: 'radial-gradient(ellipse 80% 80% at 50% 20%, black 40%, transparent 100%)',
-  '::after': {
-    content: '""',
-    position: 'absolute',
-    inset: 0,
-    background: `radial-gradient(circle at 50% 0%, ${vars.color.accentGlow} 0%, transparent 50%)`,
-  },
-});
-
-// ============================================
-// HERO SECTION
-// ============================================
-
-export const hero = style({
-  position: 'relative',
-  zIndex: 1,
-  padding: `80px ${vars.space.lg} 60px`,
-  textAlign: 'center',
-  borderBottom: `1px solid ${vars.color.border}`,
-});
-
-export const heroContent = style({
-  maxWidth: '800px',
-  margin: '0 auto',
-});
-
-export const heroBadge = style({
-  display: 'inline-block',
-  padding: `6px ${vars.space.md}`,
-  background: vars.color.accentGlow,
-  border: '1px solid rgba(0, 212, 255, 0.3)',
-  borderRadius: '100px',
-  fontSize: '11px',
-  fontWeight: 600,
-  letterSpacing: '1.5px',
-  color: vars.color.accent,
-  marginBottom: vars.space.lg,
-});
-
-export const heroTitle = style({
-  fontSize: 'clamp(36px, 6vw, 56px)',
-  fontWeight: 700,
-  margin: `0 0 ${vars.space.md} 0`,
-  background: `linear-gradient(135deg, #fff 0%, ${vars.color.accent} 100%)`,
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-});
-
-export const heroSubtitle = style({
-  fontFamily: vars.font.body,
-  fontSize: '20px',
-  color: vars.color.textSecondary,
-  margin: `0 0 ${vars.space['2xl']} 0`,
-  fontWeight: 400,
-  fontStyle: 'italic',
-});
 
 export const heroStats = style({
   display: 'flex',
   justifyContent: 'center',
   gap: vars.space['2xl'],
   flexWrap: 'wrap',
+  marginBottom: vars.space['2xl'],
+  paddingBottom: vars.space['2xl'],
+  borderBottom: `1px solid ${vars.color.border}`,
 });
 
 export const heroStat = style({
@@ -539,10 +465,6 @@ export const footer = style({
 
 // Note: Vanilla Extract doesn't have built-in media query support in style(),
 // but we can use globalStyle for responsive overrides
-globalStyle(`@media (max-width: 768px) .${hero}`, {
-  padding: '60px 20px 40px',
-});
-
 globalStyle(`@media (max-width: 768px) .${heroStats}`, {
   gap: vars.space.lg,
 });

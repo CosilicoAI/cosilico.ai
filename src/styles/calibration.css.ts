@@ -1,19 +1,7 @@
 import { style, styleVariants, globalStyle } from '@vanilla-extract/css';
 import { vars } from '../theme.css';
 
-// Grid background (REQUIRED for all Cosilico pages)
-export const gridBg = style({
-  position: 'fixed',
-  inset: 0,
-  pointerEvents: 'none',
-  zIndex: 0,
-  opacity: 0.04,
-  backgroundImage: `
-    linear-gradient(${vars.color.accent} 1px, transparent 1px),
-    linear-gradient(90deg, ${vars.color.accent} 1px, transparent 1px)
-  `,
-  backgroundSize: '40px 40px',
-});
+// Grid background is now provided by PageLayout component
 
 // Scanlines overlay
 export const scanlines = style({
@@ -31,6 +19,7 @@ export const calibrationPage = style({
   fontFamily: vars.font.body,
   minHeight: '100vh',
   position: 'relative',
+  paddingTop: '73px',
 });
 
 globalStyle(`${calibrationPage} section`, {

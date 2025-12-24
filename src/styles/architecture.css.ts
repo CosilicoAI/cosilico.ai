@@ -64,20 +64,10 @@ export const architecturePage = style({
   minHeight: '100vh',
   position: 'relative',
   overflowX: 'hidden',
+  paddingTop: '73px',
 });
 
-export const gridBg = style({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  pointerEvents: 'none',
-  zIndex: 0,
-  opacity: 0.03,
-  backgroundImage: `linear-gradient(${archColors.accent} 1px, transparent 1px), linear-gradient(90deg, ${archColors.accent} 1px, transparent 1px)`,
-  backgroundSize: '40px 40px',
-});
+// Grid background is now provided by PageLayout component
 
 globalStyle(`${architecturePage} section`, {
   position: 'relative',
@@ -2104,7 +2094,6 @@ globalStyle('.btn-primary svg', { width: '20px', height: '20px' });
 
 export const styles = {
   architecturePage,
-  gridBg,
   archHero,
   heroTerminal,
   terminalBar,

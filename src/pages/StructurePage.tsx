@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as styles from "../styles/structure.css";
+import PageLayout from "../components/PageLayout";
 
 type Audience = "investors" | "philanthropic" | "partners";
 
@@ -7,17 +8,15 @@ export default function StructurePage() {
   const [activeAudience, setActiveAudience] = useState<Audience>("investors");
 
   return (
-    <div className={styles.structure}>
-      {/* Grid background */}
-      <div className={styles.gridBg} />
-
-      {/* Top nav with logo */}
-      <nav className={styles.structureTopNav}>
-        <a href="/" className={styles.structureLogo}>
-          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.structureLogoIcon} />
-          cosilico
-        </a>
-      </nav>
+    <PageLayout>
+      <div className={styles.structure}>
+        {/* Top nav with logo */}
+        <nav className={styles.structureTopNav}>
+          <a href="/" className={styles.structureLogo}>
+            <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.structureLogoIcon} />
+            cosilico
+          </a>
+        </nav>
 
       {/* Hero */}
       <section className={styles.structureHero}>
@@ -358,6 +357,7 @@ export default function StructurePage() {
           </a>
         </div>
       </section>
-    </div>
+      </div>
+    </PageLayout>
   );
 }

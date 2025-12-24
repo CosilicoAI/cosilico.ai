@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as styles from "../styles/calibration.css";
+import PageLayout from "../components/PageLayout";
 
 interface SourceSummary {
   source: string;
@@ -175,19 +176,17 @@ export default function CalibrationPage() {
 
   if (loading) {
     return (
-      <div className={styles.calibrationPage}>
-        <div className={styles.gridBg} />
+      <PageLayout>
         <div className={styles.loadingState}>Loading baseline comparison...</div>
-      </div>
+      </PageLayout>
     );
   }
 
   if (error || !data) {
     return (
-      <div className={styles.calibrationPage}>
-        <div className={styles.gridBg} />
+      <PageLayout>
         <div className={styles.errorState}>Error: {error || "No data available"}</div>
-      </div>
+      </PageLayout>
     );
   }
 
@@ -203,8 +202,7 @@ export default function CalibrationPage() {
   const highImpactGaps = data.coverage_gaps.filter((g) => g.impact === "high").length;
 
   return (
-    <div className={styles.calibrationPage}>
-      <div className={styles.gridBg} />
+    <PageLayout>
       <div className={styles.scanlines} />
 
       {/* Hero Section */}
@@ -1025,6 +1023,6 @@ export default function CalibrationPage() {
           </div>
         </div>
       </section>
-    </div>
+    </PageLayout>
   );
 }

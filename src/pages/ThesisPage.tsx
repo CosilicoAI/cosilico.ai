@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as styles from "../styles/thesis.css";
+import PageLayout from "../components/PageLayout";
 import { Section } from "../components/thesis/types";
 import { ProblemSection } from "../components/thesis/ProblemSection";
 import { GapSection } from "../components/thesis/GapSection";
@@ -50,15 +51,15 @@ export default function ThesisPage() {
   };
 
   return (
-    <div className={styles.thesis}>
-      <div className={styles.gridBg} />
-      {/* Top nav with logo */}
-      <nav className={styles.thesisTopNav}>
-        <a href="/" className={styles.thesisLogo}>
-          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.thesisLogoIcon} />
-          cosilico
-        </a>
-      </nav>
+    <PageLayout>
+      <div className={styles.thesis}>
+        {/* Top nav with logo */}
+        <nav className={styles.thesisTopNav}>
+          <a href="/" className={styles.thesisLogo}>
+            <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.thesisLogoIcon} />
+            cosilico
+          </a>
+        </nav>
 
       {/* Progress nav */}
       <nav className={styles.thesisNav}>
@@ -159,6 +160,7 @@ export default function ThesisPage() {
           </a>
         </div>
       </section>
-    </div>
+      </div>
+    </PageLayout>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/pluginDashboard.css";
 
 // Real data from cosilico-validators encoding sessions
@@ -122,41 +123,33 @@ export default function PluginDashboardPage() {
   const failedVars = ENCODING_DATA.variables.filter((v) => v.status === "failed");
 
   return (
-    <div className={styles.dashboard}>
-      {/* Grid background */}
-      <div className={styles.gridBg} />
-
-      {/* Hero Section */}
-      <header className={styles.hero}>
-        <div className={styles.heroContent}>
-          <div className={styles.heroBadge}>VALIDATION SYSTEM</div>
-          <h1 className={styles.heroTitle}>Encoding Performance</h1>
-          <p className={styles.heroSubtitle}>
-            Real-time validation against PolicyEngine-US microsimulation
-          </p>
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>{formatPercent(ENCODING_DATA.stats.overallMatchRate)}</span>
-              <span className={styles.heroStatLabel}>Success Rate</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalVariables}</span>
-              <span className={styles.heroStatLabel}>Variables</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalTestCases}</span>
-              <span className={styles.heroStatLabel}>Test Cases</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>{ENCODING_DATA.pluginVersion}</span>
-              <span className={styles.heroStatLabel}>Plugin</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <PageLayout
+      badge="VALIDATION SYSTEM"
+      title="Encoding Performance"
+      subtitle="Real-time validation against PolicyEngine-US microsimulation"
+      showHero={true}
+    >
       {/* Main Content */}
       <main className={styles.mainContent}>
+        {/* Stats Row */}
+        <section className={styles.heroStats}>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatValue}>{formatPercent(ENCODING_DATA.stats.overallMatchRate)}</span>
+            <span className={styles.heroStatLabel}>Success Rate</span>
+          </div>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalVariables}</span>
+            <span className={styles.heroStatLabel}>Variables</span>
+          </div>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalTestCases}</span>
+            <span className={styles.heroStatLabel}>Test Cases</span>
+          </div>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatValue}>{ENCODING_DATA.pluginVersion}</span>
+            <span className={styles.heroStatLabel}>Plugin</span>
+          </div>
+        </section>
         {/* Status Summary */}
         <section className={styles.statusRow}>
           <div className={styles.statusCard}>
@@ -292,6 +285,6 @@ export default function PluginDashboardPage() {
         <span>Last updated: {new Date(ENCODING_DATA.timestamp).toLocaleString()}</span>
         <span>cosilico-validators {ENCODING_DATA.pluginVersion}</span>
       </footer>
-    </div>
+    </PageLayout>
   );
 }

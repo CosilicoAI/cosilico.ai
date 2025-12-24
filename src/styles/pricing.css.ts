@@ -10,24 +10,7 @@ import { vars } from '../theme.css';
 // GRID BACKGROUND
 // ============================================
 
-export const gridBg = style({});
-
-globalStyle(`${gridBg}::before`, {
-  content: '""',
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundImage: `
-    linear-gradient(${vars.color.border} 1px, transparent 1px),
-    linear-gradient(90deg, ${vars.color.border} 1px, transparent 1px)
-  `,
-  backgroundSize: '40px 40px',
-  opacity: 0.3,
-  pointerEvents: 'none',
-  zIndex: 0,
-});
+// Grid background is now provided by PageLayout component
 
 // ============================================
 // BASE STYLES
@@ -38,6 +21,7 @@ export const pricing = style({
   color: vars.color.text,
   fontFamily: vars.font.body,
   lineHeight: 1.7,
+  paddingTop: '73px',
 });
 
 globalStyle(`${pricing} section`, {

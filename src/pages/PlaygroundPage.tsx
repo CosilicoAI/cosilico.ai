@@ -175,33 +175,30 @@ export default function PlaygroundPage() {
   return (
     <div className={styles.playground}>
       <div className={styles.gridBg} />
-      {/* Header */}
-      <header className={styles.playgroundHeader}>
-        <a href="/" className={styles.playgroundLogo}>
-          <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" />
-          <span>cosilico</span>
-        </a>
-        <div className={styles.modeToggle}>
-          <button
-            className={`${styles.modeButton} ${mode === "calculator" ? styles.modeButtonActive : ""}`}
-            onClick={() => setMode("calculator")}
-          >
-            Rules Calculator
-          </button>
-          <button
-            className={`${styles.modeButton} ${mode === "lawarchive" ? styles.modeButtonActive : ""}`}
-            onClick={() => setMode("lawarchive")}
-          >
-            Law Archive
-          </button>
-        </div>
-        <div className={styles.playgroundBadge}>
-          <span className={`${styles.badgeDot} ${styles.badgeDotDemo}`}></span>
-          Demo — Sample Data
-        </div>
-      </header>
 
       <div className={styles.playgroundContainer}>
+        {/* Mode Toggle */}
+        <div className={styles.modeToggleContainer}>
+          <div className={styles.modeToggle}>
+            <button
+              className={`${styles.modeButton} ${mode === "calculator" ? styles.modeButtonActive : ""}`}
+              onClick={() => setMode("calculator")}
+            >
+              Rules Calculator
+            </button>
+            <button
+              className={`${styles.modeButton} ${mode === "lawarchive" ? styles.modeButtonActive : ""}`}
+              onClick={() => setMode("lawarchive")}
+            >
+              Law Archive
+            </button>
+          </div>
+          <div className={styles.playgroundBadge}>
+            <span className={`${styles.badgeDot} ${styles.badgeDotDemo}`}></span>
+            Demo — Sample Data
+          </div>
+        </div>
+
         {mode === "calculator" ? (
           <>
         {/* Input Panel */}

@@ -48,23 +48,6 @@ const resultAppear = keyframes({
 });
 
 // ============================================
-// GRID BACKGROUND
-// ============================================
-
-export const gridBg = style({
-  position: 'fixed',
-  inset: 0,
-  zIndex: 0,
-  pointerEvents: 'none',
-  background: `
-    linear-gradient(90deg, ${vars.color.border} 1px, transparent 1px),
-    linear-gradient(${vars.color.border} 1px, transparent 1px)
-  `,
-  backgroundSize: '50px 50px',
-  opacity: 0.3,
-});
-
-// ============================================
 // BASE STYLES
 // ============================================
 
@@ -75,6 +58,7 @@ export const home = style({
   lineHeight: 1.7,
   position: 'relative',
   zIndex: 1,
+  paddingTop: '73px', // Account for fixed nav
 });
 
 globalStyle(`${home} section`, {

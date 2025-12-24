@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ValidationResults } from "../types/validation";
+import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/validation.css";
 
 export default function ValidationPage() {
@@ -36,21 +37,19 @@ export default function ValidationPage() {
 
   if (loading) {
     return (
-      <div className={styles.validationPage}>
-        <div className={styles.gridBg} />
+      <PageLayout>
         <div className={styles.loading}>Loading validation results...</div>
-      </div>
+      </PageLayout>
     );
   }
 
   if (error || !data) {
     return (
-      <div className={styles.validationPage}>
-        <div className={styles.gridBg} />
+      <PageLayout>
         <div className={styles.error}>
           {error || "No validation data available"}
         </div>
-      </div>
+      </PageLayout>
     );
   }
 
@@ -64,31 +63,27 @@ export default function ValidationPage() {
   };
 
   return (
-    <div className={styles.validationPage}>
-      <div className={styles.gridBg} />
-      {/* Header */}
-      <header className={styles.validationHeader}>
-        <div className={styles.headerContent}>
-          <h1 className={styles.headerTitle}>Validation Dashboard</h1>
-          <p className={styles.subtitle}>
-            Cosilico accuracy vs. PolicyEngine and TAXSIM
-          </p>
-          <div className={styles.headerMeta}>
-            <span className={styles.metaItem}>
-              <strong>Data:</strong> {data.dataSource}
-            </span>
-            <span className={styles.metaItem}>
-              <strong>Commit:</strong> <code className={styles.metaItemCode}>{data.commit}</code>
-            </span>
-            <span className={styles.metaItem}>
-              <strong>Updated:</strong> {new Date(data.timestamp).toLocaleDateString()}
-            </span>
-            {data.isSampleData && (
-              <span className={`${styles.metaItem} ${styles.sampleBadge}`}>Sample Data</span>
-            )}
-          </div>
-        </div>
-      </header>
+    <PageLayout
+      badge="VALIDATION"
+      title="Validation Dashboard"
+      subtitle="Cosilico accuracy vs. PolicyEngine and TAXSIM"
+      showHero={true}
+    >
+      {/* Meta information */}
+      <div className={styles.headerMeta}>
+        <span className={styles.metaItem}>
+          <strong>Data:</strong> {data.dataSource}
+        </span>
+        <span className={styles.metaItem}>
+          <strong>Commit:</strong> <code className={styles.metaItemCode}>{data.commit}</code>
+        </span>
+        <span className={styles.metaItem}>
+          <strong>Updated:</strong> {new Date(data.timestamp).toLocaleDateString()}
+        </span>
+        {data.isSampleData && (
+          <span className={`${styles.metaItem} ${styles.sampleBadge}`}>Sample Data</span>
+        )}
+      </div>
 
       {/* Overall Stats */}
       <section className={styles.overallStats}>
@@ -279,6 +274,6 @@ export default function ValidationPage() {
           ))}
         </div>
       </section>
-    </div>
+    </PageLayout>
   );
 }

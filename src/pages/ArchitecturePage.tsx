@@ -3,6 +3,7 @@ import * as styles from "../styles/architecture.css";
 import { StatuteTree } from "../components/architecture/StatuteTree";
 import { IndexingDemo } from "../components/architecture/IndexingDemo";
 import { STATUTE_TREE, CODE_SAMPLES } from "../components/architecture/StatuteData";
+import PageLayout from "../components/PageLayout";
 
 const VALIDATORS = [
   {
@@ -77,10 +78,7 @@ export default function ArchitecturePage() {
   const selectedCode = selected ? CODE_SAMPLES[selected] : null;
 
   return (
-    <div className={styles.architecturePage}>
-      {/* Blueprint Grid Background */}
-      <div className={styles.gridBg} />
-
+    <PageLayout>
       {/* Hero */}
       <section className={styles.archHero}>
         <div className={styles.heroTerminal}>
@@ -1293,6 +1291,6 @@ $$ LANGUAGE SQL;`}
         </div>
       </section>
 
-    </div>
+    </PageLayout>
   );
 }
