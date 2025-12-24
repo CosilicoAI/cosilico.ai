@@ -36,10 +36,10 @@ describe("ArchitecturePage", () => {
   test("renders repository architecture section", () => {
     render(<ArchitecturePage />);
     expect(screen.getByText("Repository Architecture")).toBeInTheDocument();
-    // Use getAllByText since "cosilico-engine" appears in both the terminal and the repo diagram
+    // Use getAllByText since these appear in multiple places (terminal and repo diagram)
     expect(screen.getAllByText("cosilico-engine").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("cosilico-us")).toBeInTheDocument();
-    expect(screen.getByText("cosilico-uk")).toBeInTheDocument();
+    expect(screen.getAllByText("cosilico-us").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("cosilico-uk").length).toBeGreaterThanOrEqual(1);
   });
 
   test("renders comparison section with frameworks", () => {

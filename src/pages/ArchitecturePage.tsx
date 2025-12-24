@@ -244,6 +244,101 @@ export default function ArchitecturePage() {
             </li>
           </ol>
         </div>
+
+        {/* Override Resolution Architecture */}
+        <div className="override-architecture">
+          <h3>Override Resolution Hierarchy</h3>
+          <p className="override-intro">
+            The engine implements a declarative override system where IRS guidance explicitly
+            declares which statute parameters it overrides. This eliminates ambiguity and
+            ensures authoritative values always take precedence.
+          </p>
+
+          <div className="override-flow">
+            <div className="override-stage">
+              <div className="stage-box statute-stage">
+                <span className="stage-icon">📜</span>
+                <h5>Statute Files</h5>
+                <code className="stage-path">statute/26/32/b/2/A/base_amounts.yaml</code>
+                <p className="stage-desc">Raw statutory values from 26 USC §32</p>
+                <pre className="stage-code">
+{`earned_income_amount:
+  implements: statute/26/32/b/2/A
+  values:
+    0: 6370  # Base year 2017
+    1: 9540
+    2: 13520`}
+                </pre>
+              </div>
+
+              <div className="stage-arrow">↓ overrides</div>
+
+              <div className="stage-box irs-stage">
+                <span className="stage-icon">📋</span>
+                <h5>IRS Guidance</h5>
+                <code className="stage-path">irs/rev-proc-2023-34/eitc-2024.yaml</code>
+                <p className="stage-desc">Inflation-adjusted values with override declarations</p>
+                <pre className="stage-code">
+{`earned_income_amount:
+  implements: irs/rev-proc-2023-34#3.01
+  overrides: statute/26/32/b/2/A/base_amounts#earned_income_amount
+  values:
+    0: 8260  # 2024 adjusted
+    1: 12390
+    2: 17030`}
+                </pre>
+              </div>
+
+              <div className="stage-arrow">↓ resolves to</div>
+
+              <div className="stage-box resolution-stage">
+                <span className="stage-icon">⚙️</span>
+                <h5>Engine Resolution</h5>
+                <p className="stage-desc">Formula references statute, engine returns IRS value</p>
+                <div className="resolution-logic">
+                  <div className="logic-step">
+                    <span className="step-num">1.</span>
+                    <span className="step-text">Formula: <code>param("statute/26/32/b/2/A/base_amounts#earned_income_amount")</code></span>
+                  </div>
+                  <div className="logic-step">
+                    <span className="step-num">2.</span>
+                    <span className="step-text">Resolver checks for IRS override for tax year 2024</span>
+                  </div>
+                  <div className="logic-step">
+                    <span className="step-num">3.</span>
+                    <span className="step-text">Returns <strong>8260</strong> from Rev. Proc. 2023-34</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="override-benefits">
+            <h4>Why This Design</h4>
+            <div className="benefit-grid">
+              <div className="benefit-card">
+                <span className="benefit-icon">🎯</span>
+                <h5>Explicit Declarations</h5>
+                <p>IRS files declare <code>overrides:</code> attribute — no implicit matching</p>
+              </div>
+              <div className="benefit-card">
+                <span className="benefit-icon">🔗</span>
+                <h5>Authoritative Chain</h5>
+                <p>IRS guidance → regulation → statute — clear precedence</p>
+              </div>
+              <div className="benefit-card">
+                <span className="benefit-icon">📍</span>
+                <h5>Stable References</h5>
+                <p>Formulas reference statute paths — overrides are transparent</p>
+              </div>
+              <div className="benefit-card">
+                <span className="benefit-icon">✓</span>
+                <h5>Audit Trail</h5>
+                <p>Every value traces to its source document and version</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* RL Training Section */}
@@ -765,11 +860,15 @@ $$ LANGUAGE SQL;`}
             <div className="structure-tree">
               <div className="tree-line">
                 <span className="folder">statute/</span>
-                <span className="comment"># Primary law</span>
+                <span className="comment"># Primary law (raw statutory values)</span>
               </div>
               <div className="tree-line indent">
                 <span className="folder">26/32/</span>
                 <span className="comment"># IRC §32 EITC</span>
+              </div>
+              <div className="tree-line indent-2">
+                <span className="file">base_amounts.yaml</span>
+                <span className="comment"># Statutory base values</span>
               </div>
               <div className="tree-line indent">
                 <span className="folder">7/2011/</span>
@@ -778,6 +877,18 @@ $$ LANGUAGE SQL;`}
               <div className="tree-line">
                 <span className="folder">regs/</span>
                 <span className="comment"># Regulations (CFR)</span>
+              </div>
+              <div className="tree-line">
+                <span className="folder">irs/</span>
+                <span className="comment"># IRS guidance (overrides statute)</span>
+              </div>
+              <div className="tree-line indent">
+                <span className="folder">rev-proc-2023-34/</span>
+                <span className="comment"># 2024 inflation adjustments</span>
+              </div>
+              <div className="tree-line indent-2">
+                <span className="file">eitc-2024.yaml</span>
+                <span className="comment"># Adjusted EITC values</span>
               </div>
             </div>
           </div>
