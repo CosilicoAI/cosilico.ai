@@ -16,40 +16,9 @@ const pulse = keyframes({
 });
 
 // ============================================
-// GRID BACKGROUND
-// ============================================
-
-export const gridBg = style({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  background: `
-    linear-gradient(${vars.color.borderSubtle} 1px, transparent 1px),
-    linear-gradient(90deg, ${vars.color.borderSubtle} 1px, transparent 1px)
-  `,
-  backgroundSize: '60px 60px',
-  opacity: 0.3,
-  pointerEvents: 'none',
-  zIndex: 0,
-});
-
-// ============================================
 // BASE LAYOUT
 // ============================================
-
-export const playground = style({
-  minHeight: '100vh',
-  background: vars.color.bg,
-  color: vars.color.text,
-  fontFamily: vars.font.display,
-  display: 'flex',
-  flexDirection: 'column',
-  position: 'relative',
-  zIndex: 1,
-  paddingTop: '73px', // Account for fixed nav
-});
+// Note: Grid background and page wrapper are provided by PageLayout component
 
 // ============================================
 // MODE TOGGLE CONTAINER

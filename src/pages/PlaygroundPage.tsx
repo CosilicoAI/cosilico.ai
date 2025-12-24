@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/playground.css";
 import { STATES } from "../data/states";
 import { calculateTaxesAndBenefits, HouseholdInput, CalculationResult } from "../utils/taxCalculations";
@@ -173,9 +174,7 @@ export default function PlaygroundPage() {
   } : null;
 
   return (
-    <div className={styles.playground}>
-      <div className={styles.gridBg} />
-
+    <PageLayout>
       <div className={styles.playgroundContainer}>
         {/* Mode Toggle */}
         <div className={styles.modeToggleContainer}>
@@ -690,6 +689,6 @@ export default function PlaygroundPage() {
           </div>
         </div>
       </footer>
-    </div>
+    </PageLayout>
   );
 }
