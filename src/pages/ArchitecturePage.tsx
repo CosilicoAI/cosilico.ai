@@ -116,7 +116,7 @@ export default function ArchitecturePage() {
       </section>
 
       {/* Core Principles */}
-      <section>
+      <section className={styles.archSection}>
         <div className={styles.principleGrid}>
           <div className={styles.principleCard}>
             <div className={styles.cardNumber}>01</div>
@@ -152,7 +152,7 @@ export default function ArchitecturePage() {
       </section>
 
       {/* Interactive Explorer */}
-      <section>
+      <section className={styles.archSection}>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionLabel}>INTERACTIVE</span>
           <h2>Statute → Code Explorer</h2>

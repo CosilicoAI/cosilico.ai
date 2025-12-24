@@ -69,7 +69,8 @@ export const architecturePage = style({
 
 // Grid background is now provided by PageLayout component
 
-globalStyle(`${architecturePage} section`, {
+// Generic section style for consistent layout
+export const archSection = style({
   position: 'relative',
   zIndex: 1,
   padding: '80px 24px',
