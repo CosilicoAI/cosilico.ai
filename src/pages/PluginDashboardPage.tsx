@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/PluginDashboard.css";
+import * as styles from "../styles/pluginDashboard.css";
 
 // Real data from cosilico-validators encoding sessions
 const ENCODING_DATA = {
@@ -122,64 +122,64 @@ export default function PluginDashboardPage() {
   const failedVars = ENCODING_DATA.variables.filter((v) => v.status === "failed");
 
   return (
-    <div className="plugin-dashboard">
+    <div className={styles.dashboard}>
       {/* Grid background */}
-      <div className="grid-bg" />
+      <div className={styles.gridBg} />
 
       {/* Hero Section */}
-      <header className="hero">
-        <div className="hero-content">
-          <div className="hero-badge">VALIDATION SYSTEM</div>
-          <h1>Encoding Performance</h1>
-          <p className="hero-subtitle">
+      <header className={styles.hero}>
+        <div className={styles.heroContent}>
+          <div className={styles.heroBadge}>VALIDATION SYSTEM</div>
+          <h1 className={styles.heroTitle}>Encoding Performance</h1>
+          <p className={styles.heroSubtitle}>
             Real-time validation against PolicyEngine-US microsimulation
           </p>
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="hero-stat-value">{formatPercent(ENCODING_DATA.stats.overallMatchRate)}</span>
-              <span className="hero-stat-label">Success Rate</span>
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatValue}>{formatPercent(ENCODING_DATA.stats.overallMatchRate)}</span>
+              <span className={styles.heroStatLabel}>Success Rate</span>
             </div>
-            <div className="hero-stat">
-              <span className="hero-stat-value">{ENCODING_DATA.stats.totalVariables}</span>
-              <span className="hero-stat-label">Variables</span>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalVariables}</span>
+              <span className={styles.heroStatLabel}>Variables</span>
             </div>
-            <div className="hero-stat">
-              <span className="hero-stat-value">{ENCODING_DATA.stats.totalTestCases}</span>
-              <span className="hero-stat-label">Test Cases</span>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalTestCases}</span>
+              <span className={styles.heroStatLabel}>Test Cases</span>
             </div>
-            <div className="hero-stat">
-              <span className="hero-stat-value">{ENCODING_DATA.pluginVersion}</span>
-              <span className="hero-stat-label">Plugin</span>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatValue}>{ENCODING_DATA.pluginVersion}</span>
+              <span className={styles.heroStatLabel}>Plugin</span>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="main-content">
+      <main className={styles.mainContent}>
         {/* Status Summary */}
-        <section className="status-row">
-          <div className="status-card passed">
-            <div className="status-icon">✓</div>
-            <div className="status-info">
-              <span className="status-count">{passedVars.length}</span>
-              <span className="status-label">Passed</span>
+        <section className={styles.statusRow}>
+          <div className={styles.statusCard}>
+            <div className={`${styles.statusIcon} ${styles.statusIconPassed}`}>✓</div>
+            <div className={styles.statusInfo}>
+              <span className={styles.statusCount}>{passedVars.length}</span>
+              <span className={styles.statusLabel}>Passed</span>
             </div>
           </div>
-          <div className="status-card failed">
-            <div className="status-icon">✗</div>
-            <div className="status-info">
-              <span className="status-count">{failedVars.length}</span>
-              <span className="status-label">Failed</span>
+          <div className={styles.statusCard}>
+            <div className={`${styles.statusIcon} ${styles.statusIconFailed}`}>✗</div>
+            <div className={styles.statusInfo}>
+              <span className={styles.statusCount}>{failedVars.length}</span>
+              <span className={styles.statusLabel}>Failed</span>
             </div>
           </div>
         </section>
 
         {/* Variables Grid */}
-        <section className="variables-section">
-          <h2>Encoded Variables</h2>
-          <div className="variables-table">
-            <div className="table-header">
+        <section className={styles.variablesSection}>
+          <h2 className={styles.sectionTitle}>Encoded Variables</h2>
+          <div className={styles.variablesTable}>
+            <div className={styles.tableHeader}>
               <span>Variable</span>
               <span>Statute</span>
               <span>Tests</span>
@@ -189,19 +189,19 @@ export default function PluginDashboardPage() {
             {ENCODING_DATA.variables.map((v) => (
               <div
                 key={v.name}
-                className={`table-row ${v.status} ${selectedVariable === v.name ? "selected" : ""}`}
+                className={`${styles.tableRow} ${v.status === "passed" ? styles.tableRowPassed : styles.tableRowFailed} ${selectedVariable === v.name ? styles.tableRowSelected : ""}`}
                 onClick={() => setSelectedVariable(selectedVariable === v.name ? null : v.name)}
               >
-                <span className="var-name">
-                  <code>{v.name}</code>
-                  {v.error && <span className="error-badge">error</span>}
+                <span className={styles.varName}>
+                  <code className={styles.varNameCode}>{v.name}</code>
+                  {v.error && <span className={styles.errorBadge}>error</span>}
                 </span>
-                <span className="var-statute">{v.statute}</span>
-                <span className="var-tests">{v.testCases}</span>
-                <span className={`var-rate ${v.status}`}>
+                <span className={styles.varStatute}>{v.statute}</span>
+                <span className={styles.varTests}>{v.testCases}</span>
+                <span className={`${styles.varRate} ${v.status === "passed" ? styles.varRatePassed : styles.varRateFailed}`}>
                   {formatPercent(v.matchRate)}
                 </span>
-                <span className="var-time">{formatTime(v.timestamp)}</span>
+                <span className={styles.varTime}>{formatTime(v.timestamp)}</span>
               </div>
             ))}
           </div>
@@ -209,28 +209,28 @@ export default function PluginDashboardPage() {
 
         {/* Test Case Details */}
         {selectedVariable && ENCODING_DATA.testCaseDetails[selectedVariable as keyof typeof ENCODING_DATA.testCaseDetails] && (
-          <section className="details-section">
-            <h2>
-              Test Cases: <code>{selectedVariable}</code>
+          <section className={styles.detailsSection}>
+            <h2 className={styles.detailsTitle}>
+              Test Cases: <code className={styles.detailsTitleCode}>{selectedVariable}</code>
             </h2>
-            <div className="details-grid">
+            <div className={styles.detailsGrid}>
               {ENCODING_DATA.testCaseDetails[selectedVariable as keyof typeof ENCODING_DATA.testCaseDetails].map((tc, i) => (
-                <div key={i} className="detail-card">
-                  <div className="detail-name">{tc.name}</div>
-                  <div className="detail-row">
-                    <span className="detail-label">Expected</span>
-                    <span className="detail-value">
+                <div key={i} className={styles.detailCard}>
+                  <div className={styles.detailName}>{tc.name}</div>
+                  <div className={styles.detailRow}>
+                    <span className={styles.detailLabel}>Expected</span>
+                    <span className={styles.detailValue}>
                       {tc.expected !== null ? `$${tc.expected.toLocaleString()}` : "—"}
                     </span>
                   </div>
-                  <div className="detail-row">
-                    <span className="detail-label">Actual</span>
-                    <span className="detail-value">
+                  <div className={styles.detailRow}>
+                    <span className={styles.detailLabel}>Actual</span>
+                    <span className={styles.detailValue}>
                       {typeof tc.actual === "number" ? `$${tc.actual.toLocaleString()}` : tc.actual}
                     </span>
                   </div>
                   {typeof tc.diff === "number" && tc.diff > 0 && (
-                    <div className="detail-diff">
+                    <div className={styles.detailDiff}>
                       Δ ${tc.diff.toFixed(2)}
                     </div>
                   )}
@@ -241,54 +241,54 @@ export default function PluginDashboardPage() {
         )}
 
         {/* Encoding Timeline */}
-        <section className="timeline-section">
-          <h2>Encoding Timeline</h2>
-          <div className="timeline-track">
+        <section className={styles.timelineSection}>
+          <h2 className={styles.sectionTitle}>Encoding Timeline</h2>
+          <div className={styles.timelineTrack}>
             {ENCODING_DATA.variables.map((v, i) => (
               <div
                 key={v.name}
-                className={`timeline-node ${v.status}`}
+                className={styles.timelineNode}
                 style={{ left: `${(i / (ENCODING_DATA.variables.length - 1)) * 100}%` }}
                 title={`${v.name}: ${formatPercent(v.matchRate)}`}
               >
-                <div className="node-dot" />
-                <div className="node-label">{v.name.split("_")[0]}</div>
+                <div className={`${styles.nodeDot} ${v.status === "passed" ? styles.nodeDotPassed : styles.nodeDotFailed}`} />
+                <div className={styles.nodeLabel}>{v.name.split("_")[0]}</div>
               </div>
             ))}
-            <div className="timeline-line" />
+            <div className={styles.timelineLine} />
           </div>
         </section>
 
         {/* Technical Details */}
-        <section className="tech-section">
-          <h2>Validation Stack</h2>
-          <div className="tech-grid">
-            <div className="tech-card">
-              <div className="tech-icon">🔬</div>
-              <div className="tech-name">PolicyEngine-US</div>
-              <div className="tech-desc">Primary validator</div>
+        <section className={styles.techSection}>
+          <h2 className={styles.sectionTitle}>Validation Stack</h2>
+          <div className={styles.techGrid}>
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>🔬</div>
+              <div className={styles.techName}>PolicyEngine-US</div>
+              <div className={styles.techDesc}>Primary validator</div>
             </div>
-            <div className="tech-card">
-              <div className="tech-icon">📊</div>
-              <div className="tech-name">Consensus Engine</div>
-              <div className="tech-desc">Multi-validator agreement</div>
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>📊</div>
+              <div className={styles.techName}>Consensus Engine</div>
+              <div className={styles.techDesc}>Multi-validator agreement</div>
             </div>
-            <div className="tech-card">
-              <div className="tech-icon">🎯</div>
-              <div className="tech-name">$15 Tolerance</div>
-              <div className="tech-desc">Match threshold</div>
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>🎯</div>
+              <div className={styles.techName}>$15 Tolerance</div>
+              <div className={styles.techDesc}>Match threshold</div>
             </div>
-            <div className="tech-card">
-              <div className="tech-icon">⚡</div>
-              <div className="tech-name">Thompson Sampling</div>
-              <div className="tech-desc">Plugin selection</div>
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>⚡</div>
+              <div className={styles.techName}>Thompson Sampling</div>
+              <div className={styles.techDesc}>Plugin selection</div>
             </div>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="dashboard-footer">
+      <footer className={styles.footer}>
         <span>Last updated: {new Date(ENCODING_DATA.timestamp).toLocaleString()}</span>
         <span>cosilico-validators {ENCODING_DATA.pluginVersion}</span>
       </footer>
