@@ -2,6 +2,39 @@ import React, { useState, useEffect } from "react";
 import * as styles from "../styles/calibration.css";
 import PageLayout from "../components/PageLayout";
 
+interface CalibrationTarget {
+  name: string;
+  group: "national" | "state" | "county";
+  category: string;
+  target_value: number;
+  estimated_value: number;
+  relative_error: number;
+  absolute_error: number;
+}
+
+interface CalibrationResults {
+  metadata: {
+    date: string;
+    data_year: number;
+    tax_year: number;
+    n_records: number;
+    n_targets: number;
+    final_loss: number;
+    optimizer: string;
+    epochs: number;
+  };
+  summary: {
+    total_population_original: number;
+    total_population_calibrated: number;
+    total_agi_calibrated: number;
+    mean_weight: number;
+    std_weight: number;
+    min_weight: number;
+    max_weight: number;
+  };
+  targets: CalibrationTarget[];
+}
+
 interface SourceSummary {
   source: string;
   display_name: string;
@@ -147,6 +180,7 @@ function getTableRowClass(pctError: number): "low" | "medium" | "high" {
 export default function CalibrationPage() {
   const [data, setData] = useState<BaselineData | null>(null);
   const [targetsSummary, setTargetsSummary] = useState<TargetsSummary | null>(null);
+  const [calibrationResults, setCalibrationResults] = useState<CalibrationResults | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -162,10 +196,15 @@ export default function CalibrationPage() {
         if (!res.ok) throw new Error("Failed to load targets summary");
         return res.json();
       }),
+      fetch("/data/calibration-results.json").then((res) => {
+        if (!res.ok) return null; // Optional, don't fail if not present
+        return res.json();
+      }).catch(() => null),
     ])
-      .then(([baselineJson, targetsJson]) => {
+      .then(([baselineJson, targetsJson, calibrationJson]) => {
         setData(baselineJson);
         setTargetsSummary(targetsJson);
+        setCalibrationResults(calibrationJson);
         setLoading(false);
       })
       .catch((err) => {
@@ -327,6 +366,104 @@ export default function CalibrationPage() {
           </div>
         </div>
       </section>
+
+      {/* Calibration Results - Post-reweighting target matching */}
+      {calibrationResults && (
+        <section className={styles.calibResults}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionLabel}>RESULTS</span>
+            <h2>Post-Calibration Target Matching</h2>
+            <p>Gradient descent reweighting results from {calibrationResults.metadata.data_year} CPS to {calibrationResults.metadata.tax_year} IRS targets</p>
+          </div>
+
+          <div className={styles.resultsOverview}>
+            <div className={styles.resultCard}>
+              <div className={styles.resultIcon}>🎯</div>
+              <div className={styles.resultValue}>{(calibrationResults.metadata.final_loss * 100).toFixed(1)}%</div>
+              <div className={styles.resultLabel}>Final Loss (MSRE)</div>
+            </div>
+            <div className={styles.resultCard}>
+              <div className={styles.resultIcon}>📊</div>
+              <div className={styles.resultValue}>{formatNumber(calibrationResults.summary.total_population_calibrated, "count")}</div>
+              <div className={styles.resultLabel}>Calibrated Population</div>
+            </div>
+            <div className={styles.resultCard}>
+              <div className={styles.resultIcon}>💰</div>
+              <div className={styles.resultValue}>${formatNumber(calibrationResults.summary.total_agi_calibrated, "dollars")}</div>
+              <div className={styles.resultLabel}>Total Calibrated AGI</div>
+            </div>
+            <div className={styles.resultCard}>
+              <div className={styles.resultIcon}>✓</div>
+              <div className={styles.resultValue}>
+                {calibrationResults.targets.filter(t => Math.abs(t.relative_error) < 0.02).length}/{calibrationResults.targets.length}
+              </div>
+              <div className={styles.resultLabel}>Targets &lt;2% Error</div>
+            </div>
+          </div>
+
+          <div className={styles.targetStatusBar}>
+            <h4>Target Error Distribution</h4>
+            <div className={styles.statusBarContainer}>
+              <div
+                className={styles.statusBarGood}
+                style={{ width: `${(calibrationResults.targets.filter(t => Math.abs(t.relative_error) < 0.02).length / calibrationResults.targets.length) * 100}%` }}
+                title={`${calibrationResults.targets.filter(t => Math.abs(t.relative_error) < 0.02).length} targets <2% error`}
+              />
+              <div
+                className={styles.statusBarMedium}
+                style={{ width: `${(calibrationResults.targets.filter(t => Math.abs(t.relative_error) >= 0.02 && Math.abs(t.relative_error) < 0.1).length / calibrationResults.targets.length) * 100}%` }}
+                title={`${calibrationResults.targets.filter(t => Math.abs(t.relative_error) >= 0.02 && Math.abs(t.relative_error) < 0.1).length} targets 2-10% error`}
+              />
+              <div
+                className={styles.statusBarBad}
+                style={{ width: `${(calibrationResults.targets.filter(t => Math.abs(t.relative_error) >= 0.1).length / calibrationResults.targets.length) * 100}%` }}
+                title={`${calibrationResults.targets.filter(t => Math.abs(t.relative_error) >= 0.1).length} targets >10% error`}
+              />
+            </div>
+            <div className={styles.statusBarLegend}>
+              <span><span className={styles.legendDotGood}></span> &lt;2% ({calibrationResults.targets.filter(t => Math.abs(t.relative_error) < 0.02).length})</span>
+              <span><span className={styles.legendDotMedium}></span> 2-10% ({calibrationResults.targets.filter(t => Math.abs(t.relative_error) >= 0.02 && Math.abs(t.relative_error) < 0.1).length})</span>
+              <span><span className={styles.legendDotBad}></span> &gt;10% ({calibrationResults.targets.filter(t => Math.abs(t.relative_error) >= 0.1).length})</span>
+            </div>
+          </div>
+
+          <div className={styles.targetTable}>
+            <h4>All Calibration Targets</h4>
+            <div className={styles.tableWrapper}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Target</th>
+                    <th>Level</th>
+                    <th>IRS Target</th>
+                    <th>Calibrated</th>
+                    <th>Error</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {calibrationResults.targets
+                    .sort((a, b) => Math.abs(b.relative_error) - Math.abs(a.relative_error))
+                    .map((target, i) => (
+                      <tr key={i} className={getTableRowClass(target.relative_error)}>
+                        <td><code>{target.name}</code></td>
+                        <td>
+                          <span className={target.group === "national" ? styles.levelBadge.national : styles.levelBadge.state}>
+                            {target.group}
+                          </span>
+                        </td>
+                        <td>{formatNumber(target.target_value, target.category === "agi" ? "dollars" : "count")}</td>
+                        <td>{formatNumber(target.estimated_value, target.category === "agi" ? "dollars" : "count")}</td>
+                        <td className={Math.abs(target.relative_error) < 0.02 ? styles.errorGood : Math.abs(target.relative_error) < 0.1 ? styles.errorMedium : styles.errorBad}>
+                          {target.relative_error >= 0 ? "+" : ""}{(target.relative_error * 100).toFixed(1)}%
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Validation Status - PolicyEngine Comparison */}
       <section className={styles.calibValidation}>

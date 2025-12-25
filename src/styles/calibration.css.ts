@@ -1527,3 +1527,205 @@ globalStyle(`@media (max-width: 768px) .${peComparisonTable}`, {
 globalStyle(`@media (max-width: 768px) ${peComparisonTable} th, @media (max-width: 768px) ${peComparisonTable} td`, {
   padding: '12px',
 });
+
+// === CALIBRATION RESULTS SECTION ===
+export const calibResults = style({});
+
+export const resultsOverview = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gap: '20px',
+  marginBottom: '40px',
+  '@media': {
+    '(max-width: 768px)': {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+  },
+});
+
+export const resultCard = style({
+  background: '#161620',
+  border: '1px solid #2a2a3a',
+  borderRadius: '8px',
+  padding: '24px',
+  textAlign: 'center',
+});
+
+export const resultIcon = style({
+  fontSize: '2rem',
+  marginBottom: '12px',
+});
+
+export const resultValue = style({
+  fontFamily: vars.font.display,
+  fontSize: '1.8rem',
+  fontWeight: 700,
+  color: '#00e5ff',
+  marginBottom: '8px',
+});
+
+export const resultLabel = style({
+  fontSize: '0.85rem',
+  color: '#888898',
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+});
+
+export const targetStatusBar = style({
+  background: '#161620',
+  border: '1px solid #2a2a3a',
+  borderRadius: '8px',
+  padding: '24px',
+  marginBottom: '40px',
+});
+
+globalStyle(`${targetStatusBar} h4`, {
+  margin: '0 0 16px',
+  fontFamily: vars.font.display,
+  fontSize: '1rem',
+  color: '#e8e8f0',
+});
+
+export const statusBarContainer = style({
+  display: 'flex',
+  height: '32px',
+  borderRadius: '6px',
+  overflow: 'hidden',
+  marginBottom: '12px',
+});
+
+export const statusBarGood = style({
+  background: '#22c55e',
+  transition: 'width 0.3s ease',
+});
+
+export const statusBarMedium = style({
+  background: '#f59e0b',
+  transition: 'width 0.3s ease',
+});
+
+export const statusBarBad = style({
+  background: '#ef4444',
+  transition: 'width 0.3s ease',
+});
+
+export const statusBarLegend = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  fontSize: '0.85rem',
+  color: '#888898',
+});
+
+export const legendDotGood = style({
+  display: 'inline-block',
+  width: '10px',
+  height: '10px',
+  borderRadius: '50%',
+  background: '#22c55e',
+  marginRight: '6px',
+});
+
+export const legendDotMedium = style({
+  display: 'inline-block',
+  width: '10px',
+  height: '10px',
+  borderRadius: '50%',
+  background: '#f59e0b',
+  marginRight: '6px',
+});
+
+export const legendDotBad = style({
+  display: 'inline-block',
+  width: '10px',
+  height: '10px',
+  borderRadius: '50%',
+  background: '#ef4444',
+  marginRight: '6px',
+});
+
+export const targetTable = style({
+  background: '#161620',
+  border: '1px solid #2a2a3a',
+  borderRadius: '8px',
+  overflow: 'hidden',
+});
+
+globalStyle(`${targetTable} h4`, {
+  margin: 0,
+  padding: '20px',
+  fontFamily: vars.font.display,
+  fontSize: '1rem',
+  color: '#e8e8f0',
+  borderBottom: '1px solid #2a2a3a',
+});
+
+globalStyle(`${targetTable} table`, {
+  width: '100%',
+  borderCollapse: 'collapse',
+});
+
+globalStyle(`${targetTable} th`, {
+  padding: '12px 16px',
+  textAlign: 'left',
+  fontFamily: vars.font.display,
+  fontSize: '0.75rem',
+  fontWeight: 600,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+  color: '#888898',
+  background: '#1a1a28',
+  borderBottom: '1px solid #2a2a3a',
+});
+
+globalStyle(`${targetTable} td`, {
+  padding: '12px 16px',
+  fontSize: '0.9rem',
+  borderBottom: '1px solid #1a1a28',
+});
+
+globalStyle(`${targetTable} code`, {
+  fontFamily: vars.font.mono,
+  fontSize: '0.85rem',
+  color: '#00e5ff',
+});
+
+globalStyle(`${targetTable} tbody tr:hover`, {
+  background: '#1e1e2a',
+});
+
+const levelBadgeBase = style({
+  display: 'inline-block',
+  fontFamily: vars.font.display,
+  fontSize: '0.7rem',
+  fontWeight: 600,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+  padding: '3px 8px',
+  borderRadius: '3px',
+});
+
+export const levelBadge = styleVariants({
+  national: [levelBadgeBase, {
+    background: 'rgba(59, 130, 246, 0.2)',
+    color: '#60a5fa',
+  }],
+  state: [levelBadgeBase, {
+    background: 'rgba(168, 85, 247, 0.2)',
+    color: '#c084fc',
+  }],
+});
+
+export const errorGood = style({
+  color: '#22c55e !important',
+  fontWeight: 600,
+});
+
+export const errorMedium = style({
+  color: '#f59e0b !important',
+  fontWeight: 600,
+});
+
+export const errorBad = style({
+  color: '#ef4444 !important',
+  fontWeight: 600,
+});
