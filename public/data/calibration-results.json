@@ -1,64 +1,392 @@
 {
   "metadata": {
-    "date": "2024-12-25",
+    "date": "2025-12-25T12:09:15.604743",
     "data_year": 2024,
     "tax_year": 2021,
     "n_records": 65347,
     "n_targets": 41,
-    "final_loss": 0.0413,
-    "optimizer": "scipy L-BFGS-B",
+    "final_loss": 0.041326578706502914,
+    "optimizer": "torch",
     "epochs": 500
   },
   "summary": {
-    "total_population_original": 162115112,
-    "total_population_calibrated": 140872911,
-    "total_agi_calibrated": 12754422371089,
-    "mean_weight": 0.9,
-    "std_weight": 7.65,
-    "min_weight": 0.0,
-    "max_weight": 1921.72
+    "total_population_original": 162115112.04,
+    "total_population_calibrated": 140321728.0,
+    "total_agi_calibrated": 12798669776272.35,
+    "mean_weight": 0.8399397143152865,
+    "std_weight": 7.572468855988131,
+    "min_weight": 0.0012310906763999692,
+    "max_weight": 1901.2926387349885
   },
   "targets": [
-    {"name": "US/returns/all", "group": "national", "category": "returns", "target_value": 153918636, "estimated_value": 140872911, "relative_error": -0.085, "absolute_error": -13045725},
-    {"name": "US/returns/under_1", "group": "national", "category": "returns", "target_value": 1689756, "estimated_value": 1929442, "relative_error": 0.142, "absolute_error": 239686},
-    {"name": "US/returns/1_to_5k", "group": "national", "category": "returns", "target_value": 4567890, "estimated_value": 4512345, "relative_error": -0.012, "absolute_error": -55545},
-    {"name": "US/returns/5k_to_10k", "group": "national", "category": "returns", "target_value": 7890123, "estimated_value": 7748421, "relative_error": -0.018, "absolute_error": -141702},
-    {"name": "US/returns/10k_to_15k", "group": "national", "category": "returns", "target_value": 8234567, "estimated_value": 8152394, "relative_error": -0.010, "absolute_error": -82173},
-    {"name": "US/returns/15k_to_20k", "group": "national", "category": "returns", "target_value": 7654321, "estimated_value": 7592847, "relative_error": -0.008, "absolute_error": -61474},
-    {"name": "US/returns/20k_to_25k", "group": "national", "category": "returns", "target_value": 7123456, "estimated_value": 7087234, "relative_error": -0.005, "absolute_error": -36222},
-    {"name": "US/returns/25k_to_30k", "group": "national", "category": "returns", "target_value": 6543210, "estimated_value": 6498765, "relative_error": -0.007, "absolute_error": -44445},
-    {"name": "US/returns/30k_to_40k", "group": "national", "category": "returns", "target_value": 11234567, "estimated_value": 11087654, "relative_error": -0.013, "absolute_error": -146913},
-    {"name": "US/returns/40k_to_50k", "group": "national", "category": "returns", "target_value": 8765432, "estimated_value": 8698234, "relative_error": -0.008, "absolute_error": -67198},
-    {"name": "US/returns/50k_to_75k", "group": "national", "category": "returns", "target_value": 17654321, "estimated_value": 17543210, "relative_error": -0.006, "absolute_error": -111111},
-    {"name": "US/returns/75k_to_100k", "group": "national", "category": "returns", "target_value": 12345678, "estimated_value": 12234567, "relative_error": -0.009, "absolute_error": -111111},
-    {"name": "US/returns/100k_to_200k", "group": "national", "category": "returns", "target_value": 23456789, "estimated_value": 23234567, "relative_error": -0.009, "absolute_error": -222222},
-    {"name": "US/returns/200k_to_500k", "group": "national", "category": "returns", "target_value": 6789012, "estimated_value": 6654321, "relative_error": -0.020, "absolute_error": -134691},
-    {"name": "US/returns/500k_to_1m", "group": "national", "category": "returns", "target_value": 987654, "estimated_value": 973827, "relative_error": -0.014, "absolute_error": -13827},
-    {"name": "US/returns/1m_plus", "group": "national", "category": "returns", "target_value": 567890, "estimated_value": 690432, "relative_error": 0.216, "absolute_error": 122542},
-    {"name": "US/agi/under_1", "group": "national", "category": "agi", "target_value": 423456789012, "estimated_value": 79234567890, "relative_error": -0.813, "absolute_error": -344222221122},
-    {"name": "US/agi/1_to_5k", "group": "national", "category": "agi", "target_value": 15234567890, "estimated_value": 14987654321, "relative_error": -0.016, "absolute_error": -246913569},
-    {"name": "US/agi/5k_to_10k", "group": "national", "category": "agi", "target_value": 59876543210, "estimated_value": 60834567890, "relative_error": 0.016, "absolute_error": 958024680},
-    {"name": "US/agi/10k_to_15k", "group": "national", "category": "agi", "target_value": 103456789012, "estimated_value": 102345678901, "relative_error": -0.011, "absolute_error": -1111110111},
-    {"name": "US/agi/15k_to_20k", "group": "national", "category": "agi", "target_value": 134567890123, "estimated_value": 133456789012, "relative_error": -0.008, "absolute_error": -1111101111},
-    {"name": "US/agi/20k_to_25k", "group": "national", "category": "agi", "target_value": 160234567890, "estimated_value": 159123456789, "relative_error": -0.007, "absolute_error": -1111111101},
-    {"name": "US/agi/25k_to_30k", "group": "national", "category": "agi", "target_value": 180345678901, "estimated_value": 179234567890, "relative_error": -0.006, "absolute_error": -1111111011},
-    {"name": "US/agi/30k_to_40k", "group": "national", "category": "agi", "target_value": 395678901234, "estimated_value": 390567890123, "relative_error": -0.013, "absolute_error": -5111011111},
-    {"name": "US/agi/40k_to_50k", "group": "national", "category": "agi", "target_value": 394567890123, "estimated_value": 391456789012, "relative_error": -0.008, "absolute_error": -3111101111},
-    {"name": "US/agi/50k_to_75k", "group": "national", "category": "agi", "target_value": 1098765432109, "estimated_value": 1079654321098, "relative_error": -0.018, "absolute_error": -19111111011},
-    {"name": "US/agi/75k_to_100k", "group": "national", "category": "agi", "target_value": 1076543210987, "estimated_value": 1065432109876, "relative_error": -0.010, "absolute_error": -11111101111},
-    {"name": "US/agi/100k_to_200k", "group": "national", "category": "agi", "target_value": 3345678901234, "estimated_value": 3312345678901, "relative_error": -0.010, "absolute_error": -33333222333},
-    {"name": "US/agi/200k_to_500k", "group": "national", "category": "agi", "target_value": 1987654321098, "estimated_value": 1954321098765, "relative_error": -0.017, "absolute_error": -33333222333},
-    {"name": "US/agi/500k_to_1m", "group": "national", "category": "agi", "target_value": 678901234567, "estimated_value": 669012345678, "relative_error": -0.015, "absolute_error": -9888888889},
-    {"name": "US/agi/1m_plus", "group": "national", "category": "agi", "target_value": 2345678901234, "estimated_value": 1302469135802, "relative_error": -0.444, "absolute_error": -1043209765432},
-    {"name": "US/agi/no_agi", "group": "national", "category": "agi", "target_value": 0, "estimated_value": 0, "relative_error": -1.0, "absolute_error": 0},
-    {"name": "06/returns/all", "group": "state", "category": "returns", "target_value": 18987654, "estimated_value": 18654321, "relative_error": -0.018, "absolute_error": -333333},
-    {"name": "48/returns/all", "group": "state", "category": "returns", "target_value": 14567890, "estimated_value": 14234567, "relative_error": -0.023, "absolute_error": -333323},
-    {"name": "12/returns/all", "group": "state", "category": "returns", "target_value": 11234567, "estimated_value": 10987654, "relative_error": -0.022, "absolute_error": -246913},
-    {"name": "36/returns/all", "group": "state", "category": "returns", "target_value": 10234567, "estimated_value": 9987654, "relative_error": -0.024, "absolute_error": -246913},
-    {"name": "17/returns/all", "group": "state", "category": "returns", "target_value": 6789012, "estimated_value": 6654321, "relative_error": -0.020, "absolute_error": -134691},
-    {"name": "42/returns/all", "group": "state", "category": "returns", "target_value": 6543210, "estimated_value": 6432109, "relative_error": -0.017, "absolute_error": -111101},
-    {"name": "39/returns/all", "group": "state", "category": "returns", "target_value": 5987654, "estimated_value": 5876543, "relative_error": -0.019, "absolute_error": -111111},
-    {"name": "13/returns/all", "group": "state", "category": "returns", "target_value": 5234567, "estimated_value": 5123456, "relative_error": -0.021, "absolute_error": -111111},
-    {"name": "37/returns/all", "group": "state", "category": "returns", "target_value": 4987654, "estimated_value": 4876543, "relative_error": -0.022, "absolute_error": -111111}
+    {
+      "name": "US/returns/no_agi",
+      "group": "national",
+      "category": "Returns (no_agi)",
+      "target_value": 13992100.0,
+      "estimated_value": 0.0,
+      "relative_error": -0.9999999403953552,
+      "absolute_error": 0.9999999403953552
+    },
+    {
+      "name": "US/returns/under_1",
+      "group": "national",
+      "category": "Returns (under_1)",
+      "target_value": 1686440.0,
+      "estimated_value": 1926372.625,
+      "relative_error": 0.14227157831192017,
+      "absolute_error": 0.14227157831192017
+    },
+    {
+      "name": "US/returns/1_to_5k",
+      "group": "national",
+      "category": "Returns (1_to_5k)",
+      "target_value": 5183390.0,
+      "estimated_value": 5183400.0,
+      "relative_error": 1.929239033415797e-06,
+      "absolute_error": 1.929239033415797e-06
+    },
+    {
+      "name": "US/returns/5k_to_10k",
+      "group": "national",
+      "category": "Returns (5k_to_10k)",
+      "target_value": 7929860.0,
+      "estimated_value": 7929860.5,
+      "relative_error": 6.305280919605138e-08,
+      "absolute_error": 6.305280919605138e-08
+    },
+    {
+      "name": "US/returns/10k_to_15k",
+      "group": "national",
+      "category": "Returns (10k_to_15k)",
+      "target_value": 9883050.0,
+      "estimated_value": 9883081.0,
+      "relative_error": 3.136683289994835e-06,
+      "absolute_error": 3.136683289994835e-06
+    },
+    {
+      "name": "US/returns/15k_to_20k",
+      "group": "national",
+      "category": "Returns (15k_to_20k)",
+      "target_value": 9113990.0,
+      "estimated_value": 9114060.0,
+      "relative_error": 7.68049903854262e-06,
+      "absolute_error": 7.68049903854262e-06
+    },
+    {
+      "name": "US/returns/20k_to_25k",
+      "group": "national",
+      "category": "Returns (20k_to_25k)",
+      "target_value": 8186640.0,
+      "estimated_value": 8186809.5,
+      "relative_error": 2.0704463167930953e-05,
+      "absolute_error": 2.0704463167930953e-05
+    },
+    {
+      "name": "US/returns/25k_to_30k",
+      "group": "national",
+      "category": "Returns (25k_to_30k)",
+      "target_value": 7407890.0,
+      "estimated_value": 7408430.5,
+      "relative_error": 7.296273543033749e-05,
+      "absolute_error": 7.296273543033749e-05
+    },
+    {
+      "name": "US/returns/30k_to_40k",
+      "group": "national",
+      "category": "Returns (30k_to_40k)",
+      "target_value": 13194450.0,
+      "estimated_value": 13194521.0,
+      "relative_error": 5.381049959396478e-06,
+      "absolute_error": 5.381049959396478e-06
+    },
+    {
+      "name": "US/returns/40k_to_50k",
+      "group": "national",
+      "category": "Returns (40k_to_50k)",
+      "target_value": 10930780.0,
+      "estimated_value": 10931385.0,
+      "relative_error": 5.534828596864827e-05,
+      "absolute_error": 5.534828596864827e-05
+    },
+    {
+      "name": "US/returns/50k_to_75k",
+      "group": "national",
+      "category": "Returns (50k_to_75k)",
+      "target_value": 19494660.0,
+      "estimated_value": 19494742.0,
+      "relative_error": 4.206280209473334e-06,
+      "absolute_error": 4.206280209473334e-06
+    },
+    {
+      "name": "US/returns/75k_to_100k",
+      "group": "national",
+      "category": "Returns (75k_to_100k)",
+      "target_value": 15137070.0,
+      "estimated_value": 15137459.0,
+      "relative_error": 2.5698498575366102e-05,
+      "absolute_error": 2.5698498575366102e-05
+    },
+    {
+      "name": "US/returns/100k_to_200k",
+      "group": "national",
+      "category": "Returns (100k_to_200k)",
+      "target_value": 22849380.0,
+      "estimated_value": 22849492.0,
+      "relative_error": 4.901664851786336e-06,
+      "absolute_error": 4.901664851786336e-06
+    },
+    {
+      "name": "US/returns/200k_to_500k",
+      "group": "national",
+      "category": "Returns (200k_to_500k)",
+      "target_value": 7167290.0,
+      "estimated_value": 7167292.0,
+      "relative_error": 2.7904545163437433e-07,
+      "absolute_error": 2.7904545163437433e-07
+    },
+    {
+      "name": "US/returns/500k_to_1m",
+      "group": "national",
+      "category": "Returns (500k_to_1m)",
+      "target_value": 1106040.0,
+      "estimated_value": 1106040.375,
+      "relative_error": 3.3904711926879827e-07,
+      "absolute_error": 3.3904711926879827e-07
+    },
+    {
+      "name": "US/returns/1m_plus",
+      "group": "national",
+      "category": "Returns (1m_plus)",
+      "target_value": 664340.0,
+      "estimated_value": 808794.25,
+      "relative_error": 0.2174399197101593,
+      "absolute_error": 0.2174399197101593
+    },
+    {
+      "name": "US/agi/under_1",
+      "group": "national",
+      "category": "AGI (under_1)",
+      "target_value": -94000000000.0,
+      "estimated_value": -17543243776.0,
+      "relative_error": -0.8133697509765625,
+      "absolute_error": 0.8133697509765625
+    },
+    {
+      "name": "US/agi/1_to_5k",
+      "group": "national",
+      "category": "AGI (1_to_5k)",
+      "target_value": 15000000000.0,
+      "estimated_value": 15000027136.0,
+      "relative_error": 1.7749332528183004e-06,
+      "absolute_error": 1.7749332528183004e-06
+    },
+    {
+      "name": "US/agi/5k_to_10k",
+      "group": "national",
+      "category": "AGI (5k_to_10k)",
+      "target_value": 59000000000.0,
+      "estimated_value": 59000061952.0,
+      "relative_error": 1.0413559721200727e-06,
+      "absolute_error": 1.0413559721200727e-06
+    },
+    {
+      "name": "US/agi/10k_to_15k",
+      "group": "national",
+      "category": "AGI (10k_to_15k)",
+      "target_value": 123000000000.0,
+      "estimated_value": 123000365056.0,
+      "relative_error": 2.9970733521622606e-06,
+      "absolute_error": 2.9970733521622606e-06
+    },
+    {
+      "name": "US/agi/15k_to_20k",
+      "group": "national",
+      "category": "AGI (15k_to_20k)",
+      "target_value": 160000000000.0,
+      "estimated_value": 160001146880.0,
+      "relative_error": 7.1680001383356284e-06,
+      "absolute_error": 7.1680001383356284e-06
+    },
+    {
+      "name": "US/agi/20k_to_25k",
+      "group": "national",
+      "category": "AGI (20k_to_25k)",
+      "target_value": 184000000000.0,
+      "estimated_value": 183997628416.0,
+      "relative_error": -1.2911304111185018e-05,
+      "absolute_error": 1.2911304111185018e-05
+    },
+    {
+      "name": "US/agi/25k_to_30k",
+      "group": "national",
+      "category": "AGI (25k_to_30k)",
+      "target_value": 204000000000.0,
+      "estimated_value": 203991220224.0,
+      "relative_error": -4.304815593059175e-05,
+      "absolute_error": 4.304815593059175e-05
+    },
+    {
+      "name": "US/agi/30k_to_40k",
+      "group": "national",
+      "category": "AGI (30k_to_40k)",
+      "target_value": 461000000000.0,
+      "estimated_value": 461001916416.0,
+      "relative_error": 4.122654900129419e-06,
+      "absolute_error": 4.122654900129419e-06
+    },
+    {
+      "name": "US/agi/40k_to_50k",
+      "group": "national",
+      "category": "AGI (40k_to_50k)",
+      "target_value": 492000000000.0,
+      "estimated_value": 491979079680.0,
+      "relative_error": -4.249183984939009e-05,
+      "absolute_error": 4.249183984939009e-05
+    },
+    {
+      "name": "US/agi/50k_to_75k",
+      "group": "national",
+      "category": "AGI (50k_to_75k)",
+      "target_value": 1210000000000.0,
+      "estimated_value": 1210004275200.0,
+      "relative_error": 3.574691163521493e-06,
+      "absolute_error": 3.574691163521493e-06
+    },
+    {
+      "name": "US/agi/75k_to_100k",
+      "group": "national",
+      "category": "AGI (75k_to_100k)",
+      "target_value": 1316000000000.0,
+      "estimated_value": 1316025532416.0,
+      "relative_error": 1.9421762772253715e-05,
+      "absolute_error": 1.9421762772253715e-05
+    },
+    {
+      "name": "US/agi/100k_to_200k",
+      "group": "national",
+      "category": "AGI (100k_to_200k)",
+      "target_value": 3187000000000.0,
+      "estimated_value": 3187015680000.0,
+      "relative_error": 4.935249307891354e-06,
+      "absolute_error": 4.935249307891354e-06
+    },
+    {
+      "name": "US/agi/200k_to_500k",
+      "group": "national",
+      "category": "AGI (200k_to_500k)",
+      "target_value": 2161000000000.0,
+      "estimated_value": 2161000579072.0,
+      "relative_error": 2.426135949917807e-07,
+      "absolute_error": 2.426135949917807e-07
+    },
+    {
+      "name": "US/agi/500k_to_1m",
+      "group": "national",
+      "category": "AGI (500k_to_1m)",
+      "target_value": 762000000000.0,
+      "estimated_value": 762000113664.0,
+      "relative_error": 1.7201050184212363e-07,
+      "absolute_error": 1.7201050184212363e-07
+    },
+    {
+      "name": "US/agi/1m_plus",
+      "group": "national",
+      "category": "AGI (1m_plus)",
+      "target_value": 4466000000000.0,
+      "estimated_value": 2482195660800.0,
+      "relative_error": -0.44420158863067627,
+      "absolute_error": 0.44420158863067627
+    },
+    {
+      "name": "06/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 17847450.0,
+      "estimated_value": 17848224.0,
+      "relative_error": 4.336753409006633e-05,
+      "absolute_error": 4.336753409006633e-05
+    },
+    {
+      "name": "48/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 13592820.0,
+      "estimated_value": 13593052.0,
+      "relative_error": 1.7067832231987268e-05,
+      "absolute_error": 1.7067832231987268e-05
+    },
+    {
+      "name": "12/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 11214320.0,
+      "estimated_value": 11214388.0,
+      "relative_error": 6.063675300538307e-06,
+      "absolute_error": 6.063675300538307e-06
+    },
+    {
+      "name": "36/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 9894560.0,
+      "estimated_value": 9894612.0,
+      "relative_error": 5.2554123612935655e-06,
+      "absolute_error": 5.2554123612935655e-06
+    },
+    {
+      "name": "42/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 6485230.0,
+      "estimated_value": 6485261.5,
+      "relative_error": 4.857190106122289e-06,
+      "absolute_error": 4.857190106122289e-06
+    },
+    {
+      "name": "17/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 6317890.0,
+      "estimated_value": 6317930.0,
+      "relative_error": 6.33122681392706e-06,
+      "absolute_error": 6.33122681392706e-06
+    },
+    {
+      "name": "39/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 5897420.0,
+      "estimated_value": 5897439.5,
+      "relative_error": 3.3065300613088766e-06,
+      "absolute_error": 3.3065300613088766e-06
+    },
+    {
+      "name": "13/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 5234670.0,
+      "estimated_value": 5234678.0,
+      "relative_error": 1.5282718095477321e-06,
+      "absolute_error": 1.5282718095477321e-06
+    },
+    {
+      "name": "37/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 5178340.0,
+      "estimated_value": 5178353.5,
+      "relative_error": 2.6070124476973433e-06,
+      "absolute_error": 2.6070124476973433e-06
+    },
+    {
+      "name": "26/returns/all",
+      "group": "state",
+      "category": "Returns (all)",
+      "target_value": 4923780.0,
+      "estimated_value": 4923793.0,
+      "relative_error": 2.640247430463205e-06,
+      "absolute_error": 2.640247430463205e-06
+    }
   ]
 }
