@@ -1113,6 +1113,80 @@ $$ LANGUAGE SQL;`}
           </div>
         </div>
 
+        {/* Synthesis Validation Loop */}
+        <div className="synthesis-validation">
+          <h3>Validation-Driven Synthesis</h3>
+          <p className="validation-intro">
+            Like our rules engine, the synthesis system uses multi-source validation to drive iterative improvement.
+            Metrics feed back to refine the generative model.
+          </p>
+          <div className="validation-loop-diagram">
+            <div className="loop-node source">
+              <span className="node-icon">📊</span>
+              <h5>Data Sources</h5>
+              <span className="node-detail">CPS + PUF</span>
+            </div>
+            <div className="loop-arrow">→</div>
+            <div className="loop-node model">
+              <span className="node-icon">🌊</span>
+              <h5>Normalizing Flow</h5>
+              <span className="node-detail">Learn P(tax_vars | demographics)</span>
+            </div>
+            <div className="loop-arrow">→</div>
+            <div className="loop-node output">
+              <span className="node-icon">👥</span>
+              <h5>Synthetic Data</h5>
+              <span className="node-detail">CPS structure + PUF-like tax vars</span>
+            </div>
+            <div className="loop-arrow">→</div>
+            <div className="loop-node validators">
+              <span className="node-icon">✓</span>
+              <h5>Validators</h5>
+              <span className="node-detail">vs PE ECPS, IRS SOI, PUF</span>
+            </div>
+            <div className="loop-feedback">
+              <div className="feedback-line" />
+              <span className="feedback-label">⟳ Metrics improve model</span>
+              <div className="feedback-line" />
+            </div>
+          </div>
+
+          <div className="validation-metrics-grid">
+            <div className="metric-category">
+              <h5>Marginal Fidelity</h5>
+              <ul>
+                <li>KL divergence per variable</li>
+                <li>Zero-inflation accuracy</li>
+                <li>Quantile coverage</li>
+              </ul>
+            </div>
+            <div className="metric-category">
+              <h5>Joint Fidelity</h5>
+              <ul>
+                <li>Correlation matrix distance</li>
+                <li>Conditional distributions</li>
+                <li>Principal component overlap</li>
+              </ul>
+            </div>
+            <div className="metric-category">
+              <h5>Policy Utility</h5>
+              <ul>
+                <li>Tax liability by bracket</li>
+                <li>Credit takeup rates</li>
+                <li>Reform impact similarity</li>
+              </ul>
+            </div>
+            <div className="metric-category highlight">
+              <h5>vs PE ECPS</h5>
+              <ul>
+                <li>Correlation preservation</li>
+                <li>Calibration parity</li>
+                <li>Joint distribution score</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         {/* Implementation Status */}
         <div className="microdata-status">
           <h3>Implementation Status</h3>
@@ -1129,28 +1203,28 @@ $$ LANGUAGE SQL;`}
             </div>
             <div className="status-item done">
               <span className="status-icon">✓</span>
-              <span className="status-label">L0 Regularization</span>
-              <span className="status-detail">HardConcrete gates with PolicyEngine fix</span>
+              <span className="status-label">Gradient Calibration</span>
+              <span className="status-detail">PyTorch optimizer, 76% loss reduction</span>
             </div>
             <div className="status-item done">
               <span className="status-icon">✓</span>
-              <span className="status-label">Multi-Resolution</span>
-              <span className="status-detail">Browser (2K) to Full (330M) records</span>
+              <span className="status-label">Calibration Dashboard</span>
+              <span className="status-detail">Real-time metrics at /calibration</span>
             </div>
             <div className="status-item progress">
               <span className="status-icon">◐</span>
-              <span className="status-label">SOI Targets</span>
-              <span className="status-detail">Defining calibration targets from IRS data</span>
+              <span className="status-label">Validation Framework</span>
+              <span className="status-detail">Comparing to PE ECPS and IRS SOI</span>
             </div>
-            <div className="status-item pending">
-              <span className="status-icon">○</span>
-              <span className="status-label">Generative Model</span>
-              <span className="status-detail">TabDDPM or normalizing flow training</span>
+            <div className="status-item progress">
+              <span className="status-icon">◐</span>
+              <span className="status-label">Normalizing Flow</span>
+              <span className="status-detail">Conditional MAF for tax variables</span>
             </div>
             <div className="status-item pending">
               <span className="status-icon">○</span>
               <span className="status-label">CPS/PUF Fusion</span>
-              <span className="status-detail">Joint model for multiple data sources</span>
+              <span className="status-detail">Joint model preserving correlations</span>
             </div>
             <div className="status-item pending">
               <span className="status-icon">○</span>
