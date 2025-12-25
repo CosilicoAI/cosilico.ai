@@ -19,6 +19,7 @@ interface CalibrationResults {
     tax_year: number;
     n_records: number;
     n_targets: number;
+    initial_loss: number;
     final_loss: number;
     optimizer: string;
     epochs: number;
@@ -379,8 +380,12 @@ export default function CalibrationPage() {
           <div className={styles.resultsOverview}>
             <div className={styles.resultCard}>
               <div className={styles.resultIcon}>🎯</div>
-              <div className={styles.resultValue}>{(calibrationResults.metadata.final_loss * 100).toFixed(1)}%</div>
-              <div className={styles.resultLabel}>Final Loss (MSRE)</div>
+              <div className={styles.resultValue}>
+                {(calibrationResults.metadata.initial_loss * 100).toFixed(1)}% → {(calibrationResults.metadata.final_loss * 100).toFixed(1)}%
+              </div>
+              <div className={styles.resultLabel}>
+                Loss (MSRE) · {((1 - calibrationResults.metadata.final_loss / calibrationResults.metadata.initial_loss) * 100).toFixed(0)}% reduction
+              </div>
             </div>
             <div className={styles.resultCard}>
               <div className={styles.resultIcon}>📊</div>
