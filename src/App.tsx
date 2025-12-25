@@ -11,6 +11,7 @@ import PlaygroundPage from "./pages/PlaygroundPage";
 import CalibrationPage from "./pages/CalibrationPage";
 import ValidationPage from "./pages/ValidationPage";
 import PluginDashboardPage from "./pages/PluginDashboardPage";
+import MicroplexPage from "./pages/MicroplexPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/calibration" element={<CalibrationPage />} />
           <Route path="/validation" element={<ValidationPage />} />
           <Route path="/plugin" element={<PluginDashboardPage />} />
+          <Route path="/stack/microplex" element={<MicroplexPage />} />
         </Routes>
       </div>
     </BrowserRouter>
