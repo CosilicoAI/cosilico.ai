@@ -1,46 +1,44 @@
 {
   "metadata": {
-    "generated_at": "2025-12-27T13:46:37.974103",
+    "generated_at": "2025-12-27T14:34:03.777184",
     "tax_year": 2024,
-    "data_source": "CPS ASEC (Enhanced)"
-  },
-  "sources": {
-    "policyengine": {
-      "source": "PolicyEngine-US",
-      "version": "latest",
-      "computation_time_seconds": 8.693351984024048,
-      "aggregates": {
-        "total_income_tax": 1892203364352.0,
-        "total_income_tax_before_credits": 2058856955904.0,
-        "total_adjusted_gross_income": 14813169188864.0,
-        "total_eitc": 50075025408.0,
-        "total_ctc": 135310352384.0,
-        "total_snap": 92856745984.0,
-        "total_ssi": 67620126720.0,
-        "total_population": 143584512.0,
-        "tax_units_with_positive_tax": 106053616.0
-      },
-      "per_capita": {
-        "mean_income_tax": 13178.325001738349,
-        "mean_agi": 103166.9013776639
-      }
-    },
-    "taxsim": {
-      "source": "TAXSIM-35",
-      "version": "35",
-      "sample_size": 1000,
-      "note": "Not yet implemented - requires TAXSIM API integration",
-      "aggregates": {
-        "total_income_tax": null
-      }
-    }
-  },
-  "comparison": {
-    "baseline": "PolicyEngine-US",
-    "comparisons": []
+    "data_source": "PolicyEngine Enhanced CPS",
+    "comparison_type": "record_by_record",
+    "note": "Uses PE inputs for both systems to isolate encoding differences"
   },
   "summary": {
-    "pe_total_income_tax_billions": 1892.203364352,
-    "pe_total_agi_trillions": 14.813169188864
-  }
+    "overall_match_rate": 0.8215989662712875,
+    "total_records": 30182,
+    "variables_compared": 2
+  },
+  "variables": [
+    {
+      "variable": "eitc",
+      "match_rate": 0.8555430388973561,
+      "mean_absolute_error": 124.75143209811894,
+      "n_records": 30182,
+      "cosilico_weighted_total": 40897923792.25394,
+      "policyengine_weighted_total": 50075025408.0,
+      "error_percentiles": {
+        "p50": 0.0,
+        "p95": 632.0,
+        "p99": 2922.82671875,
+        "max": 5922.072000000001
+      }
+    },
+    {
+      "variable": "income_tax_before_credits",
+      "match_rate": 0.787654893645219,
+      "mean_absolute_error": 1054.631875883979,
+      "n_records": 30182,
+      "cosilico_weighted_total": 2231909443226.9287,
+      "policyengine_weighted_total": 2058856955904.0,
+      "error_percentiles": {
+        "p50": 0.0,
+        "p95": 1443.733837890617,
+        "p99": 14786.827343749972,
+        "max": 319009.3125
+      }
+    }
+  ]
 }
