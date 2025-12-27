@@ -9,6 +9,7 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
+  { href: "/stack", label: "Stack" },
   { href: "/playground", label: "Playground" },
   { href: "/validation", label: "Validation" },
   { href: "/plugin", label: "Plugin" },
