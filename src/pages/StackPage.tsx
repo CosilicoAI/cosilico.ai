@@ -47,6 +47,14 @@ const DocsIcon = () => (
   </svg>
 );
 
+const RacIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <path d="M8 13h8M8 17h4" />
+  </svg>
+);
+
 export default function StackPage() {
   return (
     <PageLayout>
@@ -100,8 +108,33 @@ export default function StackPage() {
               </div>
             </Link>
 
+            {/* .rac - LIVE */}
+            <Link to="/stack/.rac" className={`${styles.componentCard} ${styles.cardDelay2}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusLive}`}>SPEC</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <RacIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>.rac</h3>
+                  <div className={styles.componentTagline}>Statute encoding format</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Self-contained statute encoding format. One file captures the law:
+                text, parameters, formulas, and tests. Filepath mirrors legal citation.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>Legal Citations</span>
+                <span className={styles.featureTag}>Time-Varying</span>
+                <span className={styles.featureTag}>Inline Tests</span>
+                <span className={styles.featureTag}>Self-Contained</span>
+              </div>
+            </Link>
+
             {/* cosilico-engine - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay2} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay3} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -127,7 +160,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-validators - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay3} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay4} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -153,7 +186,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-compile - PLANNED */}
-            <div className={`${styles.componentCard} ${styles.cardDelay4} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay5} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusPlanned}`}>PLANNED</span>
               <div className={styles.componentHeader}>

@@ -176,6 +176,7 @@ export const cardDelay1 = style({ animationDelay: '0.1s' });
 export const cardDelay2 = style({ animationDelay: '0.2s' });
 export const cardDelay3 = style({ animationDelay: '0.3s' });
 export const cardDelay4 = style({ animationDelay: '0.4s' });
+export const cardDelay5 = style({ animationDelay: '0.5s' });
 
 export const componentCardGlow = style({
   position: 'absolute',
