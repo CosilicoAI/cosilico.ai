@@ -33,7 +33,7 @@ function App() {
           <Route path="/validation" element={<ValidationPage />} />
           <Route path="/plugin" element={<PluginDashboardPage />} />
           <Route path="/stack" element={<StackPage />} />
-          <Route path="/stack/rac" element={<RacPage />} />
+          <Route path="/stack/.rac" element={<RacPage />} />
           <Route path="/stack/microplex" element={<MicroplexPage />} />
         </Routes>
       </div>
