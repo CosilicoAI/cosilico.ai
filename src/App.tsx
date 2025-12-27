@@ -13,6 +13,7 @@ import ValidationPage from "./pages/ValidationPage";
 import PluginDashboardPage from "./pages/PluginDashboardPage";
 import MicroplexPage from "./pages/MicroplexPage";
 import StackPage from "./pages/StackPage";
+import RacPage from "./pages/RacPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/validation" element={<ValidationPage />} />
           <Route path="/plugin" element={<PluginDashboardPage />} />
           <Route path="/stack" element={<StackPage />} />
+          <Route path="/stack/rac" element={<RacPage />} />
           <Route path="/stack/microplex" element={<MicroplexPage />} />
         </Routes>
       </div>
