@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "generated_at": "2025-12-27T14:34:03.777184",
+    "generated_at": "2025-12-27T14:43:41.724152",
     "tax_year": 2024,
-    "data_source": "PolicyEngine Enhanced CPS",
-    "comparison_type": "record_by_record",
-    "note": "Uses PE inputs for both systems to isolate encoding differences"
+    "data_source": "PolicyEngine Enhanced CPS (Common Dataset)",
+    "comparison_type": "aligned_inputs",
+    "description": "Both systems use identical PE inputs, isolating rule implementation differences"
   },
   "summary": {
     "overall_match_rate": 0.8215989662712875,
@@ -19,8 +19,10 @@
       "n_records": 30182,
       "cosilico_weighted_total": 40897923792.25394,
       "policyengine_weighted_total": 50075025408.0,
+      "difference_billions": -9.177101615746063,
       "error_percentiles": {
         "p50": 0.0,
+        "p90": 319.15904414062567,
         "p95": 632.0,
         "p99": 2922.82671875,
         "max": 5922.072000000001
@@ -33,8 +35,10 @@
       "n_records": 30182,
       "cosilico_weighted_total": 2231909443226.9287,
       "policyengine_weighted_total": 2058856955904.0,
+      "difference_billions": 173.0524873229287,
       "error_percentiles": {
         "p50": 0.0,
+        "p90": 191.58378906250027,
         "p95": 1443.733837890617,
         "p99": 14786.827343749972,
         "max": 319009.3125
