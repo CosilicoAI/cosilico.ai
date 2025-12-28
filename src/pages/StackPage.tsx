@@ -65,15 +65,6 @@ const StatMatchIcon = () => (
   </svg>
 );
 
-const AtlasIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
-    <circle cx="12" cy="12" r="10" />
-    <path d="M2 12h20" />
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    <path d="M4.5 7h15M4.5 17h15" />
-  </svg>
-);
-
 const ArchIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
@@ -262,32 +253,6 @@ export default function StackPage() {
                 <span className={styles.featureTag}>CI Integration</span>
               </div>
             </div>
-
-            {/* cosilico-atlas - DEV */}
-            <Link to="/stack/atlas" className={`${styles.componentCard} ${styles.cardDelay7}`}>
-              <div className={styles.componentCardGlow} />
-              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
-              <div className={styles.componentHeader}>
-                <div className={styles.componentIcon}>
-                  <AtlasIcon />
-                </div>
-                <div className={styles.componentMeta}>
-                  <h3 className={styles.componentName}>cosilico-atlas</h3>
-                  <div className={styles.componentTagline}>Policy document API</div>
-                </div>
-              </div>
-              <p className={styles.componentDescription}>
-                Structured API for statutes, regulations, and guidance. Maps
-                connections between policy documents, tracks historical versions,
-                and provides search across jurisdictions.
-              </p>
-              <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>US Code</span>
-                <span className={styles.featureTag}>IRS Guidance</span>
-                <span className={styles.featureTag}>Historical</span>
-                <span className={styles.featureTag}>Full-Text Search</span>
-              </div>
-            </Link>
 
             {/* cosilico-compile - PLANNED */}
             <div className={`${styles.componentCard} ${styles.cardDelay8} ${styles.componentCardComingSoon}`}>
