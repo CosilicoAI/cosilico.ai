@@ -16,6 +16,7 @@ import PyStatmatchPage from "./pages/PyStatmatchPage";
 import StackPage from "./pages/StackPage";
 import RacPage from "./pages/RacPage";
 import AtlasPage from "./pages/AtlasPage";
+import ArchPage from "./pages/ArchPage";
 import ExperimentPage from "./pages/ExperimentPage";
 import ProgressPage from "./pages/ProgressPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
@@ -41,6 +42,7 @@ function App() {
           <Route path="/stack/microplex" element={<MicroplexPage />} />
           <Route path="/stack/py-statmatch" element={<PyStatmatchPage />} />
           <Route path="/stack/atlas" element={<AtlasPage />} />
+          <Route path="/stack/arch" element={<ArchPage />} />
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />
         </Routes>
