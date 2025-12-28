@@ -1461,7 +1461,7 @@ globalStyle('.step-content p', {
    LAW ARCHIVE SECTION
    ============================================ */
 
-globalStyle('.arch-lawarchive', {
+globalStyle('.arch-atlas', {
   position: 'relative',
   zIndex: 1,
   padding: '80px 24px',
@@ -1469,7 +1469,7 @@ globalStyle('.arch-lawarchive', {
   margin: '0 auto',
 });
 
-globalStyle('.lawarchive-diagram', {
+globalStyle('.atlas-diagram', {
   background: archColors.bgCard,
   border: `1px solid ${archColors.border}`,
   borderRadius: vars.radius.md,
@@ -1815,8 +1815,8 @@ globalStyle('.cli-desc', {
 /* Export all styles for use in components */
 
 /* Law Archive Section */
-globalStyle('.arch-lawarchive', { position: 'relative', zIndex: 1, padding: '80px 24px', maxWidth: '1200px', margin: '0 auto' });
-globalStyle('.lawarchive-diagram', { background: archColors.bgCard, border: `1px solid ${archColors.border}`, borderRadius: vars.radius.md, padding: '40px', marginBottom: '40px' });
+globalStyle('.arch-atlas', { position: 'relative', zIndex: 1, padding: '80px 24px', maxWidth: '1200px', margin: '0 auto' });
+globalStyle('.atlas-diagram', { background: archColors.bgCard, border: `1px solid ${archColors.border}`, borderRadius: vars.radius.md, padding: '40px', marginBottom: '40px' });
 globalStyle('.la-flow', { display: 'flex', flexDirection: 'column', gap: '32px' });
 globalStyle('.la-source', { display: 'flex', flexDirection: 'column', gap: '16px' });
 globalStyle('.la-box', { background: archColors.surface, border: `1px solid ${archColors.border}`, borderRadius: vars.radius.md, padding: '24px' });

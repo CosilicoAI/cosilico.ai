@@ -4,7 +4,7 @@ import * as styles from "../styles/playground.css";
 import { STATES } from "../data/states";
 import { calculateTaxesAndBenefits, HouseholdInput, CalculationResult } from "../utils/taxCalculations";
 
-type PlaygroundMode = "calculator" | "lawarchive";
+type PlaygroundMode = "calculator" | "atlas";
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat("en-US", {
@@ -186,8 +186,8 @@ export default function PlaygroundPage() {
               Rules Calculator
             </button>
             <button
-              className={`${styles.modeButton} ${mode === "lawarchive" ? styles.modeButtonActive : ""}`}
-              onClick={() => setMode("lawarchive")}
+              className={`${styles.modeButton} ${mode === "atlas" ? styles.modeButtonActive : ""}`}
+              onClick={() => setMode("atlas")}
             >
               Law Archive
             </button>

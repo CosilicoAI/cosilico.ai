@@ -448,7 +448,7 @@ export default function ArchitecturePage() {
       </section>
 
       {/* Law Archive Section */}
-      <section className="arch-lawarchive">
+      <section className="arch-atlas">
         <div className="section-header">
           <span className="section-label">DATA LAYER</span>
           <h2>Law Archive: Single Source of Truth</h2>
@@ -458,7 +458,7 @@ export default function ArchitecturePage() {
           </p>
         </div>
 
-        <div className="lawarchive-diagram">
+        <div className="atlas-diagram">
           <div className="la-flow">
             <div className="la-source">
               <div className="la-box sources">
@@ -480,7 +480,7 @@ export default function ArchitecturePage() {
               <div className="la-box archive storage-arch">
                 <div className="archive-header">
                   <span className="archive-icon">🗄️</span>
-                  <h4>cosilico-lawarchive</h4>
+                  <h4>cosilico-atlas</h4>
                 </div>
                 <div className="storage-split">
                   <div className="storage-component">
@@ -566,7 +566,7 @@ export default function ArchitecturePage() {
 
           <div className="bitemporal-query">
             <code className="query-example">
-              lawarchive.get_formula("ctc_refundable", vintage="2017-12-22", application_date="2030-01-01")
+              atlas.get_formula("ctc_refundable", vintage="2017-12-22", application_date="2030-01-01")
               <span className="query-result">→ ctc_refundable__tcja_sunset</span>
             </code>
           </div>
