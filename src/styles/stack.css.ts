@@ -13,11 +13,6 @@ const fadeInUp = keyframes({
   '100%': { opacity: 1, transform: 'translateY(0)' },
 });
 
-const shimmer = keyframes({
-  '0%': { backgroundPosition: '-200% 0' },
-  '100%': { backgroundPosition: '200% 0' },
-});
-
 // ============================================
 // BASE STYLES
 // ============================================
