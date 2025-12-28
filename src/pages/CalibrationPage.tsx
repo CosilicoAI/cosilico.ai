@@ -294,7 +294,7 @@ export default function CalibrationPage() {
       <section>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionLabel}>OVERVIEW</span>
-          <h2>Baseline Gap Summary</h2>
+          <h2>Baseline gap summary</h2>
         </div>
 
         <div className={styles.summaryGrid}>
@@ -373,7 +373,7 @@ export default function CalibrationPage() {
         <section className={styles.calibResults}>
           <div className={styles.sectionHeader}>
             <span className={styles.sectionLabel}>RESULTS</span>
-            <h2>Post-Calibration Target Matching</h2>
+            <h2>Post-calibration target matching</h2>
             <p>Gradient descent reweighting results from {calibrationResults.metadata.data_year} CPS to {calibrationResults.metadata.tax_year} IRS targets</p>
           </div>
 
@@ -407,7 +407,7 @@ export default function CalibrationPage() {
           </div>
 
           <div className={styles.targetStatusBar}>
-            <h4>Target Error Distribution</h4>
+            <h4>Target error distribution</h4>
             <div className={styles.statusBarContainer}>
               <div
                 className={styles.statusBarGood}
@@ -433,7 +433,7 @@ export default function CalibrationPage() {
           </div>
 
           <div className={styles.targetTable}>
-            <h4>All Calibration Targets</h4>
+            <h4>All calibration targets</h4>
             <div className={styles.tableWrapper}>
               <table>
                 <thead>
@@ -588,7 +588,7 @@ export default function CalibrationPage() {
           <div className={styles.coverageCategory}>
             <div className={styles.coverageHeader}>
               <div className={styles.coverageIcon}>🏥</div>
-              <h4>Benefit Programs</h4>
+              <h4>Benefit programs</h4>
             </div>
             <div className={styles.coverageStats}>
               <div className={styles.coverageNumbers}>
@@ -672,7 +672,7 @@ export default function CalibrationPage() {
           <div className={styles.coverageCategory}>
             <div className={styles.coverageHeader}>
               <div className={styles.coverageIcon}>📊</div>
-              <h4>Tax Expenditures</h4>
+              <h4>Tax expenditures</h4>
             </div>
             <div className={styles.coverageStats}>
               <div className={styles.coverageNumbers}>
@@ -711,7 +711,7 @@ export default function CalibrationPage() {
         </div>
 
         <div className={styles.comparisonTable}>
-          <h4>Detailed Comparison</h4>
+          <h4>Detailed comparison</h4>
           <div className={styles.tableWrapper}>
             <table className={styles.peComparisonTable}>
               <thead>
@@ -776,7 +776,7 @@ export default function CalibrationPage() {
       <section>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionLabel}>DETAILED</span>
-          <h2>Metric Comparison</h2>
+          <h2>Metric comparison</h2>
         </div>
 
         <div className={styles.categoryTabs}>
@@ -831,7 +831,7 @@ export default function CalibrationPage() {
       <section>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionLabel}>DOCUMENTATION</span>
-          <h2>Known Coverage Gaps</h2>
+          <h2>Known coverage gaps</h2>
           <p>Components missing from CPS that SOI captures via tax returns.</p>
         </div>
 
@@ -856,7 +856,7 @@ export default function CalibrationPage() {
       <section>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionLabel}>APPROACH</span>
-          <h2>Calibration Pipeline</h2>
+          <h2>Calibration pipeline</h2>
           <p>Connecting microdata to administrative targets through reweighting</p>
         </div>
 
@@ -892,7 +892,7 @@ export default function CalibrationPage() {
           <div className={styles.pipelineStage}>
             <div className={styles.stageHeader}>
               <div className={styles.stageIcon}>⚖️</div>
-              <h4>Calibrated Weights</h4>
+              <h4>Calibrated weights</h4>
             </div>
             <div className="stage-details">
               <p className="stage-source">Parquet</p>
@@ -903,7 +903,7 @@ export default function CalibrationPage() {
         </div>
 
         <div className={styles.pipelineMethods}>
-          <h4>Calibration Methods</h4>
+          <h4>Calibration methods</h4>
           <div className={styles.methodsGrid}>
             <div className={styles.methodCard}>
               <div className="method-name">Entropy Minimization</div>
@@ -927,7 +927,7 @@ export default function CalibrationPage() {
           <div className={styles.pipelineStepCurrent}>
             <div className={styles.stepNumber}>1</div>
             <div className="step-content">
-              <h4>Load Microdata</h4>
+              <h4>Load microdata</h4>
               <p>Import survey data with original weights and select variables.</p>
               <span className={styles.stepStatusActive}>CURRENT</span>
             </div>
@@ -936,7 +936,7 @@ export default function CalibrationPage() {
           <div className={styles.pipelineStep}>
             <div className={styles.stepNumber}>2</div>
             <div className="step-content">
-              <h4>Query Targets</h4>
+              <h4>Query targets</h4>
               <p>Retrieve administrative totals from targets database.</p>
               <span className={styles.stepStatus}>NEXT</span>
             </div>
@@ -945,7 +945,7 @@ export default function CalibrationPage() {
           <div className={styles.pipelineStep}>
             <div className={styles.stepNumber}>3</div>
             <div className="step-content">
-              <h4>Build Constraints</h4>
+              <h4>Build constraints</h4>
               <p>Map targets to microdata aggregations.</p>
               <span className={styles.stepStatus}>PENDING</span>
             </div>
@@ -975,7 +975,7 @@ export default function CalibrationPage() {
       <section>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionLabel}>DATA SOURCES</span>
-          <h2>Administrative Targets</h2>
+          <h2>Administrative targets</h2>
           <p>
             {targetsSummary ? (
               <>
@@ -989,7 +989,7 @@ export default function CalibrationPage() {
         </div>
 
         <div className={styles.sourcesOverview}>
-          <h4>Available Data Sources</h4>
+          <h4>Available data sources</h4>
           <div className={styles.sourcesList}>
             <div className={styles.sourceDetail.us}>
               <div className={styles.sourceDetailHeader}>
@@ -1050,7 +1050,7 @@ export default function CalibrationPage() {
             <div className={styles.sourceDetail.uk}>
               <div className={styles.sourceDetailHeader}>
                 <span className={styles.sourceFlag}>🇬🇧</span>
-                <h5>OBR Economic Forecasts</h5>
+                <h5>OBR economic forecasts</h5>
                 <span className={styles.sourceJurisdiction}>United Kingdom</span>
               </div>
               <div className={styles.sourceDetailContent}>
@@ -1070,7 +1070,7 @@ export default function CalibrationPage() {
             <div className={styles.sourceDetail.uk}>
               <div className={styles.sourceDetailHeader}>
                 <span className={styles.sourceFlag}>🇬🇧</span>
-                <h5>ONS Family Resources Survey</h5>
+                <h5>ONS family resources survey</h5>
                 <span className={styles.sourceJurisdiction}>United Kingdom</span>
               </div>
               <div className={styles.sourceDetailContent}>

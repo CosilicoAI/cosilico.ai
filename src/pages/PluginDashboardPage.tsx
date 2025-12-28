@@ -170,7 +170,7 @@ export default function PluginDashboardPage() {
 
         {/* Variables Grid */}
         <section className={styles.variablesSection}>
-          <h2 className={styles.sectionTitle}>Encoded Variables</h2>
+          <h2 className={styles.sectionTitle}>Encoded variables</h2>
           <div className={styles.variablesTable}>
             <div className={styles.tableHeader}>
               <span>Variable</span>
@@ -235,7 +235,7 @@ export default function PluginDashboardPage() {
 
         {/* Encoding Timeline */}
         <section className={styles.timelineSection}>
-          <h2 className={styles.sectionTitle}>Encoding Timeline</h2>
+          <h2 className={styles.sectionTitle}>Encoding timeline</h2>
           <div className={styles.timelineTrack}>
             {ENCODING_DATA.variables.map((v, i) => (
               <div
@@ -254,7 +254,7 @@ export default function PluginDashboardPage() {
 
         {/* Technical Details */}
         <section className={styles.techSection}>
-          <h2 className={styles.sectionTitle}>Validation Stack</h2>
+          <h2 className={styles.sectionTitle}>Validation stack</h2>
           <div className={styles.techGrid}>
             <div className={styles.techCard}>
               <div className={styles.techIcon}>🔬</div>

@@ -108,7 +108,7 @@ export default function StructurePage() {
       <section className={styles.audienceContent}>
         {activeAudience === "investors" && (
           <div className={styles.contentPanel}>
-            <h2>For Investors</h2>
+            <h2>For investors</h2>
 
             <div className={styles.contentSection}>
               <h3>Why the structure matters</h3>
@@ -159,7 +159,7 @@ export default function StructurePage() {
 
         {activeAudience === "philanthropic" && (
           <div className={styles.contentPanel}>
-            <h2>For Philanthropic Funders</h2>
+            <h2>For philanthropic funders</h2>
 
             <div className={styles.contentSection}>
               <h3>Where your grant goes</h3>
@@ -207,7 +207,7 @@ export default function StructurePage() {
             </div>
 
             <div className={styles.contentSection}>
-              <h3>Example: Benefit take-up analysis</h3>
+              <h3>Example: benefit take-up analysis</h3>
               <div className={styles.exampleFlow}>
                 <div className={styles.flowStep}>
                   <span className={styles.stepNum}>1</span>
@@ -232,7 +232,7 @@ export default function StructurePage() {
 
         {activeAudience === "partners" && (
           <div className={styles.contentPanel}>
-            <h2>For Partners & Customers</h2>
+            <h2>For partners & customers</h2>
 
             <div className={styles.contentSection}>
               <h3>Which organization should I work with?</h3>
@@ -303,7 +303,7 @@ export default function StructurePage() {
 
       {/* FAQ */}
       <section className={styles.structureFaq}>
-        <h2>Frequently Asked Questions</h2>
+        <h2>Frequently asked questions</h2>
 
         <div className={styles.faqGrid}>
           <div className={styles.faqItem}>

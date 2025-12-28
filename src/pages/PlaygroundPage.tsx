@@ -203,7 +203,7 @@ export default function PlaygroundPage() {
         {/* Input Panel */}
         <aside className={styles.inputPanel}>
           <div className={styles.panelHeader}>
-            <h2>Household Profile</h2>
+            <h2>Household profile</h2>
             <span className={styles.panelHint}>Adjust inputs to see real-time calculations</span>
           </div>
 
@@ -518,7 +518,7 @@ export default function PlaygroundPage() {
             {/* Law Archive - Search Panel */}
             <aside className={`${styles.inputPanel} ${styles.lawArchivePanel}`}>
               <div className={styles.panelHeader}>
-                <h2>Search Statutes</h2>
+                <h2>Search statutes</h2>
                 <span className={styles.panelHint}>Query the US Code by citation or keyword</span>
               </div>
 

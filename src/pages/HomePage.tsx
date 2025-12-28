@@ -78,7 +78,7 @@ export default function HomePage() {
 
       {/* What We Offer */}
       <section className={styles.products}>
-        <h2 className={styles.productsH2}>Five APIs. One simulation.</h2>
+        <h2 className={styles.productsH2}>Five APIs. one simulation.</h2>
         <div className={styles.productGrid}>
           <div className={styles.productCard}>
             <div className={styles.productIcon}>

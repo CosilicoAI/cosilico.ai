@@ -112,7 +112,7 @@ const NormalizingFlowsExplainer: React.FC = () => {
   return (
     <section className={styles.flowsSection}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Synthesis Approaches</h2>
+        <h2 className={styles.sectionTitle}>Synthesis approaches</h2>
         <p className={styles.sectionSubtitle}>
           Two architectures for generating multivariate targets
         </p>
@@ -123,7 +123,7 @@ const NormalizingFlowsExplainer: React.FC = () => {
         <div className={styles.flowsExplanation}>
           <div className={styles.flowsExplanationCard}>
             <div className={styles.flowsExplanationNumber}>A</div>
-            <h4 className={styles.flowsExplanationTitle}>Normalizing Flows (MAF)</h4>
+            <h4 className={styles.flowsExplanationTitle}>Normalizing flows (MAF)</h4>
             <p className={styles.flowsExplanationText}>
               Learn an invertible transformation from simple base distribution to target.
               One model generates all variables jointly. Provides exact log-likelihood.
@@ -269,7 +269,7 @@ const NormalizingFlowsExplainer: React.FC = () => {
         {/* Analysis */}
         <div className={styles.flowsKeyInsight}>
           <div className={styles.flowsKeyInsightGlow} />
-          <h4 className={styles.flowsKeyInsightTitle}>Consistent Winner on CPS</h4>
+          <h4 className={styles.flowsKeyInsightTitle}>Consistent winner on CPS</h4>
           <p className={styles.flowsKeyInsightText}>
             On highly zero-inflated CPS-like data, <strong>QRF+ZI wins on both marginal and multivariate metrics</strong>.
             Explicit two-stage zero modeling (classify then regress) outperforms both sequential QRF and normalizing flows
@@ -322,7 +322,7 @@ export default function MicroplexPage() {
         {/* Workflow */}
         <section className={styles.workflowSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>The Pipeline</h2>
+            <h2 className={styles.sectionTitle}>The pipeline</h2>
             <p className={styles.sectionSubtitle}>
               From multiple data sources to calibrated local microdata
             </p>
@@ -337,7 +337,7 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 01</div>
-                <h3 className={styles.stageTitle}>Data Sources</h3>
+                <h3 className={styles.stageTitle}>Data sources</h3>
                 <p className={styles.stageDescription}>
                   Ingest from CPS (income, tax), ACS (geography, housing),
                   SIPP (dynamics), and administrative data for validation targets.
@@ -371,7 +371,7 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 03</div>
-                <h3 className={styles.stageTitle}>Synthesize Billions</h3>
+                <h3 className={styles.stageTitle}>Synthesize billions</h3>
                 <p className={styles.stageDescription}>
                   Generate billions of diverse synthetic households.
                   More records = more degrees of freedom for reweighting.
@@ -388,7 +388,7 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 04</div>
-                <h3 className={styles.stageTitle}>Sparse Reweighting</h3>
+                <h3 className={styles.stageTitle}>Sparse reweighting</h3>
                 <p className={styles.stageDescription}>
                   L0/L1 optimization to find minimal record subset matching any targets.
                   County-level, tract-level, or even block-level calibration.
@@ -405,7 +405,7 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>OUTPUT</div>
-                <h3 className={styles.stageTitle}>Calibrated Microdata</h3>
+                <h3 className={styles.stageTitle}>Calibrated microdata</h3>
                 <p className={styles.stageDescription}>
                   Rich population with all variables from all sources,
                   matching official statistics at any geographic granularity.
@@ -429,7 +429,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ConditionalIcon />
-              <h3 className={styles.featureTitle}>Conditional Synthesis</h3>
+              <h3 className={styles.featureTitle}>Conditional synthesis</h3>
               <p className={styles.featureDescription}>
                 Generate target variables conditioned on demographics using
                 normalizing flows. Learn P(income, wealth | age, education, region).
@@ -439,7 +439,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ZeroIcon />
-              <h3 className={styles.featureTitle}>Zero-Inflated Variables</h3>
+              <h3 className={styles.featureTitle}>Zero-inflated variables</h3>
               <p className={styles.featureDescription}>
                 Built-in handling for variables with many zeros (capital gains,
                 benefits, medical expenses). Two-stage: P(positive) then P(value|positive).
@@ -449,7 +449,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <SparseIcon />
-              <h3 className={styles.featureTitle}>Sparse Reweighting</h3>
+              <h3 className={styles.featureTitle}>Sparse reweighting</h3>
               <p className={styles.featureDescription}>
                 L0/L1 optimization to find minimal record subsets matching any
                 target margins. County-level calibration from national surveys.
@@ -459,7 +459,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <FusionIcon />
-              <h3 className={styles.featureTitle}>Multi-Source Fusion</h3>
+              <h3 className={styles.featureTitle}>Multi-source fusion</h3>
               <p className={styles.featureDescription}>
                 Combine CPS (income), ACS (geography), SIPP (dynamics), and
                 admin data (validation) into one rich synthetic population.
@@ -469,7 +469,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ScaleIcon />
-              <h3 className={styles.featureTitle}>Scalable Generation</h3>
+              <h3 className={styles.featureTitle}>Scalable generation</h3>
               <p className={styles.featureDescription}>
                 Synthesize billions of households. More synthetic diversity =
                 more flexibility for sparse reweighting to any geography.
@@ -479,7 +479,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <LikelihoodIcon />
-              <h3 className={styles.featureTitle}>Exact Likelihood</h3>
+              <h3 className={styles.featureTitle}>Exact likelihood</h3>
               <p className={styles.featureDescription}>
                 Normalizing flows provide tractable log-likelihood for stable
                 training. No mode collapse or training instability.
@@ -560,7 +560,7 @@ export default function MicroplexPage() {
         <section className={styles.installSection}>
           <div className={styles.installBox}>
             <div className={styles.installBoxGlow} />
-            <h2 className={styles.installTitle}>Get Started</h2>
+            <h2 className={styles.installTitle}>Get started</h2>
             <code className={styles.installCode}>pip install microplex</code>
             <div className={styles.installLinks}>
               <a

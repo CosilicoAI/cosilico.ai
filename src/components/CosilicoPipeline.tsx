@@ -316,14 +316,14 @@ const CosilicoPipeline: React.FC = () => {
           {activeTab === 'params' && (
             <div className="params-panel">
               <div className={styles.panelHeader}>
-                <h3>Tax Year 2025</h3>
+                <h3>Tax year 2025</h3>
                 <div className={styles.engineBadge} style={{ marginTop: '12px' }}>
                   Parameters from <code>cosilico-compile</code>
                 </div>
               </div>
 
               <div className={styles.paramsSources}>
-                <h4>Authoritative Sources</h4>
+                <h4>Authoritative sources</h4>
                 <ul>
                   <li>Statute: 26 USC 32(b)(1) - fixed percentages</li>
                   <li>Guidance: Rev. Proc. 2024-40 - TY 2025 inflation adjustments</li>
@@ -332,7 +332,7 @@ const CosilicoPipeline: React.FC = () => {
 
               <div className={styles.paramsGrid}>
                 <div className={styles.paramTable}>
-                  <h4>Credit Percentages (32(b)(1))</h4>
+                  <h4>Credit percentages (32(b)(1))</h4>
                   <table>
                     <thead>
                       <tr>
@@ -354,7 +354,7 @@ const CosilicoPipeline: React.FC = () => {
                 </div>
 
                 <div className={styles.paramTable}>
-                  <h4>Maximum Credits (Rev. Proc. 2024-40)</h4>
+                  <h4>Maximum credits (Rev. Proc. 2024-40)</h4>
                   <table>
                     <thead>
                       <tr>
@@ -452,7 +452,7 @@ const CosilicoPipeline: React.FC = () => {
                   </div>
 
                   <div className={styles.citationChain}>
-                    <h5>Citation Chain</h5>
+                    <h5>Citation chain</h5>
                     <ol>
                       <li>
                         <strong>Source:</strong>{' '}
