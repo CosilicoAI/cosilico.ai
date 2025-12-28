@@ -1,7 +1,7 @@
 {
   "isSampleData": false,
-  "timestamp": "2025-12-27T20:55:11.223187",
-  "commit": "b6bb92a",
+  "timestamp": "2025-12-27T21:16:39.365135",
+  "commit": "fa8ed14",
   "dataSource": "PolicyEngine Enhanced CPS 2024",
   "householdsTotal": 30182,
   "sections": [
@@ -9,6 +9,7 @@
       "section": "26/32",
       "title": "Earned Income Tax Credit",
       "variable": "eitc",
+      "implemented": true,
       "households": 30182,
       "testCases": [],
       "summary": {
@@ -30,6 +31,7 @@
       "section": "26/1",
       "title": "Income Tax (Before Credits)",
       "variable": "income_tax_before_credits",
+      "implemented": true,
       "households": 30182,
       "testCases": [],
       "summary": {
@@ -46,11 +48,214 @@
         }
       },
       "notes": "Cosilico total: $2231.9B, PE total: $2058.9B, Diff: $+173.1B"
+    },
+    {
+      "section": "26/24",
+      "title": "Child Tax Credit",
+      "variable": "ctc",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 23180,
+        "matchRate": 0.7680074216420383,
+        "meanAbsoluteError": 739.7157246040687
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 23180,
+          "total": 30182,
+          "rate": 0.7680074216420383
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/63",
+      "title": "Standard Deduction",
+      "variable": "standard_deduction",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 0,
+        "matchRate": 0.0,
+        "meanAbsoluteError": 21051.252402093964
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 0,
+          "total": 30182,
+          "rate": 0.0
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/62",
+      "title": "Adjusted Gross Income",
+      "variable": "adjusted_gross_income",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 3247,
+        "matchRate": 0.107580677224836,
+        "meanAbsoluteError": 88145.02223460362
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 3247,
+          "total": 30182,
+          "rate": 0.107580677224836
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/63",
+      "title": "Taxable Income",
+      "variable": "taxable_income",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 9051,
+        "matchRate": 0.2998807236100987,
+        "meanAbsoluteError": 68051.79121868995
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 9051,
+          "total": 30182,
+          "rate": 0.2998807236100987
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/21",
+      "title": "Child & Dependent Care Credit",
+      "variable": "cdcc",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 29394,
+        "matchRate": 0.973891723543834,
+        "meanAbsoluteError": 18.678824209375414
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 29394,
+          "total": 30182,
+          "rate": 0.973891723543834
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/164",
+      "title": "SALT Deduction",
+      "variable": "salt_deduction",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 3825,
+        "matchRate": 0.12673116427009476,
+        "meanAbsoluteError": 3564.520520301091
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 3825,
+          "total": 30182,
+          "rate": 0.12673116427009476
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/36B",
+      "title": "Premium Tax Credit",
+      "variable": "premium_tax_credit",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 27235,
+        "matchRate": 0.9023590219336028,
+        "meanAbsoluteError": 697.7982671853443
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 27235,
+          "total": 30182,
+          "rate": 0.9023590219336028
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/25B",
+      "title": "Saver's Credit",
+      "variable": "savers_credit",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 29129,
+        "matchRate": 0.9651116559538798,
+        "meanAbsoluteError": 7.0810083606419925
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 29129,
+          "total": 30182,
+          "rate": 0.9651116559538798
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
+    },
+    {
+      "section": "26/1411",
+      "title": "Net Investment Income Tax",
+      "variable": "net_investment_income_tax",
+      "implemented": false,
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 28337,
+        "matchRate": 0.9388708501756013,
+        "meanAbsoluteError": 296.9098084271146
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 28337,
+          "total": 30182,
+          "rate": 0.9388708501756013
+        }
+      },
+      "notes": "Not yet implemented - returns 0"
     }
   ],
+  "coverage": {
+    "implemented": 2,
+    "total": 11,
+    "percentage": 0.18181818181818182
+  },
   "overall": {
     "totalHouseholds": 30182,
-    "totalTests": 60364,
+    "totalTests": 332002,
     "totalMatches": 49496,
     "matchRate": 0.8199589159101451,
     "meanAbsoluteError": 577.636645274018
