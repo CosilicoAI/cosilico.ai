@@ -104,6 +104,183 @@ const LikelihoodIcon = () => (
   </svg>
 );
 
+// ============================================
+// NORMALIZING FLOWS EXPLAINER
+// ============================================
+
+const NormalizingFlowsExplainer: React.FC = () => {
+  return (
+    <section className={styles.flowsSection}>
+      <div className={styles.sectionHeader}>
+        <h2 className={styles.sectionTitle}>Synthesis Approaches</h2>
+        <p className={styles.sectionSubtitle}>
+          Two architectures for generating multivariate targets
+        </p>
+      </div>
+
+      <div className={styles.flowsContainer}>
+        {/* Architecture comparison */}
+        <div className={styles.flowsExplanation}>
+          <div className={styles.flowsExplanationCard}>
+            <div className={styles.flowsExplanationNumber}>A</div>
+            <h4 className={styles.flowsExplanationTitle}>Normalizing Flows (MAF)</h4>
+            <p className={styles.flowsExplanationText}>
+              Learn an invertible transformation from simple base distribution to target.
+              One model generates all variables jointly. Provides exact log-likelihood.
+            </p>
+            <code className={styles.flowsMath}>(y₁,...,yₖ) = f(z; x) where z ~ N(0,I)</code>
+          </div>
+
+          <div className={styles.flowsExplanationCard}>
+            <div className={styles.flowsExplanationNumber}>B</div>
+            <h4 className={styles.flowsExplanationTitle}>Sequential QRF</h4>
+            <p className={styles.flowsExplanationText}>
+              Train separate models for each variable, conditioning on previously generated values.
+              Chain rule factorization. Each model trained independently.
+            </p>
+            <code className={styles.flowsMath}>y₁ ~ P(y₁|x), y₂ ~ P(y₂|x,y₁), ...</code>
+          </div>
+
+          <div className={styles.flowsExplanationCard}>
+            <div className={styles.flowsExplanationNumber}>B+</div>
+            <h4 className={styles.flowsExplanationTitle}>QRF + Zero-Inflation</h4>
+            <p className={styles.flowsExplanationText}>
+              Two-stage: first classify zero vs positive, then predict value given positive.
+              Explicit modeling of the zero mass point common in economic data.
+            </p>
+            <code className={styles.flowsMath}>P(y=0|x), then P(y|y&gt;0, x)</code>
+          </div>
+        </div>
+
+        {/* Two benchmarks side by side */}
+        <div className={styles.flowsVisualization}>
+          <div className={styles.flowsVisualizationGlow} />
+
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "32px", position: "relative", zIndex: 1, width: "100%" }}>
+
+            {/* Marginal KS Benchmark */}
+            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+              <div style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", color: "#707088", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                CPS-like: Marginal KS Distance (↓ lower is better)
+              </div>
+
+              <div style={{ width: "100%", maxWidth: "500px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div style={{ width: "120px", fontSize: "0.8rem", color: "#00ff88", textAlign: "right" }}>QRF + Zero-Infl.</div>
+                  <div style={{ flex: 1, height: "24px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                    <div style={{ width: "15%", height: "100%", background: "linear-gradient(90deg, #00ff88, #40ffaa)", borderRadius: "4px" }} />
+                    <span style={{ position: "absolute", left: "calc(15% + 8px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", color: "#00ff88" }}>0.044</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div style={{ width: "120px", fontSize: "0.8rem", color: "#00d4ff", textAlign: "right" }}>microplex</div>
+                  <div style={{ flex: 1, height: "24px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                    <div style={{ width: "47%", height: "100%", background: "linear-gradient(90deg, #00d4ff, #40e8ff)", borderRadius: "4px" }} />
+                    <span style={{ position: "absolute", left: "calc(47% + 8px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", color: "#00d4ff" }}>0.140</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div style={{ width: "120px", fontSize: "0.8rem", color: "#707088", textAlign: "right" }}>Sequential QRF</div>
+                  <div style={{ flex: 1, height: "24px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                    <div style={{ width: "96%", height: "100%", background: "linear-gradient(90deg, #505068, #707088)", borderRadius: "4px" }} />
+                    <span style={{ position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", color: "#707088" }}>0.288</span>
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#505068", textAlign: "center", maxWidth: "480px" }}>
+                Per-variable KS statistic averaged across 8 targets. Measures marginal distribution fidelity.
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div style={{ width: "80%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent)" }} />
+
+            {/* Multivariate Benchmark - on CPS data */}
+            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+              <div style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", color: "#707088", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                CPS-like: Joint Holdout Similarity (↓ lower is better)
+              </div>
+
+              <div style={{ width: "100%", maxWidth: "500px", display: "flex", gap: "24px" }}>
+                {/* MMD */}
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <div style={{ fontSize: "0.75rem", color: "#707088", textAlign: "center" }}>MMD</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>QRF+ZI</div>
+                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                        <div style={{ width: "28%", height: "100%", background: "linear-gradient(90deg, #00ff88, #40ffaa)", borderRadius: "4px" }} />
+                        <span style={{ position: "absolute", left: "calc(28% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00ff88" }}>0.130</span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>microplex</div>
+                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                        <div style={{ width: "32%", height: "100%", background: "linear-gradient(90deg, #00d4ff, #40e8ff)", borderRadius: "4px" }} />
+                        <span style={{ position: "absolute", left: "calc(32% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00d4ff" }}>0.152</span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#707088", textAlign: "right" }}>Seq. QRF</div>
+                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                        <div style={{ width: "100%", height: "100%", background: "linear-gradient(90deg, #505068, #707088)", borderRadius: "4px" }} />
+                        <span style={{ position: "absolute", right: "6px", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#707088" }}>0.471</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Energy Distance */}
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <div style={{ fontSize: "0.75rem", color: "#707088", textAlign: "center" }}>Energy Dist.</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>QRF+ZI</div>
+                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                        <div style={{ width: "8%", height: "100%", background: "linear-gradient(90deg, #00ff88, #40ffaa)", borderRadius: "4px" }} />
+                        <span style={{ position: "absolute", left: "calc(8% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00ff88" }}>0.072</span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>microplex</div>
+                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                        <div style={{ width: "21%", height: "100%", background: "linear-gradient(90deg, #00d4ff, #40e8ff)", borderRadius: "4px" }} />
+                        <span style={{ position: "absolute", left: "calc(21% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00d4ff" }}>0.190</span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#707088", textAlign: "right" }}>Seq. QRF</div>
+                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                        <div style={{ width: "100%", height: "100%", background: "linear-gradient(90deg, #505068, #707088)", borderRadius: "4px" }} />
+                        <span style={{ position: "absolute", right: "6px", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#707088" }}>0.906</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#505068", textAlign: "center", maxWidth: "480px" }}>
+                MMD (kernel-based) and Energy Distance measure similarity to holdout records in full joint space.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Analysis */}
+        <div className={styles.flowsKeyInsight}>
+          <div className={styles.flowsKeyInsightGlow} />
+          <h4 className={styles.flowsKeyInsightTitle}>Consistent Winner on CPS</h4>
+          <p className={styles.flowsKeyInsightText}>
+            On highly zero-inflated CPS-like data, <strong>QRF+ZI wins on both marginal and multivariate metrics</strong>.
+            Explicit two-stage zero modeling (classify then regress) outperforms both sequential QRF and normalizing flows
+            for generating realistic joint records. microplex is second-best on joint metrics, with best coverage of the data manifold.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export default function MicroplexPage() {
   return (
     <PageLayout>
@@ -138,6 +315,9 @@ export default function MicroplexPage() {
             </div>
           </div>
         </section>
+
+        {/* Normalizing Flows Explainer */}
+        <NormalizingFlowsExplainer />
 
         {/* Workflow */}
         <section className={styles.workflowSection}>

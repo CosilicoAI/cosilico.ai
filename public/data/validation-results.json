@@ -1,7 +1,7 @@
 {
   "isSampleData": false,
-  "timestamp": "2025-12-27T21:16:39.365135",
-  "commit": "fa8ed14",
+  "timestamp": "2025-12-27T21:21:41.862715",
+  "commit": "c6d47c4",
   "dataSource": "PolicyEngine Enhanced CPS 2024",
   "householdsTotal": 30182,
   "sections": [
@@ -75,23 +75,23 @@
       "section": "26/63",
       "title": "Standard Deduction",
       "variable": "standard_deduction",
-      "implemented": false,
+      "implemented": true,
       "households": 30182,
       "testCases": [],
       "summary": {
         "total": 30182,
-        "matches": 0,
-        "matchRate": 0.0,
-        "meanAbsoluteError": 21051.252402093964
+        "matches": 16425,
+        "matchRate": 0.5441985289245246,
+        "meanAbsoluteError": 5923.19263136969
       },
       "validatorBreakdown": {
         "policyengine": {
-          "matches": 0,
+          "matches": 16425,
           "total": 30182,
-          "rate": 0.0
+          "rate": 0.5441985289245246
         }
       },
-      "notes": "Not yet implemented - returns 0"
+      "notes": "Cosilico total: $2878.0B, PE total: $3992.5B, Diff: $-1114.5B"
     },
     {
       "section": "26/62",
@@ -249,16 +249,16 @@
     }
   ],
   "coverage": {
-    "implemented": 2,
+    "implemented": 3,
     "total": 11,
-    "percentage": 0.18181818181818182
+    "percentage": 0.2727272727272727
   },
   "overall": {
     "totalHouseholds": 30182,
     "totalTests": 332002,
-    "totalMatches": 49496,
-    "matchRate": 0.8199589159101451,
-    "meanAbsoluteError": 577.636645274018
+    "totalMatches": 65921,
+    "matchRate": 0.7280387869149383,
+    "meanAbsoluteError": 2359.488640639242
   },
   "validators": [
     {

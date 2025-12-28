@@ -558,3 +558,295 @@ export const installLinkIcon = style({
   width: '18px',
   height: '18px',
 });
+
+// ============================================
+// NORMALIZING FLOWS EXPLAINER
+// ============================================
+
+export const flowsSection = style({
+  background: `linear-gradient(180deg, rgba(0, 212, 255, 0.02) 0%, transparent 50%, rgba(0, 212, 255, 0.02) 100%)`,
+  paddingTop: `${vars.space['4xl']} !important`,
+  paddingBottom: `${vars.space['4xl']} !important`,
+});
+
+export const flowsContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space['3xl'],
+});
+
+export const flowsVisualization = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: vars.space['2xl'],
+  padding: vars.space['2xl'],
+  background: 'rgba(0, 0, 0, 0.4)',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  borderRadius: vars.radius.xl,
+  position: 'relative',
+  overflow: 'hidden',
+  '@media': {
+    '(max-width: 900px)': {
+      flexDirection: 'column',
+      gap: vars.space.xl,
+    },
+  },
+});
+
+export const flowsVisualizationGlow = style({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '80%',
+  height: '80%',
+  background: `radial-gradient(ellipse, ${vars.color.accentGlow} 0%, transparent 70%)`,
+  filter: 'blur(40px)',
+  pointerEvents: 'none',
+  opacity: 0.5,
+});
+
+export const distributionPanel = style({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: vars.space.md,
+  position: 'relative',
+  zIndex: 1,
+  '@media': {
+    '(max-width: 900px)': {
+      width: '100%',
+    },
+  },
+});
+
+export const distributionLabel = style({
+  fontSize: '0.85rem',
+  fontFamily: vars.font.mono,
+  color: vars.color.textMuted,
+  letterSpacing: '0.05em',
+  textTransform: 'uppercase',
+});
+
+export const distributionCanvas = style({
+  width: '280px',
+  height: '200px',
+  background: 'rgba(0, 0, 0, 0.5)',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  borderRadius: vars.radius.lg,
+  display: 'flex',
+  alignItems: 'flex-end',
+  justifyContent: 'center',
+  padding: vars.space.md,
+  gap: '2px',
+  position: 'relative',
+  overflow: 'hidden',
+  '@media': {
+    '(max-width: 900px)': {
+      width: '100%',
+      maxWidth: '320px',
+    },
+  },
+});
+
+export const distributionBar = style({
+  width: '8px',
+  background: `linear-gradient(to top, ${vars.color.accent}, ${vars.color.accentBright})`,
+  borderRadius: '2px 2px 0 0',
+  transition: `height 0.6s ${vars.ease.out}`,
+  opacity: 0.9,
+});
+
+export const transformArrow = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: vars.space.sm,
+  padding: `0 ${vars.space.lg}`,
+  position: 'relative',
+  zIndex: 1,
+  '@media': {
+    '(max-width: 900px)': {
+      transform: 'rotate(90deg)',
+      padding: `${vars.space.md} 0`,
+    },
+  },
+});
+
+export const transformArrowSvg = style({
+  width: '60px',
+  height: '24px',
+  color: vars.color.accent,
+});
+
+export const transformLabel = style({
+  fontSize: '0.75rem',
+  fontFamily: vars.font.mono,
+  color: vars.color.accent,
+  whiteSpace: 'nowrap',
+  '@media': {
+    '(max-width: 900px)': {
+      transform: 'rotate(-90deg)',
+    },
+  },
+});
+
+export const flowsControls = style({
+  display: 'flex',
+  justifyContent: 'center',
+  gap: vars.space.md,
+  flexWrap: 'wrap',
+});
+
+export const flowsButton = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: vars.space.sm,
+  padding: `${vars.space.sm} ${vars.space.lg}`,
+  background: 'rgba(0, 212, 255, 0.1)',
+  border: '1px solid rgba(0, 212, 255, 0.3)',
+  borderRadius: vars.radius.md,
+  color: vars.color.accent,
+  fontFamily: vars.font.display,
+  fontSize: '0.9rem',
+  cursor: 'pointer',
+  transition: `all ${vars.duration.fast} ${vars.ease.out}`,
+  ':hover': {
+    background: 'rgba(0, 212, 255, 0.2)',
+    borderColor: vars.color.accent,
+    transform: 'translateY(-2px)',
+  },
+  ':active': {
+    transform: 'translateY(0)',
+  },
+});
+
+export const flowsButtonActive = style({
+  background: `${vars.color.accent} !important`,
+  color: `${vars.color.bg} !important`,
+  fontWeight: 600,
+});
+
+export const flowsExplanation = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: vars.space.lg,
+  '@media': {
+    '(max-width: 900px)': {
+      gridTemplateColumns: '1fr',
+    },
+  },
+});
+
+export const flowsExplanationCard = style({
+  padding: vars.space.lg,
+  background: 'rgba(0, 0, 0, 0.3)',
+  border: '1px solid rgba(255, 255, 255, 0.06)',
+  borderRadius: vars.radius.lg,
+  transition: `all ${vars.duration.normal} ${vars.ease.out}`,
+  ':hover': {
+    borderColor: 'rgba(0, 212, 255, 0.3)',
+    background: 'rgba(0, 212, 255, 0.05)',
+  },
+});
+
+export const flowsExplanationNumber = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '28px',
+  height: '28px',
+  background: vars.color.accentGlow,
+  border: `1px solid rgba(0, 212, 255, 0.3)`,
+  borderRadius: '50%',
+  fontSize: '0.85rem',
+  fontFamily: vars.font.mono,
+  color: vars.color.accent,
+  marginBottom: vars.space.sm,
+});
+
+export const flowsExplanationTitle = style({
+  fontSize: '1.1rem',
+  fontWeight: 600,
+  fontFamily: vars.font.display,
+  color: vars.color.text,
+  marginBottom: vars.space.xs,
+});
+
+export const flowsExplanationText = style({
+  fontSize: '0.95rem',
+  color: vars.color.textSecondary,
+  lineHeight: 1.6,
+});
+
+export const flowsMath = style({
+  display: 'block',
+  marginTop: vars.space.md,
+  padding: vars.space.sm,
+  background: 'rgba(0, 0, 0, 0.4)',
+  borderRadius: vars.radius.sm,
+  fontFamily: vars.font.mono,
+  fontSize: '0.85rem',
+  color: vars.color.accent,
+  textAlign: 'center',
+});
+
+export const flowsKeyInsight = style({
+  padding: vars.space.xl,
+  background: `linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 212, 255, 0.02) 100%)`,
+  border: '1px solid rgba(0, 212, 255, 0.2)',
+  borderRadius: vars.radius.lg,
+  textAlign: 'center',
+  position: 'relative',
+  overflow: 'hidden',
+});
+
+export const flowsKeyInsightGlow = style({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  height: '1px',
+  background: `linear-gradient(90deg, transparent, ${vars.color.accent}, transparent)`,
+});
+
+export const flowsKeyInsightTitle = style({
+  fontSize: '1.25rem',
+  fontWeight: 600,
+  fontFamily: vars.font.display,
+  color: vars.color.accent,
+  marginBottom: vars.space.sm,
+});
+
+export const flowsKeyInsightText = style({
+  fontSize: '1.1rem',
+  color: vars.color.textSecondary,
+  maxWidth: '700px',
+  margin: '0 auto',
+  lineHeight: 1.7,
+});
+
+// Step indicator
+export const flowsStepIndicator = style({
+  display: 'flex',
+  justifyContent: 'center',
+  gap: vars.space.sm,
+  marginBottom: vars.space.lg,
+});
+
+export const flowsStepDot = style({
+  width: '10px',
+  height: '10px',
+  borderRadius: '50%',
+  background: 'rgba(255, 255, 255, 0.2)',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  transition: `all ${vars.duration.fast} ${vars.ease.out}`,
+});
+
+export const flowsStepDotActive = style({
+  background: vars.color.accent,
+  borderColor: vars.color.accent,
+  boxShadow: `0 0 10px ${vars.color.accentGlow}`,
+});
