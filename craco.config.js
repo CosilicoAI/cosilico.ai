@@ -13,4 +13,12 @@ module.exports = {
       return webpackConfig;
     },
   },
+  jest: {
+    configure: {
+      moduleNameMapper: {
+        '^@vanilla-extract/css$': '<rootDir>/__mocks__/@vanilla-extract/css.js',
+        '\\.css\\.ts$': '<rootDir>/src/__mocks__/vanillaExtractMock.js',
+      },
+    },
+  },
 };
