@@ -35,7 +35,7 @@ test.describe('Cosilico homepage', () => {
     await button.click();
 
     // Results should appear
-    await expect(page.getByText('10-year cost')).toBeVisible();
-    await expect(page.getByText('households affected')).toBeVisible();
+    await expect(page.getByText('10-year cost', { exact: true })).toBeVisible();
+    await expect(page.getByText('households affected', { exact: true })).toBeVisible();
   });
 });
