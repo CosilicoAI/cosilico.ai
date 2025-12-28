@@ -5,7 +5,7 @@ import * as styles from "../../styles/thesis.css";
 export function RisksSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>10. Risks & Mitigations</h2>
+      <h2>10. Risks & mitigations</h2>
 
       <div className={styles.risksGrid}>
         <div className={styles.riskCard}>

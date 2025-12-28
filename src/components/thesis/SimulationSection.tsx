@@ -23,7 +23,7 @@ export function SimulationSection() {
   return (
     <>
       <div className={styles.thesisContent}>
-        <h2>3. The Simulation</h2>
+        <h2>3. The simulation</h2>
         <p>
           We're building the shared substrate—a simulation that anyone can query (and more importantly, any AI). Decisions grounded in the same reality. Five APIs. One model of society.
         </p>

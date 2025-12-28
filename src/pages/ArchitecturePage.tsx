@@ -9,9 +9,9 @@ const VALIDATORS = [
   {
     id: "syntax",
     icon: "✓",
-    title: "Syntax Valid",
+    title: "Syntax valid",
     short: "DSL parses without errors",
-    boxTitle: "DSL Parser Validation",
+    boxTitle: "DSL parser validation",
     boxDesc: "Generated code must be valid Cosilico DSL. The parser checks module declarations, variable definitions, formula syntax, type annotations, and entity/period specifications.",
     metrics: [
       { value: "100%", label: "parse rate required" },
@@ -21,9 +21,9 @@ const VALIDATORS = [
   {
     id: "refs",
     icon: "🔗",
-    title: "References Resolve",
+    title: "References resolve",
     short: "All statute paths exist",
-    boxTitle: "Reference Graph Validation",
+    boxTitle: "Reference graph validation",
     boxDesc: "Every reference in the code must resolve to an existing variable or parameter. The engine builds a dependency graph and verifies all statute paths exist in the codebase.",
     metrics: [
       { value: "0", label: "dangling refs allowed" },
@@ -33,9 +33,9 @@ const VALIDATORS = [
   {
     id: "tests",
     icon: "🧪",
-    title: "TDD Tests",
+    title: "TDD tests",
     short: "Our tests—authoritative, statute-derived",
-    boxTitle: "Test-Driven Development",
+    boxTitle: "Test-driven development",
     boxDesc: "Hand-crafted tests constructed from statute text and IRS examples. These are OUR authoritative tests—not borrowed from external tools. Used during development to verify the encoding matches our understanding of the law. Lives in cosilico-us alongside the encoded formulas.",
     metrics: [
       { value: "TDD", label: "test-first approach" },
@@ -45,9 +45,9 @@ const VALIDATORS = [
   {
     id: "consensus",
     icon: "📊",
-    title: "External Validation",
+    title: "External validation",
     short: "Comparison with TAXSIM, PolicyEngine, others",
-    boxTitle: "External Tool Validation Report",
+    boxTitle: "External tool validation report",
     boxDesc: "Compare results against external tools (TAXSIM, PolicyEngine, TaxAct). External tools may have bugs—we report consistency AND document disagreements with statute citations. When we're confident and they disagree, we file upstream issues.",
     metrics: [
       { value: "4+", label: "external systems" },
@@ -216,7 +216,7 @@ export default function ArchitecturePage() {
       <section className="arch-indexing">
         <div className="section-header">
           <span className="section-label">LIVE DEMO</span>
-          <h2>Three-Tier Parameter Resolution</h2>
+          <h2>Three-tier parameter resolution</h2>
           <p>
             See how the engine resolves inflation-indexed amounts using official values,
             forecasts, or real-time calculations.
@@ -226,7 +226,7 @@ export default function ArchitecturePage() {
         <IndexingDemo />
 
         <div className="indexing-explanation">
-          <h4>How It Works</h4>
+          <h4>How it works</h4>
           <ol>
             <li>
               <strong>PUBLISHED</strong> — Official IRS values from Revenue Procedures.
@@ -245,7 +245,7 @@ export default function ArchitecturePage() {
 
         {/* Override Resolution Architecture */}
         <div className="override-architecture">
-          <h3>Override Resolution Hierarchy</h3>
+          <h3>Override resolution hierarchy</h3>
           <p className="override-intro">
             The engine implements a declarative override system where IRS guidance explicitly
             declares which statute parameters it overrides. This eliminates ambiguity and
@@ -312,26 +312,26 @@ export default function ArchitecturePage() {
           </div>
 
           <div className="override-benefits">
-            <h4>Why This Design</h4>
+            <h4>Why this design</h4>
             <div className="benefit-grid">
               <div className="benefit-card">
                 <span className="benefit-icon">🎯</span>
-                <h5>Explicit Declarations</h5>
+                <h5>Explicit declarations</h5>
                 <p>IRS files declare <code>overrides:</code> attribute — no implicit matching</p>
               </div>
               <div className="benefit-card">
                 <span className="benefit-icon">🔗</span>
-                <h5>Authoritative Chain</h5>
+                <h5>Authoritative chain</h5>
                 <p>IRS guidance → regulation → statute — clear precedence</p>
               </div>
               <div className="benefit-card">
                 <span className="benefit-icon">📍</span>
-                <h5>Stable References</h5>
+                <h5>Stable references</h5>
                 <p>Formulas reference statute paths — overrides are transparent</p>
               </div>
               <div className="benefit-card">
                 <span className="benefit-icon">✓</span>
-                <h5>Audit Trail</h5>
+                <h5>Audit trail</h5>
                 <p>Every value traces to its source document and version</p>
               </div>
             </div>
@@ -343,7 +343,7 @@ export default function ArchitecturePage() {
       <section className="arch-rl">
         <div className="section-header">
           <span className="section-label">AI-POWERED</span>
-          <h2>Reinforcement Learning Encoding</h2>
+          <h2>Reinforcement learning encoding</h2>
           <p>AI agents learn to translate legal text into executable code through iterative refinement.</p>
         </div>
 
@@ -351,7 +351,7 @@ export default function ArchitecturePage() {
           <div className="rl-flow">
             <div className="rl-node input">
               <div className="rl-icon">📜</div>
-              <h4>Legal Text</h4>
+              <h4>Legal text</h4>
               <p>Statute sections, regulations, IRS guidance</p>
             </div>
 
@@ -359,7 +359,7 @@ export default function ArchitecturePage() {
 
             <div className="rl-node agent">
               <div className="rl-icon">🤖</div>
-              <h4>DSL Agent</h4>
+              <h4>DSL agent</h4>
               <p>LLM with domain-specific prompting</p>
             </div>
 
@@ -451,7 +451,7 @@ export default function ArchitecturePage() {
       <section className="arch-lawarchive">
         <div className="section-header">
           <span className="section-label">DATA LAYER</span>
-          <h2>Law Archive: Single Source of Truth</h2>
+          <h2>Law archive: single source of truth</h2>
           <p>
             Raw statute text, IRS guidance PDFs, and encoded formulas—all versioned and served via API.
             Daily crawlers detect changes. Every document has a stable ID.
@@ -462,7 +462,7 @@ export default function ArchitecturePage() {
           <div className="la-flow">
             <div className="la-source">
               <div className="la-box sources">
-                <h4>Official Sources</h4>
+                <h4>Official sources</h4>
                 <div className="source-list">
                   <span className="source-item">📜 USLM XML (uscode.house.gov)</span>
                   <span className="source-item">📋 IRS Rev. Procs (irs.gov)</span>
@@ -526,7 +526,7 @@ export default function ArchitecturePage() {
         </div>
 
         <div className="bitemporal-section">
-          <h3>Bi-Temporal Model: Vintage + Application Date</h3>
+          <h3>Bi-temporal model: vintage + application date</h3>
           <p className="bitemporal-intro">
             The law specifies <em>when rules apply</em>, not just <em>what the rules are</em>.
             A single vintage (e.g., TCJA) defines different formulas for different years.
@@ -573,7 +573,7 @@ export default function ArchitecturePage() {
         </div>
 
         <div className="cli-workflow">
-          <h3>API Access Patterns</h3>
+          <h3>API access patterns</h3>
           <div className="cli-steps">
             <div className="cli-step">
               <code>GET /v1/us/guidance/irs/rp-23-34</code>
@@ -599,14 +599,14 @@ export default function ArchitecturePage() {
       <section className="arch-compilation">
         <div className="section-header">
           <span className="section-label">COMPILER</span>
-          <h2>Multi-Target Code Generation</h2>
+          <h2>Multi-target code generation</h2>
           <p>Write rules once in DSL, compile to Python, JavaScript, WASM, and SQL.</p>
         </div>
 
         <div className="compilation-flow">
           <div className="flow-stage source">
             <div className="stage-icon">📝</div>
-            <h4>DSL Source</h4>
+            <h4>DSL source</h4>
             <pre className="code-sample">
 {`variable eitc(TaxUnit, Year, Money):
   earned_income = wages + self_employment
@@ -705,12 +705,12 @@ $$ LANGUAGE SQL;`}
         </div>
 
         <div className="validation-strategy">
-          <h3>Two-Phase Validation Strategy</h3>
+          <h3>Two-phase validation strategy</h3>
           <div className="validation-phases">
             <div className="phase-card phase-1">
               <div className="phase-header">
                 <span className="phase-number">1</span>
-                <h4>Reference Validation</h4>
+                <h4>Reference validation</h4>
                 <span className="phase-frequency">Once per variable</span>
               </div>
               <p>Validate against PolicyEngine (reference implementation) to ensure correctness.</p>
@@ -729,7 +729,7 @@ $$ LANGUAGE SQL;`}
             <div className="phase-card phase-2">
               <div className="phase-header">
                 <span className="phase-number">2</span>
-                <h4>Cross-Compilation Consistency</h4>
+                <h4>Cross-compilation consistency</h4>
                 <span className="phase-frequency">Continuous (CI)</span>
               </div>
               <p>Ensure ALL compilation targets produce identical results for the same inputs.</p>
@@ -752,7 +752,7 @@ $$ LANGUAGE SQL;`}
           </div>
 
           <div className="validation-benefits">
-            <h4>Why This Strategy Works</h4>
+            <h4>Why this strategy works</h4>
             <ul>
               <li><strong>Bug fixes validated once</strong> — Fix a bug, validate against PolicyEngine, done.</li>
               <li><strong>New targets inherit correctness</strong> — Just prove they match existing targets.</li>
@@ -766,7 +766,7 @@ $$ LANGUAGE SQL;`}
       <section className="arch-repos">
         <div className="section-header">
           <span className="section-label">ECOSYSTEM</span>
-          <h2>Repository Architecture</h2>
+          <h2>Repository architecture</h2>
           <p>Simulate the economy: rules, data, dynamics, and AI.</p>
         </div>
 
@@ -918,7 +918,7 @@ $$ LANGUAGE SQL;`}
       <section className="arch-microdata">
         <div className="section-header">
           <span className="section-label">MICRODATA</span>
-          <h2>Hierarchical Probabilistic Microdata</h2>
+          <h2>Hierarchical probabilistic microdata</h2>
           <p>
             Next-generation synthetic population with full uncertainty quantification.
             Integrates multiple data sources via normalizing flows, not sequential imputation.
@@ -928,7 +928,7 @@ $$ LANGUAGE SQL;`}
         <div className="microdata-architecture">
           {/* Entity Hierarchy */}
           <div className="microdata-entities">
-            <h3>Entity-Agnostic Design</h3>
+            <h3>Entity-agnostic design</h3>
             <p className="entities-intro">
               Universal entities (Person, Household) in core. Country-specific entities (TaxUnit, BenefitUnit) via configuration.
             </p>
@@ -971,7 +971,7 @@ $$ LANGUAGE SQL;`}
 
           {/* Data Flow */}
           <div className="microdata-flow">
-            <h3>Joint Generative Model</h3>
+            <h3>Joint generative model</h3>
             <p className="flow-intro">
               Instead of sequential QRF imputation (where order affects results),
               we train a single normalizing flow on all sources simultaneously.
@@ -1011,7 +1011,7 @@ $$ LANGUAGE SQL;`}
 
           {/* Calibration */}
           <div className="microdata-calibration">
-            <h3>Bayesian Calibration</h3>
+            <h3>Bayesian calibration</h3>
             <div className="calibration-targets">
               <div className="target-tier">
                 <span className="tier-priority">P1</span>
@@ -1040,11 +1040,11 @@ $$ LANGUAGE SQL;`}
 
           {/* Temporal */}
           <div className="microdata-temporal">
-            <h3>Temporal Dynamics</h3>
+            <h3>Temporal dynamics</h3>
             <div className="temporal-layers">
               <div className="temporal-layer yearly">
                 <span className="layer-icon">📅</span>
-                <span className="layer-name">Yearly Panel</span>
+                <span className="layer-name">Yearly panel</span>
                 <ul>
                   <li>AR(1) income growth</li>
                   <li>Employment transitions</li>
@@ -1065,7 +1065,7 @@ $$ LANGUAGE SQL;`}
 
           {/* Variable Resolution Flow */}
           <div className="microdata-variable-flow">
-            <h3>Variable Resolution: Survey → Statute</h3>
+            <h3>Variable resolution: survey → statute</h3>
             <p className="flow-intro">
               Primary inputs only. Derived values (like "num_qualifying_children") are computed
               in the rules engine based on statutory definitions—not extracted from survey data.
@@ -1115,7 +1115,7 @@ $$ LANGUAGE SQL;`}
 
         {/* Synthesis Validation Loop */}
         <div className="synthesis-validation">
-          <h3>Validation-Driven Synthesis</h3>
+          <h3>Validation-driven synthesis</h3>
           <p className="validation-intro">
             Like our rules engine, the synthesis system uses multi-source validation to drive iterative improvement.
             Metrics feed back to refine the generative model.
@@ -1153,7 +1153,7 @@ $$ LANGUAGE SQL;`}
 
           <div className="validation-metrics-grid">
             <div className="metric-category">
-              <h5>Marginal Fidelity</h5>
+              <h5>Marginal fidelity</h5>
               <ul>
                 <li>KL divergence per variable</li>
                 <li>Zero-inflation accuracy</li>
@@ -1161,7 +1161,7 @@ $$ LANGUAGE SQL;`}
               </ul>
             </div>
             <div className="metric-category">
-              <h5>Joint Fidelity</h5>
+              <h5>Joint fidelity</h5>
               <ul>
                 <li>Correlation matrix distance</li>
                 <li>Conditional distributions</li>
@@ -1169,7 +1169,7 @@ $$ LANGUAGE SQL;`}
               </ul>
             </div>
             <div className="metric-category">
-              <h5>Policy Utility</h5>
+              <h5>Policy utility</h5>
               <ul>
                 <li>Tax liability by bracket</li>
                 <li>Credit takeup rates</li>
@@ -1189,46 +1189,46 @@ $$ LANGUAGE SQL;`}
 
         {/* Implementation Status */}
         <div className="microdata-status">
-          <h3>Implementation Status</h3>
+          <h3>Implementation status</h3>
           <div className="status-grid">
             <div className="status-item done">
               <span className="status-icon">✓</span>
-              <span className="status-label">Core Entities</span>
+              <span className="status-label">Core entities</span>
               <span className="status-detail">Person, Household, TaxUnit, Geography, Periods</span>
             </div>
             <div className="status-item done">
               <span className="status-icon">✓</span>
-              <span className="status-label">CPS Data Loader</span>
+              <span className="status-label">CPS data loader</span>
               <span className="status-detail">Download, parse, cache CPS ASEC</span>
             </div>
             <div className="status-item done">
               <span className="status-icon">✓</span>
-              <span className="status-label">Gradient Calibration</span>
+              <span className="status-label">Gradient calibration</span>
               <span className="status-detail">PyTorch optimizer, 76% loss reduction</span>
             </div>
             <div className="status-item done">
               <span className="status-icon">✓</span>
-              <span className="status-label">Calibration Dashboard</span>
+              <span className="status-label">Calibration dashboard</span>
               <span className="status-detail">Real-time metrics at /calibration</span>
             </div>
             <div className="status-item progress">
               <span className="status-icon">◐</span>
-              <span className="status-label">Validation Framework</span>
+              <span className="status-label">Validation framework</span>
               <span className="status-detail">Comparing to PE ECPS and IRS SOI</span>
             </div>
             <div className="status-item progress">
               <span className="status-icon">◐</span>
-              <span className="status-label">Normalizing Flow</span>
+              <span className="status-label">Normalizing flow</span>
               <span className="status-detail">Conditional MAF for tax variables</span>
             </div>
             <div className="status-item pending">
               <span className="status-icon">○</span>
-              <span className="status-label">CPS/PUF Fusion</span>
+              <span className="status-label">CPS/PUF fusion</span>
               <span className="status-detail">Joint model preserving correlations</span>
             </div>
             <div className="status-item pending">
               <span className="status-icon">○</span>
-              <span className="status-label">Temporal Dynamics</span>
+              <span className="status-label">Temporal dynamics</span>
               <span className="status-detail">Panel AR(1) + intrayear SDE</span>
             </div>
           </div>
@@ -1248,7 +1248,7 @@ $$ LANGUAGE SQL;`}
       <section className="arch-comparison">
         <div className="section-header">
           <span className="section-label">LANDSCAPE</span>
-          <h2>How Cosilico Compares</h2>
+          <h2>How Cosilico compares</h2>
           <p>Different approaches to encoding tax and benefit rules.</p>
         </div>
 
@@ -1349,7 +1349,7 @@ $$ LANGUAGE SQL;`}
       {/* CTA */}
       <section className="arch-cta">
         <div className="cta-content">
-          <h2>Explore the Source</h2>
+          <h2>Explore the source</h2>
           <p>The engine is open source. The simulation is open to all.</p>
           <div className="cta-buttons">
             <a href="https://github.com/PolicyEngine/cosilico-engine" className="btn-primary">
@@ -1359,7 +1359,7 @@ $$ LANGUAGE SQL;`}
               View on GitHub
             </a>
             <a href="https://docs.cosilico.ai/architecture" className="btn-secondary">
-              Read Documentation
+              Read documentation
             </a>
           </div>
         </div>

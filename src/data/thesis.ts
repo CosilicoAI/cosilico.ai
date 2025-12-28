@@ -276,7 +276,7 @@ export const competitors: Competitor[] = [
 
 export const pricingComps: PricingComp[] = [
   {
-    category: "Tax Calculations",
+    category: "Tax calculations",
     competitors: [
       { name: "TAXSIM (NBER)", pricing: "Free", notes: "Academic only, federal 1960-2023, states 1977-2018, no commercial API", sourceId: 23 },
       { name: "TaxJar", pricing: "~$0.10/calc", notes: "$99/mo for 200 orders, API calls count as 1/10 order, Pro plan required", sourceId: 21 },
@@ -286,7 +286,7 @@ export const pricingComps: PricingComp[] = [
     cosilicoAdvantage: "30x cheaper than TaxJar. Commercial API unlike TAXSIM.",
   },
   {
-    category: "Predictions / Enrichment",
+    category: "Predictions / enrichment",
     competitors: [
       { name: "Experian", pricing: "$0.50-2/record", notes: "Identity/credit focus, not household economic attributes", sourceId: 26 },
       { name: "Clearbit", pricing: "$0.09-0.10/record", notes: "Now HubSpot-only, deprecated standalone API, enterprise = $80k+/yr", sourceId: 24 },
@@ -306,7 +306,7 @@ export const pricingComps: PricingComp[] = [
     cosilicoAdvantage: "No commercial competitor. First API for population-scale policy simulation.",
   },
   {
-    category: "Data Downloads",
+    category: "Data downloads",
     competitors: [
       { name: "Census/IPUMS", pricing: "Free", notes: "Raw data, requires extensive processing" },
       { name: "Snowflake Marketplace", pricing: "$0.01-0.05/query", notes: "Varies by provider, usage-based", sourceId: 27 },

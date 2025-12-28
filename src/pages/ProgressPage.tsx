@@ -185,7 +185,7 @@ export default function ProgressPage() {
   return (
     <PageLayout
       badge="PROGRESS"
-      title="Federal Tax Coverage"
+      title="Federal tax coverage"
       subtitle="Tracking Cosilico encoding progress toward full PolicyEngine parity"
       showHero={true}
     >
@@ -193,7 +193,7 @@ export default function ProgressPage() {
       <section className={styles.overallSection}>
         <div className={styles.overallCard}>
           <div className={styles.overallHeader}>
-            <h2 className={styles.overallTitle}>Overall Progress</h2>
+            <h2 className={styles.overallTitle}>Overall progress</h2>
             <div className={styles.overallPercent}>{overallProgress.toFixed(1)}%</div>
           </div>
 
@@ -221,11 +221,11 @@ export default function ProgressPage() {
             </div>
             <div className={styles.legendItem}>
               <span className={styles.legendDotInProgress} />
-              In Progress
+              In progress
             </div>
             <div className={styles.legendItem}>
               <span className={styles.legendDotNotStarted} />
-              Not Started
+              Not started
             </div>
           </div>
 
@@ -237,15 +237,15 @@ export default function ProgressPage() {
             </div>
             <div className={styles.statCard}>
               <div className={styles.statValue}>{inProgressCount}</div>
-              <div className={styles.statLabel}>In Progress</div>
+              <div className={styles.statLabel}>In progress</div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statValue}>{notStartedCount}</div>
-              <div className={styles.statLabel}>Not Started</div>
+              <div className={styles.statLabel}>Not started</div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statValue}>{VARIABLES.length}</div>
-              <div className={styles.statLabel}>Total Variables</div>
+              <div className={styles.statLabel}>Total variables</div>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ export default function ProgressPage() {
 
       {/* Per-Variable Cards */}
       <section className={styles.variablesSection}>
-        <h2 className={styles.sectionTitle}>Per-Variable Status</h2>
+        <h2 className={styles.sectionTitle}>Per-variable status</h2>
         <div className={styles.variablesGrid}>
           {VARIABLES.map((variable) => (
             <div key={variable.name} className={getCardStyle(variable.status)}>
@@ -270,7 +270,7 @@ export default function ProgressPage() {
 
               <div className={styles.variableMatchRate}>
                 <div className={styles.matchLabel}>
-                  <span>Match Rate</span>
+                  <span>Match rate</span>
                   <span className={styles.matchPercent}>
                     {variable.matchRate !== null
                       ? `${variable.matchRate}%`

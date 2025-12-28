@@ -31,7 +31,7 @@ export default function PricingPage() {
 
       {/* API Pricing */}
       <section className={styles.pricingApis}>
-        <h2>API Pricing</h2>
+        <h2>API pricing</h2>
         <p className={styles.sectionSubtitle}>Simple per-call pricing. No tiers, no complexity.</p>
 
         <div className={styles.pricingGrid}>
@@ -78,7 +78,7 @@ export default function PricingPage() {
 
           <div className={`${styles.pricingCard} ${styles.featured}`}>
             <div className={styles.pricingCardHeader}>
-              <h3>Full Profile</h3>
+              <h3>Full profile</h3>
               <div className={styles.price}>
                 <span className={styles.priceValue}>$0.06</span>
                 <span className={styles.priceUnit}>per call</span>
@@ -118,7 +118,7 @@ export default function PricingPage() {
 
           <div className={styles.pricingCard}>
             <div className={styles.pricingCardHeader}>
-              <h3>Law Archive API</h3>
+              <h3>Law archive API</h3>
               <div className={styles.price}>
                 <span className={styles.priceValue}>$0.01</span>
                 <span className={styles.priceUnit}>per query</span>
@@ -140,7 +140,7 @@ export default function PricingPage() {
 
       {/* Data Pricing */}
       <section className={styles.pricingData}>
-        <h2>Data Downloads</h2>
+        <h2>Data downloads</h2>
         <p className={styles.sectionSubtitle}>
           All datasets available. Pay for bandwidth, not access.
         </p>
@@ -176,7 +176,7 @@ export default function PricingPage() {
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Benefit apps</span>
-            <span>Full Profile</span>
+            <span>Full profile</span>
             <span>Partial user info → eligibility check</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
@@ -186,7 +186,7 @@ export default function PricingPage() {
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>AI assistants</span>
-            <span>Full Profile</span>
+            <span>Full profile</span>
             <span>"What benefits can I get?"</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
@@ -196,7 +196,7 @@ export default function PricingPage() {
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Marketers</span>
-            <span>Full Profile</span>
+            <span>Full profile</span>
             <span>Segment by tax burden + benefits → WTP</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
@@ -247,10 +247,10 @@ export default function PricingPage() {
         <p>Pay-as-you-go. No minimums, no commitments.</p>
         <div className={styles.ctaButtons}>
           <a href="https://docs.cosilico.ai" className={styles.btnPrimary}>
-            Get API Key
+            Get API key
           </a>
           <a href="/playground" className={styles.btnSecondary}>
-            Try the Playground
+            Try the playground
           </a>
         </div>
       </section>

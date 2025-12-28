@@ -5,14 +5,14 @@ import * as styles from "../../styles/thesis.css";
 export function GapSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>2. The Gap</h2>
+      <h2>2. The gap</h2>
       <p>
         Building a simulation of society requires three layers: <strong>rules</strong> (how taxes and benefits work), <strong>data</strong> (who the households are), and <strong>scenarios</strong> (what-if analysis at scale). Today, these pieces exist in fragments.
       </p>
 
       <div className={styles.gapGrid}>
         <div className={`${styles.gapCard} ${styles.gapNeed}`}>
-          <h3>What's Needed</h3>
+          <h3>What's needed</h3>
           <ul>
             <li>Income tax calculation (federal + 50 states)</li>
             <li>Benefits eligibility (SNAP, Medicaid, EITC, etc.)</li>
@@ -22,7 +22,7 @@ export function GapSection() {
           </ul>
         </div>
         <div className={`${styles.gapCard} ${styles.gapExists}`}>
-          <h3>What Exists</h3>
+          <h3>What exists</h3>
           <ul>
             <li><strong>Sales tax:</strong> Avalara ($8.4B acquisition)<Cite id={7} /></li>
             <li><strong>Payroll tax:</strong> Symmetry (64M employees/year)<Cite id={11} /></li>

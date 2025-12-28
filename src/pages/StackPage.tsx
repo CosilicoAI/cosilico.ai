@@ -73,8 +73,8 @@ export default function StackPage() {
         <section className={styles.hero}>
           <div className={styles.heroGlow} />
           <div className={styles.heroContent}>
-            <div className={styles.heroBadge}>INFRASTRUCTURE</div>
-            <h1 className={styles.heroTitle}>The Cosilico Stack</h1>
+            <div className={styles.heroBadge}>Infrastructure</div>
+            <h1 className={styles.heroTitle}>The Cosilico stack</h1>
             <p className={styles.heroSubtitle}>
               Open-source tools for building tax and benefit microsimulation systems.
               From encoded law to calibrated populations.
@@ -251,7 +251,7 @@ export default function StackPage() {
         {/* Architecture */}
         <section className={styles.architectureSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>How It Fits Together</h2>
+            <h2 className={styles.sectionTitle}>How it fits together</h2>
             <p className={styles.sectionSubtitle}>
               From source law to policy analysis
             </p>
@@ -317,7 +317,7 @@ export default function StackPage() {
         {/* CTA */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Open Source</h2>
+            <h2 className={styles.ctaTitle}>Open source</h2>
             <p className={styles.ctaText}>
               All Cosilico tools are open source under the MIT license.
               Contributions welcome.
@@ -330,7 +330,7 @@ export default function StackPage() {
                 rel="noopener noreferrer"
               >
                 <GitHubIcon />
-                GitHub Organization
+                GitHub organisation
               </a>
               <a
                 href="https://cosilicoai.github.io/microplex"
@@ -339,7 +339,7 @@ export default function StackPage() {
                 rel="noopener noreferrer"
               >
                 <DocsIcon />
-                microplex Docs
+                microplex docs
               </a>
             </div>
           </div>

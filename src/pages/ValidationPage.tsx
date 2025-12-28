@@ -65,7 +65,7 @@ export default function ValidationPage() {
   return (
     <PageLayout
       badge="VALIDATION"
-      title="Validation Dashboard"
+      title="Validation dashboard"
       subtitle="Cosilico accuracy vs. PolicyEngine and TAXSIM"
       showHero={true}
     >
@@ -89,15 +89,15 @@ export default function ValidationPage() {
       <section className={styles.overallStats}>
         <div className={styles.statCard}>
           <div className={styles.statValue}>{formatNumber(data.overall.totalHouseholds)}</div>
-          <div className={styles.statLabel}>Total Households</div>
+          <div className={styles.statLabel}>Total households</div>
         </div>
         <div className={`${styles.statCard} ${styles.statCardHighlight}`}>
           <div className={styles.statValue}>{formatPercent(data.overall.matchRate)}</div>
-          <div className={styles.statLabel}>Aggregate Match Rate</div>
+          <div className={styles.statLabel}>Aggregate match rate</div>
         </div>
         <div className={styles.statCard}>
           <div className={styles.statValue}>${data.overall.meanAbsoluteError.toFixed(2)}</div>
-          <div className={styles.statLabel}>Mean Absolute Error</div>
+          <div className={styles.statLabel}>Mean absolute error</div>
         </div>
         {data.overall.speed && (
           <div className={styles.statCard}>
@@ -170,7 +170,7 @@ export default function ValidationPage() {
 
       {/* Per-Variable Results */}
       <section className={styles.sectionsList}>
-        <h2 className={styles.sectionTitle}>Per-Variable Results</h2>
+        <h2 className={styles.sectionTitle}>Per-variable results</h2>
         <div className={styles.sectionsGrid}>
           {data.sections.map((section) => (
             <div key={section.variable} className={styles.sectionCard}>
@@ -186,7 +186,7 @@ export default function ValidationPage() {
 
               <div className={styles.sectionStats}>
                 <div className={styles.sectionStat}>
-                  <span className={styles.sectionStatLabel}>Match Rate</span>
+                  <span className={styles.sectionStatLabel}>Match rate</span>
                   <span className={styles.sectionStatValue}>
                     {formatPercent(section.summary.matchRate)}
                   </span>
