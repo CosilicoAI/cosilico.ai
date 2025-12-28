@@ -12,6 +12,7 @@ import CalibrationPage from "./pages/CalibrationPage";
 import ValidationPage from "./pages/ValidationPage";
 import PluginDashboardPage from "./pages/PluginDashboardPage";
 import MicroplexPage from "./pages/MicroplexPage";
+import PyStatmatchPage from "./pages/PyStatmatchPage";
 import StackPage from "./pages/StackPage";
 import RacPage from "./pages/RacPage";
 import ExperimentPage from "./pages/ExperimentPage";
@@ -37,6 +38,7 @@ function App() {
           <Route path="/stack" element={<StackPage />} />
           <Route path="/stack/.rac" element={<RacPage />} />
           <Route path="/stack/microplex" element={<MicroplexPage />} />
+          <Route path="/stack/py-statmatch" element={<PyStatmatchPage />} />
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />
         </Routes>

@@ -55,6 +55,16 @@ const RacIcon = () => (
   </svg>
 );
 
+const StatMatchIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <circle cx="5" cy="12" r="3" />
+    <circle cx="19" cy="5" r="2" />
+    <circle cx="19" cy="12" r="2" />
+    <circle cx="19" cy="19" r="2" />
+    <path d="M8 11L17 6M8 12L17 12M8 13L17 18" strokeDasharray="2 2" />
+  </svg>
+);
+
 export default function StackPage() {
   return (
     <PageLayout>
@@ -133,8 +143,33 @@ export default function StackPage() {
               </div>
             </Link>
 
+            {/* py-statmatch - LIVE */}
+            <Link to="/stack/py-statmatch" className={`${styles.componentCard} ${styles.cardDelay3}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusLive}`}>LIVE</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <StatMatchIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>py-statmatch</h3>
+                  <div className={styles.componentTagline}>pip install py-statmatch</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Python implementation of R's StatMatch package. Statistical
+                matching and data fusion using hot deck imputation methods.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>NND Hot Deck</span>
+                <span className={styles.featureTag}>Gower Distance</span>
+                <span className={styles.featureTag}>Frechet Bounds</span>
+                <span className={styles.featureTag}>R Parity</span>
+              </div>
+            </Link>
+
             {/* cosilico-engine - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay3} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay4} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -160,7 +195,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-validators - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay4} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay5} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -186,7 +221,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-compile - PLANNED */}
-            <div className={`${styles.componentCard} ${styles.cardDelay5} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay6} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusPlanned}`}>PLANNED</span>
               <div className={styles.componentHeader}>
