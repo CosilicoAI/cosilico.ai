@@ -256,7 +256,7 @@ export default function ArchitecturePage() {
             <div className="override-stage">
               <div className="stage-box statute-stage">
                 <span className="stage-icon">📜</span>
-                <h5>Statute Files</h5>
+                <h5>Statute files</h5>
                 <code className="stage-path">statute/26/32/b/2/A/base_amounts.yaml</code>
                 <p className="stage-desc">Raw statutory values from 26 USC §32</p>
                 <pre className="stage-code">
@@ -269,11 +269,11 @@ export default function ArchitecturePage() {
                 </pre>
               </div>
 
-              <div className="stage-arrow">↓ overrides</div>
+              <div className="stage-arrow">↓ Overrides</div>
 
               <div className="stage-box irs-stage">
                 <span className="stage-icon">📋</span>
-                <h5>IRS Guidance</h5>
+                <h5>IRS guidance</h5>
                 <code className="stage-path">irs/rev-proc-2023-34/eitc-2024.yaml</code>
                 <p className="stage-desc">Inflation-adjusted values with override declarations</p>
                 <pre className="stage-code">
@@ -291,7 +291,7 @@ export default function ArchitecturePage() {
 
               <div className="stage-box resolution-stage">
                 <span className="stage-icon">⚙️</span>
-                <h5>Engine Resolution</h5>
+                <h5>Engine resolution</h5>
                 <p className="stage-desc">Formula references statute, engine returns IRS value</p>
                 <div className="resolution-logic">
                   <div className="logic-step">
@@ -1123,19 +1123,19 @@ $$ LANGUAGE SQL;`}
           <div className="validation-loop-diagram">
             <div className="loop-node source">
               <span className="node-icon">📊</span>
-              <h5>Data Sources</h5>
+              <h5>Data sources</h5>
               <span className="node-detail">CPS + PUF</span>
             </div>
             <div className="loop-arrow">→</div>
             <div className="loop-node model">
               <span className="node-icon">🌊</span>
-              <h5>Normalizing Flow</h5>
+              <h5>Normalizing flow</h5>
               <span className="node-detail">Learn P(tax_vars | demographics)</span>
             </div>
             <div className="loop-arrow">→</div>
             <div className="loop-node output">
               <span className="node-icon">👥</span>
-              <h5>Synthetic Data</h5>
+              <h5>Synthetic data</h5>
               <span className="node-detail">CPS structure + PUF-like tax vars</span>
             </div>
             <div className="loop-arrow">→</div>

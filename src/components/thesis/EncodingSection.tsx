@@ -63,7 +63,7 @@ export function EncodingSection() {
             <p>Academic gold standard, independent implementation</p>
           </div>
           <div className={styles.oracleCard}>
-            <h4>IRS Examples</h4>
+            <h4>IRS examples</h4>
             <p>Official published scenarios</p>
           </div>
         </div>
