@@ -15,6 +15,7 @@ import MicroplexPage from "./pages/MicroplexPage";
 import StackPage from "./pages/StackPage";
 import RacPage from "./pages/RacPage";
 import ExperimentPage from "./pages/ExperimentPage";
+import ProgressPage from "./pages/ProgressPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/stack/.rac" element={<RacPage />} />
           <Route path="/stack/microplex" element={<MicroplexPage />} />
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
+          <Route path="/progress" element={<ProgressPage />} />
         </Routes>
       </div>
     </BrowserRouter>
