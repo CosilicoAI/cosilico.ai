@@ -155,7 +155,7 @@ export default function ArchitecturePage() {
       <section className={styles.archSection}>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionLabel}>INTERACTIVE</span>
-          <h2>Statute → Code Explorer</h2>
+          <h2>Statute → code explorer</h2>
           <p>Navigate the tree to see how USC sections map to DSL files.</p>
         </div>
 

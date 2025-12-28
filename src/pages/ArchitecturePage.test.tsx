@@ -17,7 +17,7 @@ describe("ArchitecturePage", () => {
 
   test("renders statute tree explorer", () => {
     render(<ArchitecturePage />);
-    expect(screen.getByText("Statute → Code Explorer")).toBeInTheDocument();
+    expect(screen.getByText("Statute → code explorer")).toBeInTheDocument();
     expect(screen.getByText("§32 - EITC")).toBeInTheDocument();
   });
 
@@ -29,13 +29,13 @@ describe("ArchitecturePage", () => {
 
   test("renders indexing demo section", () => {
     render(<ArchitecturePage />);
-    expect(screen.getByText("Three-Tier Parameter Resolution")).toBeInTheDocument();
+    expect(screen.getByText("Three-tier parameter resolution")).toBeInTheDocument();
     expect(screen.getByText("PARAMETER RESOLVER")).toBeInTheDocument();
   });
 
   test("renders repository architecture section", () => {
     render(<ArchitecturePage />);
-    expect(screen.getByText("Repository Architecture")).toBeInTheDocument();
+    expect(screen.getByText("Repository architecture")).toBeInTheDocument();
     // Use getAllByText since these appear in multiple places (terminal and repo diagram)
     expect(screen.getAllByText("cosilico-engine").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("cosilico-us").length).toBeGreaterThanOrEqual(1);
@@ -44,7 +44,7 @@ describe("ArchitecturePage", () => {
 
   test("renders comparison section with frameworks", () => {
     render(<ArchitecturePage />);
-    expect(screen.getByText("How Cosilico Compares")).toBeInTheDocument();
+    expect(screen.getByText("How Cosilico compares")).toBeInTheDocument();
     expect(screen.getByText("PolicyEngine")).toBeInTheDocument();
     expect(screen.getByText("OpenFisca")).toBeInTheDocument();
     expect(screen.getByText("Tax-Calculator")).toBeInTheDocument();
@@ -61,7 +61,7 @@ describe("ArchitecturePage", () => {
 
   test("renders CTA section with GitHub link", () => {
     render(<ArchitecturePage />);
-    expect(screen.getByText("Explore the Source")).toBeInTheDocument();
+    expect(screen.getByText("Explore the source")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /View on GitHub/i })).toHaveAttribute(
       "href",
       "https://github.com/PolicyEngine/cosilico-engine"
