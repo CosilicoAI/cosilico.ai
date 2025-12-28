@@ -1,48 +1,72 @@
 {
-  "metadata": {
-    "generated_at": "2025-12-27T14:43:41.724152",
-    "tax_year": 2024,
-    "data_source": "PolicyEngine Enhanced CPS (Common Dataset)",
-    "comparison_type": "aligned_inputs",
-    "description": "Both systems use identical PE inputs, isolating rule implementation differences"
-  },
-  "summary": {
-    "overall_match_rate": 0.8215989662712875,
-    "total_records": 30182,
-    "variables_compared": 2
-  },
-  "variables": [
+  "isSampleData": false,
+  "timestamp": "2025-12-27T20:55:11.223187",
+  "commit": "b6bb92a",
+  "dataSource": "PolicyEngine Enhanced CPS 2024",
+  "householdsTotal": 30182,
+  "sections": [
     {
+      "section": "26/32",
+      "title": "Earned Income Tax Credit",
       "variable": "eitc",
-      "match_rate": 0.8555430388973561,
-      "mean_absolute_error": 124.75143209811894,
-      "n_records": 30182,
-      "cosilico_weighted_total": 40897923792.25394,
-      "policyengine_weighted_total": 50075025408.0,
-      "difference_billions": -9.177101615746063,
-      "error_percentiles": {
-        "p50": 0.0,
-        "p90": 319.15904414062567,
-        "p95": 632.0,
-        "p99": 2922.82671875,
-        "max": 5922.072000000001
-      }
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 25723,
+        "matchRate": 0.8522629381750713,
+        "meanAbsoluteError": 100.64141466405674
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 25723,
+          "total": 30182,
+          "rate": 0.8522629381750713
+        }
+      },
+      "notes": "Cosilico total: $53.9B, PE total: $50.1B, Diff: $+3.8B"
     },
     {
+      "section": "26/1",
+      "title": "Income Tax (Before Credits)",
       "variable": "income_tax_before_credits",
-      "match_rate": 0.787654893645219,
-      "mean_absolute_error": 1054.631875883979,
-      "n_records": 30182,
-      "cosilico_weighted_total": 2231909443226.9287,
-      "policyengine_weighted_total": 2058856955904.0,
-      "difference_billions": 173.0524873229287,
-      "error_percentiles": {
-        "p50": 0.0,
-        "p90": 191.58378906250027,
-        "p95": 1443.733837890617,
-        "p99": 14786.827343749972,
-        "max": 319009.3125
-      }
+      "households": 30182,
+      "testCases": [],
+      "summary": {
+        "total": 30182,
+        "matches": 23773,
+        "matchRate": 0.787654893645219,
+        "meanAbsoluteError": 1054.631875883979
+      },
+      "validatorBreakdown": {
+        "policyengine": {
+          "matches": 23773,
+          "total": 30182,
+          "rate": 0.787654893645219
+        }
+      },
+      "notes": "Cosilico total: $2231.9B, PE total: $2058.9B, Diff: $+173.1B"
+    }
+  ],
+  "overall": {
+    "totalHouseholds": 30182,
+    "totalTests": 60364,
+    "totalMatches": 49496,
+    "matchRate": 0.8199589159101451,
+    "meanAbsoluteError": 577.636645274018
+  },
+  "validators": [
+    {
+      "name": "PolicyEngine",
+      "available": true,
+      "version": "1.150.0",
+      "householdsCovered": 30182
+    },
+    {
+      "name": "TAXSIM",
+      "available": false,
+      "version": "35",
+      "householdsCovered": 0
     }
   ]
 }
