@@ -36,7 +36,7 @@ function App() {
           <Route path="/stack" element={<StackPage />} />
           <Route path="/stack/.rac" element={<RacPage />} />
           <Route path="/stack/microplex" element={<MicroplexPage />} />
-          <Route path="/experiment" element={<ExperimentPage />} />
+          <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
         </Routes>
       </div>
     </BrowserRouter>

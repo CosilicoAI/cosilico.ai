@@ -1,6 +1,6 @@
 import React from "react";
 import PageLayout from "../components/PageLayout";
-import "./ExperimentPage.css";
+import { styles } from "../styles/experiment.css";
 
 // Current agent configuration - pulled from cosilico-encoder
 const SYSTEM_PROMPT = `Encode tax law into .rac code that matches the oracle.
@@ -60,68 +60,69 @@ const AVAILABLE_RESOURCES = [
 const ExperimentPage: React.FC = () => {
   return (
     <PageLayout>
-      <div className="experiment-page">
-        <header className="experiment-header">
+      <div className={styles.experimentPage}>
+        <div className={styles.experimentContainer}>
+        <header className={styles.experimentHeader}>
           <h1>Experiment: AlphaLaw Encoding</h1>
-          <p className="subtitle">
+          <p className={styles.subtitle}>
             Minimal prompting approach to statute encoding
           </p>
         </header>
 
-        <section className="config-section">
+        <section className={styles.section}>
           <h2>Current Agent Configuration</h2>
 
-          <div className="config-card">
+          <div className={styles.configCard}>
             <h3>System Prompt</h3>
-            <p className="config-note">
+            <p className={styles.configNote}>
               AlphaLaw style: minimal instruction, learn from reward signals
             </p>
-            <pre className="code-block">{SYSTEM_PROMPT}</pre>
-            <div className="config-stats">
-              <span className="stat">{SYSTEM_PROMPT.split('\n').length} lines</span>
-              <span className="stat">{SYSTEM_PROMPT.length} chars</span>
+            <pre className={styles.codeBlock}>{SYSTEM_PROMPT}</pre>
+            <div className={styles.configStats}>
+              <span className={styles.stat}>{SYSTEM_PROMPT.split('\n').length} lines</span>
+              <span className={styles.stat}>{SYSTEM_PROMPT.length} chars</span>
             </div>
           </div>
 
-          <div className="config-card">
+          <div className={styles.configCard}>
             <h3>User Message Template</h3>
-            <p className="config-note">
+            <p className={styles.configNote}>
               Sent at start of each encoding task
             </p>
-            <pre className="code-block">{USER_MESSAGE_TEMPLATE}</pre>
-            <div className="observation">
-              <span className="label">Key observation:</span>
+            <pre className={styles.codeBlock}>{USER_MESSAGE_TEMPLATE}</pre>
+            <div className={styles.observation}>
+              <span className={styles.observationLabel}>Key observation:</span>
               The spec is a <strong>pointer</strong>, not injected.
               Agent must actively call read_file() to see it.
             </div>
           </div>
 
-          <div className="config-card">
+          <div className={styles.configCard}>
             <h3>Available Tools</h3>
-            <p className="config-note">
+            <p className={styles.configNote}>
               TOOLS_MINIMAL - focused set for encoding
             </p>
-            <div className="tools-list">
+            <div className={styles.toolsList}>
               {TOOLS_MINIMAL.map((tool) => (
-                <div key={tool.name} className="tool-item">
-                  <code className="tool-name">{tool.name}()</code>
-                  <span className="tool-desc">{tool.description}</span>
+                <div key={tool.name} className={styles.toolItem}>
+                  <code className={styles.toolName}>{tool.name}()</code>
+                  <span className={styles.toolDesc}>{tool.description}</span>
                 </div>
               ))}
             </div>
-            <div className="observation warning">
-              <span className="label">Missing:</span>
+            <div className={styles.observationWarning}>
+              <span className={styles.observationLabel}>Missing:</span>
               <code>init_rac()</code> tool not in TOOLS_MINIMAL -
               agent can't easily discover subsection structure
             </div>
           </div>
 
-          <div className="config-card">
+          <div className={styles.configCard}>
             <h3>Available Resources</h3>
-            <p className="config-note">
+            <p className={styles.configNote}>
               What the agent CAN access (if it chooses to)
             </p>
-            <table className="resources-table">
+            <table className={styles.resourcesTable}>
               <thead>
                 <tr>
                   <th>Resource</th>
@@ -134,7 +135,7 @@ const ExperimentPage: React.FC = () => {
                 {AVAILABLE_RESOURCES.map((resource) => (
                   <tr key={resource.name}>
                     <td><code>{resource.name}</code></td>
-                    <td className="path">{resource.path}</td>
+                    <td className={styles.pathCell}>{resource.path}</td>
                     <td>{resource.description}</td>
                     <td>{resource.access || "read_file()"}</td>
                   </tr>
@@ -144,42 +145,42 @@ const ExperimentPage: React.FC = () => {
           </div>
         </section>
 
-        <section className="results-section">
+        <section className={styles.section}>
           <h2>Latest Run: 26 USC 63 (Standard Deduction)</h2>
 
-          <div className="result-card failure">
-            <div className="result-header">
-              <span className="status">❌ Failed</span>
-              <span className="accuracy">0% accuracy</span>
+          <div className={styles.resultCardFailure}>
+            <div className={styles.resultHeader}>
+              <span className={styles.resultStatus}>❌ Failed</span>
+              <span className={styles.resultAccuracy}>0% accuracy</span>
             </div>
 
-            <div className="result-details">
-              <div className="detail">
-                <span className="label">Iterations:</span>
-                <span className="value">10 (max)</span>
+            <div className={styles.resultDetails}>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Iterations:</span>
+                <span className={styles.detailValue}>10 (max)</span>
               </div>
-              <div className="detail">
-                <span className="label">Tokens:</span>
-                <span className="value">26,004</span>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Tokens:</span>
+                <span className={styles.detailValue}>26,004</span>
               </div>
-              <div className="detail">
-                <span className="label">Cost:</span>
-                <span className="value">$0.031</span>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Cost:</span>
+                <span className={styles.detailValue}>$0.031</span>
               </div>
-              <div className="detail">
-                <span className="label">Model:</span>
-                <span className="value">Claude Haiku 4.5</span>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Model:</span>
+                <span className={styles.detailValue}>Claude Haiku 4.5</span>
               </div>
             </div>
 
-            <div className="result-output">
+            <div>
               <h4>Generated Code:</h4>
-              <pre className="code-block empty"># Empty encoding</pre>
+              <pre className={styles.codeBlockEmpty}># Empty encoding</pre>
             </div>
 
-            <div className="result-analysis">
+            <div>
               <h4>What Went Wrong:</h4>
-              <ul>
+              <ul className={styles.analysisList}>
                 <li>Agent did NOT read the RAC_SPEC.md (only 2 tool calls)</li>
                 <li>No <code>text:</code> field in output</li>
                 <li>Targeted whole section, not subsection</li>
@@ -188,57 +189,57 @@ const ExperimentPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="tool-calls-section">
+          <div className={styles.toolCallsSection}>
             <h4>Tool Calls Made:</h4>
-            <ol className="tool-calls">
+            <ol className={styles.toolCallsList}>
               <li>
                 <code>read_file("docs/RAC_SPEC.md", "engine")</code>
-                <span className="note">✓ Read the spec</span>
+                <span className={styles.toolCallNote}>✓ Read the spec</span>
               </li>
               <li>
                 <code>query_statute(26, "63")</code>
-                <span className="note">⚠️ Whole section, not subsection</span>
+                <span className={styles.toolCallNote}>⚠️ Whole section, not subsection</span>
               </li>
             </ol>
-            <p className="observation">
+            <p className={styles.observation}>
               Only 2 tool calls in 10 iterations. Agent gave up quickly.
             </p>
           </div>
         </section>
 
-        <section className="improvements-section">
+        <section className={styles.section}>
           <h2>Proposed System Improvements</h2>
-          <p className="section-note">
+          <p className={styles.sectionNote}>
             From <a href="https://github.com/CosilicoAI/cosilico-encoder/pull/2">cosilico-encoder PR #2</a>
           </p>
 
-          <div className="improvement-list">
-            <div className="improvement">
-              <span className="type prompt">prompt</span>
-              <span className="title">Add .rac format requirements to system prompt</span>
-              <span className="impact">Text fidelity 0% → 70%</span>
+          <div className={styles.improvementList}>
+            <div className={styles.improvement}>
+              <span className={styles.improvementTypePrompt}>prompt</span>
+              <span className={styles.improvementTitle}>Add .rac format requirements to system prompt</span>
+              <span className={styles.improvementImpact}>Text fidelity 0% → 70%</span>
             </div>
-            <div className="improvement">
-              <span className="type tool">tool</span>
-              <span className="title">Add init_rac() to TOOLS_MINIMAL</span>
-              <span className="impact">Subsection targeting 0% → 80%</span>
+            <div className={styles.improvement}>
+              <span className={styles.improvementTypeTool}>tool</span>
+              <span className={styles.improvementTitle}>Add init_rac() to TOOLS_MINIMAL</span>
+              <span className={styles.improvementImpact}>Subsection targeting 0% → 80%</span>
             </div>
-            <div className="improvement">
-              <span className="type prompt">prompt</span>
-              <span className="title">Add workflow steps (1-5) to prompt</span>
-              <span className="impact">Tool efficiency improves</span>
+            <div className={styles.improvement}>
+              <span className={styles.improvementTypePrompt}>prompt</span>
+              <span className={styles.improvementTitle}>Add workflow steps (1-5) to prompt</span>
+              <span className={styles.improvementImpact}>Tool efficiency improves</span>
             </div>
-            <div className="improvement">
-              <span className="type prompt">prompt</span>
-              <span className="title">Add example .rac code</span>
-              <span className="impact">Empty encodings reduce 100% → 10%</span>
+            <div className={styles.improvement}>
+              <span className={styles.improvementTypePrompt}>prompt</span>
+              <span className={styles.improvementTitle}>Add example .rac code</span>
+              <span className={styles.improvementImpact}>Empty encodings reduce 100% → 10%</span>
             </div>
           </div>
         </section>
 
-        <section className="links-section">
+        <section className={styles.section}>
           <h2>Related PRs</h2>
-          <ul>
+          <ul className={styles.linksList}>
             <li>
               <a href="https://github.com/CosilicoAI/cosilico-us/pull/4">
                 cosilico-us PR #4
@@ -251,6 +252,7 @@ const ExperimentPage: React.FC = () => {
             </li>
           </ul>
         </section>
+        </div>
       </div>
     </PageLayout>
   );
