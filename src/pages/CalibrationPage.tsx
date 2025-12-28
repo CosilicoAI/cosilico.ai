@@ -109,7 +109,7 @@ interface BaselineData {
 }
 
 const METRIC_LABELS: Record<string, string> = {
-  total_returns: "Total Returns",
+  total_returns: "Total returns",
   total_agi: "Total AGI",
   returns_single: "Single Filers",
   returns_married_joint: "Married Filing Jointly",
@@ -267,7 +267,7 @@ export default function CalibrationPage() {
 
         <h1>
           <span className={styles.heroPrefix}>BASELINE</span>
-          <span className={styles.heroMain}>Calibration Dashboard</span>
+          <span className={styles.heroMain}>Calibration dashboard</span>
         </h1>
         <p className={styles.calibSubtitle}>
           Comparing CPS ASEC {data.cps_year} against IRS SOI {data.soi_year}.<br />
@@ -277,11 +277,11 @@ export default function CalibrationPage() {
         <div className={styles.surveyStats}>
           <div className={styles.stat}>
             <span className={styles.statValue}>{data.raw_survey_stats.n_persons.toLocaleString()}</span>
-            <span className={styles.statLabel}>Sample Persons</span>
+            <span className={styles.statLabel}>Sample persons</span>
           </div>
           <div className={styles.stat}>
             <span className={styles.statValue}>{data.raw_survey_stats.n_tax_units.toLocaleString()}</span>
-            <span className={styles.statLabel}>Tax Units</span>
+            <span className={styles.statLabel}>Tax units</span>
           </div>
           <div className={styles.stat}>
             <span className={styles.statValue}>{formatNumber(data.raw_survey_stats.total_person_weight, "count")}</span>
@@ -301,7 +301,7 @@ export default function CalibrationPage() {
           <div className={styles.summaryCard[getErrorClass(returnsError)]}>
             <div className={styles.cardHeader}>
               <span className={styles.cardIcon}>📊</span>
-              <span className={styles.cardLabel}>Total Returns</span>
+              <span className={styles.cardLabel}>Total returns</span>
             </div>
             <div className={styles.cardComparison}>
               <div className={styles.comparisonValue}>
@@ -351,16 +351,16 @@ export default function CalibrationPage() {
           <div className={styles.summaryCard.status}>
             <div className={styles.cardHeader}>
               <span className={styles.cardIcon}>⚠️</span>
-              <span className={styles.cardLabel}>Coverage Status</span>
+              <span className={styles.cardLabel}>Coverage status</span>
             </div>
             <div className={styles.statusIndicators}>
               <div className={styles.statusItem}>
                 <span className={styles.statusCount}>{highImpactGaps}</span>
-                <span className={styles.statusLabel}>High Impact Gaps</span>
+                <span className={styles.statusLabel}>High impact gaps</span>
               </div>
               <div className={styles.statusItem}>
                 <span className={styles.statusCount}>{data.coverage_gaps.length}</span>
-                <span className={styles.statusLabel}>Total Gaps</span>
+                <span className={styles.statusLabel}>Total gaps</span>
               </div>
             </div>
             <div className={styles.cardBadge.status}>UNCALIBRATED</div>
@@ -390,7 +390,7 @@ export default function CalibrationPage() {
             <div className={styles.resultCard}>
               <div className={styles.resultIcon}>📊</div>
               <div className={styles.resultValue}>{formatNumber(calibrationResults.summary.total_population_calibrated, "count")}</div>
-              <div className={styles.resultLabel}>Calibrated Population</div>
+              <div className={styles.resultLabel}>Calibrated population</div>
             </div>
             <div className={styles.resultCard}>
               <div className={styles.resultIcon}>💰</div>
@@ -482,7 +482,7 @@ export default function CalibrationPage() {
           <div className={styles.validationHeadline}>
             <div className={styles.headlineStat}>
               <span className={styles.statNumberOur}>205</span>
-              <span className={styles.statDesc}>Our Targets</span>
+              <span className={styles.statDesc}>Our targets</span>
             </div>
             <div className={styles.headlineVs}>vs</div>
             <div className={styles.headlineStat}>
@@ -526,19 +526,19 @@ export default function CalibrationPage() {
             {expandedCategory === 'tax' && (
               <div className={styles.coverageGaps}>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Income by Source</span>
+                  <span className={styles.gapName}>Income by source</span>
                   <span className={styles.gapDesc}>Interest, dividends, capital gains, partnership income</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>EITC by Child Count</span>
+                  <span className={styles.gapName}>EITC by child count</span>
                   <span className={styles.gapDesc}>Stratified EITC targets (0, 1, 2, 3+ children)</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Deductions Detail</span>
+                  <span className={styles.gapName}>Deductions detail</span>
                   <span className={styles.gapDesc}>Medical, SALT, QBI deduction targets</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>State Coverage</span>
+                  <span className={styles.gapName}>State coverage</span>
                   <span className={styles.gapDesc}>All 50 states + DC (we have 5 states)</span>
                 </div>
               </div>
@@ -570,15 +570,15 @@ export default function CalibrationPage() {
             {expandedCategory === 'demographics' && (
               <div className={styles.coverageGaps}>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Age Granularity</span>
+                  <span className={styles.gapName}>Age granularity</span>
                   <span className={styles.gapDesc}>18 age brackets (we have 5 broad groups)</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Congressional Districts</span>
+                  <span className={styles.gapName}>Congressional districts</span>
                   <span className={styles.gapDesc}>436 district-level targets (we have state only)</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Race/Ethnicity</span>
+                  <span className={styles.gapName}>Race/ethnicity</span>
                   <span className={styles.gapDesc}>Demographic distributions by race</span>
                 </div>
               </div>
@@ -610,19 +610,19 @@ export default function CalibrationPage() {
             {expandedCategory === 'benefits' && (
               <div className={styles.coverageGaps}>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Medicaid Enrollment</span>
+                  <span className={styles.gapName}>Medicaid enrollment</span>
                   <span className={styles.gapDesc}>State + congressional district enrollment counts</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>SSI Participation</span>
+                  <span className={styles.gapName}>SSI participation</span>
                   <span className={styles.gapDesc}>Supplemental Security Income targets</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>SNAP State Coverage</span>
+                  <span className={styles.gapName}>SNAP state coverage</span>
                   <span className={styles.gapDesc}>All states (we have 10 states)</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>TANF Programs</span>
+                  <span className={styles.gapName}>TANF programs</span>
                   <span className={styles.gapDesc}>Temporary Assistance for Needy Families</span>
                 </div>
               </div>
@@ -654,15 +654,15 @@ export default function CalibrationPage() {
             {expandedCategory === 'healthcare' && (
               <div className={styles.coverageGaps}>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Insurance Enrollment</span>
+                  <span className={styles.gapName}>Insurance enrollment</span>
                   <span className={styles.gapDesc}>Public/private insurance coverage patterns</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>ACA Marketplace</span>
+                  <span className={styles.gapName}>ACA marketplace</span>
                   <span className={styles.gapDesc}>Exchange enrollment and subsidy data</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Healthcare Spending</span>
+                  <span className={styles.gapName}>Healthcare spending</span>
                   <span className={styles.gapDesc}>Medical expenditure patterns</span>
                 </div>
               </div>
@@ -694,15 +694,15 @@ export default function CalibrationPage() {
             {expandedCategory === 'tax_expenditures' && (
               <div className={styles.coverageGaps}>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Treasury Estimates</span>
+                  <span className={styles.gapName}>Treasury estimates</span>
                   <span className={styles.gapDesc}>Annual tax expenditure totals</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>JCT Estimates</span>
+                  <span className={styles.gapName}>JCT estimates</span>
                   <span className={styles.gapDesc}>Joint Committee on Taxation provision costs</span>
                 </div>
                 <div className={styles.gapItem}>
-                  <span className={styles.gapName}>Cross-Validation</span>
+                  <span className={styles.gapName}>Cross-validation</span>
                   <span className={styles.gapDesc}>Independent verification of credit/deduction totals</span>
                 </div>
               </div>
@@ -718,7 +718,7 @@ export default function CalibrationPage() {
                 <tr>
                   <th>Category</th>
                   <th>PE Targets</th>
-                  <th>Our Targets</th>
+                  <th>Our targets</th>
                   <th>Gap</th>
                   <th>Coverage</th>
                 </tr>
@@ -739,7 +739,7 @@ export default function CalibrationPage() {
                   <td><span className={styles.coverageBadge.veryLow}>5.6%</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Benefit Programs</strong></td>
+                  <td><strong>Benefit programs</strong></td>
                   <td>800</td>
                   <td>75</td>
                   <td className={styles.gapNegative}>-725</td>
@@ -753,7 +753,7 @@ export default function CalibrationPage() {
                   <td><span className={styles.coverageBadge.none}>0%</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Tax Expenditures</strong></td>
+                  <td><strong>Tax expenditures</strong></td>
                   <td>300</td>
                   <td>0</td>
                   <td className={styles.gapNegative}>-300</td>
@@ -906,7 +906,7 @@ export default function CalibrationPage() {
           <h4>Calibration methods</h4>
           <div className={styles.methodsGrid}>
             <div className={styles.methodCard}>
-              <div className="method-name">Entropy Minimization</div>
+              <div className="method-name">Entropy minimisation</div>
               <div className="method-desc">Minimize KL divergence from original weights</div>
               <div className="method-use">Default method, smooth adjustments</div>
             </div>
@@ -916,7 +916,7 @@ export default function CalibrationPage() {
               <div className="method-use">Many margin constraints</div>
             </div>
             <div className={styles.methodCard}>
-              <div className="method-name">Linear Regression</div>
+              <div className="method-name">Linear regression</div>
               <div className="method-desc">Linear regression adjustment</div>
               <div className="method-use">Few constraints, fast</div>
             </div>

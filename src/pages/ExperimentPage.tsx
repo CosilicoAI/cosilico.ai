@@ -174,7 +174,7 @@ const ExperimentPage: React.FC = () => {
             </div>
 
             <div>
-              <h4>Generated Code:</h4>
+              <h4>Generated code:</h4>
               <pre className={styles.codeBlockEmpty}># Empty encoding</pre>
             </div>
 

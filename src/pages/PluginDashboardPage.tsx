@@ -135,7 +135,7 @@ export default function PluginDashboardPage() {
         <section className={styles.heroStats}>
           <div className={styles.heroStat}>
             <span className={styles.heroStatValue}>{formatPercent(ENCODING_DATA.stats.overallMatchRate)}</span>
-            <span className={styles.heroStatLabel}>Success Rate</span>
+            <span className={styles.heroStatLabel}>Success rate</span>
           </div>
           <div className={styles.heroStat}>
             <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalVariables}</span>
@@ -143,7 +143,7 @@ export default function PluginDashboardPage() {
           </div>
           <div className={styles.heroStat}>
             <span className={styles.heroStatValue}>{ENCODING_DATA.stats.totalTestCases}</span>
-            <span className={styles.heroStatLabel}>Test Cases</span>
+            <span className={styles.heroStatLabel}>Test cases</span>
           </div>
           <div className={styles.heroStat}>
             <span className={styles.heroStatValue}>{ENCODING_DATA.pluginVersion}</span>
@@ -176,7 +176,7 @@ export default function PluginDashboardPage() {
               <span>Variable</span>
               <span>Statute</span>
               <span>Tests</span>
-              <span>Match Rate</span>
+              <span>Match rate</span>
               <span>Time</span>
             </div>
             {ENCODING_DATA.variables.map((v) => (
@@ -204,7 +204,7 @@ export default function PluginDashboardPage() {
         {selectedVariable && ENCODING_DATA.testCaseDetails[selectedVariable as keyof typeof ENCODING_DATA.testCaseDetails] && (
           <section className={styles.detailsSection}>
             <h2 className={styles.detailsTitle}>
-              Test Cases: <code className={styles.detailsTitleCode}>{selectedVariable}</code>
+              Test cases: <code className={styles.detailsTitleCode}>{selectedVariable}</code>
             </h2>
             <div className={styles.detailsGrid}>
               {ENCODING_DATA.testCaseDetails[selectedVariable as keyof typeof ENCODING_DATA.testCaseDetails].map((tc, i) => (
@@ -263,7 +263,7 @@ export default function PluginDashboardPage() {
             </div>
             <div className={styles.techCard}>
               <div className={styles.techIcon}>📊</div>
-              <div className={styles.techName}>Consensus Engine</div>
+              <div className={styles.techName}>Consensus engine</div>
               <div className={styles.techDesc}>Multi-validator agreement</div>
             </div>
             <div className={styles.techCard}>
@@ -273,7 +273,7 @@ export default function PluginDashboardPage() {
             </div>
             <div className={styles.techCard}>
               <div className={styles.techIcon}>⚡</div>
-              <div className={styles.techName}>Thompson Sampling</div>
+              <div className={styles.techName}>Thompson sampling</div>
               <div className={styles.techDesc}>Plugin selection</div>
             </div>
           </div>

@@ -216,12 +216,12 @@ export default function PricingPage() {
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Legal tech</span>
-            <span>Law Archive</span>
+            <span>Law archive</span>
             <span>Contract analysis, compliance tools</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>AI companies</span>
-            <span>Law Archive + Rules</span>
+            <span>Law archive + rules</span>
             <span>RAG for legal assistants</span>
           </div>
         </div>

@@ -948,11 +948,11 @@ $$ LANGUAGE SQL;`}
               <div className="entity-connector" />
               <div className="entity-split">
                 <div className="entity-level group">
-                  <span className="entity-label">Tax Unit</span>
+                  <span className="entity-label">Tax unit</span>
                   <span className="entity-note">US-specific</span>
                 </div>
                 <div className="entity-level group">
-                  <span className="entity-label">SPM Unit</span>
+                  <span className="entity-label">SPM unit</span>
                   <span className="entity-note">poverty calc</span>
                 </div>
               </div>
@@ -1003,7 +1003,7 @@ $$ LANGUAGE SQL;`}
               <div className="flow-arrow">↓</div>
               <div className="flow-output">
                 <span className="output-icon">👥</span>
-                <span className="output-name">Synthetic Population</span>
+                <span className="output-name">Synthetic population</span>
                 <span className="output-detail">full attribute set + uncertainty</span>
               </div>
             </div>

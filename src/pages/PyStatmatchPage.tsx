@@ -120,7 +120,7 @@ export default function PyStatmatchPage() {
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Frechet Bounds
+                Frechet bounds
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
@@ -231,7 +231,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <FrechetIcon />
-              <h3 className={styles.featureTitle}>Frechet Bounds</h3>
+              <h3 className={styles.featureTitle}>Frechet bounds</h3>
               <p className={styles.featureDescription}>
                 Compute theoretical bounds on joint distributions. Quantify
                 uncertainty from conditional independence assumption.

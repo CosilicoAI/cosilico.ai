@@ -111,10 +111,10 @@ export default function StackPage() {
                 to match any geographic targets.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>Normalizing Flows</span>
-                <span className={styles.featureTag}>Zero-Inflation</span>
-                <span className={styles.featureTag}>L0 Reweighting</span>
-                <span className={styles.featureTag}>Multi-Source</span>
+                <span className={styles.featureTag}>Normalising flows</span>
+                <span className={styles.featureTag}>Zero-inflation</span>
+                <span className={styles.featureTag}>L0 reweighting</span>
+                <span className={styles.featureTag}>Multi-source</span>
               </div>
             </Link>
 
@@ -136,10 +136,10 @@ export default function StackPage() {
                 text, parameters, formulas, and tests. Filepath mirrors legal citation.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>Legal Citations</span>
-                <span className={styles.featureTag}>Time-Varying</span>
-                <span className={styles.featureTag}>Inline Tests</span>
-                <span className={styles.featureTag}>Self-Contained</span>
+                <span className={styles.featureTag}>Legal citations</span>
+                <span className={styles.featureTag}>Time-varying</span>
+                <span className={styles.featureTag}>Inline tests</span>
+                <span className={styles.featureTag}>Self-contained</span>
               </div>
             </Link>
 
@@ -161,10 +161,10 @@ export default function StackPage() {
                 matching and data fusion using hot deck imputation methods.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>NND Hot Deck</span>
-                <span className={styles.featureTag}>Gower Distance</span>
-                <span className={styles.featureTag}>Frechet Bounds</span>
-                <span className={styles.featureTag}>R Parity</span>
+                <span className={styles.featureTag}>NND hot deck</span>
+                <span className={styles.featureTag}>Gower distance</span>
+                <span className={styles.featureTag}>Frechet bounds</span>
+                <span className={styles.featureTag}>R parity</span>
               </div>
             </Link>
 
@@ -189,7 +189,7 @@ export default function StackPage() {
               <div className={styles.componentFeatures}>
                 <span className={styles.featureTag}>Statute DSL</span>
                 <span className={styles.featureTag}>Vectorized</span>
-                <span className={styles.featureTag}>Legal Citations</span>
+                <span className={styles.featureTag}>Legal citations</span>
                 <span className={styles.featureTag}>Parameters</span>
               </div>
             </div>
@@ -213,10 +213,10 @@ export default function StackPage() {
                 documentation cross-referenced automatically.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>IRS Tools</span>
-                <span className={styles.featureTag}>State Calculators</span>
-                <span className={styles.featureTag}>Auto-Validation</span>
-                <span className={styles.featureTag}>CI Integration</span>
+                <span className={styles.featureTag}>IRS tools</span>
+                <span className={styles.featureTag}>State calculators</span>
+                <span className={styles.featureTag}>Auto-validation</span>
+                <span className={styles.featureTag}>CI integration</span>
               </div>
             </div>
 

@@ -81,7 +81,7 @@ export default function ValidationPage() {
           <strong>Updated:</strong> {new Date(data.timestamp).toLocaleDateString()}
         </span>
         {data.isSampleData && (
-          <span className={`${styles.metaItem} ${styles.sampleBadge}`}>Sample Data</span>
+          <span className={`${styles.metaItem} ${styles.sampleBadge}`}>Sample data</span>
         )}
       </div>
 

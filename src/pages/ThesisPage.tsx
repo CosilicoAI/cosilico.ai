@@ -76,7 +76,7 @@ export default function ThesisPage() {
 
       {/* Hero */}
       <section className={styles.thesisHero}>
-        <p className={styles.thesisLabel}>Research Prospectus</p>
+        <p className={styles.thesisLabel}>Research prospectus</p>
         <h1 className={styles.heroTitle}>Society, in silico</h1>
         <p className={styles.thesisSubtitle}>
           We're building the simulation of the economy that everyone can query.
