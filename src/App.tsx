@@ -14,6 +14,7 @@ import PluginDashboardPage from "./pages/PluginDashboardPage";
 import MicroplexPage from "./pages/MicroplexPage";
 import StackPage from "./pages/StackPage";
 import RacPage from "./pages/RacPage";
+import ExperimentPage from "./pages/ExperimentPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/stack" element={<StackPage />} />
           <Route path="/stack/.rac" element={<RacPage />} />
           <Route path="/stack/microplex" element={<MicroplexPage />} />
+          <Route path="/experiment" element={<ExperimentPage />} />
         </Routes>
       </div>
     </BrowserRouter>
