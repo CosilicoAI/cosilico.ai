@@ -302,7 +302,7 @@ export default function MicroplexPage() {
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                Sparse Reweighting
+                IPF Calibration
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
@@ -371,12 +371,12 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 03</div>
-                <h3 className={styles.stageTitle}>Synthesize Billions</h3>
+                <h3 className={styles.stageTitle}>Synthesize & Expand</h3>
                 <p className={styles.stageDescription}>
-                  Generate billions of diverse synthetic households.
-                  More records = more degrees of freedom for reweighting.
+                  Generate synthetic households with hierarchical structure.
+                  More records = more degrees of freedom for calibration.
                 </p>
-                <code className={styles.stageCode}>population = synth.generate(n=1_000_000_000)</code>
+                <code className={styles.stageCode}>population = synth.generate(n=100_000)</code>
               </div>
             </div>
 
@@ -388,12 +388,12 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 04</div>
-                <h3 className={styles.stageTitle}>Sparse Reweighting</h3>
+                <h3 className={styles.stageTitle}>Calibrate to Targets</h3>
                 <p className={styles.stageDescription}>
-                  L0/L1 optimization to find minimal record subset matching any targets.
-                  County-level, tract-level, or even block-level calibration.
+                  IPF calibration with constraint-aware sampling to match administrative targets.
+                  District-level, county-level, or state-level calibration.
                 </p>
-                <code className={styles.stageCode}>weights = reweight(population, targets, penalty="l0")</code>
+                <code className={styles.stageCode}>weights = calibrate(population, targets, method="ipf")</code>
               </div>
             </div>
 
@@ -449,10 +449,10 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <SparseIcon />
-              <h3 className={styles.featureTitle}>Sparse Reweighting</h3>
+              <h3 className={styles.featureTitle}>Constraint-Aware Calibration</h3>
               <p className={styles.featureDescription}>
-                L0/L1 optimization to find minimal record subsets matching any
-                target margins. County-level calibration from national surveys.
+                IPF calibration with constraint-aware sampling to match 1,700+
+                administrative targets. District-level calibration from national surveys.
               </p>
             </div>
 
