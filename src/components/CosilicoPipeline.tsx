@@ -22,14 +22,14 @@ interface Encoding {
 }
 
 
-// Real data from lawarchive
+// Real data from atlas
 const EITC_SOURCE: SourceDocument = {
   citation: '26 USC 32 - Earned income',
   path: 'us/statute/26/32/2025-01-01',
   effectiveDate: '2025-01-01',
   accessedDate: '2025-12-12',
   sourceUrl: 'https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section32',
-  rawUrl: 'https://lawarchive.cosilico.ai/us/statute/26/32/2025-01-01/original.xml',
+  rawUrl: 'https://atlas.cosilico.ai/us/statute/26/32/2025-01-01/original.xml',
   format: 'USLM XML',
   contentPreview: `32. Earned income
 
@@ -70,11 +70,11 @@ const EITC_ENCODING: Encoding = {
   citation: '26 USC 32',
   sourcePath: 'us/statute/26/32/2025-01-01',
   repoUrl: 'https://github.com/CosilicoAI/cosilico-us/blob/main/26/32/credit.cos',
-  formulaCode: `# 26 USC 32 - Earned income Tax Credit
-# Source: lawarchive://us/statute/26/32/2025-01-01
+  formulaCode: `# 26 USC 32 - Earned income tax credit
+# Source: atlas://us/statute/26/32/2025-01-01
 
 source {
-  lawarchive: us/statute/26/32/2025-01-01
+  atlas: us/statute/26/32/2025-01-01
   citation: "26 USC 32"
   accessed: 2025-12-12
 }
@@ -232,7 +232,7 @@ const CosilicoPipeline: React.FC = () => {
                 <h3>{EITC_SOURCE.citation}</h3>
                 <div className={styles.metaRow}>
                   <span className={styles.metaItem}>
-                    <strong>Path:</strong> <code>lawarchive://{EITC_SOURCE.path}</code>
+                    <strong>Path:</strong> <code>atlas://{EITC_SOURCE.path}</code>
                   </span>
                   <span className={styles.metaItem}>
                     <strong>Effective:</strong> {EITC_SOURCE.effectiveDate}
@@ -278,7 +278,7 @@ const CosilicoPipeline: React.FC = () => {
                     <strong>Citation:</strong> {EITC_ENCODING.citation}
                   </span>
                   <span className={styles.metaItem}>
-                    <strong>Source:</strong> <code>lawarchive://{EITC_ENCODING.sourcePath}</code>
+                    <strong>Source:</strong> <code>atlas://{EITC_ENCODING.sourcePath}</code>
                   </span>
                 </div>
               </div>
@@ -304,7 +304,7 @@ const CosilicoPipeline: React.FC = () => {
               <div className={styles.infoBox}>
                 <h4>How it works</h4>
                 <ul>
-                  <li><strong>source</strong> block links to lawarchive document for provenance</li>
+                  <li><strong>source</strong> block links to atlas document for provenance</li>
                   <li><strong>parameters</strong> block references statute values and IRS guidance</li>
                   <li><strong>formula</strong> translates statutory language into executable code</li>
                   <li>Every calculation can be traced back to specific statute sections</li>
@@ -457,7 +457,7 @@ const CosilicoPipeline: React.FC = () => {
                       <li>
                         <strong>Source:</strong>{' '}
                         <a href={EITC_SOURCE.rawUrl} target="_blank" rel="noopener noreferrer">
-                          lawarchive://us/statute/26/32/2025-01-01
+                          atlas://us/statute/26/32/2025-01-01
                         </a>
                       </li>
                       <li>

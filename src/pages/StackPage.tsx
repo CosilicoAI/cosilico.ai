@@ -65,6 +65,14 @@ const StatMatchIcon = () => (
   </svg>
 );
 
+const ArchIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+    <line x1="12" y1="11" x2="12" y2="17" />
+    <line x1="9" y1="14" x2="15" y2="14" />
+  </svg>
+);
+
 export default function StackPage() {
   return (
     <PageLayout>
@@ -92,8 +100,34 @@ export default function StackPage() {
           </div>
 
           <div className={styles.componentsGrid}>
+            {/* arch - DEV (foundational layer) */}
+            <Link to="/stack/arch" className={`${styles.componentCard} ${styles.cardDelay1}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <ArchIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>arch</h3>
+                  <div className={styles.componentTagline}>Foundational archive</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Single source of truth for all raw government files. Statutes,
+                regulations, guidance, microdata, and crosstabs archived with
+                full provenance tracking.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>R2 Storage</span>
+                <span className={styles.featureTag}>PostgreSQL</span>
+                <span className={styles.featureTag}>Provenance</span>
+                <span className={styles.featureTag}>Change Detection</span>
+              </div>
+            </Link>
+
             {/* microplex - LIVE */}
-            <Link to="/stack/microplex" className={`${styles.componentCard} ${styles.cardDelay1}`}>
+            <Link to="/stack/microplex" className={`${styles.componentCard} ${styles.cardDelay2}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusLive}`}>LIVE</span>
               <div className={styles.componentHeader}>
@@ -119,7 +153,7 @@ export default function StackPage() {
             </Link>
 
             {/* .rac - LIVE */}
-            <Link to="/stack/.rac" className={`${styles.componentCard} ${styles.cardDelay2}`}>
+            <Link to="/stack/.rac" className={`${styles.componentCard} ${styles.cardDelay3}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusLive}`}>SPEC</span>
               <div className={styles.componentHeader}>
@@ -144,7 +178,7 @@ export default function StackPage() {
             </Link>
 
             {/* py-statmatch - LIVE */}
-            <Link to="/stack/py-statmatch" className={`${styles.componentCard} ${styles.cardDelay3}`}>
+            <Link to="/stack/py-statmatch" className={`${styles.componentCard} ${styles.cardDelay4}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusLive}`}>LIVE</span>
               <div className={styles.componentHeader}>
@@ -169,7 +203,7 @@ export default function StackPage() {
             </Link>
 
             {/* cosilico-engine - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay4} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay5} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -195,7 +229,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-validators - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay5} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay6} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -221,7 +255,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-compile - PLANNED */}
-            <div className={`${styles.componentCard} ${styles.cardDelay6} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay8} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusPlanned}`}>PLANNED</span>
               <div className={styles.componentHeader}>

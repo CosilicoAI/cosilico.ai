@@ -44,8 +44,8 @@ const AVAILABLE_RESOURCES = [
     size: "~15KB",
   },
   {
-    name: "lawarchive.db",
-    path: "cosilico-lawarchive/lawarchive.db",
+    name: "atlas.db",
+    path: "cosilico-atlas/atlas.db",
     description: "SQLite database with USC statute text",
     access: "via query_statute() tool",
   },
