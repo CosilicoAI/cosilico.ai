@@ -292,6 +292,7 @@ export default function ArchPage() {
           </div>
 
           <div className={styles.sourcesGrid}>
+            {/* US Federal Statutes */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <CodeIcon />
@@ -309,6 +310,7 @@ export default function ArchPage() {
               </div>
             </div>
 
+            {/* IRS */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <GuidanceIcon />
@@ -321,11 +323,84 @@ export default function ArchPage() {
                 and annual inflation adjustments from irs.gov.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>Rev. Procs</span>
-                <span className={styles.sourceMetaItem}>Publications</span>
+                <span className={styles.sourceMetaItem}>570+ docs</span>
+                <span className={styles.sourceMetaItem}>PDF</span>
               </div>
             </div>
 
+            {/* SNAP/TANF/LIHEAP */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <GuidanceIcon />
+              <h3 className={styles.sourceTitle}>
+                Federal Benefits
+                <span className={styles.sourceBadge}>Live</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                SNAP COLA tables (FNS), TANF caseload/expenditure data (ACF),
+                LIHEAP SMI tables, and poverty guidelines (ASPE).
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>70+ files</span>
+                <span className={styles.sourceMetaItem}>PDF + XLSX</span>
+              </div>
+            </div>
+
+            {/* Canada */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <CodeIcon />
+              <h3 className={styles.sourceTitle}>
+                Canada Acts
+                <span className={styles.sourceBadge}>Live</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                All consolidated federal Acts from Justice Canada's Laws Website.
+                Includes Income Tax Act, Employment Insurance, and more.
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>956 acts</span>
+                <span className={styles.sourceMetaItem}>XML</span>
+              </div>
+            </div>
+
+            {/* UK */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <CodeIcon />
+              <h3 className={styles.sourceTitle}>
+                UK Legislation
+                <span className={styles.sourceBadge}>Live</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                UK Public General Acts from legislation.gov.uk. Full text in
+                Crown Legislation Markup Language (CLML) format.
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>3,237 acts</span>
+                <span className={styles.sourceMetaItem}>XML</span>
+              </div>
+            </div>
+
+            {/* State PDFs */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <StateIcon />
+              <h3 className={styles.sourceTitle}>
+                State Policy Docs
+                <span className={styles.sourceBadge}>Live</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                State tax forms, policy manuals, and benefit guidelines from 33+
+                state revenue and human services departments.
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>500+ PDFs</span>
+                <span className={styles.sourceMetaItem}>33 states</span>
+              </div>
+            </div>
+
+            {/* Census CPS */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <DatabaseIcon />
@@ -343,6 +418,7 @@ export default function ArchPage() {
               </div>
             </div>
 
+            {/* IRS SOI */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <ChartIcon />
@@ -360,23 +436,7 @@ export default function ArchPage() {
               </div>
             </div>
 
-            <div className={styles.sourceCard}>
-              <div className={styles.sourceCardGlow} />
-              <StateIcon />
-              <h3 className={styles.sourceTitle}>
-                State Laws
-                <span className={`${styles.sourceBadge} ${styles.sourceComingSoon}`}>Coming</span>
-              </h3>
-              <p className={styles.sourceDescription}>
-                State tax codes and benefit statutes. Starting with CA, NY, TX
-                and expanding to all 50 states.
-              </p>
-              <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>Tax codes</span>
-                <span className={styles.sourceMetaItem}>Benefits</span>
-              </div>
-            </div>
-
+            {/* Census ACS */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <DatabaseIcon />
