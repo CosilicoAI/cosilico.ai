@@ -302,15 +302,15 @@ export default function MicroplexPage() {
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                IPF Calibration
+                5.77M Census Blocks
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                Multi-Source Fusion
+                CD + SLD Calibration
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                Any Geography
+                Multi-Target IPF
               </span>
             </div>
           </div>
@@ -371,12 +371,12 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 03</div>
-                <h3 className={styles.stageTitle}>Synthesize billions</h3>
+                <h3 className={styles.stageTitle}>Synthesize & assign blocks</h3>
                 <p className={styles.stageDescription}>
-                  Generate synthetic households with hierarchical structure.
-                  More records = more degrees of freedom for calibration.
+                  Generate 500K+ households with block-level geography.
+                  Derive CD, SLDU, SLDL, county, tract post-hoc from block assignments.
                 </p>
-                <code className={styles.stageCode}>population = synth.generate(n=100_000)</code>
+                <code className={styles.stageCode}>hh = synth.generate(n=500_000, block_probs=blocks)</code>
               </div>
             </div>
 
@@ -388,12 +388,12 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 04</div>
-                <h3 className={styles.stageTitle}>Sparse reweighting</h3>
+                <h3 className={styles.stageTitle}>Multi-target calibration</h3>
                 <p className={styles.stageDescription}>
-                  IPF calibration with constraint-aware sampling to match administrative targets.
-                  District-level, county-level, or state-level calibration.
+                  IPF calibration to 3,000+ targets: 436 CDs, 1,950 SLDUs, 918 age distributions.
+                  Achieves &lt;1% error on calibrated geographies with smooth weight distribution.
                 </p>
-                <code className={styles.stageCode}>weights = calibrate(population, targets, method="ipf")</code>
+                <code className={styles.stageCode}>calibrate(hh, cd_targets | sldu_targets | age_targets)</code>
               </div>
             </div>
 
@@ -449,10 +449,11 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <SparseIcon />
-              <h3 className={styles.featureTitle}>Sparse reweighting</h3>
+              <h3 className={styles.featureTitle}>Block-level geography</h3>
               <p className={styles.featureDescription}>
-                IPF calibration with constraint-aware sampling to match 1,700+
-                administrative targets. District-level calibration from national surveys.
+                5.77M Census blocks with population-weighted assignment. Derive
+                CD, SLDU, SLDL, county, tract post-hoc. Calibrate to 3,000+ targets
+                with &lt;1% error on geographic totals.
               </p>
             </div>
 
