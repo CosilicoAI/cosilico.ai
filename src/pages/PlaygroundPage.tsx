@@ -183,13 +183,13 @@ export default function PlaygroundPage() {
               className={`${styles.modeButton} ${mode === "calculator" ? styles.modeButtonActive : ""}`}
               onClick={() => setMode("calculator")}
             >
-              Rules Calculator
+              Rules calculator
             </button>
             <button
               className={`${styles.modeButton} ${mode === "atlas" ? styles.modeButtonActive : ""}`}
               onClick={() => setMode("atlas")}
             >
-              Law Archive
+              Law archive
             </button>
           </div>
           <div className={styles.playgroundBadge}>
@@ -203,13 +203,13 @@ export default function PlaygroundPage() {
         {/* Input Panel */}
         <aside className={styles.inputPanel}>
           <div className={styles.panelHeader}>
-            <h2>Household Profile</h2>
+            <h2>Household profile</h2>
             <span className={styles.panelHint}>Adjust inputs to see real-time calculations</span>
           </div>
 
           <div className={styles.inputGroup}>
             <label htmlFor="income">
-              <span className={styles.labelText}>Annual Income</span>
+              <span className={styles.labelText}>Annual income</span>
               <span className={styles.labelValue}>{formatCurrency(input.income)}</span>
             </label>
             <input
@@ -246,7 +246,7 @@ export default function PlaygroundPage() {
 
           <div className={styles.inputGroup}>
             <label>
-              <span className={styles.labelText}>Filing Status</span>
+              <span className={styles.labelText}>Filing status</span>
             </label>
             <div className={styles.buttonGroup}>
               {[
@@ -337,9 +337,9 @@ export default function PlaygroundPage() {
           <div className={`${styles.resultsContent} ${isCalculating ? styles.resultsContentCalculating : ""}`}>
             {activeTab === "summary" && result && (
               <div className={styles.summaryView}>
-                {/* Net Income Hero */}
+                {/* Net income Hero */}
                 <div className={styles.netIncomeHero}>
-                  <span className={styles.netLabel}>Net Income</span>
+                  <span className={styles.netLabel}>Net income</span>
                   <span className={styles.netValue}>{formatCurrency(result.net_income)}</span>
                   <span className={styles.netSubtext}>
                     after taxes and benefits
@@ -392,11 +392,11 @@ export default function PlaygroundPage() {
                     <div className={`${styles.detailTotal} detail-total`}>{formatCurrency(result.total_tax)}</div>
                     <div className={styles.detailBreakdown}>
                       <div className={styles.detailRow}>
-                        <span>Federal Income Tax</span>
+                        <span>Federal income tax</span>
                         <span>{formatCurrency(result.federal_income_tax)}</span>
                       </div>
                       <div className={styles.detailRow}>
-                        <span>State Income Tax</span>
+                        <span>State income tax</span>
                         <span>{formatCurrency(result.state_income_tax)}</span>
                       </div>
                       <div className={styles.detailRow}>
@@ -419,7 +419,7 @@ export default function PlaygroundPage() {
                         <span>{formatCurrency(result.eitc)}</span>
                       </div>
                       <div className={styles.detailRow}>
-                        <span>Child Tax Credit</span>
+                        <span>Child tax credit</span>
                         <span>{formatCurrency(result.ctc)}</span>
                       </div>
                       <div className={styles.detailRow}>
@@ -464,7 +464,7 @@ export default function PlaygroundPage() {
                 <div className={styles.citationList}>
                   <div className={styles.citationItem}>
                     <div className={styles.citationHeader}>
-                      <span className={styles.citationLabel}>Federal Income Tax</span>
+                      <span className={styles.citationLabel}>Federal income tax</span>
                       <span className={styles.citationValue}>{formatCurrency(result.federal_income_tax)}</span>
                     </div>
                     <a href="https://www.law.cornell.edu/uscode/text/26/1" target="_blank" rel="noopener noreferrer" className={styles.citationLink}>
@@ -491,7 +491,7 @@ export default function PlaygroundPage() {
                   </div>
                   <div className={styles.citationItem}>
                     <div className={styles.citationHeader}>
-                      <span className={styles.citationLabel}>Child Tax Credit</span>
+                      <span className={styles.citationLabel}>Child tax credit</span>
                       <span className={styles.citationValue}>{formatCurrency(result.ctc)}</span>
                     </div>
                     <a href="https://www.law.cornell.edu/uscode/text/26/24" target="_blank" rel="noopener noreferrer" className={styles.citationLink}>
@@ -518,7 +518,7 @@ export default function PlaygroundPage() {
             {/* Law Archive - Search Panel */}
             <aside className={`${styles.inputPanel} ${styles.lawArchivePanel}`}>
               <div className={styles.panelHeader}>
-                <h2>Search Statutes</h2>
+                <h2>Search statutes</h2>
                 <span className={styles.panelHint}>Query the US Code by citation or keyword</span>
               </div>
 

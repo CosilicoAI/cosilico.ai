@@ -22,12 +22,6 @@ const glowPulse = keyframes({
   '50%': { boxShadow: `0 0 40px ${vars.color.accentIntense}, 0 0 60px ${vars.color.accentGlow}` },
 });
 
-const flowRight = keyframes({
-  '0%': { transform: 'translateX(-100%)', opacity: 0 },
-  '50%': { opacity: 1 },
-  '100%': { transform: 'translateX(100%)', opacity: 0 },
-});
-
 // ============================================
 // BASE STYLES
 // ============================================

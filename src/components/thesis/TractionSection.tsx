@@ -27,7 +27,7 @@ export function TractionSection() {
       </div>
 
       <div className={styles.tractionUsers}>
-        <h3>Used By</h3>
+        <h3>Used by</h3>
         <div className={styles.userGrid}>
           <div className={styles.userCard}>
             <h4>UK Government</h4>
@@ -38,37 +38,37 @@ export function TractionSection() {
             <p>Distributional analysis for tax reforms</p>
           </div>
           <div className={styles.userCard}>
-            <h4>Think Tanks</h4>
+            <h4>Think tanks</h4>
             <p>Research on UBI, child allowances, tax reform</p>
           </div>
         </div>
       </div>
 
       <div className={styles.lighthouseSection}>
-        <h3>Government as Lighthouse Customers</h3>
+        <h3>Government as lighthouse customers</h3>
         <p>Government adoption creates downstream enterprise value:</p>
         <div className={styles.lighthouseGrid}>
           <div className={styles.lighthouseCard}>
-            <h4>Credibility Signal</h4>
+            <h4>Credibility signal</h4>
             <p>"If HM Treasury trusts this for budget scoring, it's accurate enough for our risk models."</p>
           </div>
           <div className={styles.lighthouseCard}>
-            <h4>Regulatory Alignment</h4>
+            <h4>Regulatory alignment</h4>
             <p>Banks want to model what government models. Same methodology = predictable regulatory outcomes.</p>
           </div>
           <div className={styles.lighthouseCard}>
-            <h4>Policy Anticipation</h4>
+            <h4>Policy anticipation</h4>
             <p>Run the same scenarios government runs. Know how proposed legislation affects your portfolio before it passes.</p>
           </div>
           <div className={styles.lighthouseCard}>
-            <h4>Compliance Defense</h4>
+            <h4>Compliance defence</h4>
             <p>"We used the same methodology as [agency]" is a strong regulatory position.</p>
           </div>
         </div>
       </div>
 
       <div className={styles.tractionCoverage}>
-        <h3>Geographic Coverage</h3>
+        <h3>Geographic coverage</h3>
         <div className={styles.coverageGrid}>
           <div className={`${styles.coverageItem} ${styles.coverageLive}`}>
             <span className={styles.coverageFlag}>🇺🇸</span>
@@ -82,7 +82,7 @@ export function TractionSection() {
           </div>
           <div className={`${styles.coverageItem} ${styles.coverageProgress}`}>
             <span className={styles.coverageFlag}>🇨🇦</span>
-            <span className={`${styles.coverageStatus} ${styles.coverageStatusProgress}`}>In Progress</span>
+            <span className={`${styles.coverageStatus} ${styles.coverageStatusProgress}`}>In progress</span>
             <span className={styles.coverageDetail}>Canada (50% complete)</span>
           </div>
         </div>

@@ -63,17 +63,17 @@ const ExperimentPage: React.FC = () => {
       <div className={styles.experimentPage}>
         <div className={styles.experimentContainer}>
         <header className={styles.experimentHeader}>
-          <h1>Experiment: AlphaLaw Encoding</h1>
+          <h1>Experiment: AlphaLaw encoding</h1>
           <p className={styles.subtitle}>
             Minimal prompting approach to statute encoding
           </p>
         </header>
 
         <section className={styles.section}>
-          <h2>Current Agent Configuration</h2>
+          <h2>Current agent configuration</h2>
 
           <div className={styles.configCard}>
-            <h3>System Prompt</h3>
+            <h3>System prompt</h3>
             <p className={styles.configNote}>
               AlphaLaw style: minimal instruction, learn from reward signals
             </p>
@@ -85,7 +85,7 @@ const ExperimentPage: React.FC = () => {
           </div>
 
           <div className={styles.configCard}>
-            <h3>User Message Template</h3>
+            <h3>User message template</h3>
             <p className={styles.configNote}>
               Sent at start of each encoding task
             </p>
@@ -98,7 +98,7 @@ const ExperimentPage: React.FC = () => {
           </div>
 
           <div className={styles.configCard}>
-            <h3>Available Tools</h3>
+            <h3>Available tools</h3>
             <p className={styles.configNote}>
               TOOLS_MINIMAL - focused set for encoding
             </p>
@@ -118,7 +118,7 @@ const ExperimentPage: React.FC = () => {
           </div>
 
           <div className={styles.configCard}>
-            <h3>Available Resources</h3>
+            <h3>Available resources</h3>
             <p className={styles.configNote}>
               What the agent CAN access (if it chooses to)
             </p>
@@ -146,7 +146,7 @@ const ExperimentPage: React.FC = () => {
         </section>
 
         <section className={styles.section}>
-          <h2>Latest Run: 26 USC 63 (Standard Deduction)</h2>
+          <h2>Latest run: 26 USC 63 (standard deduction)</h2>
 
           <div className={styles.resultCardFailure}>
             <div className={styles.resultHeader}>
@@ -174,12 +174,12 @@ const ExperimentPage: React.FC = () => {
             </div>
 
             <div>
-              <h4>Generated Code:</h4>
+              <h4>Generated code:</h4>
               <pre className={styles.codeBlockEmpty}># Empty encoding</pre>
             </div>
 
             <div>
-              <h4>What Went Wrong:</h4>
+              <h4>What went wrong:</h4>
               <ul className={styles.analysisList}>
                 <li>Agent did NOT read the RAC_SPEC.md (only 2 tool calls)</li>
                 <li>No <code>text:</code> field in output</li>
@@ -190,7 +190,7 @@ const ExperimentPage: React.FC = () => {
           </div>
 
           <div className={styles.toolCallsSection}>
-            <h4>Tool Calls Made:</h4>
+            <h4>Tool calls made:</h4>
             <ol className={styles.toolCallsList}>
               <li>
                 <code>read_file("docs/RAC_SPEC.md", "engine")</code>
@@ -208,7 +208,7 @@ const ExperimentPage: React.FC = () => {
         </section>
 
         <section className={styles.section}>
-          <h2>Proposed System Improvements</h2>
+          <h2>Proposed system improvements</h2>
           <p className={styles.sectionNote}>
             From <a href="https://github.com/CosilicoAI/cosilico-encoder/pull/2">cosilico-encoder PR #2</a>
           </p>

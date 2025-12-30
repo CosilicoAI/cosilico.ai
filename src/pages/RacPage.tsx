@@ -142,7 +142,7 @@ export default function RacPage() {
         {/* Features Grid */}
         <section className={styles.featuresSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Everything in One File</h2>
+            <h2 className={styles.sectionTitle}>Everything in one file</h2>
             <p className={styles.sectionSubtitle}>
               No separate parameter files. No external test suites. Self-contained and auditable.
             </p>
@@ -151,7 +151,7 @@ export default function RacPage() {
           <div className={styles.featuresGrid}>
             <div className={`${styles.featureCard} ${styles.delay1}`}>
               <div className={styles.featureIcon}><CitationIcon /></div>
-              <h3 className={styles.featureTitle}>Legal Citations</h3>
+              <h3 className={styles.featureTitle}>Legal citations</h3>
               <p className={styles.featureDescription}>
                 Filepath mirrors statute citation. <code>26/24/d/1/B.rac</code> encodes
                 26 USC &sect; 24(d)(1)(B).
@@ -160,7 +160,7 @@ export default function RacPage() {
 
             <div className={`${styles.featureCard} ${styles.delay2}`}>
               <div className={styles.featureIcon}><ParameterIcon /></div>
-              <h3 className={styles.featureTitle}>Time-Varying Parameters</h3>
+              <h3 className={styles.featureTitle}>Time-varying parameters</h3>
               <p className={styles.featureDescription}>
                 Policy values change over time. Parameters track every historical value
                 with effective dates.
@@ -169,7 +169,7 @@ export default function RacPage() {
 
             <div className={`${styles.featureCard} ${styles.delay3}`}>
               <div className={styles.featureIcon}><FormulaIcon /></div>
-              <h3 className={styles.featureTitle}>No Magic Numbers</h3>
+              <h3 className={styles.featureTitle}>No magic numbers</h3>
               <p className={styles.featureDescription}>
                 Only -1, 0, 1, 2, 3 allowed in formulas. All policy values must come
                 from parameters.
@@ -187,7 +187,7 @@ export default function RacPage() {
 
             <div className={`${styles.featureCard} ${styles.delay5}`}>
               <div className={styles.featureIcon}><TestIcon /></div>
-              <h3 className={styles.featureTitle}>Inline Tests</h3>
+              <h3 className={styles.featureTitle}>Inline tests</h3>
               <p className={styles.featureDescription}>
                 Test cases live next to the code. Verify against official calculators
                 and real-world examples.
@@ -196,7 +196,7 @@ export default function RacPage() {
 
             <div className={`${styles.featureCard} ${styles.delay6}`}>
               <div className={styles.featureIcon}><VersionIcon /></div>
-              <h3 className={styles.featureTitle}>Temporal Formulas</h3>
+              <h3 className={styles.featureTitle}>Temporal formulas</h3>
               <p className={styles.featureDescription}>
                 When laws change, track different formula versions with effective dates
                 and sunset provisions.
@@ -208,7 +208,7 @@ export default function RacPage() {
         {/* Structure Table */}
         <section className={styles.structureSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Declaration Types</h2>
+            <h2 className={styles.sectionTitle}>Declaration types</h2>
             <p className={styles.sectionSubtitle}>
               Each file can contain multiple named declarations
             </p>
@@ -255,7 +255,7 @@ export default function RacPage() {
         {/* CTA */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Full Specification</h2>
+            <h2 className={styles.ctaTitle}>Full specification</h2>
             <p className={styles.ctaText}>
               See the complete .rac format specification with all attributes,
               scoping rules, and migration guide.

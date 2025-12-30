@@ -57,7 +57,7 @@ For purposes of subsection (a) -
 The credit percentage and the phaseout percentage shall be determined
 as follows:
 
-  | Qualifying Children | Credit % | Phaseout % |
+  | Qualifying children | Credit % | Phaseout % |
   |---------------------|----------|------------|
   | 1 child             | 34%      | 15.98%     |
   | 2 children          | 40%      | 21.06%     |
@@ -70,7 +70,7 @@ const EITC_ENCODING: Encoding = {
   citation: '26 USC 32',
   sourcePath: 'us/statute/26/32/2025-01-01',
   repoUrl: 'https://github.com/CosilicoAI/cosilico-us/blob/main/26/32/credit.cos',
-  formulaCode: `# 26 USC 32 - Earned Income Tax Credit
+  formulaCode: `# 26 USC 32 - Earned income tax credit
 # Source: atlas://us/statute/26/32/2025-01-01
 
 source {
@@ -93,7 +93,7 @@ variable eitc {
   entity TaxUnit
   period Year
   dtype Money
-  label "Earned Income Tax Credit"
+  label "Earned income Tax Credit"
 
   formula {
     # 32(c)(1): Check eligibility
@@ -257,7 +257,7 @@ const CosilicoPipeline: React.FC = () => {
 
               <div className={styles.codeBlock}>
                 <div className={styles.codeBlockHeader}>
-                  <span className={styles.codeBlockTitle}>Statute Text</span>
+                  <span className={styles.codeBlockTitle}>Statute text</span>
                   <div className={styles.codeBlockDots}>
                     <span></span>
                     <span></span>
@@ -316,14 +316,14 @@ const CosilicoPipeline: React.FC = () => {
           {activeTab === 'params' && (
             <div className="params-panel">
               <div className={styles.panelHeader}>
-                <h3>Tax Year 2025</h3>
+                <h3>Tax year 2025</h3>
                 <div className={styles.engineBadge} style={{ marginTop: '12px' }}>
                   Parameters from <code>cosilico-compile</code>
                 </div>
               </div>
 
               <div className={styles.paramsSources}>
-                <h4>Authoritative Sources</h4>
+                <h4>Authoritative sources</h4>
                 <ul>
                   <li>Statute: 26 USC 32(b)(1) - fixed percentages</li>
                   <li>Guidance: Rev. Proc. 2024-40 - TY 2025 inflation adjustments</li>
@@ -332,7 +332,7 @@ const CosilicoPipeline: React.FC = () => {
 
               <div className={styles.paramsGrid}>
                 <div className={styles.paramTable}>
-                  <h4>Credit Percentages (32(b)(1))</h4>
+                  <h4>Credit percentages (32(b)(1))</h4>
                   <table>
                     <thead>
                       <tr>
@@ -354,12 +354,12 @@ const CosilicoPipeline: React.FC = () => {
                 </div>
 
                 <div className={styles.paramTable}>
-                  <h4>Maximum Credits (Rev. Proc. 2024-40)</h4>
+                  <h4>Maximum credits (Rev. Proc. 2024-40)</h4>
                   <table>
                     <thead>
                       <tr>
                         <th>Children</th>
-                        <th>Max Credit</th>
+                        <th>Max credit</th>
                         <th>Earned Inc. Amt</th>
                       </tr>
                     </thead>
@@ -384,7 +384,7 @@ const CosilicoPipeline: React.FC = () => {
 
               <div className={styles.calcGrid}>
                 <div className={`${styles.inputField} ${errors.earnedIncome ? styles.inputFieldError : ''}`}>
-                  <label>Earned Income</label>
+                  <label>Earned income</label>
                   <input
                     type="number"
                     value={earnedIncome}
@@ -410,7 +410,7 @@ const CosilicoPipeline: React.FC = () => {
                   {errors.agi && <span className={styles.errorMsg}>{errors.agi}</span>}
                 </div>
                 <div className={styles.inputField}>
-                  <label>Qualifying Children</label>
+                  <label>Qualifying children</label>
                   <select value={numChildren} onChange={(e) => {
                     setNumChildren(Number(e.target.value));
                     setResult(null);
@@ -421,13 +421,13 @@ const CosilicoPipeline: React.FC = () => {
                   </select>
                 </div>
                 <div className={styles.inputField}>
-                  <label>Filing Status</label>
+                  <label>Filing status</label>
                   <select value={filingStatus} onChange={(e) => {
                     setFilingStatus(e.target.value as 'single' | 'joint');
                     setResult(null);
                   }}>
-                    <option value="single">Single / Head of Household</option>
-                    <option value="joint">Married Filing Jointly</option>
+                    <option value="single">Single / head of household</option>
+                    <option value="joint">Married filing jointly</option>
                   </select>
                 </div>
               </div>
@@ -452,7 +452,7 @@ const CosilicoPipeline: React.FC = () => {
                   </div>
 
                   <div className={styles.citationChain}>
-                    <h5>Citation Chain</h5>
+                    <h5>Citation chain</h5>
                     <ol>
                       <li>
                         <strong>Source:</strong>{' '}

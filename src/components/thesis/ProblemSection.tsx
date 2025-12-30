@@ -5,7 +5,7 @@ import * as styles from "../../styles/thesis.css";
 export function ProblemSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>1. The Problem</h2>
+      <h2>1. The problem</h2>
       <p className={styles.problemLead}>
         Society is hard to optimize because nobody has a shared model to reason against.
       </p>
@@ -19,7 +19,7 @@ export function ProblemSection() {
           <p className={styles.problemExampleText}>Model portfolio risk without knowing how policy changes will affect borrowers.</p>
         </div>
         <div className={styles.problemExample}>
-          <h4 className={styles.problemExampleTitle}>AI Agents</h4>
+          <h4 className={styles.problemExampleTitle}>AI agents</h4>
           <p className={styles.problemExampleText}>Hallucinate tax and benefit calculations that require statutory precision.</p>
         </div>
       </div>

@@ -4,17 +4,17 @@ import * as styles from "../../styles/thesis.css";
 export function AskSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>11. The Ask</h2>
+      <h2>11. The ask</h2>
 
       <div className={styles.askContainer}>
         <div className={styles.askAmount}>
-          <span className={styles.askLabel}>Seed Round</span>
+          <span className={styles.askLabel}>Seed round</span>
           <span className={styles.askValue}>$3-5M</span>
         </div>
 
         <div className={styles.askDetails}>
           <div className={styles.askUse}>
-            <h3>Use of Funds</h3>
+            <h3>Use of funds</h3>
             <div className={styles.fundBars}>
               <div className={styles.fundBar}>
                 <div className={styles.fundFill} style={{ width: "50%" }}></div>
@@ -36,7 +36,7 @@ export function AskSection() {
           </div>
 
           <div className={styles.askMilestones}>
-            <h3>Milestones to Series A</h3>
+            <h3>Milestones to series A</h3>
             <ul>
               <li>10+ paying customers</li>
               <li>$1M+ ARR</li>
@@ -49,7 +49,7 @@ export function AskSection() {
       </div>
 
       <div className={styles.askProjections}>
-        <h3>Revenue Path</h3>
+        <h3>Revenue path</h3>
         <table className={styles.projectionsTable}>
           <thead>
             <tr>
