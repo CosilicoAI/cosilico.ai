@@ -13,13 +13,6 @@ const EncodeIcon = () => (
   </svg>
 );
 
-const PredictIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.loopNodeIconSvg}>
-    <circle cx="12" cy="12" r="10" />
-    <path d="M12 6v6l4 2" />
-  </svg>
-);
-
 const ValidateIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.loopNodeIconSvg}>
     <path d="M9 11l3 3L22 4" />
@@ -34,6 +27,28 @@ const LearnIcon = () => (
   </svg>
 );
 
+const SessionIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.loopNodeIconSvg}>
+    <path d="M12 8v4l3 3" />
+    <circle cx="12" cy="12" r="10" />
+  </svg>
+);
+
+const TerminalIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <polyline points="4 17 10 11 4 5" />
+    <line x1="12" y1="19" x2="20" y2="19" />
+  </svg>
+);
+
+const JourneyIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+    <path d="M2 17l10 5 10-5" />
+    <path d="M2 12l10 5 10-5" />
+  </svg>
+);
+
 const DatabaseIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
     <ellipse cx="12" cy="5" rx="9" ry="3" />
@@ -45,22 +60,6 @@ const DatabaseIcon = () => (
 const PipelineIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
     <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-  </svg>
-);
-
-const HarnessIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
-    <rect x="3" y="3" width="18" height="18" rx="2" />
-    <path d="M3 9h18" />
-    <path d="M9 21V9" />
-  </svg>
-);
-
-const MetricsIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
-    <path d="M18 20V10" />
-    <path d="M12 20V4" />
-    <path d="M6 20v-6" />
   </svg>
 );
 
@@ -88,8 +87,8 @@ export default function AutoRacPage() {
             <h1 className={styles.heroTitle}>AutoRAC</h1>
             <p className={styles.heroSubtitle}>
               Automated statute encoding with continuous feedback.
-              AI agents predict, encode, validate, and learn. Scientific
-              experimentation for autonomous legal rule extraction.
+              AI agents encode, validate, and learn through full session tracking.
+              Journey-based experimentation for autonomous legal rule extraction.
             </p>
           </div>
         </section>
@@ -98,17 +97,17 @@ export default function AutoRacPage() {
         <section className={styles.loopSection}>
           <div className={styles.loopDiagram}>
             <div className={`${styles.loopNode} ${styles.loopNodeActive}`}>
-              <div className={styles.loopNodeIcon}><EncodeIcon /></div>
-              <span className={styles.loopNodeLabel}>Encode</span>
-              <span className={styles.loopNodeDesc}>Statute → RAC</span>
+              <div className={styles.loopNodeIcon}><SessionIcon /></div>
+              <span className={styles.loopNodeLabel}>Session</span>
+              <span className={styles.loopNodeDesc}>Track journey</span>
             </div>
 
             <div className={styles.loopArrow} />
 
             <div className={styles.loopNode}>
-              <div className={styles.loopNodeIcon}><PredictIcon /></div>
-              <span className={styles.loopNodeLabel}>Predict</span>
-              <span className={styles.loopNodeDesc}>Self-assess scores</span>
+              <div className={styles.loopNodeIcon}><EncodeIcon /></div>
+              <span className={styles.loopNodeLabel}>Encode</span>
+              <span className={styles.loopNodeDesc}>Statute → RAC</span>
             </div>
 
             <div className={styles.loopArrow} />
@@ -124,7 +123,7 @@ export default function AutoRacPage() {
             <div className={styles.loopNode}>
               <div className={styles.loopNodeIcon}><LearnIcon /></div>
               <span className={styles.loopNodeLabel}>Learn</span>
-              <span className={styles.loopNodeDesc}>Calibrate & improve</span>
+              <span className={styles.loopNodeDesc}>Analyze sessions</span>
             </div>
           </div>
         </section>
@@ -134,31 +133,50 @@ export default function AutoRacPage() {
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Infrastructure</h2>
             <p className={styles.sectionSubtitle}>
-              The harness that orchestrates encoding experiments and tracks calibration
+              Session logging and journey tracking for encoding experiments
             </p>
           </div>
 
           <div className={styles.componentsGrid}>
             <div className={`${styles.componentCard} ${styles.delay1}`}>
               <div className={styles.componentHeader}>
-                <div className={styles.componentIcon}><DatabaseIcon /></div>
+                <div className={styles.componentIcon}><JourneyIcon /></div>
                 <div>
-                  <div className={styles.componentTitle}>Experiment DB</div>
-                  <div className={styles.componentFile}>experiment_db.py</div>
+                  <div className={styles.componentTitle}>Session Logging</div>
+                  <div className={styles.componentFile}>session_logging.py</div>
                 </div>
               </div>
               <p className={styles.componentDesc}>
-                SQLite database logging every encoding attempt with predicted and
-                actual scores for calibration analysis.
+                Full Claude Code session transcript tracking. Captures every tool call,
+                validation result, and decision path for post-hoc analysis.
               </p>
               <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>Predicted vs actual score tracking</div>
-                <div className={styles.componentFeature}>Agent suggestion logging</div>
-                <div className={styles.componentFeature}>Iteration history chain</div>
+                <div className={styles.componentFeature}>Full session transcripts</div>
+                <div className={styles.componentFeature}>Automatic event capture via hooks</div>
+                <div className={styles.componentFeature}>Journey-based tracking</div>
               </div>
             </div>
 
             <div className={`${styles.componentCard} ${styles.delay2}`}>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}><TerminalIcon /></div>
+                <div>
+                  <div className={styles.componentTitle}>CLI Commands</div>
+                  <div className={styles.componentFile}>cli.py</div>
+                </div>
+              </div>
+              <p className={styles.componentDesc}>
+                Rich command-line interface for managing sessions, viewing history,
+                and analyzing encoding patterns.
+              </p>
+              <div className={styles.componentFeatures}>
+                <div className={styles.componentFeature}>session-start, session-end</div>
+                <div className={styles.componentFeature}>sessions, session-show, session-stats</div>
+                <div className={styles.componentFeature}>log-event for custom events</div>
+              </div>
+            </div>
+
+            <div className={`${styles.componentCard} ${styles.delay3}`}>
               <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}><PipelineIcon /></div>
                 <div>
@@ -177,111 +195,131 @@ export default function AutoRacPage() {
               </div>
             </div>
 
-            <div className={`${styles.componentCard} ${styles.delay3}`}>
-              <div className={styles.componentHeader}>
-                <div className={styles.componentIcon}><HarnessIcon /></div>
-                <div>
-                  <div className={styles.componentTitle}>Encoder Harness</div>
-                  <div className={styles.componentFile}>encoder_harness.py</div>
-                </div>
-              </div>
-              <p className={styles.componentDesc}>
-                Wraps the encoding agent with prediction requests and logging.
-                Iterates until all validators pass.
-              </p>
-              <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>Pre-encoding score prediction</div>
-                <div className={styles.componentFeature}>Framework improvement suggestions</div>
-                <div className={styles.componentFeature}>Automatic retry with feedback</div>
-              </div>
-            </div>
-
             <div className={`${styles.componentCard} ${styles.delay4}`}>
               <div className={styles.componentHeader}>
-                <div className={styles.componentIcon}><MetricsIcon /></div>
+                <div className={styles.componentIcon}><DatabaseIcon /></div>
                 <div>
-                  <div className={styles.componentTitle}>Calibration Metrics</div>
-                  <div className={styles.componentFile}>metrics.py</div>
+                  <div className={styles.componentTitle}>Experiment DB</div>
+                  <div className={styles.componentFile}>experiment_db.py</div>
                 </div>
               </div>
               <p className={styles.componentDesc}>
-                Measures how well agents predict their own performance.
-                Tracks bias, MSE, and correlation over time.
+                SQLite database storing sessions, events, and outcomes for
+                pattern analysis and learning.
               </p>
               <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>Mean squared error per metric</div>
-                <div className={styles.componentFeature}>Systematic bias detection</div>
-                <div className={styles.componentFeature}>Trend analysis snapshots</div>
+                <div className={styles.componentFeature}>Session and event storage</div>
+                <div className={styles.componentFeature}>Outcome tracking</div>
+                <div className={styles.componentFeature}>Pattern analysis queries</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Calibration Example */}
+        {/* Session Stats Example */}
         <section className={styles.calibrationSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Calibration Report</h2>
+            <h2 className={styles.sectionTitle}>Session Analytics</h2>
             <p className={styles.sectionSubtitle}>
-              Sample output showing agent prediction accuracy
+              Sample output from session-stats command
             </p>
           </div>
 
           <div className={styles.calibrationCard}>
             <div className={styles.calibrationHeader}>
-              $ python -m autorac.metrics --db experiments.db
+              $ autorac session-stats --last 30d
             </div>
             <div className={styles.calibrationContent}>
               <table className={styles.calibrationTable}>
                 <thead>
                   <tr>
                     <th>Metric</th>
-                    <th>N</th>
-                    <th>Predicted</th>
-                    <th>Actual</th>
-                    <th>Bias</th>
-                    <th>MSE</th>
+                    <th>Sessions</th>
+                    <th>Events</th>
+                    <th>Success</th>
+                    <th>Avg Duration</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>rac_reviewer</td>
-                    <td className={styles.metricNeutral}>47</td>
-                    <td className={styles.metricNeutral}>7.82</td>
-                    <td className={styles.metricNeutral}>7.45</td>
-                    <td className={styles.metricNegative}>+0.37</td>
-                    <td className={styles.metricNeutral}>0.4821</td>
+                    <td>EITC encoding</td>
+                    <td className={styles.metricNeutral}>12</td>
+                    <td className={styles.metricNeutral}>847</td>
+                    <td className={styles.metricPositive}>92%</td>
+                    <td className={styles.metricNeutral}>24m</td>
                   </tr>
                   <tr>
-                    <td>formula_reviewer</td>
-                    <td className={styles.metricNeutral}>47</td>
-                    <td className={styles.metricNeutral}>7.15</td>
-                    <td className={styles.metricNeutral}>7.32</td>
-                    <td className={styles.metricPositive}>-0.17</td>
-                    <td className={styles.metricNeutral}>0.3156</td>
+                    <td>CTC encoding</td>
+                    <td className={styles.metricNeutral}>8</td>
+                    <td className={styles.metricNeutral}>623</td>
+                    <td className={styles.metricPositive}>88%</td>
+                    <td className={styles.metricNeutral}>31m</td>
                   </tr>
                   <tr>
-                    <td>parameter_reviewer</td>
-                    <td className={styles.metricNeutral}>47</td>
-                    <td className={styles.metricNeutral}>8.21</td>
-                    <td className={styles.metricNeutral}>7.89</td>
-                    <td className={styles.metricNegative}>+0.32</td>
-                    <td className={styles.metricNeutral}>0.2847</td>
+                    <td>SNAP encoding</td>
+                    <td className={styles.metricNeutral}>15</td>
+                    <td className={styles.metricNeutral}>1,204</td>
+                    <td className={styles.metricNeutral}>75%</td>
+                    <td className={styles.metricNeutral}>42m</td>
                   </tr>
                   <tr>
-                    <td>policyengine_match</td>
-                    <td className={styles.metricNeutral}>32</td>
-                    <td className={styles.metricNeutral}>0.91</td>
-                    <td className={styles.metricNeutral}>0.94</td>
-                    <td className={styles.metricPositive}>-0.03</td>
-                    <td className={styles.metricNeutral}>0.0089</td>
+                    <td>Validation runs</td>
+                    <td className={styles.metricNeutral}>35</td>
+                    <td className={styles.metricNeutral}>2,674</td>
+                    <td className={styles.metricPositive}>94%</td>
+                    <td className={styles.metricNeutral}>8m</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* CLI Reference */}
+        <section className={styles.calibrationSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>CLI Reference</h2>
+            <p className={styles.sectionSubtitle}>
+              Session management commands
+            </p>
+          </div>
+
+          <div className={styles.calibrationCard}>
+            <div className={styles.calibrationHeader}>
+              Session Lifecycle
+            </div>
+            <div className={styles.calibrationContent}>
+              <table className={styles.calibrationTable}>
+                <thead>
+                  <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>session-start</td>
+                    <td className={styles.metricNeutral}>Begin a new encoding session with goal and metadata</td>
                   </tr>
                   <tr>
-                    <td>taxsim_match</td>
-                    <td className={styles.metricNeutral}>28</td>
-                    <td className={styles.metricNeutral}>0.87</td>
-                    <td className={styles.metricNeutral}>0.89</td>
-                    <td className={styles.metricPositive}>-0.02</td>
-                    <td className={styles.metricNeutral}>0.0124</td>
+                    <td>session-end</td>
+                    <td className={styles.metricNeutral}>Complete session with outcome (success/failure/partial)</td>
+                  </tr>
+                  <tr>
+                    <td>log-event</td>
+                    <td className={styles.metricNeutral}>Record custom events during a session</td>
+                  </tr>
+                  <tr>
+                    <td>sessions</td>
+                    <td className={styles.metricNeutral}>List all sessions with filters and sorting</td>
+                  </tr>
+                  <tr>
+                    <td>session-show</td>
+                    <td className={styles.metricNeutral}>View full session transcript and events</td>
+                  </tr>
+                  <tr>
+                    <td>session-stats</td>
+                    <td className={styles.metricNeutral}>Aggregate statistics across sessions</td>
                   </tr>
                 </tbody>
               </table>
@@ -292,10 +330,10 @@ export default function AutoRacPage() {
         {/* CTA */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Scientific Encoding</h2>
+            <h2 className={styles.ctaTitle}>Journey-Based Learning</h2>
             <p className={styles.ctaText}>
-              Build calibrated AI agents that know what they don't know.
-              Every encoding attempt contributes to improving the system.
+              Track complete encoding journeys from start to finish.
+              Every session contributes to understanding what works and why.
             </p>
             <div className={styles.ctaLinks}>
               <a

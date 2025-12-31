@@ -20,6 +20,7 @@ import ArchPage from "./pages/ArchPage";
 import AutoRacPage from "./pages/AutoRacPage";
 import ExperimentPage from "./pages/ExperimentPage";
 import ProgressPage from "./pages/ProgressPage";
+import PortalPage from "./pages/PortalPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 // Scroll to top on route change
@@ -57,6 +58,7 @@ function App() {
           <Route path="/stack/autorac" element={<AutoRacPage />} />
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />
+          <Route path="/portal" element={<PortalPage />} />
         </Routes>
       </div>
     </BrowserRouter>
