@@ -1,15 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
-
-// Scroll to top on route change
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-}
 import Nav from "./components/Nav";
 import HomePage from "./pages/HomePage";
 import ThesisPage from "./pages/ThesisPage";
@@ -30,6 +21,15 @@ import AutoRacPage from "./pages/AutoRacPage";
 import ExperimentPage from "./pages/ExperimentPage";
 import ProgressPage from "./pages/ProgressPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function App() {
   return (

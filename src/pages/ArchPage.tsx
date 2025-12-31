@@ -144,24 +144,24 @@ export default function ArchPage() {
         <section className={styles.hero}>
           <div className={styles.heroGlow} />
           <div className={styles.heroContent}>
-            <div className={styles.heroBadge}>FOUNDATIONAL ARCHIVE</div>
+            <div className={styles.heroBadge}>UNIVERSAL LEGAL ARCHIVE</div>
             <h1 className={styles.heroTitle}>Arch</h1>
             <p className={styles.heroSubtitle}>
-              The single source of truth for all raw government files. Statutes, regulations,
-              guidance documents, microdata, and crosstabs - archived, versioned, and API-accessible.
+              The world's law, normalized to one format. Statutes from the US, UK, Canada, EU, and NZ -
+              plus regulations, guidance, and microdata - all converted to Akoma Ntoso and indexed for AI.
             </p>
             <div className={styles.heroPills}>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Source Files
+                Akoma Ntoso
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Provenance Tracking
+                50 US States
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Change Detection
+                5 Countries
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
@@ -176,53 +176,55 @@ export default function ArchPage() {
           <div className={styles.descriptionContent}>
             <div className={styles.descriptionText}>
               <h2 className={styles.descriptionTitle}>
-                The Archive Layer
+                Universal Interchange Format
               </h2>
               <p className={styles.descriptionParagraph}>
-                Arch is the foundational layer of the Cosilico stack. Before we can encode law
-                into executable rules, we need the raw source materials - statutes from Congress,
-                guidance from the IRS, microdata from the Census, and crosstabs from every agency.
+                Every jurisdiction has its own format: USLM for US Code, CLML for UK legislation,
+                Formex for EU, proprietary HTML for each US state. Arch normalizes everything to
+                <strong> Akoma Ntoso</strong> - the UN-backed OASIS standard for legislative documents.
               </p>
               <ul className={styles.descriptionList}>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  Automated fetchers pull from official government sources
+                  Parsers for US Code (USLM), UK Acts (CLML), Canada, NZ, and EU (Formex)
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  All files stored in Cloudflare R2 with full provenance
+                  US federal regulations from eCFR (Title 26 IRS, Title 7 SNAP, Title 20 SSA)
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  PostgreSQL metadata tracks versions, citations, and relationships
+                  State statute converters for NY, CA, FL, MI, TX, and 45 more states
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  REST API for programmatic access to any document
+                  IRS guidance, SSA POMS, and CMS manuals parsed from HTML/PDF
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  Change detection alerts when sources are updated
+                  All documents indexed in PostgreSQL with full-text search
                 </li>
               </ul>
             </div>
             <div className={styles.descriptionVisual}>
               <div className={styles.visualGlow} />
               <pre className={styles.codePre}>
-{`{
-  "file_id": "arch-2024-irs-pub-596",
-  "source": "irs.gov",
-  "type": "guidance",
-  "title": "Publication 596: EITC",
-  "year": 2024,
-  "fetched_at": "2024-12-15T08:00:00Z",
-  "r2_path": "guidance/irs/pub-596-2024.pdf",
-  "checksum": "sha256:a1b2c3...",
-  "citations": [
-    "26 USC 32",
-    "Rev. Proc. 2023-34"
+{`# Akoma Ntoso Section Model
+{
+  "id": "act/us/usc/26/32",
+  "heading": "Earned income",
+  "jurisdiction": "us",
+  "doc_type": "statute",
+  "source_format": "uslm",
+  "effective_date": "2024-01-01",
+  "subsections": [
+    { "id": "a", "heading": "Allowance of credit" },
+    { "id": "b", "heading": "Percentages" },
+    { "id": "c", "heading": "Definitions" }
   ],
-  "supersedes": "arch-2023-irs-pub-596"
+  "cross_references": [
+    "26 USC 2(a)", "26 USC 152"
+  ]
 }`}
               </pre>
             </div>
