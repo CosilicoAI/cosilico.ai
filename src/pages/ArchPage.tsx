@@ -145,7 +145,7 @@ export default function ArchPage() {
           <div className={styles.heroGlow} />
           <div className={styles.heroContent}>
             <div className={styles.heroBadge}>FOUNDATIONAL ARCHIVE</div>
-            <h1 className={styles.heroTitle}>Cosilico Arch</h1>
+            <h1 className={styles.heroTitle}>Arch</h1>
             <p className={styles.heroSubtitle}>
               The single source of truth for all raw government files. Statutes, regulations,
               guidance documents, microdata, and crosstabs - archived, versioned, and API-accessible.

@@ -87,9 +87,9 @@ export default function AutoRacPage() {
             <div className={styles.heroBadge}>AI ENCODING</div>
             <h1 className={styles.heroTitle}>AutoRAC</h1>
             <p className={styles.heroSubtitle}>
-              AI-assisted statute encoding with continuous feedback.
-              Predict, encode, validate, learn. Scientific experimentation
-              for automated legal rule extraction.
+              Automated statute encoding with continuous feedback.
+              AI agents predict, encode, validate, and learn. Scientific
+              experimentation for autonomous legal rule extraction.
             </p>
           </div>
         </section>
