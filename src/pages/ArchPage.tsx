@@ -180,8 +180,10 @@ export default function ArchPage() {
               </h2>
               <p className={styles.descriptionParagraph}>
                 Every jurisdiction has its own format: USLM for US Code, CLML for UK legislation,
-                Formex for EU, proprietary HTML for each US state. Arch normalizes everything to
-                <strong> Akoma Ntoso</strong> - the UN-backed OASIS standard for legislative documents.
+                Formex for EU, proprietary HTML for each US state. Arch normalizes everything to{" "}
+                <a href="https://www.oasis-open.org/committees/legaldocml/" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>
+                  <strong>Akoma Ntoso</strong>
+                </a> - the UN-backed OASIS standard for legislative documents.
               </p>
               <ul className={styles.descriptionList}>
                 <li className={styles.descriptionItem}>
