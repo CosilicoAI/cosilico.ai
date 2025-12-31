@@ -234,9 +234,9 @@ export default function ArchPage() {
         {/* Architecture Diagram */}
         <section className={styles.architectureSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Architecture</h2>
+            <h2 className={styles.sectionTitle}>Converter Pipeline</h2>
             <p className={styles.sectionSubtitle}>
-              From government sources to API endpoints
+              From diverse source formats to unified Akoma Ntoso
             </p>
           </div>
 
@@ -245,9 +245,9 @@ export default function ArchPage() {
             <div className={styles.pipelineStages}>
               <div className={styles.pipelineStage}>
                 <FetchIcon />
-                <h4 className={styles.stageTitle}>Fetchers</h4>
+                <h4 className={styles.stageTitle}>Sources</h4>
                 <p className={styles.stageDescription}>
-                  Automated scrapers for IRS, Census, state agencies
+                  USLM, CLML, eCFR, state HTML, PDF
                 </p>
               </div>
 
@@ -255,9 +255,9 @@ export default function ArchPage() {
 
               <div className={styles.pipelineStage}>
                 <StorageIcon />
-                <h4 className={styles.stageTitle}>R2 Storage</h4>
+                <h4 className={styles.stageTitle}>Converters</h4>
                 <p className={styles.stageDescription}>
-                  Raw files stored with versioning and checksums
+                  60+ parsers normalize to Akoma Ntoso
                 </p>
               </div>
 
@@ -265,9 +265,9 @@ export default function ArchPage() {
 
               <div className={styles.pipelineStage}>
                 <MetadataIcon />
-                <h4 className={styles.stageTitle}>PostgreSQL</h4>
+                <h4 className={styles.stageTitle}>arch.rules</h4>
                 <p className={styles.stageDescription}>
-                  Metadata, citations, relationships indexed
+                  PostgreSQL with FTS5 full-text search
                 </p>
               </div>
 
@@ -275,9 +275,9 @@ export default function ArchPage() {
 
               <div className={styles.pipelineStage}>
                 <ServeIcon />
-                <h4 className={styles.stageTitle}>API</h4>
+                <h4 className={styles.stageTitle}>RAC</h4>
                 <p className={styles.stageDescription}>
-                  REST endpoints for retrieval and search
+                  Feed encoding pipeline for executable rules
                 </p>
               </div>
             </div>
@@ -330,21 +330,21 @@ export default function ArchPage() {
               </div>
             </div>
 
-            {/* SNAP/TANF/LIHEAP */}
+            {/* eCFR Regulations */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <GuidanceIcon />
               <h3 className={styles.sourceTitle}>
-                Federal Benefits
+                Federal Regulations
                 <span className={styles.sourceBadge}>Live</span>
               </h3>
               <p className={styles.sourceDescription}>
-                SNAP COLA tables (FNS), TANF caseload/expenditure data (ACF),
-                LIHEAP SMI tables, and poverty guidelines (ASPE).
+                Code of Federal Regulations from eCFR. Title 26 (IRS), Title 7 (SNAP),
+                Title 20 (SSA), Title 42 (CMS) with point-in-time versioning.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>70+ files</span>
-                <span className={styles.sourceMetaItem}>PDF + XLSX</span>
+                <span className={styles.sourceMetaItem}>50 titles</span>
+                <span className={styles.sourceMetaItem}>eCFR XML</span>
               </div>
             </div>
 
@@ -384,21 +384,21 @@ export default function ArchPage() {
               </div>
             </div>
 
-            {/* State PDFs */}
+            {/* US State Statutes */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <StateIcon />
               <h3 className={styles.sourceTitle}>
-                State Policy Docs
-                <span className={styles.sourceBadge}>Live</span>
+                US State Statutes
+                <span className={styles.sourceBadge}>Building</span>
               </h3>
               <p className={styles.sourceDescription}>
-                State tax forms, policy manuals, and benefit guidelines from 33+
-                state revenue and human services departments.
+                Dedicated parsers for each state's unique format. NY (API), CA (bulk XML),
+                FL, MI, TX, OH, and 44 more with HTML scraping converters.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>500+ PDFs</span>
-                <span className={styles.sourceMetaItem}>33 states</span>
+                <span className={styles.sourceMetaItem}>50 states</span>
+                <span className={styles.sourceMetaItem}>HTML/XML</span>
               </div>
             </div>
 
@@ -438,21 +438,21 @@ export default function ArchPage() {
               </div>
             </div>
 
-            {/* Census ACS */}
+            {/* New Zealand */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
-              <DatabaseIcon />
+              <CodeIcon />
               <h3 className={styles.sourceTitle}>
-                Census ACS
-                <span className={`${styles.sourceBadge} ${styles.sourceComingSoon}`}>Coming</span>
+                New Zealand
+                <span className={styles.sourceBadge}>Live</span>
               </h3>
               <p className={styles.sourceDescription}>
-                American Community Survey microdata for detailed geographic
-                targeting at county and tract level.
+                All Acts and regulations from the NZ Parliamentary Counsel Office.
+                Full XML access with point-in-time historical versions.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>1-Year</span>
-                <span className={styles.sourceMetaItem}>5-Year</span>
+                <span className={styles.sourceMetaItem}>PCO XML</span>
+                <span className={styles.sourceMetaItem}>Versioned</span>
               </div>
             </div>
           </div>
@@ -552,10 +552,10 @@ export default function ArchPage() {
         <section className={styles.installSection}>
           <div className={styles.installBox}>
             <div className={styles.installBoxGlow} />
-            <h2 className={styles.installTitle}>In Development</h2>
+            <h2 className={styles.installTitle}>Building the World's Legal Archive</h2>
             <p className={styles.installSubtext}>
-              Arch is currently in active development. Core infrastructure is operational
-              with fetchers running for primary sources.
+              60+ converters operational. US federal (USLM + eCFR), UK (CLML), Canada, NZ,
+              and 50 US state parsers converting to Akoma Ntoso. EU coming next.
             </p>
             <div className={styles.installLinks}>
               <a
@@ -567,8 +567,8 @@ export default function ArchPage() {
                 <GitHubIcon />
                 GitHub
               </a>
-              <Link to="/stack/atlas" className={`${styles.installLink} ${styles.installLinkSecondary}`}>
-                View Atlas (API Layer)
+              <Link to="/stack/rac" className={`${styles.installLink} ${styles.installLinkSecondary}`}>
+                View RAC (Rules Engine)
               </Link>
             </div>
           </div>
