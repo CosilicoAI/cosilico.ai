@@ -336,9 +336,16 @@ export default function AutoRacPage() {
               Every session contributes to understanding what works and why.
             </p>
             <div className={styles.ctaLinks}>
+              <Link
+                to="/stack/autorac/lab"
+                className={styles.ctaLink}
+              >
+                <SessionIcon />
+                Experiment Lab
+              </Link>
               <a
                 href="https://github.com/CosilicoAI/autorac"
-                className={styles.ctaLink}
+                className={`${styles.ctaLink} ${styles.ctaLinkSecondary}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
