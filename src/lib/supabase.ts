@@ -84,6 +84,14 @@ export interface EncodingRunScores {
   integration: number;
 }
 
+// Valid data source values - CRITICAL for preventing fake data
+// 'reviewer_agent' = Scores from actual reviewer agent runs (trustworthy)
+// 'ci_only' = Only CI tests ran, no reviewer scores
+// 'mock' = Fake/placeholder data for testing (MUST show warning)
+// 'manual_estimate' = Human-estimated scores, not from agents
+// 'unknown' = Legacy data without data_source (show warning)
+export type DataSource = 'reviewer_agent' | 'ci_only' | 'mock' | 'manual_estimate' | 'unknown';
+
 export interface EncodingRun {
   id: string;
   timestamp: string;
@@ -95,6 +103,7 @@ export interface EncodingRun {
   total_duration_ms: number | null;
   agent_type: string | null;
   agent_model: string | null;
+  data_source: DataSource;
 }
 
 // Fetch encoding runs from Supabase

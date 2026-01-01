@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
-import { getEncodingRuns, EncodingRun as SupabaseEncodingRun } from "../lib/supabase";
+import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource } from "../lib/supabase";
 
 // ============================================
 // TYPES
@@ -22,7 +22,17 @@ interface ExperimentRun {
   scores: { rac: number; formula: number; parameter: number; integration: number };
   hasIssues?: boolean;
   note?: string;
+  dataSource: DataSource;
 }
+
+// Data source display info - CRITICAL for showing warnings about fake/untrusted data
+const DATA_SOURCE_INFO: Record<DataSource, { label: string; color: string; warning: boolean }> = {
+  reviewer_agent: { label: 'Reviewer Agent', color: '#00ff88', warning: false },
+  ci_only: { label: 'CI Only', color: '#ffaa00', warning: true },
+  mock: { label: '⚠️ MOCK', color: '#ff4466', warning: true },
+  manual_estimate: { label: '⚠️ Manual Estimate', color: '#ff6b35', warning: true },
+  unknown: { label: '⚠️ Unknown', color: '#ff4466', warning: true },
+};
 
 // ============================================
 // ⚠️ MOCK DATA - NOT REAL ⚠️
@@ -41,6 +51,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
       { attempt: 2, success: true, duration_ms: 499500, errors: [] },
     ],
     scores: { rac: 7.5, formula: 8.5, parameter: 9.5, integration: 7.5 },
+    dataSource: 'mock',
   },
   {
     id: "0900f584",
@@ -48,6 +59,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
     citation: "26 USC 23",
     iterations: [{ attempt: 1, success: true, duration_ms: 233000, errors: [] }],
     scores: { rac: 8.2, formula: 7.5, parameter: 9.5, integration: 8.2 },
+    dataSource: 'mock',
   },
   {
     id: "cb77655b",
@@ -55,6 +67,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
     citation: "26 USC 25A",
     iterations: [{ attempt: 1, success: true, duration_ms: 141000, errors: [] }],
     scores: { rac: 8.5, formula: 8.5, parameter: 8.0, integration: 7.5 },
+    dataSource: 'mock',
   },
   {
     id: "1d1fee67",
@@ -62,6 +75,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
     citation: "26 USC 25B",
     iterations: [{ attempt: 1, success: true, duration_ms: 461000, errors: [] }],
     scores: { rac: 8.5, formula: 8.5, parameter: 9.5, integration: 7.5 },
+    dataSource: 'mock',
   },
   {
     id: "a59ef11b",
@@ -69,6 +83,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
     citation: "26 USC 21",
     iterations: [{ attempt: 1, success: true, duration_ms: 1053000, errors: [] }],
     scores: { rac: 7.5, formula: 7.5, parameter: 9.0, integration: 7.5 },
+    dataSource: 'mock',
   },
   {
     id: "1ba951e2",
@@ -76,6 +91,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
     citation: "26 USC 31",
     iterations: [{ attempt: 1, success: true, duration_ms: 180000, errors: [] }],
     scores: { rac: 8.0, formula: 8.5, parameter: 8.0, integration: 8.5 },
+    dataSource: 'mock',
   },
   {
     id: "cd62660b",
@@ -91,6 +107,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
     ],
     scores: { rac: 7.5, formula: 7.5, parameter: 9.5, integration: 7.5 },
     hasIssues: true,
+    dataSource: 'mock',
   },
   {
     id: "62f77e5d",
@@ -103,6 +120,7 @@ const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
     scores: { rac: 8.5, formula: 8.5, parameter: 9.0, integration: 7.5 },
     hasIssues: true,
     note: "IRS guidance values mixed into statute; wrong bracket parameter structure",
+    dataSource: 'mock',
   },
 ];
 
@@ -272,6 +290,7 @@ function transformToUIFormat(run: SupabaseEncodingRun): ExperimentRun {
     scores: run.scores || { rac: 0, formula: 0, parameter: 0, integration: 0 },
     hasIssues: run.has_issues ?? undefined,
     note: run.note ?? undefined,
+    dataSource: run.data_source || 'unknown',
   };
 }
 
@@ -328,6 +347,10 @@ export default function ExperimentLabPage() {
         0
       ) / totalRuns
     : 0;
+
+  // Count runs with untrusted data sources (not from reviewer_agent)
+  const untrustedRuns = data.filter(d => d.dataSource !== 'reviewer_agent').length;
+  const hasUntrustedData = untrustedRuns > 0;
 
   return (
     <PageLayout>
@@ -404,6 +427,30 @@ export default function ExperimentLabPage() {
                 </div>
               </div>
             </div>
+          ) : hasUntrustedData ? (
+            <div style={{
+              background: 'linear-gradient(135deg, #ffaa00 0%, #ff8800 100%)',
+              color: '#08080c',
+              padding: '16px 24px',
+              borderRadius: '8px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '16px',
+              fontWeight: 600,
+              fontSize: '16px',
+              boxShadow: '0 4px 20px rgba(255, 170, 0, 0.3)',
+              border: '2px solid rgba(255, 255, 255, 0.3)'
+            }}>
+              <span style={{ fontSize: '28px' }}>⚠️</span>
+              <div>
+                <div style={{ marginBottom: '4px' }}>DATA SOURCE WARNING</div>
+                <div style={{ fontWeight: 400, fontSize: '14px', opacity: 0.9 }}>
+                  {untrustedRuns} of {totalRuns} runs have scores NOT from actual reviewer agents.
+                  Check the "Source" column for details.
+                </div>
+              </div>
+            </div>
           ) : (
             <div style={{
               background: 'linear-gradient(135deg, #00ff88 0%, #00cc66 100%)',
@@ -418,7 +465,7 @@ export default function ExperimentLabPage() {
               fontSize: '14px',
             }}>
               <span style={{ fontSize: '20px' }}>✓</span>
-              <div>Live data from Supabase ({totalRuns} runs)</div>
+              <div>Live data from Supabase ({totalRuns} runs) - All scores verified by reviewer agents</div>
             </div>
           )}
 
@@ -465,6 +512,7 @@ export default function ExperimentLabPage() {
                   <tr>
                     <th>Citation</th>
                     <th>Time</th>
+                    <th>Source</th>
                     <th>Iterations</th>
                     <th>Duration</th>
                     <th>RAC</th>
@@ -479,6 +527,7 @@ export default function ExperimentLabPage() {
                     const lastIter = run.iterations[run.iterations.length - 1];
                     const totalDuration = run.iterations.reduce((acc: number, i) => acc + i.duration_ms, 0);
                     const hasErrors = run.iterations.some((i) => i.errors && i.errors.length > 0);
+                    const sourceInfo = DATA_SOURCE_INFO[run.dataSource];
 
                     return (
                       <tr key={run.id}>
@@ -489,6 +538,23 @@ export default function ExperimentLabPage() {
                           )}
                         </td>
                         <td className={styles.timestampCell}>{formatTime(run.timestamp)}</td>
+                        <td>
+                          <span
+                            style={{
+                              display: 'inline-block',
+                              padding: '2px 8px',
+                              borderRadius: '4px',
+                              fontSize: '11px',
+                              fontWeight: 600,
+                              color: sourceInfo.color,
+                              background: `${sourceInfo.color}15`,
+                              border: `1px solid ${sourceInfo.color}40`,
+                            }}
+                            title={sourceInfo.warning ? 'WARNING: Scores may not be from actual reviewer agents' : 'Verified by reviewer agents'}
+                          >
+                            {sourceInfo.label}
+                          </span>
+                        </td>
                         <td>
                           <span
                             className={`${styles.iterationBadge} ${
