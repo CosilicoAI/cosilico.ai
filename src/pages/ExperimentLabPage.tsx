@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
+import { getEncodingRuns, EncodingRun as SupabaseEncodingRun } from "../lib/supabase";
 
 // ============================================
 // TYPES
@@ -24,10 +25,13 @@ interface ExperimentRun {
 }
 
 // ============================================
-// DATA
+// ⚠️ MOCK DATA - NOT REAL ⚠️
+// This is placeholder data for UI development only.
+// Real data should come from Supabase via the encoding_runs table.
+// The experiments.db currently has 0 rows.
 // ============================================
 
-const CALIBRATION_DATA: ExperimentRun[] = [
+const MOCK_CALIBRATION_DATA: ExperimentRun[] = [
   {
     id: "3aedd4db",
     timestamp: "2025-12-31T10:36:22",
@@ -258,19 +262,72 @@ const getScoreClass = (score: number) => {
 // COMPONENT
 // ============================================
 
+// Transform Supabase data to UI format
+function transformToUIFormat(run: SupabaseEncodingRun): ExperimentRun {
+  return {
+    id: run.id,
+    timestamp: run.timestamp,
+    citation: run.citation,
+    iterations: run.iterations || [],
+    scores: run.scores || { rac: 0, formula: 0, parameter: 0, integration: 0 },
+    hasIssues: run.has_issues ?? undefined,
+    note: run.note ?? undefined,
+  };
+}
+
 export default function ExperimentLabPage() {
   const [activeTab, setActiveTab] = useState<"experiments" | "plugin" | "issues">("experiments");
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
-  const totalRuns = CALIBRATION_DATA.length;
-  const successRuns = CALIBRATION_DATA.filter(
-    (d) => d.iterations[d.iterations.length - 1].success
+  // State for Supabase data
+  const [liveData, setLiveData] = useState<ExperimentRun[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [usingMockData, setUsingMockData] = useState(false);
+
+  // Fetch data from Supabase on mount
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const runs = await getEncodingRuns(100, 0);
+
+        if (runs.length > 0) {
+          setLiveData(runs.map(transformToUIFormat));
+          setUsingMockData(false);
+        } else {
+          // No data in Supabase yet, fall back to mock data
+          setLiveData(MOCK_CALIBRATION_DATA);
+          setUsingMockData(true);
+        }
+      } catch (err) {
+        console.error('Failed to fetch encoding runs:', err);
+        setError('Failed to load data from database');
+        // Fall back to mock data on error
+        setLiveData(MOCK_CALIBRATION_DATA);
+        setUsingMockData(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const data = liveData.length > 0 ? liveData : MOCK_CALIBRATION_DATA;
+
+  const totalRuns = data.length;
+  const successRuns = data.filter(
+    (d) => d.iterations[d.iterations.length - 1]?.success
   ).length;
-  const avgScore =
-    CALIBRATION_DATA.reduce(
-      (acc, d) => acc + (d.scores.rac + d.scores.formula + d.scores.parameter + d.scores.integration) / 4,
-      0
-    ) / totalRuns;
+  const avgScore = totalRuns > 0
+    ? data.reduce(
+        (acc, d) => acc + (d.scores.rac + d.scores.formula + d.scores.parameter + d.scores.integration) / 4,
+        0
+      ) / totalRuns
+    : 0;
 
   return (
     <PageLayout>
@@ -304,6 +361,66 @@ export default function ExperimentLabPage() {
               </span>
             </div>
           </header>
+
+          {/* Data Status Banner */}
+          {isLoading ? (
+            <div style={{
+              background: 'linear-gradient(135deg, #00d4ff 0%, #0088cc 100%)',
+              color: 'white',
+              padding: '16px 24px',
+              borderRadius: '8px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '16px',
+              fontWeight: 600,
+              fontSize: '16px',
+            }}>
+              <span style={{ fontSize: '28px' }}>⏳</span>
+              <div>Loading data from Supabase...</div>
+            </div>
+          ) : usingMockData ? (
+            <div style={{
+              background: 'linear-gradient(135deg, #ff4466 0%, #ff6b35 100%)',
+              color: 'white',
+              padding: '16px 24px',
+              borderRadius: '8px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '16px',
+              fontWeight: 600,
+              fontSize: '16px',
+              boxShadow: '0 4px 20px rgba(255, 68, 102, 0.4)',
+              border: '2px solid rgba(255, 255, 255, 0.3)'
+            }}>
+              <span style={{ fontSize: '28px' }}>⚠️</span>
+              <div>
+                <div style={{ marginBottom: '4px' }}>MOCK DATA - NOT REAL</div>
+                <div style={{ fontWeight: 400, fontSize: '14px', opacity: 0.9 }}>
+                  {error
+                    ? `Database error: ${error}. Showing placeholder data.`
+                    : 'No encoding runs in database yet. Showing placeholder data for UI preview.'}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div style={{
+              background: 'linear-gradient(135deg, #00ff88 0%, #00cc66 100%)',
+              color: '#08080c',
+              padding: '12px 20px',
+              borderRadius: '8px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              fontWeight: 600,
+              fontSize: '14px',
+            }}>
+              <span style={{ fontSize: '20px' }}>✓</span>
+              <div>Live data from Supabase ({totalRuns} runs)</div>
+            </div>
+          )}
 
           {/* Data Note */}
           <div className={styles.dataNote}>
@@ -358,7 +475,7 @@ export default function ExperimentLabPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {CALIBRATION_DATA.map((run) => {
+                  {data.map((run) => {
                     const lastIter = run.iterations[run.iterations.length - 1];
                     const totalDuration = run.iterations.reduce((acc: number, i) => acc + i.duration_ms, 0);
                     const hasErrors = run.iterations.some((i) => i.errors && i.errors.length > 0);

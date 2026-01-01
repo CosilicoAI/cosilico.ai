@@ -69,6 +69,47 @@ export interface StripeCustomer {
   updated_at: string;
 }
 
+// Types for encoding runs (AutoRAC Experiment Lab)
+export interface EncodingRunIteration {
+  attempt: number;
+  success: boolean;
+  duration_ms: number;
+  errors: { type: string; message: string }[];
+}
+
+export interface EncodingRunScores {
+  rac: number;
+  formula: number;
+  parameter: number;
+  integration: number;
+}
+
+export interface EncodingRun {
+  id: string;
+  timestamp: string;
+  citation: string;
+  iterations: EncodingRunIteration[];
+  scores: EncodingRunScores;
+  has_issues: boolean | null;
+  note: string | null;
+  total_duration_ms: number | null;
+  agent_type: string | null;
+  agent_model: string | null;
+}
+
+// Fetch encoding runs from Supabase
+export async function getEncodingRuns(limit = 100, offset = 0): Promise<EncodingRun[]> {
+  const { data, error } = await supabase
+    .rpc('get_encoding_runs', { limit_count: limit, offset_count: offset });
+
+  if (error) {
+    console.error('Error fetching encoding runs:', error);
+    return [];
+  }
+
+  return (data || []) as EncodingRun[];
+}
+
 // Helper to format credits for display (convert micro-credits to readable format)
 export function formatCredits(microCredits: number): string {
   // Convert micro-credits to approximate API calls at $0.02/call rate
