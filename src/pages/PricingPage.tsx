@@ -9,7 +9,7 @@ export default function PricingPage() {
       <section className={styles.pricingHero}>
         <h1>Pricing</h1>
         <p className={styles.pricingSubtitle}>
-          Open source infrastructure. Pay for insights.
+          Open source infrastructure. Pay for compute.
         </p>
       </section>
 
@@ -18,13 +18,16 @@ export default function PricingPage() {
         <div className={styles.philosophyContent}>
           <h2>Everything is open source</h2>
           <p>
-            The rules engine, the datasets, the generator—all free to download and run yourself.
-            We're too close to superabundance to hold knowledge back.
+            The rules engine, the datasets, the synthetic microdata—all free to download
+            from GitHub and R2. We're not gating knowledge.
           </p>
           <p>
-            <strong>What you pay for:</strong> The insights we compute from that infrastructure.
-            Predictions, simulations, and forecasts that require fresh data, calibrated models,
-            and serious compute.
+            <strong>What you pay for:</strong> We run the infrastructure so you don't have to.
+            API convenience, fresh data, and serious compute—without maintaining PolicyEngine
+            or microplex yourself.
+          </p>
+          <p>
+            <strong>$5 free credits</strong> to start. Enough to build and test your integration.
           </p>
         </div>
       </section>
@@ -37,14 +40,14 @@ export default function PricingPage() {
         <div className={styles.pricingGrid}>
           <div className={styles.pricingCard}>
             <div className={styles.pricingCardHeader}>
-              <h3>Rules API</h3>
+              <h3>/calculate</h3>
               <div className={styles.price}>
                 <span className={styles.priceValue}>$0.02</span>
-                <span className={styles.priceUnit}>per call</span>
+                <span className={styles.priceUnit}>per household</span>
               </div>
             </div>
             <p className={styles.pricingDescription}>
-              Calculate taxes and benefits for a complete household.
+              Deterministic tax and benefit calculations.
               Every formula traced to statute.
             </p>
             <code>POST /calculate</code>
@@ -58,58 +61,39 @@ export default function PricingPage() {
 
           <div className={styles.pricingCard}>
             <div className={styles.pricingCardHeader}>
-              <h3>Predictions API</h3>
+              <h3>/rules</h3>
               <div className={styles.price}>
-                <span className={styles.priceValue}>$0.05</span>
-                <span className={styles.priceUnit}>per call</span>
+                <span className={styles.priceValue}>$0.001</span>
+                <span className={styles.priceUnit}>base per query</span>
               </div>
             </div>
             <p className={styles.pricingDescription}>
-              Complete a partial household profile using locally-calibrated models.
+              Structured US statute text with historical versions.
+              Price scales with response size.
             </p>
-            <code>POST /predict</code>
+            <code>GET /rules/26/32</code>
             <ul className={styles.pricingFeatures}>
-              <li>Impute missing attributes</li>
-              <li>County-level calibration</li>
-              <li>Real-time economic signals</li>
-              <li>Probability distributions</li>
+              <li>Full US Code (USLM XML → JSON)</li>
+              <li>Historical versions (as_of dates)</li>
+              <li>Include children option</li>
+              <li>State codes (CA, NY, TX+)</li>
             </ul>
           </div>
 
           <div className={`${styles.pricingCard} ${styles.featured}`}>
             <div className={styles.pricingCardHeader}>
-              <h3>Full Profile</h3>
+              <h3>/microsim</h3>
               <div className={styles.price}>
-                <span className={styles.priceValue}>$0.06</span>
-                <span className={styles.priceUnit}>per call</span>
+                <span className={styles.priceValue}>$0.50</span>
+                <span className={styles.priceUnit}>per 1K records</span>
               </div>
             </div>
             <p className={styles.pricingDescription}>
-              Partial household in → complete financial profile + tax/benefit calculations out.
+              Population-scale policy simulation. Distributional impacts in seconds.
             </p>
-            <code>POST /profile</code>
+            <code>POST /microsim</code>
             <ul className={styles.pricingFeatures}>
-              <li>Predictions + Rules combined</li>
-              <li>Full financial picture</li>
-              <li>Tax liability & effective rates</li>
-              <li>Benefit eligibility & amounts</li>
-            </ul>
-          </div>
-
-          <div className={styles.pricingCard}>
-            <div className={styles.pricingCardHeader}>
-              <h3>Simulations API</h3>
-              <div className={styles.price}>
-                <span className={styles.priceValue}>$1</span>
-                <span className={styles.priceUnit}>per 1M household-reforms</span>
-              </div>
-            </div>
-            <p className={styles.pricingDescription}>
-              Run policy reforms at population scale. Distributional impacts in seconds.
-            </p>
-            <code>POST /simulate</code>
-            <ul className={styles.pricingFeatures}>
-              <li>Population-wide analysis</li>
+              <li>Run on microplex populations</li>
               <li>Custom reform definitions</li>
               <li>Distributional breakdowns</li>
               <li>Budget scoring</li>
@@ -118,48 +102,48 @@ export default function PricingPage() {
 
           <div className={styles.pricingCard}>
             <div className={styles.pricingCardHeader}>
-              <h3>Law Archive API</h3>
+              <h3>/impute</h3>
               <div className={styles.price}>
-                <span className={styles.priceValue}>$0.01</span>
-                <span className={styles.priceUnit}>per query</span>
+                <span className={styles.priceValue}>$0.10</span>
+                <span className={styles.priceUnit}>per 1K records</span>
               </div>
             </div>
             <p className={styles.pricingDescription}>
-              Structured US statute text with historical versions. All 54 titles of the US Code.
+              Complete partial records using locally-calibrated models from microplex.
             </p>
-            <code>GET /v1/sections/26/32</code>
+            <code>POST /impute</code>
             <ul className={styles.pricingFeatures}>
-              <li>Full US Code (USLM XML → JSON)</li>
-              <li>Historical versions (as_of dates)</li>
-              <li>Full-text search</li>
-              <li>State codes (CA, NY, TX+)</li>
+              <li>Impute missing attributes</li>
+              <li>County-level calibration</li>
+              <li>Real-time economic signals</li>
+              <li>Probability distributions</li>
             </ul>
           </div>
         </div>
       </section>
 
-      {/* Data Pricing */}
+      {/* Free Data */}
       <section className={styles.pricingData}>
-        <h2>Data Downloads</h2>
+        <h2>Data: Free</h2>
         <p className={styles.sectionSubtitle}>
-          All datasets available. Pay for bandwidth, not access.
+          All datasets free to download. No API needed.
         </p>
 
         <div className={styles.dataPricingBox}>
           <div className={styles.dataPrice}>
-            <span className={styles.priceValue}>$0.10</span>
-            <span className={styles.priceUnit}>per GB</span>
+            <span className={styles.priceValue}>$0</span>
+            <span className={styles.priceUnit}>via R2</span>
           </div>
           <div className={styles.dataDetails}>
             <p>
-              Download calibrated microdata, synthetic populations, and economic forecasts.
-              Updated monthly with CPS, daily with economic signals.
+              We're open source and open access. Download directly from our public buckets.
+              No authentication, no rate limits, no restrictions (except direct resale).
             </p>
             <ul>
-              <li>National, state, and county-level datasets</li>
-              <li>Real-time economic calibration</li>
-              <li>Full variable documentation</li>
-              <li>No quality tiers—everyone gets the same data</li>
+              <li><strong>arch.cosilico.ai</strong> — Structured statute archive (US Code, CFR, state codes)</li>
+              <li><strong>microplex.cosilico.ai</strong> — Synthetic microdata, updated daily with economic signals</li>
+              <li>Full version history via R2 versioning</li>
+              <li>Clone the repos, host it yourself, do whatever you want</li>
             </ul>
           </div>
         </div>
@@ -171,58 +155,53 @@ export default function PricingPage() {
         <div className={styles.useCaseTable}>
           <div className={`${styles.useCaseRow} ${styles.header}`}>
             <span>Customer</span>
-            <span>Products</span>
+            <span>Endpoints</span>
             <span>Use case</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Benefit apps</span>
-            <span>Full Profile</span>
-            <span>Partial user info → eligibility check</span>
+            <span>/calculate</span>
+            <span>Eligibility checks from user input</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Tax software</span>
-            <span>Rules + Predictions</span>
-            <span>Liability estimates from partial data</span>
+            <span>/calculate</span>
+            <span>Liability estimates, what-if scenarios</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>AI assistants</span>
-            <span>Full Profile</span>
-            <span>"What benefits can I get?"</span>
+            <span>/calculate + /rules</span>
+            <span>"What benefits can I get?" with citations</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Fintech</span>
-            <span>Predictions</span>
-            <span>Customer profile completion</span>
+            <span>/impute</span>
+            <span>Customer profile completion for underwriting</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
-            <span>Marketers</span>
-            <span>Full Profile</span>
-            <span>Segment by tax burden + benefits → WTP</span>
+            <span>Quant funds</span>
+            <span>microplex (free)</span>
+            <span>Daily economic nowcasting data</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Researchers</span>
-            <span>Simulations + Data</span>
-            <span>Reform modeling at scale</span>
+            <span>/microsim</span>
+            <span>Reform modeling at population scale</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Government</span>
-            <span>Simulations + Enterprise</span>
+            <span>/microsim</span>
             <span>Bill scoring, outreach targeting</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
-            <span>Journalists</span>
-            <span>Playground + Rules</span>
-            <span>Fact-checking, embedded calculators</span>
-          </div>
-          <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
             <span>Legal tech</span>
-            <span>Law Archive</span>
-            <span>Contract analysis, compliance tools</span>
+            <span>/rules</span>
+            <span>RAG for legal assistants, compliance tools</span>
           </div>
           <div className={`${styles.useCaseRow} ${styles.useCaseRowNotHeader}`}>
-            <span>AI companies</span>
-            <span>Law Archive + Rules</span>
-            <span>RAG for legal assistants</span>
+            <span>LLM companies</span>
+            <span>/rules + arch (free)</span>
+            <span>Training data, retrieval augmentation</span>
           </div>
         </div>
       </section>
@@ -244,9 +223,9 @@ export default function PricingPage() {
       {/* CTA */}
       <section className={styles.pricingCta}>
         <h2>Start building</h2>
-        <p>Pay-as-you-go. No minimums, no commitments.</p>
+        <p>$5 free credits. No minimums, no commitments.</p>
         <div className={styles.ctaButtons}>
-          <a href="https://docs.cosilico.ai" className={styles.btnPrimary}>
+          <a href="/portal" className={styles.btnPrimary}>
             Get API Key
           </a>
           <a href="/playground" className={styles.btnSecondary}>
