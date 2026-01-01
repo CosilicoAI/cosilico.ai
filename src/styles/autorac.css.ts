@@ -6,11 +6,6 @@ const fadeInUp = keyframes({
   '100%': { opacity: 1, transform: 'translateY(0)' },
 });
 
-const pulse = keyframes({
-  '0%, 100%': { opacity: 0.4 },
-  '50%': { opacity: 1 },
-});
-
 const flowRight = keyframes({
   '0%': { transform: 'translateX(-100%)' },
   '100%': { transform: 'translateX(100%)' },

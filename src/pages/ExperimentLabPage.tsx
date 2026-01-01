@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
 
@@ -253,12 +252,6 @@ const getScoreClass = (score: number) => {
   if (score >= 8.5) return styles.scoreGood;
   if (score >= 7.5) return styles.scoreWarn;
   return styles.scoreBad;
-};
-
-const getScoreBarClass = (score: number) => {
-  if (score >= 8.5) return styles.scoreBarGood;
-  if (score >= 7.5) return styles.scoreBarWarn;
-  return styles.scoreBarBad;
 };
 
 // ============================================

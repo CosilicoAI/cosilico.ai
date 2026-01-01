@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import * as styles from '../styles/portal.css';
 import { supabase, ApiKey, CreditBalance, UsageLog, CreditPackage, AutoReloadSettings, StripeCustomer, formatCredits, formatCreditsAsDollars } from '../lib/supabase';
@@ -844,7 +843,6 @@ function Dashboard({ user, onSignOut }: DashboardProps) {
 export default function PortalPage() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Check for existing session

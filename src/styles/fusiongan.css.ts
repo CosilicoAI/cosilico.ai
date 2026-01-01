@@ -22,12 +22,6 @@ const pulseGlow = keyframes({
   '50%': { boxShadow: `0 0 40px rgba(123, 44, 191, 0.5), 0 0 60px rgba(0, 212, 255, 0.3)` },
 });
 
-const flowData = keyframes({
-  '0%': { transform: 'translateX(-100%)', opacity: 0 },
-  '50%': { opacity: 1 },
-  '100%': { transform: 'translateX(100%)', opacity: 0 },
-});
-
 // ============================================
 // BASE STYLES
 // ============================================
