@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import * as styles from '../styles/portal.css';
-import { supabase, ApiKey, CreditBalance, UsageLog, CreditPackage, formatCredits, formatCreditsAsDollars } from '../lib/supabase';
+import { supabase, ApiKey, CreditBalance, UsageLog, CreditPackage, AutoReloadSettings, StripeCustomer, formatCredits, formatCreditsAsDollars } from '../lib/supabase';
 import type { User, Session } from '@supabase/supabase-js';
 
 // ============================================
@@ -73,6 +73,24 @@ function AuthForm({ onAuthSuccess }: AuthProps) {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/portal',
+        },
+      });
+      if (error) throw error;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
@@ -132,6 +150,28 @@ function AuthForm({ onAuthSuccess }: AuthProps) {
           style={{ width: '100%', justifyContent: 'center' }}
         >
           Send Magic Link
+        </button>
+
+        <button
+          onClick={handleGoogleSignIn}
+          className={styles.btnSecondary}
+          disabled={loading}
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+            marginTop: '0.75rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Continue with Google
         </button>
 
         <div className={styles.authFooter}>
@@ -413,7 +453,10 @@ function Dashboard({ user, onSignOut }: DashboardProps) {
   const [creditBalance, setCreditBalance] = useState<CreditBalance | null>(null);
   const [usageData, setUsageData] = useState<UsageLog[]>([]);
   const [packages, setPackages] = useState<CreditPackage[]>([]);
+  const [autoReloadSettings, setAutoReloadSettings] = useState<AutoReloadSettings | null>(null);
+  const [stripeCustomer, setStripeCustomer] = useState<StripeCustomer | null>(null);
   const [loading, setLoading] = useState(true);
+  const [savingAutoReload, setSavingAutoReload] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [keyToRevoke, setKeyToRevoke] = useState<ApiKey | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -449,10 +492,26 @@ function Dashboard({ user, onSignOut }: DashboardProps) {
         .eq('is_active', true)
         .order('price_cents', { ascending: true });
 
+      // Fetch auto-reload settings
+      const { data: autoReloadData } = await supabase
+        .from('auto_reload_settings')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      // Fetch stripe customer (to check if payment method is saved)
+      const { data: stripeCustomerData } = await supabase
+        .from('stripe_customers')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
       setApiKeys(keysData || []);
       setCreditBalance(balanceData);
       setUsageData(usageLogsData || []);
       setPackages(packagesData || []);
+      setAutoReloadSettings(autoReloadData);
+      setStripeCustomer(stripeCustomerData);
     } catch (err) {
       console.error('Error fetching data:', err);
     } finally {
@@ -468,6 +527,36 @@ function Dashboard({ user, onSignOut }: DashboardProps) {
     await navigator.clipboard.writeText(prefix + '...');
     setCopiedKey(prefix);
     setTimeout(() => setCopiedKey(null), 2000);
+  };
+
+  const updateAutoReload = async (enabled: boolean, thresholdCredits?: number, reloadPackageId?: string) => {
+    setSavingAutoReload(true);
+    try {
+      const updateData: Partial<AutoReloadSettings> & { user_id: string } = {
+        user_id: user.id,
+        enabled,
+        updated_at: new Date().toISOString(),
+      };
+      if (thresholdCredits !== undefined) {
+        updateData.threshold_credits = thresholdCredits;
+      }
+      if (reloadPackageId !== undefined) {
+        updateData.reload_package_id = reloadPackageId;
+      }
+
+      const { data, error } = await supabase
+        .from('auto_reload_settings')
+        .upsert(updateData)
+        .select()
+        .single();
+
+      if (error) throw error;
+      setAutoReloadSettings(data);
+    } catch (err) {
+      console.error('Error updating auto-reload settings:', err);
+    } finally {
+      setSavingAutoReload(false);
+    }
   };
 
   const totalCalls = usageData.length;
@@ -562,6 +651,84 @@ function Dashboard({ user, onSignOut }: DashboardProps) {
                 </a>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Auto-Reload Settings Section */}
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Auto-Reload</h2>
+          </div>
+          <div className={styles.autoReloadCard}>
+            {!stripeCustomer?.default_payment_method_id ? (
+              <div className={styles.autoReloadNotice}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4M12 8h.01" />
+                </svg>
+                <div>
+                  <strong>Payment method required</strong>
+                  <p>Complete a purchase above to save a payment method for auto-reload.</p>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className={styles.autoReloadToggle}>
+                  <label className={styles.toggleLabel}>
+                    <input
+                      type="checkbox"
+                      checked={autoReloadSettings?.enabled || false}
+                      onChange={(e) => updateAutoReload(
+                        e.target.checked,
+                        autoReloadSettings?.threshold_credits || 10000000,
+                        autoReloadSettings?.reload_package_id || 'starter'
+                      )}
+                      disabled={savingAutoReload}
+                      className={styles.toggleInput}
+                    />
+                    <span className={styles.toggleSwitch} />
+                    <span className={styles.toggleText}>
+                      Automatically reload credits when balance is low
+                    </span>
+                  </label>
+                </div>
+
+                {autoReloadSettings?.enabled && (
+                  <div className={styles.autoReloadOptions}>
+                    <div className={styles.inputGroup}>
+                      <label className={styles.inputLabel}>Reload when balance falls below</label>
+                      <select
+                        value={autoReloadSettings.threshold_credits}
+                        onChange={(e) => updateAutoReload(true, parseInt(e.target.value), autoReloadSettings.reload_package_id)}
+                        className={styles.input}
+                        disabled={savingAutoReload}
+                      >
+                        <option value={5000000}>$5.00</option>
+                        <option value={10000000}>$10.00</option>
+                        <option value={25000000}>$25.00</option>
+                        <option value={50000000}>$50.00</option>
+                      </select>
+                    </div>
+
+                    <div className={styles.inputGroup}>
+                      <label className={styles.inputLabel}>Reload package</label>
+                      <select
+                        value={autoReloadSettings.reload_package_id}
+                        onChange={(e) => updateAutoReload(true, autoReloadSettings.threshold_credits, e.target.value)}
+                        className={styles.input}
+                        disabled={savingAutoReload}
+                      >
+                        {packages.map((pkg) => (
+                          <option key={pkg.id} value={pkg.id}>
+                            {pkg.name} - ${(pkg.price_cents / 100).toFixed(0)} ({formatCredits(pkg.credits)})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </section>
 

@@ -1,12 +1,15 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // Supabase configuration
 // These should be set in environment variables for production
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || '';
 
-// Create the Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create the Supabase client (use placeholder URL in test environment)
+const isTestEnv = !supabaseUrl || process.env.NODE_ENV === 'test';
+export const supabase: SupabaseClient = isTestEnv
+  ? createClient('https://placeholder.supabase.co', 'placeholder-key')
+  : createClient(supabaseUrl, supabaseAnonKey);
 
 // Types for our database schema
 export interface ApiKey {
@@ -47,6 +50,23 @@ export interface EndpointPricing {
   endpoint: string;
   credits_per_call: number;
   description: string | null;
+}
+
+export interface AutoReloadSettings {
+  user_id: string;
+  enabled: boolean;
+  threshold_credits: number;
+  reload_package_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StripeCustomer {
+  user_id: string;
+  stripe_customer_id: string;
+  default_payment_method_id: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 // Helper to format credits for display (convert micro-credits to readable format)

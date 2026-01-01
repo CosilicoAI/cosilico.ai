@@ -13,4 +13,14 @@ module.exports = {
       return webpackConfig;
     },
   },
+  jest: {
+    configure: (jestConfig) => {
+      // Add vanilla-extract transform before the default TypeScript transform
+      jestConfig.transform = {
+        '\\.css\\.ts$': '@vanilla-extract/jest-transform',
+        ...jestConfig.transform,
+      };
+      return jestConfig;
+    },
+  },
 };

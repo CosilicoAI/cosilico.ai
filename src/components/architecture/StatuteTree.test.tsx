@@ -97,8 +97,8 @@ describe("StatuteTree", () => {
         onToggle={jest.fn()}
       />
     );
-    const selectedItem = screen.getByText("(1) Credit Amount").closest(".tree-item");
-    expect(selectedItem).toHaveClass("selected");
+    const selectedItem = screen.getByTestId("tree-item-32/a/1");
+    expect(selectedItem).toHaveAttribute("data-selected", "true");
   });
 
   test("displays file name for leaf nodes", () => {

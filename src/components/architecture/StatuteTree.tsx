@@ -38,6 +38,8 @@ export function StatuteTree({
     <div className={styles.treeNode} style={{ marginLeft: depth * 16 }}>
       <div
         className={`${styles.treeItem} ${isSelected ? styles.treeItemSelected : ""}`}
+        data-testid={`tree-item-${node.id}`}
+        data-selected={isSelected}
         onClick={() => {
           if (hasChildren) onToggle(node.id);
           if (hasFile) onSelect(node.id);
