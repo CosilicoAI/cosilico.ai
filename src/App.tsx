@@ -20,6 +20,7 @@ import ArchPage from "./pages/ArchPage";
 import AutoRacPage from "./pages/AutoRacPage";
 import FusionGanPage from "./pages/FusionGanPage";
 import ExperimentPage from "./pages/ExperimentPage";
+import ExperimentLabPage from "./pages/ExperimentLabPage";
 import ProgressPage from "./pages/ProgressPage";
 import PortalPage from "./pages/PortalPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
@@ -57,6 +58,7 @@ function App() {
           <Route path="/stack/atlas" element={<AtlasPage />} />
           <Route path="/stack/arch" element={<ArchPage />} />
           <Route path="/stack/autorac" element={<AutoRacPage />} />
+          <Route path="/stack/autorac/lab" element={<ExperimentLabPage />} />
           <Route path="/stack/fusiongan" element={<FusionGanPage />} />
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />

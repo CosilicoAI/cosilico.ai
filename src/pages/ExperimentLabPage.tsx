@@ -1,0 +1,644 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import PageLayout from "../components/PageLayout";
+import * as styles from "../styles/experimentLab.css";
+
+// ============================================
+// TYPES
+// ============================================
+
+interface Iteration {
+  attempt: number;
+  success: boolean;
+  duration_ms: number;
+  errors: { type: string; message: string }[];
+}
+
+interface ExperimentRun {
+  id: string;
+  timestamp: string;
+  citation: string;
+  iterations: Iteration[];
+  scores: { rac: number; formula: number; parameter: number; integration: number };
+  hasIssues?: boolean;
+  note?: string;
+}
+
+// ============================================
+// DATA
+// ============================================
+
+const CALIBRATION_DATA: ExperimentRun[] = [
+  {
+    id: "3aedd4db",
+    timestamp: "2025-12-31T10:36:22",
+    citation: "26 USC 137",
+    iterations: [
+      { attempt: 1, success: false, duration_ms: 499500, errors: [] },
+      { attempt: 2, success: true, duration_ms: 499500, errors: [] },
+    ],
+    scores: { rac: 7.5, formula: 8.5, parameter: 9.5, integration: 7.5 },
+  },
+  {
+    id: "0900f584",
+    timestamp: "2025-12-31T10:36:22",
+    citation: "26 USC 23",
+    iterations: [{ attempt: 1, success: true, duration_ms: 233000, errors: [] }],
+    scores: { rac: 8.2, formula: 7.5, parameter: 9.5, integration: 8.2 },
+  },
+  {
+    id: "cb77655b",
+    timestamp: "2025-12-31T11:02:05",
+    citation: "26 USC 25A",
+    iterations: [{ attempt: 1, success: true, duration_ms: 141000, errors: [] }],
+    scores: { rac: 8.5, formula: 8.5, parameter: 8.0, integration: 7.5 },
+  },
+  {
+    id: "1d1fee67",
+    timestamp: "2025-12-31T11:13:56",
+    citation: "26 USC 25B",
+    iterations: [{ attempt: 1, success: true, duration_ms: 461000, errors: [] }],
+    scores: { rac: 8.5, formula: 8.5, parameter: 9.5, integration: 7.5 },
+  },
+  {
+    id: "a59ef11b",
+    timestamp: "2025-12-31T12:49:52",
+    citation: "26 USC 21",
+    iterations: [{ attempt: 1, success: true, duration_ms: 1053000, errors: [] }],
+    scores: { rac: 7.5, formula: 7.5, parameter: 9.0, integration: 7.5 },
+  },
+  {
+    id: "1ba951e2",
+    timestamp: "2025-12-31T19:18:47",
+    citation: "26 USC 31",
+    iterations: [{ attempt: 1, success: true, duration_ms: 180000, errors: [] }],
+    scores: { rac: 8.0, formula: 8.5, parameter: 8.0, integration: 8.5 },
+  },
+  {
+    id: "cd62660b",
+    timestamp: "2025-12-31T19:20:08",
+    citation: "26 USC 1",
+    iterations: [
+      {
+        attempt: 1,
+        success: false,
+        duration_ms: 900000,
+        errors: [{ type: "test", message: "0/31 tests passed - syntax:python not supported" }],
+      },
+    ],
+    scores: { rac: 7.5, formula: 7.5, parameter: 9.5, integration: 7.5 },
+    hasIssues: true,
+  },
+  {
+    id: "62f77e5d",
+    timestamp: "2025-12-31T19:25:07",
+    citation: "26 USC 1",
+    iterations: [
+      { attempt: 1, success: false, duration_ms: 600000, errors: [] },
+      { attempt: 2, success: true, duration_ms: 600000, errors: [] },
+    ],
+    scores: { rac: 8.5, formula: 8.5, parameter: 9.0, integration: 7.5 },
+    hasIssues: true,
+    note: "IRS guidance values mixed into statute; wrong bracket parameter structure",
+  },
+];
+
+const PLUGIN_COMPONENTS = {
+  agents: [
+    {
+      name: "RAC Encoder",
+      file: "encoder.md",
+      description: "Encodes tax/benefit rules into RAC format. Use when implementing statutes.",
+      lines: 380,
+    },
+    {
+      name: "RAC Reviewer",
+      file: "rac-reviewer.md",
+      description: "Reviews .rac encodings for quality, accuracy, and compliance.",
+      lines: 120,
+    },
+    {
+      name: "Formula Reviewer",
+      file: "formula-reviewer.md",
+      description: "Audits formula logic for statutory fidelity, completeness, and correctness.",
+      lines: 95,
+    },
+    {
+      name: "Parameter Reviewer",
+      file: "parameter-reviewer.md",
+      description: "Audits parameter values, effective dates, and sources.",
+      lines: 88,
+    },
+    {
+      name: "Integration Reviewer",
+      file: "integration-reviewer.md",
+      description: "Audits file connections, import resolution, and dependency graph.",
+      lines: 72,
+    },
+    {
+      name: "Parameter Researcher",
+      file: "parameter-researcher.md",
+      description: "Researches legislative history to find authoritative parameter values.",
+      lines: 145,
+    },
+    {
+      name: "Formula Writer",
+      file: "formula-writer.md",
+      description: "Translates statutory logic into RAC formula code.",
+      lines: 110,
+    },
+    {
+      name: "Statute Analyzer",
+      file: "statute-analyzer.md",
+      description: "Pre-flight analysis of statutes before encoding.",
+      lines: 98,
+    },
+    {
+      name: "Encoding Validator",
+      file: "validator.md",
+      description: "Validates statute encodings against PolicyEngine and TAXSIM.",
+      lines: 156,
+    },
+    {
+      name: "Test Adversary",
+      file: "test-adversary.md",
+      description: "Generates adversarial test cases to find edge case failures.",
+      lines: 82,
+    },
+    {
+      name: "Fixer",
+      file: "fixer.md",
+      description: "Makes surgical fixes to .rac files based on specific issues.",
+      lines: 64,
+    },
+    {
+      name: "Integrator",
+      file: "integrator.md",
+      description: "Connects .rac files into the dependency graph.",
+      lines: 78,
+    },
+  ],
+  skills: [
+    {
+      name: "policy-encoding",
+      file: "policy-encoding/SKILL.md",
+      description: "Encoding tax/benefit statutes into executable code.",
+      lines: 450,
+    },
+    {
+      name: "microplex",
+      file: "microplex/SKILL.md",
+      description: "Evaluating synthetic microdata quality and training synthesizers.",
+      lines: 280,
+    },
+  ],
+  commands: [
+    {
+      name: "/encode",
+      file: "encode.md",
+      description: "Encode a statute into RAC format with validation.",
+      lines: 85,
+    },
+    {
+      name: "/validate",
+      file: "validate.md",
+      description: "Validate encoded policy against multiple tax/benefit systems.",
+      lines: 62,
+    },
+    {
+      name: "/file-bug",
+      file: "file-bug.md",
+      description: "File an upstream bug report when validation reveals discrepancies.",
+      lines: 45,
+    },
+  ],
+  hooks: [
+    {
+      name: "SessionStart",
+      file: "session-start.sh",
+      description: "Initialize session tracking and logging.",
+      lines: 28,
+    },
+    {
+      name: "PostToolUse",
+      file: "log-tool-use.sh",
+      description: "Log every tool call for experiment tracking.",
+      lines: 15,
+    },
+    {
+      name: "SessionEnd",
+      file: "session-end.sh",
+      description: "Finalize session and compute metrics.",
+      lines: 22,
+    },
+  ],
+};
+
+// ============================================
+// HELPERS
+// ============================================
+
+const formatDuration = (ms: number) => {
+  const minutes = Math.floor(ms / 60000);
+  const seconds = Math.floor((ms % 60000) / 1000);
+  return `${minutes}m ${seconds}s`;
+};
+
+const formatTime = (ts: string) => {
+  const date = new Date(ts);
+  return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+};
+
+const getScoreClass = (score: number) => {
+  if (score >= 8.5) return styles.scoreGood;
+  if (score >= 7.5) return styles.scoreWarn;
+  return styles.scoreBad;
+};
+
+const getScoreBarClass = (score: number) => {
+  if (score >= 8.5) return styles.scoreBarGood;
+  if (score >= 7.5) return styles.scoreBarWarn;
+  return styles.scoreBarBad;
+};
+
+// ============================================
+// COMPONENT
+// ============================================
+
+export default function ExperimentLabPage() {
+  const [activeTab, setActiveTab] = useState<"experiments" | "plugin" | "issues">("experiments");
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  const totalRuns = CALIBRATION_DATA.length;
+  const successRuns = CALIBRATION_DATA.filter(
+    (d) => d.iterations[d.iterations.length - 1].success
+  ).length;
+  const avgScore =
+    CALIBRATION_DATA.reduce(
+      (acc, d) => acc + (d.scores.rac + d.scores.formula + d.scores.parameter + d.scores.integration) / 4,
+      0
+    ) / totalRuns;
+
+  return (
+    <PageLayout>
+      <div className={styles.page}>
+        <div className={styles.gridOverlay} />
+        <div className={styles.scanlineOverlay} />
+
+        <div className={styles.container}>
+          {/* Header */}
+          <header className={styles.header}>
+            <div className={styles.headerTop}>
+              <span className={styles.labBadge}>Experiment Lab</span>
+              <h1 className={styles.headerTitle}>AutoRAC Calibration</h1>
+            </div>
+            <div className={styles.headerMeta}>
+              <span className={styles.metaItem}>
+                <span className={styles.metaLabel}>Runs:</span>
+                <span className={styles.metaValue}>{totalRuns}</span>
+              </span>
+              <span className={styles.metaItem}>
+                <span className={styles.metaLabel}>Success:</span>
+                <span className={styles.metaValue}>{((successRuns / totalRuns) * 100).toFixed(0)}%</span>
+              </span>
+              <span className={styles.metaItem}>
+                <span className={styles.metaLabel}>Avg Score:</span>
+                <span className={styles.metaValue}>{avgScore.toFixed(1)}/10</span>
+              </span>
+              <span className={styles.metaItem}>
+                <span className={styles.metaLabel}>Plugin:</span>
+                <span className={styles.metaValue}>cosilico@0.2.1</span>
+              </span>
+            </div>
+          </header>
+
+          {/* Data Note */}
+          <div className={styles.dataNote}>
+            <span className={styles.dataNoteBold}>Data Architecture Note:</span> Plugin content is NOT
+            currently stored with each experiment run. Recommend SCD2 table for{" "}
+            <code>plugin_versions</code> with hash-based versioning to track which plugin state
+            produced each result.
+          </div>
+
+          {/* Tabs */}
+          <div className={styles.tabs}>
+            <button
+              className={`${styles.tab} ${activeTab === "experiments" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("experiments")}
+            >
+              Experiment Runs
+            </button>
+            <button
+              className={`${styles.tab} ${activeTab === "plugin" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("plugin")}
+            >
+              Plugin Content
+            </button>
+            <button
+              className={`${styles.tab} ${activeTab === "issues" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("issues")}
+            >
+              Known Issues
+            </button>
+          </div>
+
+          {/* Experiments Tab */}
+          {activeTab === "experiments" && (
+            <section className={styles.tableSection}>
+              <h2 className={styles.sectionTitle}>
+                Encoding Runs
+                <span className={styles.sectionCount}>{totalRuns}</span>
+              </h2>
+
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Citation</th>
+                    <th>Time</th>
+                    <th>Iterations</th>
+                    <th>Duration</th>
+                    <th>RAC</th>
+                    <th>Formula</th>
+                    <th>Param</th>
+                    <th>Integ</th>
+                    <th>Errors</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {CALIBRATION_DATA.map((run) => {
+                    const lastIter = run.iterations[run.iterations.length - 1];
+                    const totalDuration = run.iterations.reduce((acc: number, i) => acc + i.duration_ms, 0);
+                    const hasErrors = run.iterations.some((i) => i.errors && i.errors.length > 0);
+
+                    return (
+                      <tr key={run.id}>
+                        <td className={styles.citationCell}>
+                          {run.citation}
+                          {run.hasIssues && (
+                            <span style={{ color: "#ff4466", marginLeft: "8px" }}>⚠</span>
+                          )}
+                        </td>
+                        <td className={styles.timestampCell}>{formatTime(run.timestamp)}</td>
+                        <td>
+                          <span
+                            className={`${styles.iterationBadge} ${
+                              lastIter.success ? styles.iterationSuccess : styles.iterationFailed
+                            }`}
+                          >
+                            {run.iterations.length} {lastIter.success ? "✓" : "✗"}
+                          </span>
+                        </td>
+                        <td className={styles.durationCell}>{formatDuration(totalDuration)}</td>
+                        <td className={`${styles.scoreCell} ${getScoreClass(run.scores.rac)}`}>
+                          {run.scores.rac.toFixed(1)}
+                        </td>
+                        <td className={`${styles.scoreCell} ${getScoreClass(run.scores.formula)}`}>
+                          {run.scores.formula.toFixed(1)}
+                        </td>
+                        <td className={`${styles.scoreCell} ${getScoreClass(run.scores.parameter)}`}>
+                          {run.scores.parameter.toFixed(1)}
+                        </td>
+                        <td className={`${styles.scoreCell} ${getScoreClass(run.scores.integration)}`}>
+                          {run.scores.integration.toFixed(1)}
+                        </td>
+                        <td>
+                          {hasErrors && (
+                            <span className={styles.errorTag}>
+                              {run.iterations.flatMap((i) => i.errors || []).map((e) => e.type).join(", ")}
+                            </span>
+                          )}
+                          {run.note && (
+                            <span className={styles.errorTag} style={{ background: "rgba(255, 170, 0, 0.15)", color: "#ffaa00" }}>
+                              structural
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </section>
+          )}
+
+          {/* Plugin Tab */}
+          {activeTab === "plugin" && (
+            <>
+              {/* Agents */}
+              <section className={styles.pluginSection}>
+                <h2 className={styles.sectionTitle}>
+                  Agents
+                  <span className={styles.sectionCount}>{PLUGIN_COMPONENTS.agents.length}</span>
+                </h2>
+                <div className={styles.pluginGrid}>
+                  {PLUGIN_COMPONENTS.agents.map((agent) => (
+                    <div key={agent.name} className={styles.pluginCard}>
+                      <div className={styles.pluginCardHeader}>
+                        <span className={`${styles.pluginType} ${styles.pluginTypeAgent}`}>Agent</span>
+                        <button
+                          className={styles.expandButton}
+                          onClick={() =>
+                            setExpandedCard(expandedCard === agent.name ? null : agent.name)
+                          }
+                        >
+                          {expandedCard === agent.name ? "Collapse" : "View"}
+                        </button>
+                      </div>
+                      <div className={styles.pluginName}>{agent.name}</div>
+                      <div className={styles.pluginDesc}>{agent.description}</div>
+                      <div className={styles.pluginMeta}>
+                        <span>{agent.file}</span>
+                        <span>{agent.lines} lines</span>
+                      </div>
+                      {expandedCard === agent.name && (
+                        <div className={styles.pluginContent}>
+                          Content loaded from: ~/.claude/plugins/cache/cosilico/cosilico/0.1.0/agents/{agent.file}
+                          {"\n\n"}
+                          [Full agent prompt would be displayed here - currently showing placeholder.
+                          The actual content includes detailed instructions for the agent's behavior,
+                          workflow steps, validation rules, and example patterns.]
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Skills */}
+              <section className={styles.pluginSection}>
+                <h2 className={styles.sectionTitle}>
+                  Skills
+                  <span className={styles.sectionCount}>{PLUGIN_COMPONENTS.skills.length}</span>
+                </h2>
+                <div className={styles.pluginGrid}>
+                  {PLUGIN_COMPONENTS.skills.map((skill) => (
+                    <div key={skill.name} className={styles.pluginCard}>
+                      <div className={styles.pluginCardHeader}>
+                        <span className={`${styles.pluginType} ${styles.pluginTypeSkill}`}>Skill</span>
+                      </div>
+                      <div className={styles.pluginName}>{skill.name}</div>
+                      <div className={styles.pluginDesc}>{skill.description}</div>
+                      <div className={styles.pluginMeta}>
+                        <span>{skill.file}</span>
+                        <span>{skill.lines} lines</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Commands */}
+              <section className={styles.pluginSection}>
+                <h2 className={styles.sectionTitle}>
+                  Commands
+                  <span className={styles.sectionCount}>{PLUGIN_COMPONENTS.commands.length}</span>
+                </h2>
+                <div className={styles.pluginGrid}>
+                  {PLUGIN_COMPONENTS.commands.map((cmd) => (
+                    <div key={cmd.name} className={styles.pluginCard}>
+                      <div className={styles.pluginCardHeader}>
+                        <span className={`${styles.pluginType} ${styles.pluginTypeCommand}`}>Command</span>
+                      </div>
+                      <div className={styles.pluginName}>{cmd.name}</div>
+                      <div className={styles.pluginDesc}>{cmd.description}</div>
+                      <div className={styles.pluginMeta}>
+                        <span>{cmd.file}</span>
+                        <span>{cmd.lines} lines</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Hooks */}
+              <section className={styles.pluginSection}>
+                <h2 className={styles.sectionTitle}>
+                  Hooks
+                  <span className={styles.sectionCount}>{PLUGIN_COMPONENTS.hooks.length}</span>
+                </h2>
+                <div className={styles.pluginGrid}>
+                  {PLUGIN_COMPONENTS.hooks.map((hook) => (
+                    <div key={hook.name} className={styles.pluginCard}>
+                      <div className={styles.pluginCardHeader}>
+                        <span className={`${styles.pluginType} ${styles.pluginTypeHook}`}>Hook</span>
+                      </div>
+                      <div className={styles.pluginName}>{hook.name}</div>
+                      <div className={styles.pluginDesc}>{hook.description}</div>
+                      <div className={styles.pluginMeta}>
+                        <span>{hook.file}</span>
+                        <span>{hook.lines} lines</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
+
+          {/* Issues Tab */}
+          {activeTab === "issues" && (
+            <>
+              <section className={styles.alertSection}>
+                <div className={styles.alertCard}>
+                  <div className={styles.alertGlow} />
+                  <div className={styles.alertHeader}>
+                    <svg className={styles.alertIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                      <line x1="12" y1="9" x2="12" y2="13" />
+                      <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <h3 className={styles.alertTitle}>26 USC 1 Encoding Failed Quality Review</h3>
+                  </div>
+                  <div className={styles.alertBody}>
+                    <p>
+                      Despite passing tests and receiving scores of 8.5+, the §1 encoding has critical structural problems that the reviewers failed to catch:
+                    </p>
+                    <ul className={styles.alertList}>
+                      <li>
+                        <strong>IRS guidance mixed into statute:</strong> Lines 106-420 contain 2019-2024 indexed values from Rev. Proc. guidance documents. The statute only has 2018 TCJA base values.
+                      </li>
+                      <li>
+                        <strong>Wrong bracket parameter structure:</strong> 31 separate parameters (<code>rate_bracket_1</code>, <code>threshold_single_1</code>, etc.) instead of a single <code>brackets</code> parameter with arrays.
+                      </li>
+                      <li>
+                        <strong>Manual bracket math instead of <code>marginal_agg()</code>:</strong> 80 lines of manual computation vs one line using the built-in function.
+                      </li>
+                      <li>
+                        <strong>Wrong file depth:</strong> Should be <code>26/1/j/2.rac</code> for TCJA rates, not <code>26/1.rac</code>.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              <section className={styles.alertSection}>
+                <div className={styles.alertCard} style={{ borderColor: "rgba(255, 170, 0, 0.3)", background: "rgba(255, 170, 0, 0.03)" }}>
+                  <div className={styles.alertGlow} style={{ background: "linear-gradient(90deg, transparent, #ffaa00, transparent)" }} />
+                  <div className={styles.alertHeader}>
+                    <svg className={styles.alertIcon} viewBox="0 0 24 24" fill="none" stroke="#ffaa00" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 16v-4" />
+                      <path d="M12 8h.01" />
+                    </svg>
+                    <h3 className={styles.alertTitle} style={{ color: "#ffaa00" }}>Reviewer Agents Missing Critical Checks</h3>
+                  </div>
+                  <div className={styles.alertBody}>
+                    <p>The reviewer agents need to be updated to catch these issues:</p>
+                    <ul className={styles.alertList}>
+                      <li><strong>Statute vs guidance separation:</strong> Check that parameter values only come from statute text, not IRS guidance</li>
+                      <li><strong>Bracket parameter conventions:</strong> Enforce use of array-based bracket parameters</li>
+                      <li><strong>Built-in function usage:</strong> Flag when manual implementations exist for built-in functions like <code>marginal_agg()</code></li>
+                      <li><strong>File path depth rules:</strong> Verify filepath matches the granularity of content</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              <section className={styles.pluginSection}>
+                <h2 className={styles.sectionTitle}>Proposed Reviewer Updates</h2>
+                <div className={styles.pluginGrid}>
+                  <div className={styles.pluginCard}>
+                    <div className={styles.pluginCardHeader}>
+                      <span className={`${styles.pluginType} ${styles.pluginTypeAgent}`}>Update</span>
+                    </div>
+                    <div className={styles.pluginName}>formula-reviewer.md</div>
+                    <div className={styles.pluginDesc}>
+                      Add check: "If formula manually computes progressive brackets, flag as issue and recommend <code>marginal_agg()</code>"
+                    </div>
+                  </div>
+                  <div className={styles.pluginCard}>
+                    <div className={styles.pluginCardHeader}>
+                      <span className={`${styles.pluginType} ${styles.pluginTypeAgent}`}>Update</span>
+                    </div>
+                    <div className={styles.pluginName}>parameter-reviewer.md</div>
+                    <div className={styles.pluginDesc}>
+                      Add check: "Parameter values must trace to statute text, NOT IRS guidance (Rev. Proc., Notice, etc.)"
+                    </div>
+                  </div>
+                  <div className={styles.pluginCard}>
+                    <div className={styles.pluginCardHeader}>
+                      <span className={`${styles.pluginType} ${styles.pluginTypeAgent}`}>Update</span>
+                    </div>
+                    <div className={styles.pluginName}>rac-reviewer.md</div>
+                    <div className={styles.pluginDesc}>
+                      Add check: "Tax brackets must use array-based <code>brackets:</code> parameter, not individual threshold parameters"
+                    </div>
+                  </div>
+                  <div className={styles.pluginCard}>
+                    <div className={styles.pluginCardHeader}>
+                      <span className={`${styles.pluginType} ${styles.pluginTypeAgent}`}>Update</span>
+                    </div>
+                    <div className={styles.pluginName}>integration-reviewer.md</div>
+                    <div className={styles.pluginDesc}>
+                      Add check: "File path depth must match content granularity - section-level content needs subsection files"
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
+        </div>
+      </div>
+    </PageLayout>
+  );
+}
