@@ -1,4 +1,4 @@
-import { style, keyframes } from '@vanilla-extract/css';
+import { style, keyframes, globalStyle } from '@vanilla-extract/css';
 import { vars } from '../theme.css';
 
 /**
@@ -717,4 +717,112 @@ export const packageCredits = style({
   fontSize: '0.9rem',
   color: vars.color.textMuted,
   marginBottom: vars.space.lg,
+});
+
+// ============================================
+// AUTO-RELOAD SETTINGS
+// ============================================
+
+export const autoReloadCard = style({
+  background: vars.color.bgCard,
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: vars.radius.xl,
+  padding: vars.space.xl,
+});
+
+export const autoReloadNotice = style({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: vars.space.md,
+  padding: vars.space.lg,
+  background: vars.color.bgElevated,
+  borderRadius: vars.radius.lg,
+  color: vars.color.textSecondary,
+  fontFamily: vars.font.body,
+  fontSize: '0.95rem',
+  lineHeight: 1.5,
+});
+
+globalStyle(`${autoReloadNotice} strong`, {
+  display: 'block',
+  color: vars.color.text,
+  marginBottom: vars.space.xs,
+});
+
+globalStyle(`${autoReloadNotice} p`, {
+  margin: 0,
+});
+
+globalStyle(`${autoReloadNotice} svg`, {
+  flexShrink: 0,
+  marginTop: '2px',
+  color: vars.color.textMuted,
+});
+
+export const autoReloadToggle = style({
+  marginBottom: vars.space.lg,
+});
+
+export const toggleLabel = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.md,
+  cursor: 'pointer',
+});
+
+export const toggleInput = style({
+  position: 'absolute',
+  opacity: 0,
+  width: 0,
+  height: 0,
+});
+
+export const toggleSwitch = style({
+  position: 'relative',
+  width: '52px',
+  height: '28px',
+  background: vars.color.bgElevated,
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: '14px',
+  transition: `all ${vars.duration.normal} ${vars.ease.out}`,
+  flexShrink: 0,
+  '::after': {
+    content: '""',
+    position: 'absolute',
+    top: '3px',
+    left: '3px',
+    width: '20px',
+    height: '20px',
+    background: vars.color.textMuted,
+    borderRadius: '50%',
+    transition: `all ${vars.duration.normal} ${vars.ease.out}`,
+  },
+  selectors: {
+    [`${toggleInput}:checked + &`]: {
+      background: vars.color.accent,
+      borderColor: vars.color.accent,
+    },
+    [`${toggleInput}:checked + &::after`]: {
+      transform: 'translateX(24px)',
+      background: vars.color.bg,
+    },
+    [`${toggleInput}:disabled + &`]: {
+      opacity: 0.5,
+      cursor: 'not-allowed',
+    },
+  },
+});
+
+export const toggleText = style({
+  fontFamily: vars.font.body,
+  fontSize: '1rem',
+  color: vars.color.text,
+});
+
+export const autoReloadOptions = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: vars.space.lg,
+  paddingTop: vars.space.lg,
+  borderTop: `1px solid ${vars.color.border}`,
 });

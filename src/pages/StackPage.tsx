@@ -81,6 +81,16 @@ const AutoRacIcon = () => (
   </svg>
 );
 
+const FusionGanIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <circle cx="6" cy="6" r="3" />
+    <circle cx="18" cy="6" r="3" />
+    <circle cx="12" cy="18" r="4" />
+    <path d="M7.5 8.5L10.5 14.5M16.5 8.5L13.5 14.5" />
+    <path d="M12 14v-2" strokeDasharray="2 1" />
+  </svg>
+);
+
 export default function StackPage() {
   return (
     <PageLayout>
@@ -210,8 +220,34 @@ export default function StackPage() {
               </div>
             </Link>
 
+            {/* fusiongan - RESEARCH */}
+            <Link to="/stack/fusiongan" className={`${styles.componentCard} ${styles.cardDelay5}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusDev}`}>RESEARCH</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <FusionGanIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>fusiongan</h3>
+                  <div className={styles.componentTagline}>pip install fusiongan</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Multi-source adversarial synthesis for survey data fusion.
+                Learn joint distributions from CPS, PUF, and other surveys
+                with different variable coverage.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>GAN Synthesis</span>
+                <span className={styles.featureTag}>Multi-Discriminator</span>
+                <span className={styles.featureTag}>No Matching Keys</span>
+                <span className={styles.featureTag}>Coverage Metrics</span>
+              </div>
+            </Link>
+
             {/* rac (DSL) - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay5} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay6} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -237,7 +273,7 @@ export default function StackPage() {
             </div>
 
             {/* autorac - DEV */}
-            <Link to="/stack/autorac" className={`${styles.componentCard} ${styles.cardDelay6}`}>
+            <Link to="/stack/autorac" className={`${styles.componentCard} ${styles.cardDelay7}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -263,7 +299,7 @@ export default function StackPage() {
             </Link>
 
             {/* rac-validators - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay7} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay8} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -289,7 +325,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-compile - PLANNED */}
-            <div className={`${styles.componentCard} ${styles.cardDelay8} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay9} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusPlanned}`}>PLANNED</span>
               <div className={styles.componentHeader}>
