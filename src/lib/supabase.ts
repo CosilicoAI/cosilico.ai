@@ -130,6 +130,7 @@ export interface AgentTranscript {
   description: string | null;
   response_summary: string | null;
   transcript: TranscriptMessage[] | null;
+  orchestrator_thinking: string | null;
   message_count: number;
   created_at: string;
   uploaded_at: string | null;

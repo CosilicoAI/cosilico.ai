@@ -770,10 +770,33 @@ export default function ExperimentLabPage() {
                         {/* Expanded Content - Chronological Timeline */}
                         {isExpanded && (
                           <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                            {/* Prompt */}
+                            {/* Orchestrator Thinking - Why did it spawn this agent? */}
+                            {t.orchestrator_thinking && (
+                              <div style={{ padding: '16px', background: 'rgba(139, 92, 246, 0.05)', borderBottom: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                                <div style={{ color: '#a78bfa', fontSize: '12px', marginBottom: '8px', fontWeight: 600 }}>
+                                  ORCHESTRATOR THINKING
+                                  <span style={{ fontWeight: 400, marginLeft: '8px', color: '#888' }}>
+                                    (why this agent was spawned)
+                                  </span>
+                                </div>
+                                <pre style={{
+                                  margin: 0,
+                                  whiteSpace: 'pre-wrap',
+                                  fontFamily: 'JetBrains Mono, monospace',
+                                  fontSize: '12px',
+                                  color: '#ccc',
+                                  maxHeight: '300px',
+                                  overflow: 'auto',
+                                }}>
+                                  {t.orchestrator_thinking}
+                                </pre>
+                              </div>
+                            )}
+
+                            {/* Prompt sent to subagent */}
                             {t.prompt && (
                               <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.2)' }}>
-                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '8px' }}>INITIAL PROMPT</div>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '8px' }}>PROMPT TO SUBAGENT</div>
                                 <pre style={{
                                   margin: 0,
                                   whiteSpace: 'pre-wrap',
