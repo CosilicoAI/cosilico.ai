@@ -252,7 +252,18 @@ export default function AutoRacPage() {
               </div>
             </div>
 
-            <div className={styles.workflowConnector} />
+            {/* Feedback Loop: Validation Issues */}
+            <div className={styles.workflowFeedbackLoop}>
+              <div className={styles.workflowFeedbackArrow}>
+                <span className={styles.workflowFeedbackLabel}>Issues Found</span>
+                <svg viewBox="0 0 24 60" className={styles.workflowFeedbackSvg}>
+                  <path d="M12 0 L12 45 M6 39 L12 45 L18 39" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <path d="M12 45 Q12 55 2 55 L2 25" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="4 2" />
+                </svg>
+                <span className={styles.workflowFeedbackTarget}>→ Back to Step 4</span>
+              </div>
+              <div className={styles.workflowConnector} />
+            </div>
 
             {/* Step 7: Log */}
             <div className={styles.workflowStep}>
@@ -267,6 +278,16 @@ export default function AutoRacPage() {
                     <span>Suggestions for framework improvement</span>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Learning Feedback Loop */}
+            <div className={styles.workflowLearningLoop}>
+              <div className={styles.workflowLearningArrow}>
+                <span className={styles.workflowLearningIcon}>↻</span>
+                <span className={styles.workflowLearningText}>
+                  Calibration data improves encoder prompts, pattern library, and validation rules
+                </span>
               </div>
             </div>
           </div>

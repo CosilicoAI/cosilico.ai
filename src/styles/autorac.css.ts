@@ -499,6 +499,81 @@ globalStyle(`${workflowMetrics} span::before`, {
   color: vars.color.accent,
 });
 
+export const workflowFeedbackLoop = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '100%',
+  position: 'relative',
+});
+
+export const workflowFeedbackArrow = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: vars.space.sm,
+  padding: `${vars.space.lg} ${vars.space.xl}`,
+  background: 'rgba(239, 68, 68, 0.08)',
+  border: '1px dashed rgba(239, 68, 68, 0.3)',
+  borderRadius: vars.radius.lg,
+  width: '100%',
+  maxWidth: '400px',
+});
+
+export const workflowFeedbackLabel = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  fontWeight: 600,
+  color: vars.color.error,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+});
+
+export const workflowFeedbackSvg = style({
+  width: '24px',
+  height: '40px',
+  color: vars.color.error,
+  opacity: 0.6,
+});
+
+export const workflowFeedbackTarget = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.85rem',
+  color: vars.color.textMuted,
+});
+
+export const workflowLearningLoop = style({
+  marginTop: vars.space.xl,
+  width: '100%',
+});
+
+export const workflowLearningArrow = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.md,
+  padding: vars.space.lg,
+  background: `linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 255, 136, 0.08) 100%)`,
+  border: '1px solid rgba(0, 212, 255, 0.2)',
+  borderRadius: vars.radius.lg,
+});
+
+export const workflowLearningIcon = style({
+  fontSize: '2rem',
+  color: vars.color.accent,
+  animation: `${flowRight} 2s infinite linear`,
+  animationName: 'none',  // Disable by default
+  ':hover': {
+    animationName: flowRight,
+  },
+});
+
+export const workflowLearningText = style({
+  fontFamily: vars.font.body,
+  fontSize: '0.9rem',
+  color: vars.color.textSecondary,
+  lineHeight: 1.5,
+});
+
 // ============================================
 // COMPONENTS GRID
 // ============================================
