@@ -218,15 +218,23 @@ export default function AutoRacPage() {
             <div className={styles.workflowConnector} />
 
             {/* Step 5: Validators */}
-            <div className={styles.workflowStep}>
+            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
               <div className={styles.workflowStepNumber}>5</div>
               <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>Parallel Validation</div>
+                <div className={styles.workflowStepTitle}>Reviewer Agents</div>
                 <div className={styles.workflowValidators}>
                   <div className={styles.workflowValidator}>RAC Reviewer</div>
                   <div className={styles.workflowValidator}>Formula Reviewer</div>
                   <div className={styles.workflowValidator}>Parameter Reviewer</div>
                   <div className={styles.workflowValidator}>Integration Reviewer</div>
+                </div>
+                <div className={styles.workflowBeadsFlow}>
+                  <span className={styles.workflowBeadsLabel}>Issues found?</span>
+                  <span className={styles.workflowBeadsArrow}>→</span>
+                  <span className={styles.workflowBeadsBadge}>bd create</span>
+                  <span className={styles.workflowBeadsArrow}>→</span>
+                  <span className={styles.workflowBeadsText}>Encoder picks up & fixes</span>
+                  <span className={styles.workflowBeadsLoop}>↺</span>
                 </div>
               </div>
             </div>
@@ -234,7 +242,7 @@ export default function AutoRacPage() {
             <div className={styles.workflowConnector} />
 
             {/* Step 6: Oracles */}
-            <div className={styles.workflowStep}>
+            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
               <div className={styles.workflowStepNumber}>6</div>
               <div className={styles.workflowStepContent}>
                 <div className={styles.workflowStepTitle}>External Oracles</div>
@@ -249,21 +257,17 @@ export default function AutoRacPage() {
                   </div>
                 </div>
                 <div className={styles.workflowStepDesc}>Compare against reference implementations</div>
+                <div className={styles.workflowBeadsFlow}>
+                  <span className={styles.workflowBeadsLabel}>Discrepancy?</span>
+                  <span className={styles.workflowBeadsArrow}>→</span>
+                  <span className={styles.workflowBeadsBadge}>bd create</span>
+                  <span className={styles.workflowBeadsArrow}>→</span>
+                  <span className={styles.workflowBeadsText}>or file upstream bug</span>
+                </div>
               </div>
             </div>
 
-            {/* Feedback Loop: Validation Issues */}
-            <div className={styles.workflowFeedbackLoop}>
-              <div className={styles.workflowFeedbackArrow}>
-                <span className={styles.workflowFeedbackLabel}>Issues Found</span>
-                <svg viewBox="0 0 24 60" className={styles.workflowFeedbackSvg}>
-                  <path d="M12 0 L12 45 M6 39 L12 45 L18 39" stroke="currentColor" strokeWidth="2" fill="none" />
-                  <path d="M12 45 Q12 55 2 55 L2 25" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="4 2" />
-                </svg>
-                <span className={styles.workflowFeedbackTarget}>→ Back to Step 4</span>
-              </div>
-              <div className={styles.workflowConnector} />
-            </div>
+            <div className={styles.workflowConnector} />
 
             {/* Step 7: Log */}
             <div className={styles.workflowStep}>

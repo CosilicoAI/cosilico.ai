@@ -499,6 +499,53 @@ globalStyle(`${workflowMetrics} span::before`, {
   color: vars.color.accent,
 });
 
+export const workflowBeadsFlow = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.sm,
+  marginTop: vars.space.lg,
+  padding: vars.space.md,
+  background: 'rgba(0, 0, 0, 0.3)',
+  borderRadius: vars.radius.md,
+  flexWrap: 'wrap',
+});
+
+export const workflowBeadsLabel = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  color: vars.color.textMuted,
+});
+
+export const workflowBeadsArrow = style({
+  color: vars.color.accent,
+  fontFamily: vars.font.mono,
+  opacity: 0.6,
+});
+
+export const workflowBeadsBadge = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.75rem',
+  fontWeight: 600,
+  color: vars.color.success,
+  background: 'rgba(0, 255, 136, 0.15)',
+  border: '1px solid rgba(0, 255, 136, 0.3)',
+  padding: `${vars.space.xs} ${vars.space.sm}`,
+  borderRadius: vars.radius.sm,
+});
+
+export const workflowBeadsText = style({
+  fontFamily: vars.font.body,
+  fontSize: '0.85rem',
+  color: vars.color.textSecondary,
+});
+
+export const workflowBeadsLoop = style({
+  fontFamily: vars.font.mono,
+  fontSize: '1.2rem',
+  color: vars.color.accent,
+  marginLeft: 'auto',
+});
+
 export const workflowFeedbackLoop = style({
   display: 'flex',
   flexDirection: 'column',
