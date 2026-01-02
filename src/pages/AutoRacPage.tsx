@@ -128,6 +128,150 @@ export default function AutoRacPage() {
           </div>
         </section>
 
+        {/* Encode Workflow Detail */}
+        <section className={styles.workflowSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>/encode Workflow</h2>
+            <p className={styles.sectionSubtitle}>
+              Detailed steps when encoding a statute
+            </p>
+          </div>
+
+          <div className={styles.workflowContainer}>
+            {/* Step 1: Command */}
+            <div className={styles.workflowStep}>
+              <div className={styles.workflowStepNumber}>1</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>/encode "26 USC 1"</div>
+                <div className={styles.workflowStepDesc}>User invokes encode command with citation</div>
+              </div>
+            </div>
+
+            <div className={styles.workflowConnector} />
+
+            {/* Step 2: Fetch */}
+            <div className={styles.workflowStep}>
+              <div className={styles.workflowStepNumber}>2</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>Fetch Statute</div>
+                <div className={styles.workflowStepDesc}>
+                  <code>autorac statute "26 USC 1"</code>
+                  <br />Extract from arch USC XML
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.workflowConnector} />
+
+            {/* Step 3: Structure Discovery */}
+            <div className={styles.workflowStep}>
+              <div className={styles.workflowStepNumber}>3</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>Discover Structure</div>
+                <div className={styles.workflowStepDesc}>
+                  Parse subsections, build leaf-first queue
+                  <div className={styles.workflowTree}>
+                    <div>26/1/j/2/A.rac ← LEAF (first)</div>
+                    <div>26/1/j/2/B.rac ← LEAF</div>
+                    <div>26/1/j/2.rac ← imports children</div>
+                    <div>26/1.rac ← LAST</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.workflowConnector} />
+
+            {/* Step 4: Encode Loop */}
+            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
+              <div className={styles.workflowStepNumber}>4</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>Encode Each Subsection</div>
+                <div className={styles.workflowStepDesc}>For each item in queue:</div>
+
+                <div className={styles.workflowInnerLoop}>
+                  <div className={styles.workflowInnerStep}>
+                    <span className={styles.workflowInnerLabel}>4a</span>
+                    <span>RAC Encoder agent writes .rac file</span>
+                  </div>
+                  <div className={styles.workflowInnerConnector}>↓</div>
+                  <div className={styles.workflowInnerStep}>
+                    <span className={styles.workflowInnerLabel}>4b</span>
+                    <span>Run CI validation (parse, lint, tests)</span>
+                  </div>
+                  <div className={styles.workflowInnerConnector}>↓</div>
+                  <div className={styles.workflowInnerBranch}>
+                    <div className={styles.workflowBranchFail}>
+                      <span className={styles.workflowBranchLabel}>✗ Fail</span>
+                      <span>Fix errors, retry (max 3)</span>
+                      <div className={styles.workflowRetryArrow}>↺</div>
+                    </div>
+                    <div className={styles.workflowBranchPass}>
+                      <span className={styles.workflowBranchLabel}>✓ Pass</span>
+                      <span>Log to experiment DB, next item</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.workflowConnector} />
+
+            {/* Step 5: Validators */}
+            <div className={styles.workflowStep}>
+              <div className={styles.workflowStepNumber}>5</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>Parallel Validation</div>
+                <div className={styles.workflowValidators}>
+                  <div className={styles.workflowValidator}>RAC Reviewer</div>
+                  <div className={styles.workflowValidator}>Formula Reviewer</div>
+                  <div className={styles.workflowValidator}>Parameter Reviewer</div>
+                  <div className={styles.workflowValidator}>Integration Reviewer</div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.workflowConnector} />
+
+            {/* Step 6: Oracles */}
+            <div className={styles.workflowStep}>
+              <div className={styles.workflowStepNumber}>6</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>External Oracles</div>
+                <div className={styles.workflowOracles}>
+                  <div className={styles.workflowOracle}>
+                    <span className={styles.workflowOracleIcon}>PE</span>
+                    <span>PolicyEngine</span>
+                  </div>
+                  <div className={styles.workflowOracle}>
+                    <span className={styles.workflowOracleIcon}>TX</span>
+                    <span>TAXSIM</span>
+                  </div>
+                </div>
+                <div className={styles.workflowStepDesc}>Compare against reference implementations</div>
+              </div>
+            </div>
+
+            <div className={styles.workflowConnector} />
+
+            {/* Step 7: Log */}
+            <div className={styles.workflowStep}>
+              <div className={styles.workflowStepNumber}>7</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>Log & Learn</div>
+                <div className={styles.workflowStepDesc}>
+                  Record predictions vs actuals for calibration
+                  <div className={styles.workflowMetrics}>
+                    <span>Iterations: predicted vs actual</span>
+                    <span>Scores: RAC, Formula, Param, Integration</span>
+                    <span>Suggestions for framework improvement</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Components */}
         <section className={styles.componentsSection}>
           <div className={styles.sectionHeader}>

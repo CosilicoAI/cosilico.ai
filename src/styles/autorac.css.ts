@@ -229,6 +229,277 @@ export const loopArrowReturn = style({
 });
 
 // ============================================
+// WORKFLOW SECTION
+// ============================================
+
+export const workflowSection = style({
+  paddingTop: `${vars.space['3xl']} !important`,
+  paddingBottom: `${vars.space['2xl']} !important`,
+});
+
+export const workflowContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: 0,
+  maxWidth: '700px',
+  margin: '0 auto',
+});
+
+export const workflowStep = style({
+  display: 'flex',
+  gap: vars.space.lg,
+  padding: vars.space.xl,
+  background: 'rgba(0, 0, 0, 0.3)',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  borderRadius: vars.radius.xl,
+  width: '100%',
+  animation: `${fadeInUp} 0.6s ${vars.ease.out} forwards`,
+  animationFillMode: 'backwards',
+  transition: `all ${vars.duration.fast} ${vars.ease.out}`,
+  ':hover': {
+    borderColor: 'rgba(0, 212, 255, 0.3)',
+    background: 'rgba(0, 212, 255, 0.02)',
+  },
+});
+
+export const workflowStepLarge = style({
+  padding: vars.space['2xl'],
+});
+
+export const workflowStepNumber = style({
+  width: '40px',
+  height: '40px',
+  borderRadius: '50%',
+  background: 'rgba(0, 212, 255, 0.15)',
+  border: '1px solid rgba(0, 212, 255, 0.3)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontFamily: vars.font.display,
+  fontWeight: 600,
+  fontSize: '1.1rem',
+  color: vars.color.accent,
+  flexShrink: 0,
+});
+
+export const workflowStepContent = style({
+  flex: 1,
+});
+
+export const workflowStepTitle = style({
+  fontFamily: vars.font.display,
+  fontWeight: 600,
+  fontSize: '1.15rem',
+  color: vars.color.text,
+  marginBottom: vars.space.sm,
+});
+
+export const workflowStepDesc = style({
+  fontSize: '0.9rem',
+  color: vars.color.textSecondary,
+  lineHeight: 1.6,
+});
+
+globalStyle(`${workflowStepDesc} code`, {
+  fontFamily: vars.font.mono,
+  fontSize: '0.85rem',
+  padding: `${vars.space.xs} ${vars.space.sm}`,
+  background: 'rgba(0, 212, 255, 0.1)',
+  borderRadius: vars.radius.sm,
+  color: vars.color.accent,
+});
+
+export const workflowConnector = style({
+  width: '2px',
+  height: '24px',
+  background: `linear-gradient(180deg, rgba(0, 212, 255, 0.4), rgba(0, 212, 255, 0.1))`,
+});
+
+export const workflowTree = style({
+  marginTop: vars.space.md,
+  padding: vars.space.md,
+  background: 'rgba(0, 0, 0, 0.3)',
+  borderRadius: vars.radius.md,
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  color: vars.color.textMuted,
+  lineHeight: 1.8,
+  borderLeft: '2px solid rgba(0, 212, 255, 0.3)',
+});
+
+export const workflowInnerLoop = style({
+  marginTop: vars.space.lg,
+  padding: vars.space.lg,
+  background: 'rgba(0, 0, 0, 0.4)',
+  border: '1px solid rgba(255, 255, 255, 0.06)',
+  borderRadius: vars.radius.lg,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.sm,
+});
+
+export const workflowInnerStep = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.md,
+  fontSize: '0.9rem',
+  color: vars.color.textSecondary,
+});
+
+export const workflowInnerLabel = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.75rem',
+  color: vars.color.accent,
+  background: 'rgba(0, 212, 255, 0.1)',
+  padding: `${vars.space.xs} ${vars.space.sm}`,
+  borderRadius: vars.radius.sm,
+  fontWeight: 600,
+});
+
+export const workflowInnerConnector = style({
+  marginLeft: vars.space.xl,
+  color: vars.color.textMuted,
+  fontFamily: vars.font.mono,
+});
+
+export const workflowInnerBranch = style({
+  display: 'flex',
+  gap: vars.space.lg,
+  marginTop: vars.space.sm,
+  '@media': {
+    '(max-width: 600px)': {
+      flexDirection: 'column',
+    },
+  },
+});
+
+export const workflowBranchFail = style({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.sm,
+  padding: vars.space.md,
+  background: 'rgba(239, 68, 68, 0.1)',
+  border: '1px solid rgba(239, 68, 68, 0.2)',
+  borderRadius: vars.radius.md,
+  fontSize: '0.85rem',
+  color: vars.color.textSecondary,
+  position: 'relative',
+});
+
+export const workflowBranchPass = style({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.sm,
+  padding: vars.space.md,
+  background: 'rgba(0, 255, 136, 0.1)',
+  border: '1px solid rgba(0, 255, 136, 0.2)',
+  borderRadius: vars.radius.md,
+  fontSize: '0.85rem',
+  color: vars.color.textSecondary,
+});
+
+export const workflowBranchLabel = style({
+  fontFamily: vars.font.mono,
+  fontWeight: 600,
+  fontSize: '0.8rem',
+});
+
+globalStyle(`${workflowBranchFail} ${workflowBranchLabel}`, {
+  color: vars.color.error,
+});
+
+globalStyle(`${workflowBranchPass} ${workflowBranchLabel}`, {
+  color: vars.color.success,
+});
+
+export const workflowRetryArrow = style({
+  position: 'absolute',
+  right: vars.space.md,
+  top: '50%',
+  transform: 'translateY(-50%)',
+  fontFamily: vars.font.mono,
+  fontSize: '1.5rem',
+  color: vars.color.error,
+  opacity: 0.6,
+});
+
+export const workflowValidators = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: vars.space.sm,
+  marginTop: vars.space.md,
+  '@media': {
+    '(max-width: 500px)': {
+      gridTemplateColumns: '1fr',
+    },
+  },
+});
+
+export const workflowValidator = style({
+  padding: `${vars.space.sm} ${vars.space.md}`,
+  background: 'rgba(0, 212, 255, 0.05)',
+  border: '1px solid rgba(0, 212, 255, 0.15)',
+  borderRadius: vars.radius.md,
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  color: vars.color.textSecondary,
+  textAlign: 'center',
+});
+
+export const workflowOracles = style({
+  display: 'flex',
+  gap: vars.space.md,
+  marginTop: vars.space.md,
+  flexWrap: 'wrap',
+});
+
+export const workflowOracle = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.sm,
+  padding: `${vars.space.sm} ${vars.space.lg}`,
+  background: 'rgba(255, 170, 0, 0.1)',
+  border: '1px solid rgba(255, 170, 0, 0.2)',
+  borderRadius: vars.radius.md,
+  fontSize: '0.9rem',
+  color: vars.color.textSecondary,
+});
+
+export const workflowOracleIcon = style({
+  fontFamily: vars.font.mono,
+  fontWeight: 700,
+  fontSize: '0.75rem',
+  color: vars.color.amber,
+  background: 'rgba(255, 170, 0, 0.2)',
+  padding: `${vars.space.xs} ${vars.space.sm}`,
+  borderRadius: vars.radius.sm,
+});
+
+export const workflowMetrics = style({
+  marginTop: vars.space.md,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.xs,
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  color: vars.color.textMuted,
+});
+
+globalStyle(`${workflowMetrics} span`, {
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.sm,
+});
+
+globalStyle(`${workflowMetrics} span::before`, {
+  content: '"•"',
+  color: vars.color.accent,
+});
+
+// ============================================
 // COMPONENTS GRID
 // ============================================
 
