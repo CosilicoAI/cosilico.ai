@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
-import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource } from "../lib/supabase";
+import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource, getAgentTranscripts, AgentTranscript } from "../lib/supabase";
 
 // ============================================
 // TYPES
@@ -295,11 +295,13 @@ function transformToUIFormat(run: SupabaseEncodingRun): ExperimentRun {
 }
 
 export default function ExperimentLabPage() {
-  const [activeTab, setActiveTab] = useState<"experiments" | "plugin" | "issues">("experiments");
+  const [activeTab, setActiveTab] = useState<"experiments" | "plugin" | "issues" | "transcripts">("experiments");
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
+  const [expandedTranscript, setExpandedTranscript] = useState<number | null>(null);
 
   // State for Supabase data
   const [liveData, setLiveData] = useState<ExperimentRun[]>([]);
+  const [transcripts, setTranscripts] = useState<AgentTranscript[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [usingMockData, setUsingMockData] = useState(false);
@@ -311,7 +313,10 @@ export default function ExperimentLabPage() {
       setError(null);
 
       try {
-        const runs = await getEncodingRuns(100, 0);
+        const [runs, agentTranscripts] = await Promise.all([
+          getEncodingRuns(100, 0),
+          getAgentTranscripts(100, 0)
+        ]);
 
         if (runs.length > 0) {
           setLiveData(runs.map(transformToUIFormat));
@@ -321,8 +326,10 @@ export default function ExperimentLabPage() {
           setLiveData(MOCK_CALIBRATION_DATA);
           setUsingMockData(true);
         }
+
+        setTranscripts(agentTranscripts);
       } catch (err) {
-        console.error('Failed to fetch encoding runs:', err);
+        console.error('Failed to fetch data:', err);
         setError('Failed to load data from database');
         // Fall back to mock data on error
         setLiveData(MOCK_CALIBRATION_DATA);
@@ -486,6 +493,17 @@ export default function ExperimentLabPage() {
               Experiment Runs
             </button>
             <button
+              className={`${styles.tab} ${activeTab === "transcripts" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("transcripts")}
+            >
+              Agent Transcripts
+              {transcripts.length > 0 && (
+                <span style={{ marginLeft: '8px', background: '#00ff88', color: '#08080c', padding: '2px 8px', borderRadius: '10px', fontSize: '11px' }}>
+                  {transcripts.length}
+                </span>
+              )}
+            </button>
+            <button
               className={`${styles.tab} ${activeTab === "plugin" ? styles.tabActive : ""}`}
               onClick={() => setActiveTab("plugin")}
             >
@@ -594,6 +612,274 @@ export default function ExperimentLabPage() {
                   })}
                 </tbody>
               </table>
+            </section>
+          )}
+
+          {/* Transcripts Tab */}
+          {activeTab === "transcripts" && (
+            <section className={styles.tableSection}>
+              <h2 className={styles.sectionTitle}>
+                Agent Transcripts
+                <span className={styles.sectionCount}>{transcripts.length}</span>
+              </h2>
+
+              {transcripts.length === 0 ? (
+                <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>
+                  No agent transcripts yet. Run an encoding task to capture transcripts.
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {transcripts.map((t) => {
+                    const isExpanded = expandedTranscript === t.id;
+                    const messages = Array.isArray(t.transcript) ? t.transcript : [];
+
+                    // Extract thinking, text, and tool_use blocks from messages
+                    const thinkingBlocks: string[] = [];
+                    const textBlocks: string[] = [];
+                    const toolCalls: { name: string; input: string; result?: string }[] = [];
+
+                    // Build a map of tool results by tool_use_id
+                    const toolResults: Record<string, string> = {};
+                    messages.forEach((msg) => {
+                      if (msg.type === 'user' && msg.message?.content) {
+                        const content = msg.message.content;
+                        // content can be string or array
+                        if (Array.isArray(content)) {
+                          content.forEach((block: { type: string; tool_use_id?: string; content?: string }) => {
+                            if (block.type === 'tool_result' && block.tool_use_id) {
+                              toolResults[block.tool_use_id] = typeof block.content === 'string'
+                                ? block.content.slice(0, 2000)
+                                : JSON.stringify(block.content).slice(0, 2000);
+                            }
+                          });
+                        }
+                      }
+                    });
+
+                    messages.forEach((msg) => {
+                      if (msg.type === 'assistant' && msg.message?.content) {
+                        const content = msg.message.content;
+                        // content can be string or array
+                        if (Array.isArray(content)) {
+                          content.forEach((block: { type: string; thinking?: string; text?: string; name?: string; input?: Record<string, unknown>; id?: string }) => {
+                            if (block.type === 'thinking' && block.thinking) {
+                              thinkingBlocks.push(block.thinking);
+                            }
+                            if (block.type === 'text' && block.text) {
+                              textBlocks.push(block.text);
+                            }
+                            if (block.type === 'tool_use' && block.name) {
+                              toolCalls.push({
+                                name: block.name,
+                                input: JSON.stringify(block.input || {}, null, 2).slice(0, 500),
+                                result: block.id ? toolResults[block.id] : undefined,
+                              });
+                            }
+                          });
+                        }
+                      }
+                    });
+
+                    return (
+                      <div
+                        key={t.id}
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.02)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {/* Header */}
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '16px',
+                            cursor: 'pointer',
+                            background: isExpanded ? 'rgba(0, 212, 255, 0.05)' : 'transparent',
+                          }}
+                          onClick={() => setExpandedTranscript(isExpanded ? null : t.id)}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                            <span style={{
+                              background: '#00d4ff20',
+                              color: '#00d4ff',
+                              padding: '4px 12px',
+                              borderRadius: '4px',
+                              fontSize: '12px',
+                              fontWeight: 600,
+                            }}>
+                              {t.subagent_type}
+                            </span>
+                            <span style={{ fontWeight: 500 }}>{t.description || 'No description'}</span>
+                            <span style={{ color: '#666', fontSize: '13px' }}>
+                              {t.agent_id ? `agent-${t.agent_id}` : ''}
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                            <span style={{ color: '#888', fontSize: '13px' }}>
+                              {new Date(t.created_at).toLocaleString()}
+                            </span>
+                            <span style={{ color: '#00ff88', fontSize: '13px' }}>
+                              {t.message_count} messages
+                            </span>
+                            <span style={{ color: '#00d4ff' }}>
+                              {isExpanded ? '▼' : '▶'}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Expanded Content */}
+                        {isExpanded && (
+                          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                            {/* Prompt */}
+                            {t.prompt && (
+                              <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.2)' }}>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '8px' }}>PROMPT</div>
+                                <pre style={{
+                                  margin: 0,
+                                  whiteSpace: 'pre-wrap',
+                                  fontFamily: 'JetBrains Mono, monospace',
+                                  fontSize: '13px',
+                                  color: '#ccc',
+                                }}>
+                                  {t.prompt}
+                                </pre>
+                              </div>
+                            )}
+
+                            {/* Tool Calls */}
+                            {toolCalls.length > 0 && (
+                              <div style={{ padding: '16px' }}>
+                                <div style={{ color: '#00d4ff', fontSize: '12px', marginBottom: '12px' }}>
+                                  TOOL CALLS ({toolCalls.length})
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '400px', overflow: 'auto' }}>
+                                  {toolCalls.map((tool, idx) => (
+                                    <details
+                                      key={idx}
+                                      style={{
+                                        background: 'rgba(0, 212, 255, 0.05)',
+                                        border: '1px solid rgba(0, 212, 255, 0.2)',
+                                        borderRadius: '6px',
+                                        padding: '8px 12px',
+                                      }}
+                                    >
+                                      <summary style={{ cursor: 'pointer', color: '#00d4ff', fontWeight: 500, fontSize: '13px' }}>
+                                        {tool.name}
+                                      </summary>
+                                      <div style={{ marginTop: '8px' }}>
+                                        <div style={{ color: '#888', fontSize: '11px', marginBottom: '4px' }}>INPUT:</div>
+                                        <pre style={{
+                                          margin: 0,
+                                          padding: '8px',
+                                          background: 'rgba(0, 0, 0, 0.3)',
+                                          borderRadius: '4px',
+                                          fontSize: '11px',
+                                          color: '#aaa',
+                                          whiteSpace: 'pre-wrap',
+                                          maxHeight: '150px',
+                                          overflow: 'auto',
+                                        }}>
+                                          {tool.input}
+                                        </pre>
+                                        {tool.result && (
+                                          <>
+                                            <div style={{ color: '#888', fontSize: '11px', marginTop: '8px', marginBottom: '4px' }}>OUTPUT:</div>
+                                            <pre style={{
+                                              margin: 0,
+                                              padding: '8px',
+                                              background: 'rgba(0, 255, 136, 0.05)',
+                                              borderRadius: '4px',
+                                              fontSize: '11px',
+                                              color: '#aaa',
+                                              whiteSpace: 'pre-wrap',
+                                              maxHeight: '150px',
+                                              overflow: 'auto',
+                                            }}>
+                                              {tool.result}
+                                            </pre>
+                                          </>
+                                        )}
+                                      </div>
+                                    </details>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Chain of Thought */}
+                            {thinkingBlocks.length > 0 && (
+                              <div style={{ padding: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                                <div style={{ color: '#ffaa00', fontSize: '12px', marginBottom: '12px' }}>
+                                  CHAIN OF THOUGHT ({thinkingBlocks.length} blocks)
+                                </div>
+                                {thinkingBlocks.map((thinking, idx) => (
+                                  <div
+                                    key={idx}
+                                    style={{
+                                      background: 'rgba(255, 170, 0, 0.05)',
+                                      border: '1px solid rgba(255, 170, 0, 0.2)',
+                                      borderRadius: '6px',
+                                      padding: '12px',
+                                      marginBottom: '12px',
+                                    }}
+                                  >
+                                    <pre style={{
+                                      margin: 0,
+                                      whiteSpace: 'pre-wrap',
+                                      fontFamily: 'JetBrains Mono, monospace',
+                                      fontSize: '12px',
+                                      color: '#ccc',
+                                      maxHeight: '300px',
+                                      overflow: 'auto',
+                                    }}>
+                                      {thinking}
+                                    </pre>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {/* Output */}
+                            {textBlocks.length > 0 && (
+                              <div style={{ padding: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                                <div style={{ color: '#00ff88', fontSize: '12px', marginBottom: '12px' }}>
+                                  OUTPUT ({textBlocks.length} blocks)
+                                </div>
+                                {textBlocks.map((text, idx) => (
+                                  <div
+                                    key={idx}
+                                    style={{
+                                      background: 'rgba(0, 255, 136, 0.05)',
+                                      border: '1px solid rgba(0, 255, 136, 0.2)',
+                                      borderRadius: '6px',
+                                      padding: '12px',
+                                      marginBottom: '12px',
+                                    }}
+                                  >
+                                    <pre style={{
+                                      margin: 0,
+                                      whiteSpace: 'pre-wrap',
+                                      fontFamily: 'JetBrains Mono, monospace',
+                                      fontSize: '12px',
+                                      color: '#ccc',
+                                    }}>
+                                      {text}
+                                    </pre>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </section>
           )}
 

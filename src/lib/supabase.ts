@@ -119,6 +119,48 @@ export async function getEncodingRuns(limit = 100, offset = 0): Promise<Encoding
   return (data || []) as EncodingRun[];
 }
 
+// Types for agent transcripts (AutoRAC Experiment Lab)
+export interface AgentTranscript {
+  id: number;
+  session_id: string;
+  agent_id: string | null;
+  tool_use_id: string;
+  subagent_type: string;
+  prompt: string | null;
+  description: string | null;
+  response_summary: string | null;
+  transcript: TranscriptMessage[] | null;
+  message_count: number;
+  created_at: string;
+  uploaded_at: string | null;
+}
+
+export interface TranscriptMessage {
+  type: string;
+  message?: {
+    role: string;
+    content: Array<{ type: string; text?: string; thinking?: string }>;
+  };
+  timestamp?: string;
+  agentId?: string;
+}
+
+// Fetch agent transcripts from Supabase
+export async function getAgentTranscripts(limit = 100, offset = 0): Promise<AgentTranscript[]> {
+  const { data, error } = await supabase
+    .from('agent_transcripts')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .range(offset, offset + limit - 1);
+
+  if (error) {
+    console.error('Error fetching agent transcripts:', error);
+    return [];
+  }
+
+  return (data || []) as AgentTranscript[];
+}
+
 // Helper to format credits for display (convert micro-credits to readable format)
 export function formatCredits(microCredits: number): string {
   // Convert micro-credits to approximate API calls at $0.02/call rate
