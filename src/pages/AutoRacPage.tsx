@@ -163,19 +163,41 @@ export default function AutoRacPage() {
 
             <div className={styles.workflowConnector} />
 
-            {/* Step 3: Structure Discovery */}
-            <div className={styles.workflowStep}>
+            {/* Step 3: Structure Discovery & Chunking */}
+            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
               <div className={styles.workflowStepNumber}>3</div>
               <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>Discover Structure</div>
+                <div className={styles.workflowStepTitle}>Discover Structure & Chunk</div>
                 <div className={styles.workflowStepDesc}>
-                  Parse subsections, build leaf-first queue
-                  <div className={styles.workflowTree}>
-                    <div>26/1/j/2/A.rac ← LEAF (first)</div>
-                    <div>26/1/j/2/B.rac ← LEAF</div>
-                    <div>26/1/j/2.rac ← imports children</div>
-                    <div>26/1.rac ← LAST</div>
+                  Parse subsections, auto-chunk by complexity, build leaf-first queue
+                </div>
+                <div className={styles.workflowChunking}>
+                  <div className={styles.workflowChunkRule}>
+                    <span className={styles.workflowChunkType}>Simple leaf</span>
+                    <span className={styles.workflowChunkArrow}>→</span>
+                    <span className={styles.workflowChunkAction}>1 session</span>
                   </div>
+                  <div className={styles.workflowChunkRule}>
+                    <span className={styles.workflowChunkType}>Leaf cluster</span>
+                    <span className={styles.workflowChunkArrow}>→</span>
+                    <span className={styles.workflowChunkAction}>siblings together</span>
+                  </div>
+                  <div className={styles.workflowChunkRule}>
+                    <span className={styles.workflowChunkType}>Complex section</span>
+                    <span className={styles.workflowChunkArrow}>→</span>
+                    <span className={styles.workflowChunkAction}>split into N sessions</span>
+                  </div>
+                  <div className={styles.workflowChunkRule}>
+                    <span className={styles.workflowChunkType}>Container</span>
+                    <span className={styles.workflowChunkArrow}>→</span>
+                    <span className={styles.workflowChunkAction}>auto after children</span>
+                  </div>
+                </div>
+                <div className={styles.workflowTree}>
+                  <div>Session 1: 26/1/h/1/*.rac (TCJA brackets)</div>
+                  <div>Session 2: 26/1/h/2-6.rac (adjustments)</div>
+                  <div>Session 3: 26/1/h.rac (container)</div>
+                  <div>...</div>
                 </div>
               </div>
             </div>

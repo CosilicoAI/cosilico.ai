@@ -316,6 +316,41 @@ export const workflowConnector = style({
   background: `linear-gradient(180deg, rgba(0, 212, 255, 0.4), rgba(0, 212, 255, 0.1))`,
 });
 
+export const workflowChunking = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.sm,
+  marginTop: vars.space.md,
+  padding: vars.space.md,
+  background: 'rgba(0, 0, 0, 0.3)',
+  borderRadius: vars.radius.md,
+});
+
+export const workflowChunkRule = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.sm,
+  fontSize: '0.85rem',
+});
+
+export const workflowChunkType = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  color: vars.color.textSecondary,
+  minWidth: '120px',
+});
+
+export const workflowChunkArrow = style({
+  color: vars.color.accent,
+  opacity: 0.6,
+});
+
+export const workflowChunkAction = style({
+  fontFamily: vars.font.body,
+  fontSize: '0.85rem',
+  color: vars.color.textMuted,
+});
+
 export const workflowTree = style({
   marginTop: vars.space.md,
   padding: vars.space.md,
