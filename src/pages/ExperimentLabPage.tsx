@@ -793,22 +793,6 @@ export default function ExperimentLabPage() {
                               </div>
                             )}
 
-                            {/* Prompt sent to subagent */}
-                            {t.prompt && (
-                              <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.2)' }}>
-                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '8px' }}>PROMPT TO SUBAGENT</div>
-                                <pre style={{
-                                  margin: 0,
-                                  whiteSpace: 'pre-wrap',
-                                  fontFamily: 'JetBrains Mono, monospace',
-                                  fontSize: '13px',
-                                  color: '#ccc',
-                                }}>
-                                  {t.prompt}
-                                </pre>
-                              </div>
-                            )}
-
                             {/* Timeline Controls */}
                             <div style={{
                               padding: '12px 16px',
