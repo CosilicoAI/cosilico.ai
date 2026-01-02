@@ -104,6 +104,7 @@ export interface EncodingRun {
   agent_type: string | null;
   agent_model: string | null;
   data_source: DataSource;
+  session_id: string | null;
 }
 
 // Fetch encoding runs from Supabase
@@ -156,6 +157,22 @@ export async function getAgentTranscripts(limit = 100, offset = 0): Promise<Agen
 
   if (error) {
     console.error('Error fetching agent transcripts:', error);
+    return [];
+  }
+
+  return (data || []) as AgentTranscript[];
+}
+
+// Fetch transcripts for a specific session (linked to an encoding run)
+export async function getTranscriptsBySession(sessionId: string): Promise<AgentTranscript[]> {
+  const { data, error } = await supabase
+    .from('agent_transcripts')
+    .select('*')
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching transcripts by session:', error);
     return [];
   }
 

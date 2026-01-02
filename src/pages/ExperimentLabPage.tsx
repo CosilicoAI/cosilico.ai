@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
-import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource, getAgentTranscripts, AgentTranscript } from "../lib/supabase";
+import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource, getAgentTranscripts, AgentTranscript, getTranscriptsBySession } from "../lib/supabase";
 
 // ============================================
 // TYPES
@@ -23,6 +23,7 @@ interface ExperimentRun {
   hasIssues?: boolean;
   note?: string;
   dataSource: DataSource;
+  sessionId?: string;
 }
 
 // Data source display info - CRITICAL for showing warnings about fake/untrusted data
@@ -291,7 +292,19 @@ function transformToUIFormat(run: SupabaseEncodingRun): ExperimentRun {
     hasIssues: run.has_issues ?? undefined,
     note: run.note ?? undefined,
     dataSource: run.data_source || 'unknown',
+    sessionId: run.session_id ?? undefined,
   };
+}
+
+// Normalize agent type names for display
+function normalizeAgentType(type: string): string {
+  return type
+    .replace('cosilico:', '')
+    .replace('essential:', '')
+    .replace(/-/g, ' ')
+    .split(' ')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
 }
 
 export default function ExperimentLabPage() {
@@ -299,6 +312,8 @@ export default function ExperimentLabPage() {
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [expandedTranscript, setExpandedTranscript] = useState<number | null>(null);
   const [showTimestamps, setShowTimestamps] = useState<boolean>(false);
+  const [selectedRun, setSelectedRun] = useState<ExperimentRun | null>(null);
+  const [selectedRunTranscripts, setSelectedRunTranscripts] = useState<AgentTranscript[]>([]);
 
   // State for Supabase data
   const [liveData, setLiveData] = useState<ExperimentRun[]>([]);
@@ -342,6 +357,25 @@ export default function ExperimentLabPage() {
 
     fetchData();
   }, []);
+
+  // Handler to select a run and load its transcripts
+  const handleSelectRun = async (run: ExperimentRun) => {
+    if (selectedRun?.id === run.id) {
+      // Clicking same run closes the detail view
+      setSelectedRun(null);
+      setSelectedRunTranscripts([]);
+      return;
+    }
+
+    setSelectedRun(run);
+
+    if (run.sessionId) {
+      const runTranscripts = await getTranscriptsBySession(run.sessionId);
+      setSelectedRunTranscripts(runTranscripts);
+    } else {
+      setSelectedRunTranscripts([]);
+    }
+  };
 
   const data = liveData.length > 0 ? liveData : MOCK_CALIBRATION_DATA;
 
@@ -549,7 +583,15 @@ export default function ExperimentLabPage() {
                     const sourceInfo = DATA_SOURCE_INFO[run.dataSource];
 
                     return (
-                      <tr key={run.id}>
+                      <tr
+                        key={run.id}
+                        onClick={() => handleSelectRun(run)}
+                        style={{
+                          cursor: 'pointer',
+                          background: selectedRun?.id === run.id ? 'rgba(0, 212, 255, 0.1)' : undefined,
+                          borderLeft: selectedRun?.id === run.id ? '3px solid #00d4ff' : '3px solid transparent',
+                        }}
+                      >
                         <td className={styles.citationCell}>
                           {run.citation}
                           {run.hasIssues && (
@@ -613,6 +655,169 @@ export default function ExperimentLabPage() {
                   })}
                 </tbody>
               </table>
+
+              {/* Run Detail Panel */}
+              {selectedRun && (
+                <div style={{
+                  marginTop: '24px',
+                  background: 'rgba(0, 212, 255, 0.03)',
+                  border: '1px solid rgba(0, 212, 255, 0.2)',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                }}>
+                  {/* Detail Header */}
+                  <div style={{
+                    padding: '16px 20px',
+                    background: 'rgba(0, 212, 255, 0.08)',
+                    borderBottom: '1px solid rgba(0, 212, 255, 0.2)',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: '18px', color: '#00d4ff' }}>
+                        {selectedRun.citation}
+                      </h3>
+                      <div style={{ color: '#888', fontSize: '13px', marginTop: '4px' }}>
+                        {new Date(selectedRun.timestamp).toLocaleString()} • {selectedRun.id}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => { setSelectedRun(null); setSelectedRunTranscripts([]); }}
+                      style={{
+                        background: 'transparent',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        color: '#888',
+                        padding: '6px 12px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Close ✕
+                    </button>
+                  </div>
+
+                  {/* Scores Section */}
+                  <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>SCORES</div>
+                    <div style={{ display: 'flex', gap: '24px' }}>
+                      {(['rac', 'formula', 'parameter', 'integration'] as const).map(key => (
+                        <div key={key} style={{ textAlign: 'center' }}>
+                          <div style={{
+                            fontSize: '24px',
+                            fontWeight: 700,
+                            color: selectedRun.scores[key] >= 8 ? '#00ff88' : selectedRun.scores[key] >= 6 ? '#ffaa00' : '#ff4466',
+                          }}>
+                            {selectedRun.scores[key].toFixed(1)}
+                          </div>
+                          <div style={{ color: '#888', fontSize: '11px', textTransform: 'uppercase' }}>{key}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Transcripts Section */}
+                  <div style={{ padding: '20px' }}>
+                    <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>
+                      AGENT TRANSCRIPTS ({selectedRunTranscripts.length})
+                    </div>
+                    {selectedRunTranscripts.length === 0 ? (
+                      <div style={{ color: '#666', fontStyle: 'italic' }}>
+                        {selectedRun.sessionId ? 'Loading transcripts...' : 'No session ID - transcripts not linked'}
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {selectedRunTranscripts.map((t) => (
+                          <div
+                            key={t.id}
+                            style={{
+                              background: 'rgba(0, 0, 0, 0.2)',
+                              border: '1px solid rgba(255,255,255,0.1)',
+                              borderRadius: '6px',
+                              overflow: 'hidden',
+                            }}
+                          >
+                            <div
+                              style={{
+                                padding: '12px 16px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                cursor: 'pointer',
+                                background: expandedTranscript === t.id ? 'rgba(0, 212, 255, 0.05)' : 'transparent',
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpandedTranscript(expandedTranscript === t.id ? null : t.id);
+                              }}
+                            >
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{
+                                  background: '#00d4ff20',
+                                  color: '#00d4ff',
+                                  padding: '4px 10px',
+                                  borderRadius: '4px',
+                                  fontSize: '11px',
+                                  fontWeight: 600,
+                                }}>
+                                  {normalizeAgentType(t.subagent_type)}
+                                </span>
+                                <span style={{ color: '#ccc', fontSize: '13px' }}>
+                                  {t.description || 'No description'}
+                                </span>
+                              </div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{ color: '#00ff88', fontSize: '12px' }}>
+                                  {t.message_count} msgs
+                                </span>
+                                <span style={{ color: '#00d4ff' }}>
+                                  {expandedTranscript === t.id ? '▼' : '▶'}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Expanded transcript content */}
+                            {expandedTranscript === t.id && t.transcript && (
+                              <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '16px', maxHeight: '400px', overflow: 'auto' }}>
+                                {/* Orchestrator thinking */}
+                                {t.orchestrator_thinking && (
+                                  <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.3)' }}>
+                                    <div style={{ color: '#a78bfa', fontSize: '11px', marginBottom: '8px', fontWeight: 600 }}>ORCHESTRATOR THINKING</div>
+                                    <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '11px', color: '#ccc', maxHeight: '150px', overflow: 'auto' }}>
+                                      {t.orchestrator_thinking}
+                                    </pre>
+                                  </div>
+                                )}
+
+                                {/* Prompt */}
+                                {t.prompt && (
+                                  <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '6px' }}>
+                                    <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px' }}>PROMPT</div>
+                                    <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '12px', color: '#ccc' }}>
+                                      {t.prompt}
+                                    </pre>
+                                  </div>
+                                )}
+
+                                {/* Message count summary */}
+                                <div style={{ color: '#666', fontSize: '12px' }}>
+                                  {t.message_count} messages in transcript •
+                                  <span
+                                    style={{ color: '#00d4ff', cursor: 'pointer', marginLeft: '8px' }}
+                                    onClick={() => setActiveTab('transcripts')}
+                                  >
+                                    View full timeline →
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </section>
           )}
 
