@@ -298,6 +298,7 @@ export default function ExperimentLabPage() {
   const [activeTab, setActiveTab] = useState<"experiments" | "plugin" | "issues" | "transcripts">("experiments");
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [expandedTranscript, setExpandedTranscript] = useState<number | null>(null);
+  const [showTimestamps, setShowTimestamps] = useState<boolean>(false);
 
   // State for Supabase data
   const [liveData, setLiveData] = useState<ExperimentRun[]>([]);
@@ -633,52 +634,87 @@ export default function ExperimentLabPage() {
                     const isExpanded = expandedTranscript === t.id;
                     const messages = Array.isArray(t.transcript) ? t.transcript : [];
 
-                    // Extract thinking, text, and tool_use blocks from messages
-                    const thinkingBlocks: string[] = [];
-                    const textBlocks: string[] = [];
-                    const toolCalls: { name: string; input: string; result?: string }[] = [];
+                    // Build chronological list of events
+                    interface TimelineEvent {
+                      type: 'thinking' | 'text' | 'tool_use' | 'tool_result' | 'user_prompt';
+                      timestamp?: string;
+                      content: string;
+                      toolName?: string;
+                      toolInput?: string;
+                    }
+                    const timeline: TimelineEvent[] = [];
 
-                    // Build a map of tool results by tool_use_id
-                    const toolResults: Record<string, string> = {};
                     messages.forEach((msg) => {
-                      if (msg.type === 'user' && msg.message?.content) {
-                        const content = msg.message.content;
-                        // content can be string or array
+                      const ts = msg.timestamp;
+                      const content = msg.message?.content;
+
+                      if (msg.type === 'user' && content) {
                         if (Array.isArray(content)) {
-                          content.forEach((block: { type: string; tool_use_id?: string; content?: string }) => {
-                            if (block.type === 'tool_result' && block.tool_use_id) {
-                              toolResults[block.tool_use_id] = typeof block.content === 'string'
-                                ? block.content.slice(0, 2000)
-                                : JSON.stringify(block.content).slice(0, 2000);
+                          content.forEach((block: { type: string; tool_use_id?: string; content?: string; text?: string }) => {
+                            if (block.type === 'tool_result') {
+                              timeline.push({
+                                type: 'tool_result',
+                                timestamp: ts,
+                                content: typeof block.content === 'string'
+                                  ? block.content.slice(0, 3000)
+                                  : JSON.stringify(block.content).slice(0, 3000),
+                              });
+                            } else if (block.type === 'text' && block.text) {
+                              timeline.push({
+                                type: 'user_prompt',
+                                timestamp: ts,
+                                content: block.text,
+                              });
                             }
+                          });
+                        } else if (typeof content === 'string') {
+                          timeline.push({
+                            type: 'user_prompt',
+                            timestamp: ts,
+                            content: content,
                           });
                         }
                       }
-                    });
 
-                    messages.forEach((msg) => {
-                      if (msg.type === 'assistant' && msg.message?.content) {
-                        const content = msg.message.content;
-                        // content can be string or array
+                      if (msg.type === 'assistant' && content) {
                         if (Array.isArray(content)) {
-                          content.forEach((block: { type: string; thinking?: string; text?: string; name?: string; input?: Record<string, unknown>; id?: string }) => {
+                          content.forEach((block: { type: string; thinking?: string; text?: string; name?: string; input?: Record<string, unknown> }) => {
                             if (block.type === 'thinking' && block.thinking) {
-                              thinkingBlocks.push(block.thinking);
+                              timeline.push({
+                                type: 'thinking',
+                                timestamp: ts,
+                                content: block.thinking,
+                              });
                             }
                             if (block.type === 'text' && block.text) {
-                              textBlocks.push(block.text);
+                              timeline.push({
+                                type: 'text',
+                                timestamp: ts,
+                                content: block.text,
+                              });
                             }
                             if (block.type === 'tool_use' && block.name) {
-                              toolCalls.push({
-                                name: block.name,
-                                input: JSON.stringify(block.input || {}, null, 2).slice(0, 500),
-                                result: block.id ? toolResults[block.id] : undefined,
+                              timeline.push({
+                                type: 'tool_use',
+                                timestamp: ts,
+                                content: '',
+                                toolName: block.name,
+                                toolInput: JSON.stringify(block.input || {}, null, 2).slice(0, 1000),
                               });
                             }
                           });
                         }
                       }
                     });
+
+                    // Style configs for each event type
+                    const eventStyles: Record<string, { label: string; color: string; bg: string; border: string }> = {
+                      thinking: { label: 'THINKING', color: '#ffaa00', bg: 'rgba(255, 170, 0, 0.05)', border: 'rgba(255, 170, 0, 0.2)' },
+                      text: { label: 'OUTPUT', color: '#00ff88', bg: 'rgba(0, 255, 136, 0.05)', border: 'rgba(0, 255, 136, 0.2)' },
+                      tool_use: { label: 'TOOL', color: '#00d4ff', bg: 'rgba(0, 212, 255, 0.05)', border: 'rgba(0, 212, 255, 0.2)' },
+                      tool_result: { label: 'RESULT', color: '#a78bfa', bg: 'rgba(167, 139, 250, 0.05)', border: 'rgba(167, 139, 250, 0.2)' },
+                      user_prompt: { label: 'USER', color: '#888', bg: 'rgba(136, 136, 136, 0.05)', border: 'rgba(136, 136, 136, 0.2)' },
+                    };
 
                     return (
                       <div
@@ -731,13 +767,13 @@ export default function ExperimentLabPage() {
                           </div>
                         </div>
 
-                        {/* Expanded Content */}
+                        {/* Expanded Content - Chronological Timeline */}
                         {isExpanded && (
                           <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
                             {/* Prompt */}
                             {t.prompt && (
                               <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.2)' }}>
-                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '8px' }}>PROMPT</div>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '8px' }}>INITIAL PROMPT</div>
                                 <pre style={{
                                   margin: 0,
                                   whiteSpace: 'pre-wrap',
@@ -750,129 +786,98 @@ export default function ExperimentLabPage() {
                               </div>
                             )}
 
-                            {/* Tool Calls */}
-                            {toolCalls.length > 0 && (
-                              <div style={{ padding: '16px' }}>
-                                <div style={{ color: '#00d4ff', fontSize: '12px', marginBottom: '12px' }}>
-                                  TOOL CALLS ({toolCalls.length})
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '400px', overflow: 'auto' }}>
-                                  {toolCalls.map((tool, idx) => (
-                                    <details
-                                      key={idx}
-                                      style={{
-                                        background: 'rgba(0, 212, 255, 0.05)',
-                                        border: '1px solid rgba(0, 212, 255, 0.2)',
-                                        borderRadius: '6px',
-                                        padding: '8px 12px',
-                                      }}
-                                    >
-                                      <summary style={{ cursor: 'pointer', color: '#00d4ff', fontWeight: 500, fontSize: '13px' }}>
-                                        {tool.name}
-                                      </summary>
-                                      <div style={{ marginTop: '8px' }}>
-                                        <div style={{ color: '#888', fontSize: '11px', marginBottom: '4px' }}>INPUT:</div>
+                            {/* Timeline Controls */}
+                            <div style={{
+                              padding: '12px 16px',
+                              borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                            }}>
+                              <span style={{ color: '#888', fontSize: '12px' }}>
+                                {timeline.length} events
+                              </span>
+                              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                <input
+                                  type="checkbox"
+                                  checked={showTimestamps}
+                                  onChange={(e) => setShowTimestamps(e.target.checked)}
+                                  style={{ cursor: 'pointer' }}
+                                />
+                                <span style={{ color: '#888', fontSize: '12px' }}>Show timestamps</span>
+                              </label>
+                            </div>
+
+                            {/* Chronological Timeline */}
+                            <div style={{ padding: '16px', maxHeight: '600px', overflow: 'auto' }}>
+                              {timeline.map((event, idx) => {
+                                const style = eventStyles[event.type];
+                                return (
+                                  <div
+                                    key={idx}
+                                    style={{
+                                      marginBottom: '12px',
+                                      background: style.bg,
+                                      border: `1px solid ${style.border}`,
+                                      borderRadius: '6px',
+                                      overflow: 'hidden',
+                                    }}
+                                  >
+                                    {/* Event Header */}
+                                    <div style={{
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      padding: '8px 12px',
+                                      borderBottom: `1px solid ${style.border}`,
+                                    }}>
+                                      <span style={{
+                                        color: style.color,
+                                        fontSize: '11px',
+                                        fontWeight: 600,
+                                        letterSpacing: '0.5px',
+                                      }}>
+                                        {event.type === 'tool_use' ? `TOOL: ${event.toolName}` : style.label}
+                                      </span>
+                                      {showTimestamps && event.timestamp && (
+                                        <span style={{ color: '#666', fontSize: '10px', fontFamily: 'JetBrains Mono, monospace' }}>
+                                          {new Date(event.timestamp).toLocaleTimeString()}
+                                        </span>
+                                      )}
+                                    </div>
+
+                                    {/* Event Content */}
+                                    <div style={{ padding: '10px 12px' }}>
+                                      {event.type === 'tool_use' ? (
                                         <pre style={{
                                           margin: 0,
-                                          padding: '8px',
-                                          background: 'rgba(0, 0, 0, 0.3)',
-                                          borderRadius: '4px',
+                                          whiteSpace: 'pre-wrap',
+                                          fontFamily: 'JetBrains Mono, monospace',
                                           fontSize: '11px',
                                           color: '#aaa',
-                                          whiteSpace: 'pre-wrap',
                                           maxHeight: '150px',
                                           overflow: 'auto',
                                         }}>
-                                          {tool.input}
+                                          {event.toolInput}
                                         </pre>
-                                        {tool.result && (
-                                          <>
-                                            <div style={{ color: '#888', fontSize: '11px', marginTop: '8px', marginBottom: '4px' }}>OUTPUT:</div>
-                                            <pre style={{
-                                              margin: 0,
-                                              padding: '8px',
-                                              background: 'rgba(0, 255, 136, 0.05)',
-                                              borderRadius: '4px',
-                                              fontSize: '11px',
-                                              color: '#aaa',
-                                              whiteSpace: 'pre-wrap',
-                                              maxHeight: '150px',
-                                              overflow: 'auto',
-                                            }}>
-                                              {tool.result}
-                                            </pre>
-                                          </>
-                                        )}
-                                      </div>
-                                    </details>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Chain of Thought */}
-                            {thinkingBlocks.length > 0 && (
-                              <div style={{ padding: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                                <div style={{ color: '#ffaa00', fontSize: '12px', marginBottom: '12px' }}>
-                                  CHAIN OF THOUGHT ({thinkingBlocks.length} blocks)
-                                </div>
-                                {thinkingBlocks.map((thinking, idx) => (
-                                  <div
-                                    key={idx}
-                                    style={{
-                                      background: 'rgba(255, 170, 0, 0.05)',
-                                      border: '1px solid rgba(255, 170, 0, 0.2)',
-                                      borderRadius: '6px',
-                                      padding: '12px',
-                                      marginBottom: '12px',
-                                    }}
-                                  >
-                                    <pre style={{
-                                      margin: 0,
-                                      whiteSpace: 'pre-wrap',
-                                      fontFamily: 'JetBrains Mono, monospace',
-                                      fontSize: '12px',
-                                      color: '#ccc',
-                                      maxHeight: '300px',
-                                      overflow: 'auto',
-                                    }}>
-                                      {thinking}
-                                    </pre>
+                                      ) : (
+                                        <pre style={{
+                                          margin: 0,
+                                          whiteSpace: 'pre-wrap',
+                                          fontFamily: 'JetBrains Mono, monospace',
+                                          fontSize: '12px',
+                                          color: '#ccc',
+                                          maxHeight: event.type === 'tool_result' ? '200px' : '300px',
+                                          overflow: 'auto',
+                                        }}>
+                                          {event.content}
+                                        </pre>
+                                      )}
+                                    </div>
                                   </div>
-                                ))}
-                              </div>
-                            )}
-
-                            {/* Output */}
-                            {textBlocks.length > 0 && (
-                              <div style={{ padding: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                                <div style={{ color: '#00ff88', fontSize: '12px', marginBottom: '12px' }}>
-                                  OUTPUT ({textBlocks.length} blocks)
-                                </div>
-                                {textBlocks.map((text, idx) => (
-                                  <div
-                                    key={idx}
-                                    style={{
-                                      background: 'rgba(0, 255, 136, 0.05)',
-                                      border: '1px solid rgba(0, 255, 136, 0.2)',
-                                      borderRadius: '6px',
-                                      padding: '12px',
-                                      marginBottom: '12px',
-                                    }}
-                                  >
-                                    <pre style={{
-                                      margin: 0,
-                                      whiteSpace: 'pre-wrap',
-                                      fontFamily: 'JetBrains Mono, monospace',
-                                      fontSize: '12px',
-                                      color: '#ccc',
-                                    }}>
-                                      {text}
-                                    </pre>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
+                                );
+                              })}
+                            </div>
                           </div>
                         )}
                       </div>
