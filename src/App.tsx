@@ -25,6 +25,7 @@ import ProgressPage from "./pages/ProgressPage";
 import PortalPage from "./pages/PortalPage";
 import PopdgpEvalPage from "./pages/PopdgpEvalPage";
 import PopdgpPage from "./pages/PopdgpPage";
+import RACDemoPage from "./pages/RACDemoPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 // Scroll to top on route change
@@ -67,6 +68,7 @@ function App() {
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/portal" element={<PortalPage />} />
+          <Route path="/rac-demo" element={<RACDemoPage />} />
         </Routes>
       </div>
     </BrowserRouter>
