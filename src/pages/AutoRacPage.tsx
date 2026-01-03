@@ -219,7 +219,7 @@ export default function AutoRacPage() {
                   <div className={styles.workflowInnerConnector}>↓</div>
                   <div className={styles.workflowInnerStep}>
                     <span className={styles.workflowInnerLabel}>4b</span>
-                    <span>Run CI validation (parse, lint, tests)</span>
+                    <span>Run CI validation (rac pytest suite)</span>
                   </div>
                   <div className={styles.workflowInnerConnector}>↓</div>
                   <div className={styles.workflowInnerBranch}>
@@ -376,13 +376,13 @@ export default function AutoRacPage() {
                 </div>
               </div>
               <p className={styles.componentDesc}>
-                Parallel execution of all validators: CI checks, reviewer agents,
-                and external oracles.
+                Two-tier validation: automated CI checks from rac,
+                plus LLM reviewers and external oracles.
               </p>
               <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>Parse & lint (CI)</div>
-                <div className={styles.componentFeature}>RAC/Formula/Parameter reviewers</div>
-                <div className={styles.componentFeature}>PolicyEngine & TAXSIM oracles</div>
+                <div className={styles.componentFeature}>CI: rac pytest validation suite</div>
+                <div className={styles.componentFeature}>LLM: RAC/Formula/Param/Integration reviewers</div>
+                <div className={styles.componentFeature}>Oracles: PolicyEngine & TAXSIM</div>
               </div>
             </div>
 

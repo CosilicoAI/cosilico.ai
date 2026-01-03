@@ -171,8 +171,8 @@ export default function RacPage() {
               <div className={styles.featureIcon}><FormulaIcon /></div>
               <h3 className={styles.featureTitle}>No Magic Numbers</h3>
               <p className={styles.featureDescription}>
-                Only -1, 0, 1, 2, 3 allowed in formulas. All policy values must come
-                from parameters.
+                Only -1, 0, 1, 2, 3 allowed in formulas. Parameter values must appear
+                in statute text. CI enforces automatically.
               </p>
             </div>
 
