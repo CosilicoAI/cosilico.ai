@@ -239,33 +239,9 @@ export default function AutoRacPage() {
 
             <div className={styles.workflowConnector} />
 
-            {/* Step 5: Validators */}
+            {/* Step 5: Oracles (run BEFORE LLM reviewers) */}
             <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
               <div className={styles.workflowStepNumber}>5</div>
-              <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>Reviewer Agents</div>
-                <div className={styles.workflowValidators}>
-                  <div className={styles.workflowValidator}>RAC Reviewer</div>
-                  <div className={styles.workflowValidator}>Formula Reviewer</div>
-                  <div className={styles.workflowValidator}>Parameter Reviewer</div>
-                  <div className={styles.workflowValidator}>Integration Reviewer</div>
-                </div>
-                <div className={styles.workflowBeadsFlow}>
-                  <span className={styles.workflowBeadsLabel}>Issues found?</span>
-                  <span className={styles.workflowBeadsArrow}>→</span>
-                  <span className={styles.workflowBeadsBadge}>bd create</span>
-                  <span className={styles.workflowBeadsArrow}>→</span>
-                  <span className={styles.workflowBeadsText}>Encoder picks up & fixes</span>
-                  <span className={styles.workflowBeadsLoop}>↺</span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.workflowConnector} />
-
-            {/* Step 6: Oracles */}
-            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
-              <div className={styles.workflowStepNumber}>6</div>
               <div className={styles.workflowStepContent}>
                 <div className={styles.workflowStepTitle}>External Oracles</div>
                 <div className={styles.workflowOracles}>
@@ -278,13 +254,35 @@ export default function AutoRacPage() {
                     <span>TAXSIM</span>
                   </div>
                 </div>
-                <div className={styles.workflowStepDesc}>Compare against reference implementations</div>
+                <div className={styles.workflowStepDesc}>
+                  Fast (~10s), free - generates comparison data for LLM reviewers
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.workflowConnector} />
+
+            {/* Step 6: LLM Reviewers (use oracle context) */}
+            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
+              <div className={styles.workflowStepNumber}>6</div>
+              <div className={styles.workflowStepContent}>
+                <div className={styles.workflowStepTitle}>LLM Reviewers</div>
+                <div className={styles.workflowValidators}>
+                  <div className={styles.workflowValidator}>RAC Reviewer</div>
+                  <div className={styles.workflowValidator}>Formula Reviewer</div>
+                  <div className={styles.workflowValidator}>Parameter Reviewer</div>
+                  <div className={styles.workflowValidator}>Integration Reviewer</div>
+                </div>
+                <div className={styles.workflowStepDesc}>
+                  Receive oracle comparison data to diagnose WHY discrepancies exist
+                </div>
                 <div className={styles.workflowBeadsFlow}>
-                  <span className={styles.workflowBeadsLabel}>Discrepancy?</span>
+                  <span className={styles.workflowBeadsLabel}>Issues found?</span>
                   <span className={styles.workflowBeadsArrow}>→</span>
                   <span className={styles.workflowBeadsBadge}>bd create</span>
                   <span className={styles.workflowBeadsArrow}>→</span>
-                  <span className={styles.workflowBeadsText}>or file upstream bug</span>
+                  <span className={styles.workflowBeadsText}>Encoder picks up & fixes</span>
+                  <span className={styles.workflowBeadsLoop}>↺</span>
                 </div>
               </div>
             </div>
@@ -376,13 +374,13 @@ export default function AutoRacPage() {
                 </div>
               </div>
               <p className={styles.componentDesc}>
-                Two-tier validation: automated CI checks from rac,
-                plus LLM reviewers and external oracles.
+                Three-tier validation: CI catches syntax, oracles generate comparison data,
+                LLM reviewers diagnose issues using oracle context.
               </p>
               <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>CI: rac pytest validation suite</div>
-                <div className={styles.componentFeature}>LLM: RAC/Formula/Param/Integration reviewers</div>
-                <div className={styles.componentFeature}>Oracles: PolicyEngine & TAXSIM</div>
+                <div className={styles.componentFeature}>Tier 1: CI (rac pytest) - instant</div>
+                <div className={styles.componentFeature}>Tier 2: Oracles (PE/TAXSIM) - fast, ~10s</div>
+                <div className={styles.componentFeature}>Tier 3: LLM reviewers - uses oracle context</div>
               </div>
             </div>
 
