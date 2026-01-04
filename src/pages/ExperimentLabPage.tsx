@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
-import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource, getAgentTranscripts, AgentTranscript, getTranscriptsBySession } from "../lib/supabase";
+import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource, getAgentTranscripts, AgentTranscript, getTranscriptsBySession, getSDKSessions, getSDKSessionEvents, SDKSession, SDKSessionEvent } from "../lib/supabase";
 
 // ============================================
 // TYPES
@@ -308,7 +308,7 @@ function normalizeAgentType(type: string): string {
 }
 
 export default function ExperimentLabPage() {
-  const [activeTab, setActiveTab] = useState<"experiments" | "plugin" | "issues" | "transcripts">("experiments");
+  const [activeTab, setActiveTab] = useState<"experiments" | "plugin" | "issues" | "transcripts" | "sdk">("experiments");
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [expandedTranscript, setExpandedTranscript] = useState<number | null>(null);
   const [showTimestamps, setShowTimestamps] = useState<boolean>(false);
@@ -318,6 +318,9 @@ export default function ExperimentLabPage() {
   // State for Supabase data
   const [liveData, setLiveData] = useState<ExperimentRun[]>([]);
   const [transcripts, setTranscripts] = useState<AgentTranscript[]>([]);
+  const [sdkSessions, setSdkSessions] = useState<SDKSession[]>([]);
+  const [selectedSDKSession, setSelectedSDKSession] = useState<SDKSession | null>(null);
+  const [sdkSessionEvents, setSdkSessionEvents] = useState<SDKSessionEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [usingMockData, setUsingMockData] = useState(false);
@@ -329,9 +332,10 @@ export default function ExperimentLabPage() {
       setError(null);
 
       try {
-        const [runs, agentTranscripts] = await Promise.all([
+        const [runs, agentTranscripts, sessions] = await Promise.all([
           getEncodingRuns(100, 0),
-          getAgentTranscripts(100, 0)
+          getAgentTranscripts(100, 0),
+          getSDKSessions(50)
         ]);
 
         if (runs.length > 0) {
@@ -344,6 +348,7 @@ export default function ExperimentLabPage() {
         }
 
         setTranscripts(agentTranscripts);
+        setSdkSessions(sessions);
       } catch (err) {
         console.error('Failed to fetch data:', err);
         setError('Failed to load data from database');
@@ -357,6 +362,18 @@ export default function ExperimentLabPage() {
 
     fetchData();
   }, []);
+
+  // Handler to select SDK session and load its events
+  const handleSelectSDKSession = async (session: SDKSession) => {
+    if (selectedSDKSession?.id === session.id) {
+      setSelectedSDKSession(null);
+      setSdkSessionEvents([]);
+      return;
+    }
+    setSelectedSDKSession(session);
+    const events = await getSDKSessionEvents(session.id, 500);
+    setSdkSessionEvents(events);
+  };
 
   // Handler to select a run and load its transcripts
   const handleSelectRun = async (run: ExperimentRun) => {
@@ -539,6 +556,17 @@ export default function ExperimentLabPage() {
               )}
             </button>
             <button
+              className={`${styles.tab} ${activeTab === "sdk" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("sdk")}
+            >
+              SDK Sessions
+              {sdkSessions.length > 0 && (
+                <span style={{ marginLeft: '8px', background: '#00d4ff', color: '#08080c', padding: '2px 8px', borderRadius: '10px', fontSize: '11px' }}>
+                  {sdkSessions.length}
+                </span>
+              )}
+            </button>
+            <button
               className={`${styles.tab} ${activeTab === "plugin" ? styles.tabActive : ""}`}
               onClick={() => setActiveTab("plugin")}
             >
@@ -583,8 +611,8 @@ export default function ExperimentLabPage() {
                     const sourceInfo = DATA_SOURCE_INFO[run.dataSource];
 
                     return (
-                      <tr
-                        key={run.id}
+                      <React.Fragment key={run.id}>
+                        <tr
                         onClick={() => handleSelectRun(run)}
                         style={{
                           cursor: 'pointer',
@@ -651,173 +679,293 @@ export default function ExperimentLabPage() {
                           )}
                         </td>
                       </tr>
+                      {/* Inline Detail Panel - appears right after selected row */}
+                      {selectedRun?.id === run.id && (
+                        <tr>
+                          <td colSpan={10} style={{ padding: 0, border: 'none' }}>
+                            <div style={{
+                              background: 'rgba(0, 212, 255, 0.03)',
+                              border: '1px solid rgba(0, 212, 255, 0.2)',
+                              borderRadius: '8px',
+                              overflow: 'hidden',
+                            }}>
+                              {/* Detail Header */}
+                              <div style={{
+                                padding: '16px 20px',
+                                background: 'rgba(0, 212, 255, 0.08)',
+                                borderBottom: '1px solid rgba(0, 212, 255, 0.2)',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                              }}>
+                                <div>
+                                  <h3 style={{ margin: 0, fontSize: '18px', color: '#00d4ff' }}>
+                                    {run.citation}
+                                  </h3>
+                                  <div style={{ color: '#888', fontSize: '13px', marginTop: '4px' }}>
+                                    {new Date(run.timestamp).toLocaleString()} • {run.id}
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setSelectedRun(null); setSelectedRunTranscripts([]); }}
+                                  style={{
+                                    background: 'transparent',
+                                    border: '1px solid rgba(255,255,255,0.2)',
+                                    color: '#888',
+                                    padding: '6px 12px',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                  }}
+                                >
+                                  Close ✕
+                                </button>
+                              </div>
+
+                              {/* Scores Section */}
+                              <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>SCORES</div>
+                                <div style={{ display: 'flex', gap: '24px' }}>
+                                  {(['rac', 'formula', 'parameter', 'integration'] as const).map(key => (
+                                    <div key={key} style={{ textAlign: 'center' }}>
+                                      <div style={{
+                                        fontSize: '24px',
+                                        fontWeight: 700,
+                                        color: run.scores[key] >= 8 ? '#00ff88' : run.scores[key] >= 6 ? '#ffaa00' : '#ff4466',
+                                      }}>
+                                        {run.scores[key].toFixed(1)}
+                                      </div>
+                                      <div style={{ color: '#888', fontSize: '11px', textTransform: 'uppercase' }}>{key}</div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Metadata Section */}
+                              <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+                                <div>
+                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '4px' }}>ITERATIONS</div>
+                                  <div style={{
+                                    color: run.iterations[run.iterations.length - 1]?.success ? '#00ff88' : '#ff4466',
+                                    fontWeight: 600,
+                                  }}>
+                                    {run.iterations.length} {run.iterations[run.iterations.length - 1]?.success ? '✓' : '✗'}
+                                  </div>
+                                </div>
+                                <div>
+                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '4px' }}>DURATION</div>
+                                  <div style={{ color: '#fff', fontWeight: 600 }}>
+                                    {Math.floor(run.iterations.reduce((acc, i) => acc + i.duration_ms, 0) / 60000)}m {Math.floor((run.iterations.reduce((acc, i) => acc + i.duration_ms, 0) % 60000) / 1000)}s
+                                  </div>
+                                </div>
+                                <div>
+                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '4px' }}>DATA SOURCE</div>
+                                  <div style={{
+                                    color: DATA_SOURCE_INFO[run.dataSource].color,
+                                    fontWeight: 600,
+                                  }}>
+                                    {DATA_SOURCE_INFO[run.dataSource].label}
+                                  </div>
+                                </div>
+                                {run.note && (
+                                  <div style={{ flex: '1 1 100%' }}>
+                                    <div style={{ color: '#888', fontSize: '11px', marginBottom: '4px' }}>NOTES</div>
+                                    <div style={{ color: '#ffaa00', fontSize: '13px' }}>{run.note}</div>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Calibration Section - Predicted vs Final Scores */}
+                              <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>
+                                  CALIBRATION
+                                  <span style={{ fontWeight: 400, marginLeft: '8px', color: '#666' }}>(predicted vs final)</span>
+                                </div>
+                                <div style={{ color: '#666', fontStyle: 'italic', fontSize: '13px' }}>
+                                  ⚠️ Calibration data not yet captured. Requires pre-run predictions from encoder agent.
+                                </div>
+                              </div>
+
+                              {/* Validation Section - PolicyEngine + TAXSIM */}
+                              <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>
+                                  VALIDATION ALIGNMENT
+                                </div>
+                                <div style={{ display: 'flex', gap: '24px' }}>
+                                  <div style={{
+                                    flex: 1,
+                                    padding: '12px',
+                                    background: 'rgba(0, 0, 0, 0.2)',
+                                    borderRadius: '6px',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                  }}>
+                                    <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px' }}>PolicyEngine</div>
+                                    <div style={{ color: '#666', fontStyle: 'italic', fontSize: '12px' }}>
+                                      Not validated yet
+                                    </div>
+                                  </div>
+                                  <div style={{
+                                    flex: 1,
+                                    padding: '12px',
+                                    background: 'rgba(0, 0, 0, 0.2)',
+                                    borderRadius: '6px',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                  }}>
+                                    <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px' }}>TAXSIM</div>
+                                    <div style={{ color: '#666', fontStyle: 'italic', fontSize: '12px' }}>
+                                      Not validated yet
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* PR & Issues Section */}
+                              <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>
+                                  ARTIFACTS
+                                </div>
+                                <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                                  <div style={{
+                                    padding: '8px 16px',
+                                    background: 'rgba(0, 0, 0, 0.3)',
+                                    borderRadius: '6px',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    color: '#666',
+                                    fontSize: '13px',
+                                  }}>
+                                    📄 No PR linked
+                                  </div>
+                                  <div style={{
+                                    padding: '8px 16px',
+                                    background: 'rgba(0, 0, 0, 0.3)',
+                                    borderRadius: '6px',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    color: '#666',
+                                    fontSize: '13px',
+                                  }}>
+                                    🎯 No beads issues
+                                  </div>
+                                  <div style={{
+                                    padding: '8px 16px',
+                                    background: 'rgba(0, 0, 0, 0.3)',
+                                    borderRadius: '6px',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    color: '#666',
+                                    fontSize: '13px',
+                                  }}>
+                                    📁 {run.citation.replace(' USC ', '/').replace('§ ', '')}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Transcripts Section */}
+                              <div style={{ padding: '20px' }}>
+                                <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>
+                                  AGENT TRANSCRIPTS ({selectedRunTranscripts.length})
+                                </div>
+                                {selectedRunTranscripts.length === 0 ? (
+                                  <div style={{ color: '#666', fontStyle: 'italic' }}>
+                                    {run.sessionId ? 'Loading transcripts...' : 'No session ID - transcripts not linked'}
+                                  </div>
+                                ) : (
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    {selectedRunTranscripts.map((t) => (
+                                      <div
+                                        key={t.id}
+                                        style={{
+                                          background: 'rgba(0, 0, 0, 0.2)',
+                                          border: '1px solid rgba(255,255,255,0.1)',
+                                          borderRadius: '6px',
+                                          overflow: 'hidden',
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            padding: '12px 16px',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            cursor: 'pointer',
+                                            background: expandedTranscript === t.id ? 'rgba(0, 212, 255, 0.05)' : 'transparent',
+                                          }}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            setExpandedTranscript(expandedTranscript === t.id ? null : t.id);
+                                          }}
+                                        >
+                                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                            <span style={{
+                                              background: '#00d4ff20',
+                                              color: '#00d4ff',
+                                              padding: '4px 10px',
+                                              borderRadius: '4px',
+                                              fontSize: '11px',
+                                              fontWeight: 600,
+                                            }}>
+                                              {normalizeAgentType(t.subagent_type)}
+                                            </span>
+                                            <span style={{ color: '#ccc', fontSize: '13px' }}>
+                                              {t.description || 'No description'}
+                                            </span>
+                                          </div>
+                                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                            <span style={{ color: '#00ff88', fontSize: '12px' }}>
+                                              {t.message_count} msgs
+                                            </span>
+                                            <span style={{ color: '#00d4ff' }}>
+                                              {expandedTranscript === t.id ? '▼' : '▶'}
+                                            </span>
+                                          </div>
+                                        </div>
+
+                                        {/* Expanded transcript content */}
+                                        {expandedTranscript === t.id && t.transcript && (
+                                          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '16px', maxHeight: '400px', overflow: 'auto' }}>
+                                            {/* Orchestrator thinking */}
+                                            {t.orchestrator_thinking && (
+                                              <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.3)' }}>
+                                                <div style={{ color: '#a78bfa', fontSize: '11px', marginBottom: '8px', fontWeight: 600 }}>ORCHESTRATOR THINKING</div>
+                                                <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '11px', color: '#ccc', maxHeight: '150px', overflow: 'auto' }}>
+                                                  {t.orchestrator_thinking}
+                                                </pre>
+                                              </div>
+                                            )}
+
+                                            {/* Prompt */}
+                                            {t.prompt && (
+                                              <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '6px' }}>
+                                                <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px' }}>PROMPT</div>
+                                                <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '12px', color: '#ccc' }}>
+                                                  {t.prompt}
+                                                </pre>
+                                              </div>
+                                            )}
+
+                                            {/* Message count summary */}
+                                            <div style={{ color: '#666', fontSize: '12px' }}>
+                                              {t.message_count} messages in transcript •
+                                              <span
+                                                style={{ color: '#00d4ff', cursor: 'pointer', marginLeft: '8px' }}
+                                                onClick={() => setActiveTab('transcripts')}
+                                              >
+                                                View full timeline →
+                                              </span>
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                      </React.Fragment>
                     );
                   })}
                 </tbody>
               </table>
-
-              {/* Run Detail Panel */}
-              {selectedRun && (
-                <div style={{
-                  marginTop: '24px',
-                  background: 'rgba(0, 212, 255, 0.03)',
-                  border: '1px solid rgba(0, 212, 255, 0.2)',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                }}>
-                  {/* Detail Header */}
-                  <div style={{
-                    padding: '16px 20px',
-                    background: 'rgba(0, 212, 255, 0.08)',
-                    borderBottom: '1px solid rgba(0, 212, 255, 0.2)',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                    <div>
-                      <h3 style={{ margin: 0, fontSize: '18px', color: '#00d4ff' }}>
-                        {selectedRun.citation}
-                      </h3>
-                      <div style={{ color: '#888', fontSize: '13px', marginTop: '4px' }}>
-                        {new Date(selectedRun.timestamp).toLocaleString()} • {selectedRun.id}
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => { setSelectedRun(null); setSelectedRunTranscripts([]); }}
-                      style={{
-                        background: 'transparent',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        color: '#888',
-                        padding: '6px 12px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Close ✕
-                    </button>
-                  </div>
-
-                  {/* Scores Section */}
-                  <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                    <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>SCORES</div>
-                    <div style={{ display: 'flex', gap: '24px' }}>
-                      {(['rac', 'formula', 'parameter', 'integration'] as const).map(key => (
-                        <div key={key} style={{ textAlign: 'center' }}>
-                          <div style={{
-                            fontSize: '24px',
-                            fontWeight: 700,
-                            color: selectedRun.scores[key] >= 8 ? '#00ff88' : selectedRun.scores[key] >= 6 ? '#ffaa00' : '#ff4466',
-                          }}>
-                            {selectedRun.scores[key].toFixed(1)}
-                          </div>
-                          <div style={{ color: '#888', fontSize: '11px', textTransform: 'uppercase' }}>{key}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Transcripts Section */}
-                  <div style={{ padding: '20px' }}>
-                    <div style={{ color: '#888', fontSize: '12px', marginBottom: '12px', fontWeight: 600 }}>
-                      AGENT TRANSCRIPTS ({selectedRunTranscripts.length})
-                    </div>
-                    {selectedRunTranscripts.length === 0 ? (
-                      <div style={{ color: '#666', fontStyle: 'italic' }}>
-                        {selectedRun.sessionId ? 'Loading transcripts...' : 'No session ID - transcripts not linked'}
-                      </div>
-                    ) : (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        {selectedRunTranscripts.map((t) => (
-                          <div
-                            key={t.id}
-                            style={{
-                              background: 'rgba(0, 0, 0, 0.2)',
-                              border: '1px solid rgba(255,255,255,0.1)',
-                              borderRadius: '6px',
-                              overflow: 'hidden',
-                            }}
-                          >
-                            <div
-                              style={{
-                                padding: '12px 16px',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                background: expandedTranscript === t.id ? 'rgba(0, 212, 255, 0.05)' : 'transparent',
-                              }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setExpandedTranscript(expandedTranscript === t.id ? null : t.id);
-                              }}
-                            >
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <span style={{
-                                  background: '#00d4ff20',
-                                  color: '#00d4ff',
-                                  padding: '4px 10px',
-                                  borderRadius: '4px',
-                                  fontSize: '11px',
-                                  fontWeight: 600,
-                                }}>
-                                  {normalizeAgentType(t.subagent_type)}
-                                </span>
-                                <span style={{ color: '#ccc', fontSize: '13px' }}>
-                                  {t.description || 'No description'}
-                                </span>
-                              </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <span style={{ color: '#00ff88', fontSize: '12px' }}>
-                                  {t.message_count} msgs
-                                </span>
-                                <span style={{ color: '#00d4ff' }}>
-                                  {expandedTranscript === t.id ? '▼' : '▶'}
-                                </span>
-                              </div>
-                            </div>
-
-                            {/* Expanded transcript content */}
-                            {expandedTranscript === t.id && t.transcript && (
-                              <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '16px', maxHeight: '400px', overflow: 'auto' }}>
-                                {/* Orchestrator thinking */}
-                                {t.orchestrator_thinking && (
-                                  <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.3)' }}>
-                                    <div style={{ color: '#a78bfa', fontSize: '11px', marginBottom: '8px', fontWeight: 600 }}>ORCHESTRATOR THINKING</div>
-                                    <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '11px', color: '#ccc', maxHeight: '150px', overflow: 'auto' }}>
-                                      {t.orchestrator_thinking}
-                                    </pre>
-                                  </div>
-                                )}
-
-                                {/* Prompt */}
-                                {t.prompt && (
-                                  <div style={{ marginBottom: '16px', padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '6px' }}>
-                                    <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px' }}>PROMPT</div>
-                                    <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '12px', color: '#ccc' }}>
-                                      {t.prompt}
-                                    </pre>
-                                  </div>
-                                )}
-
-                                {/* Message count summary */}
-                                <div style={{ color: '#666', fontSize: '12px' }}>
-                                  {t.message_count} messages in transcript •
-                                  <span
-                                    style={{ color: '#00d4ff', cursor: 'pointer', marginLeft: '8px' }}
-                                    onClick={() => setActiveTab('transcripts')}
-                                  >
-                                    View full timeline →
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
             </section>
           )}
 
@@ -1090,6 +1238,182 @@ export default function ExperimentLabPage() {
                                 );
                               })}
                             </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* SDK Sessions Tab */}
+          {activeTab === "sdk" && (
+            <section className={styles.tableSection}>
+              <h2 className={styles.sectionTitle}>
+                SDK Orchestrator Sessions
+                <span className={styles.sectionCount}>{sdkSessions.length}</span>
+              </h2>
+
+              {sdkSessions.length === 0 ? (
+                <div style={{
+                  padding: '40px',
+                  textAlign: 'center',
+                  color: '#888',
+                  background: 'rgba(0, 212, 255, 0.05)',
+                  borderRadius: '8px',
+                  border: '1px dashed rgba(0, 212, 255, 0.3)'
+                }}>
+                  <div style={{ fontSize: '32px', marginBottom: '16px' }}>📭</div>
+                  <div>No SDK sessions synced yet.</div>
+                  <div style={{ fontSize: '13px', marginTop: '8px', opacity: 0.7 }}>
+                    Run <code style={{ background: 'rgba(0, 212, 255, 0.1)', padding: '2px 6px', borderRadius: '4px' }}>autorac sync-sdk-sessions</code> to sync sessions from experiments.db
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  {sdkSessions.map((session) => {
+                    const duration = session.ended_at
+                      ? Math.round((new Date(session.ended_at).getTime() - new Date(session.started_at).getTime()) / 1000)
+                      : null;
+                    const isSelected = selectedSDKSession?.id === session.id;
+
+                    return (
+                      <div key={session.id} style={{ marginBottom: '16px' }}>
+                        <div
+                          onClick={() => handleSelectSDKSession(session)}
+                          style={{
+                            background: isSelected ? 'rgba(0, 212, 255, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                            border: isSelected ? '1px solid #00d4ff' : '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: '8px',
+                            padding: '16px 20px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                          }}
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                              <span style={{
+                                background: '#00d4ff',
+                                color: '#08080c',
+                                padding: '4px 10px',
+                                borderRadius: '4px',
+                                fontSize: '12px',
+                                fontWeight: 600,
+                              }}>
+                                SDK
+                              </span>
+                              <code style={{
+                                fontSize: '14px',
+                                color: '#00ff88',
+                                background: 'rgba(0, 255, 136, 0.1)',
+                                padding: '4px 8px',
+                                borderRadius: '4px'
+                              }}>
+                                {session.id}
+                              </code>
+                            </div>
+                            <span style={{ color: '#888', fontSize: '13px' }}>
+                              {new Date(session.started_at).toLocaleDateString()} {new Date(session.started_at).toLocaleTimeString()}
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'flex', gap: '24px', fontSize: '13px', color: '#ccc' }}>
+                            <span>
+                              <span style={{ color: '#888' }}>Events:</span>{' '}
+                              <span style={{ color: '#00d4ff' }}>{session.event_count}</span>
+                            </span>
+                            {duration && (
+                              <span>
+                                <span style={{ color: '#888' }}>Duration:</span>{' '}
+                                <span style={{ color: '#ffaa00' }}>{Math.floor(duration / 60)}m {duration % 60}s</span>
+                              </span>
+                            )}
+                            <span>
+                              <span style={{ color: '#888' }}>Tokens:</span>{' '}
+                              <span style={{ color: '#00ff88' }}>{(session.input_tokens + session.output_tokens).toLocaleString()}</span>
+                            </span>
+                            <span>
+                              <span style={{ color: '#888' }}>Cost:</span>{' '}
+                              <span style={{ color: '#ff6b35' }}>${session.estimated_cost_usd.toFixed(2)}</span>
+                            </span>
+                            {session.model && (
+                              <span>
+                                <span style={{ color: '#888' }}>Model:</span>{' '}
+                                <span style={{ color: '#aaa' }}>{session.model.replace('claude-', '').replace('-20251101', '')}</span>
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Expanded Event Timeline */}
+                        {isSelected && sdkSessionEvents.length > 0 && (
+                          <div style={{
+                            marginTop: '8px',
+                            background: 'rgba(0, 0, 0, 0.3)',
+                            border: '1px solid rgba(0, 212, 255, 0.2)',
+                            borderRadius: '8px',
+                            padding: '16px',
+                            maxHeight: '500px',
+                            overflow: 'auto',
+                          }}>
+                            <div style={{ marginBottom: '12px', fontSize: '13px', color: '#888' }}>
+                              Showing {sdkSessionEvents.length} events (max 500)
+                            </div>
+                            {sdkSessionEvents.map((event, idx) => (
+                              <div key={event.id} style={{
+                                padding: '8px 12px',
+                                marginBottom: '4px',
+                                background: event.event_type === 'tool_use' ? 'rgba(0, 212, 255, 0.05)'
+                                  : event.event_type === 'tool_result' ? 'rgba(0, 255, 136, 0.05)'
+                                  : 'rgba(255, 255, 255, 0.02)',
+                                borderRadius: '4px',
+                                borderLeft: event.event_type === 'tool_use' ? '3px solid #00d4ff'
+                                  : event.event_type === 'tool_result' ? '3px solid #00ff88'
+                                  : event.event_type === 'assistant' ? '3px solid #ffaa00'
+                                  : '3px solid #555',
+                                fontSize: '12px',
+                              }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                    <span style={{ color: '#666' }}>#{event.sequence}</span>
+                                    <span style={{
+                                      color: event.event_type === 'tool_use' ? '#00d4ff'
+                                        : event.event_type === 'tool_result' ? '#00ff88'
+                                        : event.event_type === 'assistant' ? '#ffaa00'
+                                        : '#888',
+                                      fontWeight: 600,
+                                      textTransform: 'uppercase',
+                                      fontSize: '10px',
+                                    }}>
+                                      {event.event_type}
+                                    </span>
+                                    {event.tool_name && (
+                                      <code style={{ color: '#00d4ff', background: 'rgba(0, 212, 255, 0.1)', padding: '2px 6px', borderRadius: '3px' }}>
+                                        {event.tool_name}
+                                      </code>
+                                    )}
+                                  </div>
+                                  <span style={{ color: '#555', fontSize: '10px' }}>
+                                    {new Date(event.timestamp).toLocaleTimeString()}
+                                  </span>
+                                </div>
+                                {event.content && (
+                                  <div style={{
+                                    color: '#999',
+                                    fontSize: '11px',
+                                    whiteSpace: 'pre-wrap',
+                                    wordBreak: 'break-word',
+                                    maxHeight: '100px',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                  }}>
+                                    {event.content.length > 300 ? event.content.slice(0, 300) + '...' : event.content}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
                           </div>
                         )}
                       </div>

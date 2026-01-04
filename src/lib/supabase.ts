@@ -179,6 +179,66 @@ export async function getTranscriptsBySession(sessionId: string): Promise<AgentT
   return (data || []) as AgentTranscript[];
 }
 
+// Types for SDK orchestrator sessions (full encoding pipeline runs)
+export interface SDKSession {
+  id: string;
+  started_at: string;
+  ended_at: string | null;
+  model: string | null;
+  cwd: string | null;
+  event_count: number;
+  input_tokens: number;
+  output_tokens: number;
+  cache_read_tokens: number;
+  estimated_cost_usd: number;
+}
+
+export interface SDKSessionEvent {
+  id: string;
+  session_id: string;
+  sequence: number;
+  timestamp: string;
+  event_type: string;
+  tool_name: string | null;
+  content: string | null;
+  metadata: Record<string, unknown> | null;
+}
+
+// Fetch SDK orchestrator sessions from Supabase
+export async function getSDKSessions(limit = 50): Promise<SDKSession[]> {
+  const { data, error } = await supabase
+    .schema('rac')
+    .from('sdk_sessions')
+    .select('*')
+    .order('started_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching SDK sessions:', error);
+    return [];
+  }
+
+  return (data || []) as SDKSession[];
+}
+
+// Fetch events for a specific SDK session
+export async function getSDKSessionEvents(sessionId: string, limit = 100): Promise<SDKSessionEvent[]> {
+  const { data, error } = await supabase
+    .schema('rac')
+    .from('sdk_session_events')
+    .select('*')
+    .eq('session_id', sessionId)
+    .order('sequence', { ascending: true })
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching SDK session events:', error);
+    return [];
+  }
+
+  return (data || []) as SDKSessionEvent[];
+}
+
 // Helper to format credits for display (convert micro-credits to readable format)
 export function formatCredits(microCredits: number): string {
   // Convert micro-credits to approximate API calls at $0.02/call rate
