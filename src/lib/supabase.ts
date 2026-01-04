@@ -205,9 +205,9 @@ export interface SDKSessionEvent {
 }
 
 // Fetch SDK orchestrator sessions from Supabase
+// Note: Uses public.sdk_sessions view (points to rac.sdk_sessions)
 export async function getSDKSessions(limit = 50): Promise<SDKSession[]> {
   const { data, error } = await supabase
-    .schema('rac')
     .from('sdk_sessions')
     .select('*')
     .order('started_at', { ascending: false })
@@ -222,9 +222,9 @@ export async function getSDKSessions(limit = 50): Promise<SDKSession[]> {
 }
 
 // Fetch events for a specific SDK session
+// Note: Uses public.sdk_session_events view (points to rac.sdk_session_events)
 export async function getSDKSessionEvents(sessionId: string, limit = 100): Promise<SDKSessionEvent[]> {
   const { data, error } = await supabase
-    .schema('rac')
     .from('sdk_session_events')
     .select('*')
     .eq('session_id', sessionId)
