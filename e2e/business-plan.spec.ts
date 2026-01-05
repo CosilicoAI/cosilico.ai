@@ -13,8 +13,8 @@ test.describe('Cosilico homepage', () => {
     await expect(page.getByRole('heading', { name: 'Rules' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Data' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Scenarios' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Full profile' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Law archive' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Full Profile' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Law Archive' })).toBeVisible();
 
     // Screenshot
     const image = await page.screenshot({ fullPage: true });
@@ -34,8 +34,8 @@ test.describe('Cosilico homepage', () => {
     // Click query button
     await button.click();
 
-    // Results should appear
-    await expect(page.getByText('10-year cost', { exact: true })).toBeVisible();
-    await expect(page.getByText('households affected', { exact: true })).toBeVisible();
+    // Results should appear - check for the stat values which are unique to demo results
+    await expect(page.getByText('$147B')).toBeVisible();
+    await expect(page.getByText('43M')).toBeVisible();
   });
 });

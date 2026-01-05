@@ -251,7 +251,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ValidationIcon />
-              <h3 className={styles.featureTitle}>R Validation</h3>
+              <h3 className={styles.featureTitle}>R validation</h3>
               <p className={styles.featureDescription}>
                 Tested against the original R StatMatch package. Numerical
                 parity verified with rpy2 integration tests.
@@ -334,7 +334,7 @@ fused = create_fused(
         {/* Integration Note */}
         <section className={styles.integrationSection}>
           <div className={styles.integrationCard}>
-            <h3 className={styles.integrationTitle}>Part of the Cosilico Stack</h3>
+            <h3 className={styles.integrationTitle}>Part of the Cosilico stack</h3>
             <p className={styles.integrationDescription}>
               py-statmatch is available as an optional backend in microplex.
               Use traditional statistical matching alongside neural synthesis

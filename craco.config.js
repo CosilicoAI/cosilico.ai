@@ -14,11 +14,13 @@ module.exports = {
     },
   },
   jest: {
-    configure: {
-      moduleNameMapper: {
-        '^@vanilla-extract/css$': '<rootDir>/__mocks__/@vanilla-extract/css.js',
-        '\\.css\\.ts$': '<rootDir>/src/__mocks__/vanillaExtractMock.js',
-      },
+    configure: (jestConfig) => {
+      // Add vanilla-extract transform before the default TypeScript transform
+      jestConfig.transform = {
+        '\\.css\\.ts$': '@vanilla-extract/jest-transform',
+        ...jestConfig.transform,
+      };
+      return jestConfig;
     },
   },
 };

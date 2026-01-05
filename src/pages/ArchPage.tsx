@@ -144,24 +144,24 @@ export default function ArchPage() {
         <section className={styles.hero}>
           <div className={styles.heroGlow} />
           <div className={styles.heroContent}>
-            <div className={styles.heroBadge}>FOUNDATIONAL ARCHIVE</div>
-            <h1 className={styles.heroTitle}>Cosilico Arch</h1>
+            <div className={styles.heroBadge}>UNIVERSAL LEGAL ARCHIVE</div>
+            <h1 className={styles.heroTitle}>Arch</h1>
             <p className={styles.heroSubtitle}>
-              The single source of truth for all raw government files. Statutes, regulations,
-              guidance documents, microdata, and crosstabs - archived, versioned, and API-accessible.
+              The world's law, normalized to one format. Statutes from the US, UK, Canada, EU, and NZ -
+              plus regulations, guidance, and microdata - all converted to Akoma Ntoso and indexed for AI.
             </p>
             <div className={styles.heroPills}>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Source Files
+                Akoma Ntoso
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Provenance Tracking
+                50 US States
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Change Detection
+                5 Countries
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
@@ -176,53 +176,57 @@ export default function ArchPage() {
           <div className={styles.descriptionContent}>
             <div className={styles.descriptionText}>
               <h2 className={styles.descriptionTitle}>
-                The Archive Layer
+                Universal Interchange Format
               </h2>
               <p className={styles.descriptionParagraph}>
-                Arch is the foundational layer of the Cosilico stack. Before we can encode law
-                into executable rules, we need the raw source materials - statutes from Congress,
-                guidance from the IRS, microdata from the Census, and crosstabs from every agency.
+                Every jurisdiction has its own format: USLM for US Code, CLML for UK legislation,
+                Formex for EU, proprietary HTML for each US state. Arch normalizes everything to{" "}
+                <a href="https://www.oasis-open.org/committees/legaldocml/" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>
+                  <strong>Akoma Ntoso</strong>
+                </a> - the UN-backed OASIS standard for legislative documents.
               </p>
               <ul className={styles.descriptionList}>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  Automated fetchers pull from official government sources
+                  Parsers for US Code (USLM), UK Acts (CLML), Canada, NZ, and EU (Formex)
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  All files stored in Cloudflare R2 with full provenance
+                  US federal regulations from eCFR (Title 26 IRS, Title 7 SNAP, Title 20 SSA)
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  PostgreSQL metadata tracks versions, citations, and relationships
+                  State statute converters for NY, CA, FL, MI, TX, and 45 more states
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  REST API for programmatic access to any document
+                  IRS guidance, SSA POMS, and CMS manuals parsed from HTML/PDF
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  Change detection alerts when sources are updated
+                  All documents indexed in PostgreSQL with full-text search
                 </li>
               </ul>
             </div>
             <div className={styles.descriptionVisual}>
               <div className={styles.visualGlow} />
               <pre className={styles.codePre}>
-{`{
-  "file_id": "arch-2024-irs-pub-596",
-  "source": "irs.gov",
-  "type": "guidance",
-  "title": "Publication 596: EITC",
-  "year": 2024,
-  "fetched_at": "2024-12-15T08:00:00Z",
-  "r2_path": "guidance/irs/pub-596-2024.pdf",
-  "checksum": "sha256:a1b2c3...",
-  "citations": [
-    "26 USC 32",
-    "Rev. Proc. 2023-34"
+{`# Akoma Ntoso Section Model
+{
+  "id": "act/us/usc/26/32",
+  "heading": "Earned income",
+  "jurisdiction": "us",
+  "doc_type": "statute",
+  "source_format": "uslm",
+  "effective_date": "2024-01-01",
+  "subsections": [
+    { "id": "a", "heading": "Allowance of credit" },
+    { "id": "b", "heading": "Percentages" },
+    { "id": "c", "heading": "Definitions" }
   ],
-  "supersedes": "arch-2023-irs-pub-596"
+  "cross_references": [
+    "26 USC 2(a)", "26 USC 152"
+  ]
 }`}
               </pre>
             </div>
@@ -232,9 +236,9 @@ export default function ArchPage() {
         {/* Architecture Diagram */}
         <section className={styles.architectureSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Architecture</h2>
+            <h2 className={styles.sectionTitle}>Converter Pipeline</h2>
             <p className={styles.sectionSubtitle}>
-              From government sources to API endpoints
+              From diverse source formats to unified Akoma Ntoso
             </p>
           </div>
 
@@ -243,9 +247,9 @@ export default function ArchPage() {
             <div className={styles.pipelineStages}>
               <div className={styles.pipelineStage}>
                 <FetchIcon />
-                <h4 className={styles.stageTitle}>Fetchers</h4>
+                <h4 className={styles.stageTitle}>Sources</h4>
                 <p className={styles.stageDescription}>
-                  Automated scrapers for IRS, Census, state agencies
+                  USLM, CLML, eCFR, state HTML, PDF
                 </p>
               </div>
 
@@ -253,9 +257,9 @@ export default function ArchPage() {
 
               <div className={styles.pipelineStage}>
                 <StorageIcon />
-                <h4 className={styles.stageTitle}>R2 Storage</h4>
+                <h4 className={styles.stageTitle}>Converters</h4>
                 <p className={styles.stageDescription}>
-                  Raw files stored with versioning and checksums
+                  60+ parsers normalize to Akoma Ntoso
                 </p>
               </div>
 
@@ -263,9 +267,9 @@ export default function ArchPage() {
 
               <div className={styles.pipelineStage}>
                 <MetadataIcon />
-                <h4 className={styles.stageTitle}>PostgreSQL</h4>
+                <h4 className={styles.stageTitle}>arch.rules</h4>
                 <p className={styles.stageDescription}>
-                  Metadata, citations, relationships indexed
+                  PostgreSQL with FTS5 full-text search
                 </p>
               </div>
 
@@ -273,9 +277,9 @@ export default function ArchPage() {
 
               <div className={styles.pipelineStage}>
                 <ServeIcon />
-                <h4 className={styles.stageTitle}>API</h4>
+                <h4 className={styles.stageTitle}>RAC</h4>
                 <p className={styles.stageDescription}>
-                  REST endpoints for retrieval and search
+                  Feed encoding pipeline for executable rules
                 </p>
               </div>
             </div>
@@ -292,6 +296,7 @@ export default function ArchPage() {
           </div>
 
           <div className={styles.sourcesGrid}>
+            {/* US Federal Statutes */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <CodeIcon />
@@ -309,6 +314,7 @@ export default function ArchPage() {
               </div>
             </div>
 
+            {/* IRS */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <GuidanceIcon />
@@ -321,11 +327,84 @@ export default function ArchPage() {
                 and annual inflation adjustments from irs.gov.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>Rev. Procs</span>
-                <span className={styles.sourceMetaItem}>Publications</span>
+                <span className={styles.sourceMetaItem}>570+ docs</span>
+                <span className={styles.sourceMetaItem}>PDF</span>
               </div>
             </div>
 
+            {/* eCFR Regulations */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <GuidanceIcon />
+              <h3 className={styles.sourceTitle}>
+                Federal Regulations
+                <span className={styles.sourceBadge}>Live</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                Code of Federal Regulations from eCFR. Title 26 (IRS), Title 7 (SNAP),
+                Title 20 (SSA), Title 42 (CMS) with point-in-time versioning.
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>50 titles</span>
+                <span className={styles.sourceMetaItem}>eCFR XML</span>
+              </div>
+            </div>
+
+            {/* Canada */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <CodeIcon />
+              <h3 className={styles.sourceTitle}>
+                Canada Acts
+                <span className={styles.sourceBadge}>Live</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                All consolidated federal Acts from Justice Canada's Laws Website.
+                Includes Income Tax Act, Employment Insurance, and more.
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>956 acts</span>
+                <span className={styles.sourceMetaItem}>XML</span>
+              </div>
+            </div>
+
+            {/* UK */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <CodeIcon />
+              <h3 className={styles.sourceTitle}>
+                UK Legislation
+                <span className={styles.sourceBadge}>Live</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                UK Public General Acts from legislation.gov.uk. Full text in
+                Crown Legislation Markup Language (CLML) format.
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>3,237 acts</span>
+                <span className={styles.sourceMetaItem}>XML</span>
+              </div>
+            </div>
+
+            {/* US State Statutes */}
+            <div className={styles.sourceCard}>
+              <div className={styles.sourceCardGlow} />
+              <StateIcon />
+              <h3 className={styles.sourceTitle}>
+                US State Statutes
+                <span className={styles.sourceBadge}>Building</span>
+              </h3>
+              <p className={styles.sourceDescription}>
+                Dedicated parsers for each state's unique format. NY (API), CA (bulk XML),
+                FL, MI, TX, OH, and 44 more with HTML scraping converters.
+              </p>
+              <div className={styles.sourceMeta}>
+                <span className={styles.sourceMetaItem}>50 states</span>
+                <span className={styles.sourceMetaItem}>HTML/XML</span>
+              </div>
+            </div>
+
+            {/* Census CPS */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <DatabaseIcon />
@@ -343,6 +422,7 @@ export default function ArchPage() {
               </div>
             </div>
 
+            {/* IRS SOI */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
               <ChartIcon />
@@ -360,37 +440,21 @@ export default function ArchPage() {
               </div>
             </div>
 
+            {/* New Zealand */}
             <div className={styles.sourceCard}>
               <div className={styles.sourceCardGlow} />
-              <StateIcon />
+              <CodeIcon />
               <h3 className={styles.sourceTitle}>
-                State Laws
-                <span className={`${styles.sourceBadge} ${styles.sourceComingSoon}`}>Coming</span>
+                New Zealand
+                <span className={styles.sourceBadge}>Live</span>
               </h3>
               <p className={styles.sourceDescription}>
-                State tax codes and benefit statutes. Starting with CA, NY, TX
-                and expanding to all 50 states.
+                All Acts and regulations from the NZ Parliamentary Counsel Office.
+                Full XML access with point-in-time historical versions.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>Tax codes</span>
-                <span className={styles.sourceMetaItem}>Benefits</span>
-              </div>
-            </div>
-
-            <div className={styles.sourceCard}>
-              <div className={styles.sourceCardGlow} />
-              <DatabaseIcon />
-              <h3 className={styles.sourceTitle}>
-                Census ACS
-                <span className={`${styles.sourceBadge} ${styles.sourceComingSoon}`}>Coming</span>
-              </h3>
-              <p className={styles.sourceDescription}>
-                American Community Survey microdata for detailed geographic
-                targeting at county and tract level.
-              </p>
-              <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>1-Year</span>
-                <span className={styles.sourceMetaItem}>5-Year</span>
+                <span className={styles.sourceMetaItem}>PCO XML</span>
+                <span className={styles.sourceMetaItem}>Versioned</span>
               </div>
             </div>
           </div>
@@ -490,10 +554,10 @@ export default function ArchPage() {
         <section className={styles.installSection}>
           <div className={styles.installBox}>
             <div className={styles.installBoxGlow} />
-            <h2 className={styles.installTitle}>In Development</h2>
+            <h2 className={styles.installTitle}>Building the World's Legal Archive</h2>
             <p className={styles.installSubtext}>
-              Arch is currently in active development. Core infrastructure is operational
-              with fetchers running for primary sources.
+              60+ converters operational. US federal (USLM + eCFR), UK (CLML), Canada, NZ,
+              and 50 US state parsers converting to Akoma Ntoso. EU coming next.
             </p>
             <div className={styles.installLinks}>
               <a
@@ -505,8 +569,8 @@ export default function ArchPage() {
                 <GitHubIcon />
                 GitHub
               </a>
-              <Link to="/stack/atlas" className={`${styles.installLink} ${styles.installLinkSecondary}`}>
-                View Atlas (API Layer)
+              <Link to="/stack/rac" className={`${styles.installLink} ${styles.installLinkSecondary}`}>
+                View RAC (Rules Engine)
               </Link>
             </div>
           </div>

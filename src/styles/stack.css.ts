@@ -175,6 +175,7 @@ export const cardDelay5 = style({ animationDelay: '0.5s' });
 export const cardDelay6 = style({ animationDelay: '0.6s' });
 export const cardDelay7 = style({ animationDelay: '0.7s' });
 export const cardDelay8 = style({ animationDelay: '0.8s' });
+export const cardDelay9 = style({ animationDelay: '0.9s' });
 
 export const componentCardGlow = style({
   position: 'absolute',
@@ -299,7 +300,7 @@ export const componentCardComingSoon = style({
 });
 
 // ============================================
-// ARCHITECTURE DIAGRAM
+// ARCHITECTURE DIAGRAM (Visual Pipeline)
 // ============================================
 
 export const architectureSection = style({
@@ -307,29 +308,239 @@ export const architectureSection = style({
   paddingBottom: `${vars.space['4xl']} !important`,
 });
 
-export const architectureWrapper = style({
-  background: 'rgba(0, 0, 0, 0.3)',
-  border: '1px solid rgba(255, 255, 255, 0.06)',
-  borderRadius: vars.radius.xl,
-  padding: vars.space['2xl'],
-  overflowX: 'auto',
+export const pipelineContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space['2xl'],
+  position: 'relative',
 });
 
-export const architectureDiagram = style({
+// Pipeline row
+export const pipelineRow = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: vars.space.lg,
+  flexWrap: 'wrap',
+  position: 'relative',
+});
+
+// Source materials row (top)
+export const sourceRow = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gap: vars.space.md,
+  '@media': {
+    '(max-width: 768px)': {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+  },
+});
+
+export const sourceCard = style({
+  padding: vars.space.lg,
+  background: 'rgba(255, 255, 255, 0.03)',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  borderRadius: vars.radius.lg,
+  textAlign: 'center',
+});
+
+export const sourceIcon = style({
+  width: '32px',
+  height: '32px',
+  margin: '0 auto',
+  marginBottom: vars.space.sm,
+  color: vars.color.textMuted,
+});
+
+export const sourceLabel = style({
+  fontFamily: vars.font.display,
+  fontSize: '0.9rem',
+  fontWeight: 600,
+  color: vars.color.text,
+  marginBottom: vars.space.xs,
+});
+
+export const sourceExamples = style({
   fontFamily: vars.font.mono,
-  fontSize: '0.85rem',
-  lineHeight: 1.5,
-  color: vars.color.textSecondary,
-  whiteSpace: 'pre',
-  minWidth: '700px',
+  fontSize: '0.75rem',
+  color: vars.color.textMuted,
 });
 
-globalStyle(`${architectureDiagram} .highlight`, {
+// Connector arrows
+export const connectorDown = style({
+  display: 'flex',
+  justifyContent: 'center',
+  padding: `${vars.space.md} 0`,
+});
+
+export const connectorArrow = style({
+  width: '2px',
+  height: '40px',
+  background: `linear-gradient(180deg, rgba(0, 212, 255, 0.5), rgba(0, 212, 255, 0.1))`,
+  position: 'relative',
+  '::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: '-6px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: 0,
+    height: 0,
+    borderLeft: '6px solid transparent',
+    borderRight: '6px solid transparent',
+    borderTop: `8px solid rgba(0, 212, 255, 0.5)`,
+  },
+});
+
+export const connectorHorizontal = style({
+  width: '60px',
+  height: '2px',
+  background: `linear-gradient(90deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.5), rgba(0, 212, 255, 0.1))`,
+  '@media': {
+    '(max-width: 900px)': {
+      display: 'none',
+    },
+  },
+});
+
+// Processing nodes (main components)
+export const processingNode = style({
+  padding: vars.space.xl,
+  background: 'rgba(0, 0, 0, 0.4)',
+  border: '1px solid rgba(0, 212, 255, 0.2)',
+  borderRadius: vars.radius.xl,
+  minWidth: '280px',
+  maxWidth: '400px',
+  position: 'relative',
+  transition: `all ${vars.duration.fast} ${vars.ease.out}`,
+  ':hover': {
+    borderColor: 'rgba(0, 212, 255, 0.4)',
+    background: 'rgba(0, 212, 255, 0.05)',
+  },
+});
+
+export const processingNodeWide = style({
+  minWidth: '100%',
+  maxWidth: '100%',
+});
+
+export const nodeHeader = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.space.md,
+  marginBottom: vars.space.md,
+});
+
+export const nodeIcon = style({
+  width: '40px',
+  height: '40px',
+  borderRadius: vars.radius.md,
+  background: 'rgba(0, 212, 255, 0.1)',
+  border: '1px solid rgba(0, 212, 255, 0.2)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexShrink: 0,
+});
+
+export const nodeIconSvg = style({
+  width: '20px',
+  height: '20px',
   color: vars.color.accent,
 });
 
-globalStyle(`${architectureDiagram} .dim`, {
-  color: vars.color.textMuted,
+export const nodeName = style({
+  fontFamily: vars.font.mono,
+  fontSize: '1.1rem',
+  fontWeight: 600,
+  color: vars.color.accent,
+});
+
+export const nodeFeatures = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.xs,
+  paddingLeft: vars.space.sm,
+  borderLeft: `2px solid rgba(0, 212, 255, 0.2)`,
+});
+
+export const nodeFeature = style({
+  fontSize: '0.85rem',
+  color: vars.color.textSecondary,
+  paddingLeft: vars.space.sm,
+});
+
+// Parallel processing row
+export const parallelRow = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: vars.space.xl,
+  '@media': {
+    '(max-width: 768px)': {
+      gridTemplateColumns: '1fr',
+    },
+  },
+});
+
+// Output node
+export const outputNode = style({
+  padding: vars.space.xl,
+  background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1))',
+  border: '1px solid rgba(0, 255, 136, 0.3)',
+  borderRadius: vars.radius.xl,
+  textAlign: 'center',
+  maxWidth: '500px',
+  margin: '0 auto',
+});
+
+export const outputTitle = style({
+  fontFamily: vars.font.display,
+  fontSize: '1.25rem',
+  fontWeight: 600,
+  color: vars.color.success,
+  marginBottom: vars.space.md,
+});
+
+export const outputFeatures = style({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  gap: vars.space.sm,
+});
+
+export const outputFeatureTag = style({
+  padding: `${vars.space.xs} ${vars.space.md}`,
+  background: 'rgba(0, 255, 136, 0.1)',
+  border: '1px solid rgba(0, 255, 136, 0.2)',
+  borderRadius: vars.radius.md,
+  fontSize: '0.85rem',
+  color: vars.color.success,
+  fontFamily: vars.font.mono,
+});
+
+// Inner flow for microplex
+export const innerFlow = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: vars.space.md,
+  marginTop: vars.space.lg,
+  flexWrap: 'wrap',
+});
+
+export const innerStep = style({
+  padding: `${vars.space.sm} ${vars.space.md}`,
+  background: 'rgba(0, 0, 0, 0.3)',
+  borderRadius: vars.radius.md,
+  fontSize: '0.8rem',
+  color: vars.color.textSecondary,
+  fontFamily: vars.font.mono,
+});
+
+export const innerArrow = style({
+  color: vars.color.accent,
+  fontSize: '1.2rem',
 });
 
 // ============================================

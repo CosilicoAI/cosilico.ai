@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav";
 import HomePage from "./pages/HomePage";
@@ -17,13 +17,29 @@ import StackPage from "./pages/StackPage";
 import RacPage from "./pages/RacPage";
 import AtlasPage from "./pages/AtlasPage";
 import ArchPage from "./pages/ArchPage";
+import AutoRacPage from "./pages/AutoRacPage";
+import FusionGanPage from "./pages/FusionGanPage";
 import ExperimentPage from "./pages/ExperimentPage";
+import ExperimentLabPage from "./pages/ExperimentLabPage";
 import ProgressPage from "./pages/ProgressPage";
+import PortalPage from "./pages/PortalPage";
+import PopdgpEvalPage from "./pages/PopdgpEvalPage";
+import PopdgpPage from "./pages/PopdgpPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="App">
         <Nav />
         <Routes>
@@ -43,8 +59,14 @@ function App() {
           <Route path="/stack/py-statmatch" element={<PyStatmatchPage />} />
           <Route path="/stack/atlas" element={<AtlasPage />} />
           <Route path="/stack/arch" element={<ArchPage />} />
+          <Route path="/stack/autorac" element={<AutoRacPage />} />
+          <Route path="/stack/autorac/lab" element={<ExperimentLabPage />} />
+          <Route path="/stack/fusiongan" element={<FusionGanPage />} />
+          <Route path="/stack/popdgp" element={<PopdgpPage />} />
+          <Route path="/stack/popdgp/eval" element={<PopdgpEvalPage />} />
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />
+          <Route path="/portal" element={<PortalPage />} />
         </Routes>
       </div>
     </BrowserRouter>

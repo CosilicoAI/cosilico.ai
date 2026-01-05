@@ -242,18 +242,18 @@ export default function AtlasPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <StateIcon />
-              <h3 className={styles.featureTitle}>State Codes</h3>
+              <h3 className={styles.featureTitle}>State codes</h3>
               <p className={styles.featureDescription}>
                 State tax codes and benefit statutes with the same structured
                 format as federal sources.
               </p>
-              <div className={styles.featureBadge}>Coming Soon</div>
+              <div className={styles.featureBadge}>Coming soon</div>
             </div>
 
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <HistoryIcon />
-              <h3 className={styles.featureTitle}>Historical Versions</h3>
+              <h3 className={styles.featureTitle}>Historical versions</h3>
               <p className={styles.featureDescription}>
                 Access any version of the law as it existed at a specific date.
                 Track changes over time.
@@ -414,7 +414,7 @@ eitc_2020 = atlas.get(
         <section className={styles.installSection}>
           <div className={styles.installBox}>
             <div className={styles.installBoxGlow} />
-            <h2 className={styles.installTitle}>Get Started</h2>
+            <h2 className={styles.installTitle}>Get started</h2>
             <code className={styles.installCode}>pip install cosilico-atlas</code>
             <div className={styles.installLinks}>
               <a

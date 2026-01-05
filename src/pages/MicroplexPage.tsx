@@ -105,176 +105,231 @@ const LikelihoodIcon = () => (
 );
 
 // ============================================
-// NORMALIZING FLOWS EXPLAINER
+// MULTI-SURVEY FUSION EXPLAINER
 // ============================================
 
-const NormalizingFlowsExplainer: React.FC = () => {
+const MultiSurveyFusionExplainer: React.FC = () => {
   return (
     <section className={styles.flowsSection}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Synthesis approaches</h2>
+        <h2 className={styles.sectionTitle}>Multi-survey fusion</h2>
         <p className={styles.sectionSubtitle}>
-          Two architectures for generating multivariate targets
+          Stack surveys with different coverage, learn joint distribution from partial observations
         </p>
       </div>
 
       <div className={styles.flowsContainer}>
-        {/* Architecture comparison */}
+        {/* Data source comparison */}
         <div className={styles.flowsExplanation}>
           <div className={styles.flowsExplanationCard}>
-            <div className={styles.flowsExplanationNumber}>A</div>
-            <h4 className={styles.flowsExplanationTitle}>Normalizing flows (MAF)</h4>
+            <div className={styles.flowsExplanationNumber}>CPS</div>
+            <h4 className={styles.flowsExplanationTitle}>Current Population Survey</h4>
             <p className={styles.flowsExplanationText}>
-              Learn an invertible transformation from simple base distribution to target.
-              One model generates all variables jointly. Provides exact log-likelihood.
+              Household structure, demographics, geography, base income.
+              Includes non-filers. Top-coded wages, underreported investment income.
             </p>
-            <code className={styles.flowsMath}>(y₁,...,yₖ) = f(z; x) where z ~ N(0,I)</code>
+            <code className={styles.flowsMath}>150k persons, 54k households</code>
           </div>
 
           <div className={styles.flowsExplanationCard}>
-            <div className={styles.flowsExplanationNumber}>B</div>
-            <h4 className={styles.flowsExplanationTitle}>Sequential QRF</h4>
+            <div className={styles.flowsExplanationNumber}>PUF</div>
+            <h4 className={styles.flowsExplanationTitle}>IRS Public Use File</h4>
             <p className={styles.flowsExplanationText}>
-              Train separate models for each variable, conditioning on previously generated values.
-              Chain rule factorization. Each model trained independently.
+              Capital gains, partnership/S-corp income, detailed expenses.
+              Uncapped income. No geography, missing non-filers.
             </p>
-            <code className={styles.flowsMath}>y₁ ~ P(y₁|x), y₂ ~ P(y₂|x,y₁), ...</code>
+            <code className={styles.flowsMath}>208k tax units → 300k persons</code>
           </div>
 
           <div className={styles.flowsExplanationCard}>
-            <div className={styles.flowsExplanationNumber}>B+</div>
-            <h4 className={styles.flowsExplanationTitle}>QRF + Zero-Inflation</h4>
+            <div className={styles.flowsExplanationNumber}>+</div>
+            <h4 className={styles.flowsExplanationTitle}>Administrative targets</h4>
             <p className={styles.flowsExplanationText}>
-              Two-stage: first classify zero vs positive, then predict value given positive.
-              Explicit modeling of the zero mass point common in economic data.
+              IRS SOI totals by AGI bracket, Census demographics by state/age,
+              CBO program aggregates. 5,000+ calibration constraints.
             </p>
-            <code className={styles.flowsMath}>P(y=0|x), then P(y|y&gt;0, x)</code>
+            <code className={styles.flowsMath}>L0 calibration removes implausible combos</code>
           </div>
         </div>
 
-        {/* Two benchmarks side by side */}
+        {/* Variable coverage visualization */}
         <div className={styles.flowsVisualization}>
           <div className={styles.flowsVisualizationGlow} />
 
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "32px", position: "relative", zIndex: 1, width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px", position: "relative", zIndex: 1, width: "100%" }}>
 
-            {/* Marginal KS Benchmark */}
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
-              <div style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", color: "#707088", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                CPS-like: Marginal KS Distance (↓ lower is better)
-              </div>
+            <div style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", color: "#707088", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Variable Coverage by Source
+            </div>
 
-              <div style={{ width: "100%", maxWidth: "500px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <div style={{ width: "120px", fontSize: "0.8rem", color: "#00ff88", textAlign: "right" }}>QRF + Zero-Infl.</div>
-                  <div style={{ flex: 1, height: "24px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                    <div style={{ width: "15%", height: "100%", background: "linear-gradient(90deg, #00ff88, #40ffaa)", borderRadius: "4px" }} />
-                    <span style={{ position: "absolute", left: "calc(15% + 8px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", color: "#00ff88" }}>0.044</span>
-                  </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <div style={{ width: "120px", fontSize: "0.8rem", color: "#00d4ff", textAlign: "right" }}>microplex</div>
-                  <div style={{ flex: 1, height: "24px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                    <div style={{ width: "47%", height: "100%", background: "linear-gradient(90deg, #00d4ff, #40e8ff)", borderRadius: "4px" }} />
-                    <span style={{ position: "absolute", left: "calc(47% + 8px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", color: "#00d4ff" }}>0.140</span>
-                  </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <div style={{ width: "120px", fontSize: "0.8rem", color: "#707088", textAlign: "right" }}>Sequential QRF</div>
-                  <div style={{ flex: 1, height: "24px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                    <div style={{ width: "96%", height: "100%", background: "linear-gradient(90deg, #505068, #707088)", borderRadius: "4px" }} />
-                    <span style={{ position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", fontSize: "0.75rem", fontFamily: "var(--font-mono)", color: "#707088" }}>0.288</span>
-                  </div>
+            <div style={{ width: "100%", maxWidth: "600px", display: "flex", flexDirection: "column", gap: "8px" }}>
+              {/* Shared variables */}
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Wages, SE income</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS (top-coded)</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF (uncapped)</div>
                 </div>
               </div>
-              <div style={{ fontSize: "0.75rem", color: "#505068", textAlign: "center", maxWidth: "480px" }}>
-                Per-variable KS statistic averaged across 8 targets. Measures marginal distribution fidelity.
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Interest, dividends</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS (underreported)</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF (detailed)</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Pension, Social Security</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF</div>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: "1px", background: "rgba(255,255,255,0.1)", margin: "8px 0" }} />
+
+              {/* CPS only */}
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>Household structure</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS only</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>State, county, block</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS only</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>Medical, childcare expense</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS only</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: "1px", background: "rgba(255,255,255,0.1)", margin: "8px 0" }} />
+
+              {/* PUF only */}
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Capital gains (LT/ST)</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF only</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Partnership, S-corp income</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF only</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Charitable, mortgage int.</div>
+                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF only</div>
+                </div>
               </div>
             </div>
 
-            {/* Divider */}
-            <div style={{ width: "80%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent)" }} />
-
-            {/* Multivariate Benchmark - on CPS data */}
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
-              <div style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", color: "#707088", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                CPS-like: Joint Holdout Similarity (↓ lower is better)
-              </div>
-
-              <div style={{ width: "100%", maxWidth: "500px", display: "flex", gap: "24px" }}>
-                {/* MMD */}
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
-                  <div style={{ fontSize: "0.75rem", color: "#707088", textAlign: "center" }}>MMD</div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>QRF+ZI</div>
-                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                        <div style={{ width: "28%", height: "100%", background: "linear-gradient(90deg, #00ff88, #40ffaa)", borderRadius: "4px" }} />
-                        <span style={{ position: "absolute", left: "calc(28% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00ff88" }}>0.130</span>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>microplex</div>
-                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                        <div style={{ width: "32%", height: "100%", background: "linear-gradient(90deg, #00d4ff, #40e8ff)", borderRadius: "4px" }} />
-                        <span style={{ position: "absolute", left: "calc(32% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00d4ff" }}>0.152</span>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#707088", textAlign: "right" }}>Seq. QRF</div>
-                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                        <div style={{ width: "100%", height: "100%", background: "linear-gradient(90deg, #505068, #707088)", borderRadius: "4px" }} />
-                        <span style={{ position: "absolute", right: "6px", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#707088" }}>0.471</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Energy Distance */}
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
-                  <div style={{ fontSize: "0.75rem", color: "#707088", textAlign: "center" }}>Energy Dist.</div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>QRF+ZI</div>
-                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                        <div style={{ width: "8%", height: "100%", background: "linear-gradient(90deg, #00ff88, #40ffaa)", borderRadius: "4px" }} />
-                        <span style={{ position: "absolute", left: "calc(8% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00ff88" }}>0.072</span>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>microplex</div>
-                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                        <div style={{ width: "21%", height: "100%", background: "linear-gradient(90deg, #00d4ff, #40e8ff)", borderRadius: "4px" }} />
-                        <span style={{ position: "absolute", left: "calc(21% + 6px)", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#00d4ff" }}>0.190</span>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ width: "80px", fontSize: "0.75rem", color: "#707088", textAlign: "right" }}>Seq. QRF</div>
-                      <div style={{ flex: 1, height: "20px", background: "rgba(0,0,0,0.4)", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-                        <div style={{ width: "100%", height: "100%", background: "linear-gradient(90deg, #505068, #707088)", borderRadius: "4px" }} />
-                        <span style={{ position: "absolute", right: "6px", top: "50%", transform: "translateY(-50%)", fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "#707088" }}>0.906</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div style={{ fontSize: "0.75rem", color: "#505068", textAlign: "center", maxWidth: "480px" }}>
-                MMD (kernel-based) and Energy Distance measure similarity to holdout records in full joint space.
-              </div>
+            <div style={{ fontSize: "0.75rem", color: "#505068", textAlign: "center", maxWidth: "520px" }}>
+              Stack 450k records with partial observations. Masked MAF learns joint distribution, fills all gaps at synthesis.
             </div>
 
           </div>
         </div>
 
-        {/* Analysis */}
+        {/* Key insight */}
         <div className={styles.flowsKeyInsight}>
           <div className={styles.flowsKeyInsightGlow} />
-          <h4 className={styles.flowsKeyInsightTitle}>Consistent winner on CPS</h4>
+          <h4 className={styles.flowsKeyInsightTitle}>Learn from both, trust neither completely</h4>
           <p className={styles.flowsKeyInsightText}>
-            On highly zero-inflated CPS-like data, <strong>QRF+ZI wins on both marginal and multivariate metrics</strong>.
-            Explicit two-stage zero modeling (classify then regress) outperforms both sequential QRF and normalizing flows
-            for generating realistic joint records. microplex is second-best on joint metrics, with best coverage of the data manifold.
+            For shared variables like wages, the flow learns from <strong>both sources</strong>: CPS provides
+            low-income patterns (includes non-filers), PUF provides high-income tail (uncapped).
+            L0 calibration to IRS SOI totals then removes implausible combinations and corrects marginal distributions.
+            The result: complete input vectors for RAC to compute taxes and benefits.
           </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ============================================
+// RAC INPUTS SECTION
+// ============================================
+
+const RacInputsSection: React.FC = () => {
+  return (
+    <section className={styles.comparisonSection}>
+      <div className={styles.sectionHeader}>
+        <h2 className={styles.sectionTitle}>Inputs for RAC</h2>
+        <p className={styles.sectionSubtitle}>
+          microplex synthesizes the input vector; RAC computes taxes and benefits
+        </p>
+      </div>
+
+      <div className={styles.comparisonWrapper}>
+        <table className={styles.comparisonTable}>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Variables (microplex synthesizes)</th>
+              <th>RAC Computes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Demographics</td>
+              <td>age, sex, race, marital status, disability, citizenship</td>
+              <td>Filing status eligibility</td>
+            </tr>
+            <tr>
+              <td>Household</td>
+              <td>persons[], relationships, ages[]</td>
+              <td>Tax units, SPM units, dependents</td>
+            </tr>
+            <tr>
+              <td>Geography</td>
+              <td>state, county, block → CD, SLDU, SLDL</td>
+              <td>State tax rules, benefit eligibility</td>
+            </tr>
+            <tr>
+              <td>Wage Income</td>
+              <td>employment income, self-employment income</td>
+              <td>Payroll tax, earned income</td>
+            </tr>
+            <tr>
+              <td>Investment</td>
+              <td>interest, dividends (ordinary/qualified), capital gains (LT/ST)</td>
+              <td>Investment income tax, NIIT</td>
+            </tr>
+            <tr>
+              <td>Business</td>
+              <td>partnership income, S-corp income, rental income</td>
+              <td>QBI deduction, SE tax</td>
+            </tr>
+            <tr>
+              <td>Retirement</td>
+              <td>Social Security, pension (taxable/nontaxable), IRA distributions</td>
+              <td>SS taxation, retirement credits</td>
+            </tr>
+            <tr>
+              <td>Expenses</td>
+              <td>medical OOP, childcare, housing cost, property tax, charitable, mortgage interest</td>
+              <td>Itemized deductions, CDCTC</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style={{ textAlign: "center", marginTop: "16px", color: "#707088", fontSize: "0.85rem" }}>
+          RAC then computes: federal tax, state tax, EITC, CTC, SNAP, Medicaid, SSI, SPM poverty status, and more
         </div>
       </div>
     </section>
@@ -292,39 +347,39 @@ export default function MicroplexPage() {
             <div className={styles.heroBadge}>COSILICO DATA</div>
             <h1 className={styles.heroTitle}>microplex</h1>
             <p className={styles.heroSubtitle}>
-              Microdata synthesis and reweighting using normalizing flows.
-              Create rich, calibrated populations from multiple data sources.
+              Multi-survey fusion using normalizing flows with masked training.
+              Synthesize complete input vectors from CPS + IRS PUF for RAC microsimulation.
             </p>
             <div className={styles.heroPills}>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                Normalizing Flows
+                CPS + PUF Fusion
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                5.77M Census Blocks
+                Masked MAF Training
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                CD + SLD Calibration
+                5,000+ Calibration Targets
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>◆</span>
-                Multi-Target IPF
+                L0 Sparse Reweighting
               </span>
             </div>
           </div>
         </section>
 
-        {/* Normalizing Flows Explainer */}
-        <NormalizingFlowsExplainer />
+        {/* Multi-Survey Fusion Explainer */}
+        <MultiSurveyFusionExplainer />
 
         {/* Workflow */}
         <section className={styles.workflowSection}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>The pipeline</h2>
             <p className={styles.sectionSubtitle}>
-              From multiple data sources to calibrated local microdata
+              From partial survey observations to complete RAC input vectors
             </p>
           </div>
 
@@ -337,12 +392,13 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 01</div>
-                <h3 className={styles.stageTitle}>Data sources</h3>
+                <h3 className={styles.stageTitle}>Stack surveys</h3>
                 <p className={styles.stageDescription}>
-                  Ingest from CPS (income, tax), ACS (geography, housing),
-                  SIPP (dynamics), and administrative data for validation targets.
+                  CPS (150k persons): household structure, geography, expenses, base income.
+                  PUF (300k persons): capital gains, partnership income, detailed expenses.
+                  Mark missing values as NaN.
                 </p>
-                <code className={styles.stageCode}>sources = [cps, acs, sipp, irs_soi]</code>
+                <code className={styles.stageCode}>stacked = concat([cps, puf], mark_missing=True)</code>
               </div>
             </div>
 
@@ -354,12 +410,13 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 02</div>
-                <h3 className={styles.stageTitle}>Conditional MAF</h3>
+                <h3 className={styles.stageTitle}>Masked MAF Training</h3>
                 <p className={styles.stageDescription}>
-                  Learn P(targets | context) using Masked Autoregressive Flows.
-                  Handles zero-inflation, joint correlations, and hierarchical structure.
+                  Train normalizing flow on 450k records with partial observations.
+                  Loss computed only on observed values. Flow learns joint distribution
+                  from both sources simultaneously.
                 </p>
-                <code className={styles.stageCode}>synth.fit(data, epochs=100)</code>
+                <code className={styles.stageCode}>flow.fit(stacked, mask=observed, weights=survey_weights)</code>
               </div>
             </div>
 
@@ -371,12 +428,13 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 03</div>
-                <h3 className={styles.stageTitle}>Synthesize & assign blocks</h3>
+                <h3 className={styles.stageTitle}>Synthesize complete records</h3>
                 <p className={styles.stageDescription}>
-                  Generate 500K+ households with block-level geography.
-                  Derive CD, SLDU, SLDL, county, tract post-hoc from block assignments.
+                  Generate 1M+ households with ALL variables filled. No NaN gaps.
+                  CPS variables + PUF variables + learned correlations.
+                  Assign census blocks by state × population probability.
                 </p>
-                <code className={styles.stageCode}>hh = synth.generate(n=500_000, block_probs=blocks)</code>
+                <code className={styles.stageCode}>synthetic = flow.sample(n=1_000_000)</code>
               </div>
             </div>
 
@@ -388,12 +446,13 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 04</div>
-                <h3 className={styles.stageTitle}>Multi-target calibration</h3>
+                <h3 className={styles.stageTitle}>L0 Calibration</h3>
                 <p className={styles.stageDescription}>
-                  IPF calibration to 3,000+ targets: 436 CDs, 1,950 SLDUs, 918 age distributions.
-                  Achieves &lt;1% error on calibrated geographies with smooth weight distribution.
+                  Sparse reweighting to 5,000+ targets: IRS SOI income totals (including capital gains!),
+                  Census demographics by state/age, CBO program aggregates.
+                  Implausible combinations get zero weight.
                 </p>
-                <code className={styles.stageCode}>calibrate(hh, cd_targets | sldu_targets | age_targets)</code>
+                <code className={styles.stageCode}>calibrate(synthetic, targets, l0_lambda=5e-6)</code>
               </div>
             </div>
 
@@ -405,16 +464,19 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>OUTPUT</div>
-                <h3 className={styles.stageTitle}>Calibrated microdata</h3>
+                <h3 className={styles.stageTitle}>RAC input vectors</h3>
                 <p className={styles.stageDescription}>
-                  Rich population with all variables from all sources,
-                  matching official statistics at any geographic granularity.
+                  Complete population with all income sources, demographics, geography, expenses.
+                  Ready for RAC to compute federal/state taxes, EITC, CTC, SNAP, Medicaid, SSI, poverty.
                 </p>
-                <code className={styles.stageCode}>calibrated_population.to_parquet("output.parquet")</code>
+                <code className={styles.stageCode}>rac.compute(synthetic) → taxes, benefits, poverty</code>
               </div>
             </div>
           </div>
         </section>
+
+        {/* RAC Inputs */}
+        <RacInputsSection />
 
         {/* Features */}
         <section className={styles.featuresSection}>
@@ -428,11 +490,23 @@ export default function MicroplexPage() {
           <div className={styles.featuresGrid}>
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
-              <ConditionalIcon />
-              <h3 className={styles.featureTitle}>Conditional synthesis</h3>
+              <FusionIcon />
+              <h3 className={styles.featureTitle}>Multi-survey fusion</h3>
               <p className={styles.featureDescription}>
-                Generate target variables conditioned on demographics using
-                normalizing flows. Learn P(income, wealth | age, education, region).
+                Stack CPS + PUF with different coverage patterns.
+                CPS: household structure, geography, non-filers.
+                PUF: capital gains, partnership income, high-income tail.
+              </p>
+            </div>
+
+            <div className={styles.featureCard}>
+              <div className={styles.featureCardGlow} />
+              <ConditionalIcon />
+              <h3 className={styles.featureTitle}>Masked training</h3>
+              <p className={styles.featureDescription}>
+                Learn joint distribution from partial observations.
+                Flow computes loss only on observed values, learns
+                correlations between variables across surveys.
               </p>
             </div>
 
@@ -441,39 +515,31 @@ export default function MicroplexPage() {
               <ZeroIcon />
               <h3 className={styles.featureTitle}>Zero-inflated variables</h3>
               <p className={styles.featureDescription}>
-                Built-in handling for variables with many zeros (capital gains,
-                benefits, medical expenses). Two-stage: P(positive) then P(value|positive).
+                Capital gains, partnership income, charitable contributions
+                have many zeros. Flow learns the joint zero/positive pattern
+                without explicit mixture models.
               </p>
             </div>
 
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <SparseIcon />
-              <h3 className={styles.featureTitle}>Block-level geography</h3>
+              <h3 className={styles.featureTitle}>L0 Calibration</h3>
               <p className={styles.featureDescription}>
-                5.77M Census blocks with population-weighted assignment. Derive
-                CD, SLDU, SLDL, county, tract post-hoc. Calibrate to 3,000+ targets
-                with &lt;1% error on geographic totals.
-              </p>
-            </div>
-
-            <div className={styles.featureCard}>
-              <div className={styles.featureCardGlow} />
-              <FusionIcon />
-              <h3 className={styles.featureTitle}>Multi-source fusion</h3>
-              <p className={styles.featureDescription}>
-                Combine CPS (income), ACS (geography), SIPP (dynamics), and
-                admin data (validation) into one rich synthetic population.
+                Hard Concrete gates for sparse weight adjustment.
+                Match 5,000+ targets while keeping most weights unchanged.
+                Implausible record types get zero weight automatically.
               </p>
             </div>
 
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ScaleIcon />
-              <h3 className={styles.featureTitle}>Scalable generation</h3>
+              <h3 className={styles.featureTitle}>Block-level geography</h3>
               <p className={styles.featureDescription}>
-                Synthesize billions of households. More synthetic diversity =
-                more flexibility for sparse reweighting to any geography.
+                5.77M Census blocks with population-weighted assignment.
+                Derive CD, SLDU, SLDL, county, tract post-hoc.
+                State-level calibration to Census targets.
               </p>
             </div>
 
@@ -482,8 +548,9 @@ export default function MicroplexPage() {
               <LikelihoodIcon />
               <h3 className={styles.featureTitle}>Exact likelihood</h3>
               <p className={styles.featureDescription}>
-                Normalizing flows provide tractable log-likelihood for stable
-                training. No mode collapse or training instability.
+                Normalizing flows provide tractable log-likelihood.
+                Stable training, no mode collapse. Can score any
+                record against the learned distribution.
               </p>
             </div>
           </div>
@@ -494,7 +561,7 @@ export default function MicroplexPage() {
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Why microplex?</h2>
             <p className={styles.sectionSubtitle}>
-              Comparison to alternative synthesis methods
+              Comparison to alternative approaches
             </p>
           </div>
 
@@ -504,53 +571,53 @@ export default function MicroplexPage() {
                 <tr>
                   <th>Feature</th>
                   <th className={styles.microplexCell}>microplex</th>
-                  <th>CT-GAN</th>
-                  <th>TVAE</th>
+                  <th>PE Enhanced CPS</th>
+                  <th>Tax-Calculator</th>
                   <th>synthpop</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Conditional generation</td>
+                  <td>Multi-survey fusion</td>
                   <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                </tr>
-                <tr>
-                  <td>Zero-inflation handling</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.partialMark}>~</span></td>
-                </tr>
-                <tr>
-                  <td>Sparse reweighting</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                </tr>
-                <tr>
-                  <td>Multi-source fusion</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.partialMark}>~</span></td>
-                </tr>
-                <tr>
-                  <td>Exact likelihood</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td>N/A</td>
-                </tr>
-                <tr>
-                  <td>Stable training</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.partialMark}>~</span></td>
                   <td><span className={styles.checkMark}>✓</span></td>
+                  <td><span className={styles.partialMark}>~</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                </tr>
+                <tr>
+                  <td>Learns joint distribution</td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.partialMark}>~</span></td>
+                </tr>
+                <tr>
+                  <td>Masked training</td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                </tr>
+                <tr>
+                  <td>Sparse L0 calibration</td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
+                  <td><span className={styles.partialMark}>~</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                </tr>
+                <tr>
+                  <td>Scalable synthesis</td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
                   <td><span className={styles.checkMark}>✓</span></td>
+                </tr>
+                <tr>
+                  <td>Block-level geography</td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td><span className={styles.crossMark}>✗</span></td>
                 </tr>
               </tbody>
             </table>

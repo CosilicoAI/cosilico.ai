@@ -276,24 +276,24 @@ export const competitors: Competitor[] = [
 
 export const pricingComps: PricingComp[] = [
   {
-    category: "Tax calculations",
+    category: "Tax/Benefit Calculations",
     competitors: [
       { name: "TAXSIM (NBER)", pricing: "Free", notes: "Academic only, federal 1960-2023, states 1977-2018, no commercial API", sourceId: 23 },
       { name: "TaxJar", pricing: "~$0.10/calc", notes: "$99/mo for 200 orders, API calls count as 1/10 order, Pro plan required", sourceId: 21 },
       { name: "Avalara", pricing: "Not public", notes: "Requires sales call, reported 30%+ more expensive than competitors", sourceId: 22 },
     ],
-    cosilicoPricing: "$0.003/call",
-    cosilicoAdvantage: "30x cheaper than TaxJar. Commercial API unlike TAXSIM.",
+    cosilicoPricing: "$0.02/household",
+    cosilicoAdvantage: "5x cheaper than TaxJar. Includes benefits, not just taxes.",
   },
   {
-    category: "Predictions / enrichment",
+    category: "Record Imputation",
     competitors: [
       { name: "Experian", pricing: "$0.50-2/record", notes: "Identity/credit focus, not household economic attributes", sourceId: 26 },
       { name: "Clearbit", pricing: "$0.09-0.10/record", notes: "Now HubSpot-only, deprecated standalone API, enterprise = $80k+/yr", sourceId: 24 },
       { name: "FullContact", pricing: "$0.05-0.10/call", notes: "$99-499/mo plans, credit-based, marketing data focus", sourceId: 25 },
     ],
-    cosilicoPricing: "$0.008/call",
-    cosilicoAdvantage: "5-10x cheaper. Economic/tax attributes vs. marketing data.",
+    cosilicoPricing: "$0.10/1K records",
+    cosilicoAdvantage: "500-1000x cheaper at scale. Economic/tax attributes vs. marketing data.",
   },
   {
     category: "Microsimulation",
@@ -302,17 +302,17 @@ export const pricingComps: PricingComp[] = [
       { name: "Tax Policy Center", pricing: "N/A", notes: "Internal only, no external access" },
       { name: "JCT/CBO", pricing: "N/A", notes: "Government only, not commercially available" },
     ],
-    cosilicoPricing: "$0.50/1M household-reforms",
+    cosilicoPricing: "$0.50/1K records",
     cosilicoAdvantage: "No commercial competitor. First API for population-scale policy simulation.",
   },
   {
-    category: "Data downloads",
+    category: "Data Downloads",
     competitors: [
       { name: "Census/IPUMS", pricing: "Free", notes: "Raw data, requires extensive processing" },
       { name: "Snowflake Marketplace", pricing: "$0.01-0.05/query", notes: "Varies by provider, usage-based", sourceId: 27 },
       { name: "Commercial providers", pricing: "$0.10+/record", notes: "Typically per-record, not per-GB" },
     ],
-    cosilicoPricing: "$0.10/GB",
-    cosilicoAdvantage: "Processed, calibrated data. Real-time economic signals included.",
+    cosilicoPricing: "Free (R2)",
+    cosilicoAdvantage: "Open source, open access. Daily-updated microplex included.",
   },
 ];

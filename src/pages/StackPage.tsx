@@ -73,6 +73,34 @@ const ArchIcon = () => (
   </svg>
 );
 
+const AutoRacIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 6v6l4 2" />
+    <path d="M16 16l2 2" />
+  </svg>
+);
+
+const FusionGanIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <circle cx="6" cy="6" r="3" />
+    <circle cx="18" cy="6" r="3" />
+    <circle cx="12" cy="18" r="4" />
+    <path d="M7.5 8.5L10.5 14.5M16.5 8.5L13.5 14.5" />
+    <path d="M12 14v-2" strokeDasharray="2 1" />
+  </svg>
+);
+
+const MicrosynthIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <rect x="3" y="3" width="7" height="7" />
+    <rect x="14" y="3" width="7" height="7" />
+    <rect x="3" y="14" width="7" height="7" />
+    <rect x="14" y="14" width="7" height="7" />
+    <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" strokeDasharray="2 1" />
+  </svg>
+);
+
 export default function StackPage() {
   return (
     <PageLayout>
@@ -81,7 +109,7 @@ export default function StackPage() {
         <section className={styles.hero}>
           <div className={styles.heroGlow} />
           <div className={styles.heroContent}>
-            <div className={styles.heroBadge}>Infrastructure</div>
+            <div className={styles.heroBadge}>INFRASTRUCTURE</div>
             <h1 className={styles.heroTitle}>The Cosilico stack</h1>
             <p className={styles.heroSubtitle}>
               Open-source tools for building tax and benefit microsimulation systems.
@@ -145,10 +173,10 @@ export default function StackPage() {
                 to match any geographic targets.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>Normalising flows</span>
-                <span className={styles.featureTag}>Zero-inflation</span>
-                <span className={styles.featureTag}>L0 reweighting</span>
-                <span className={styles.featureTag}>Multi-source</span>
+                <span className={styles.featureTag}>Normalizing Flows</span>
+                <span className={styles.featureTag}>Zero-Inflation</span>
+                <span className={styles.featureTag}>L0 Reweighting</span>
+                <span className={styles.featureTag}>Multi-Source</span>
               </div>
             </Link>
 
@@ -170,10 +198,10 @@ export default function StackPage() {
                 text, parameters, formulas, and tests. Filepath mirrors legal citation.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>Legal citations</span>
-                <span className={styles.featureTag}>Time-varying</span>
-                <span className={styles.featureTag}>Inline tests</span>
-                <span className={styles.featureTag}>Self-contained</span>
+                <span className={styles.featureTag}>Legal Citations</span>
+                <span className={styles.featureTag}>Time-Varying</span>
+                <span className={styles.featureTag}>Inline Tests</span>
+                <span className={styles.featureTag}>Self-Contained</span>
               </div>
             </Link>
 
@@ -195,15 +223,67 @@ export default function StackPage() {
                 matching and data fusion using hot deck imputation methods.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>NND hot deck</span>
-                <span className={styles.featureTag}>Gower distance</span>
-                <span className={styles.featureTag}>Frechet bounds</span>
-                <span className={styles.featureTag}>R parity</span>
+                <span className={styles.featureTag}>NND Hot Deck</span>
+                <span className={styles.featureTag}>Gower Distance</span>
+                <span className={styles.featureTag}>Frechet Bounds</span>
+                <span className={styles.featureTag}>R Parity</span>
               </div>
             </Link>
 
-            {/* cosilico-engine - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay5} ${styles.componentCardComingSoon}`}>
+            {/* fusiongan - RESEARCH */}
+            <Link to="/stack/fusiongan" className={`${styles.componentCard} ${styles.cardDelay5}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusDev}`}>RESEARCH</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <FusionGanIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>fusiongan</h3>
+                  <div className={styles.componentTagline}>pip install fusiongan</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Multi-source adversarial synthesis for survey data fusion.
+                Learn joint distributions from CPS, PUF, and other surveys
+                with different variable coverage.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>GAN Synthesis</span>
+                <span className={styles.featureTag}>Multi-Discriminator</span>
+                <span className={styles.featureTag}>No Matching Keys</span>
+                <span className={styles.featureTag}>Coverage Metrics</span>
+              </div>
+            </Link>
+
+            {/* microsynth - IN DEV */}
+            <Link to="/stack/microsynth" className={`${styles.componentCard} ${styles.cardDelay6}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <MicrosynthIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>microsynth</h3>
+                  <div className={styles.componentTagline}>Synthesis experiments</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Multi-source synthesis experiment tracking. ZI-QDNN models for
+                CPS+SIPP+PSID fusion. Coverage metrics, holdout validation,
+                and per-record analysis.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>ZI-QDNN</span>
+                <span className={styles.featureTag}>Coverage Tracking</span>
+                <span className={styles.featureTag}>Multi-Survey</span>
+                <span className={styles.featureTag}>Experiment DB</span>
+              </div>
+            </Link>
+
+            {/* rac (DSL) - DEV */}
+            <div className={`${styles.componentCard} ${styles.cardDelay7} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -211,25 +291,51 @@ export default function StackPage() {
                   <EngineIcon />
                 </div>
                 <div className={styles.componentMeta}>
-                  <h3 className={styles.componentName}>cosilico-engine</h3>
-                  <div className={styles.componentTagline}>DSL runtime</div>
+                  <h3 className={styles.componentName}>rac</h3>
+                  <div className={styles.componentTagline}>DSL parser & runtime</div>
                 </div>
               </div>
               <p className={styles.componentDescription}>
-                Domain-specific language for encoding tax and benefit law.
-                Vectorized execution, legal citations, time-varying parameters,
-                and multi-entity calculations.
+                The RAC language engine. Parses .rac files, executes formulas,
+                and provides vectorized microsimulation across millions of
+                tax units.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>Statute DSL</span>
+                <span className={styles.featureTag}>Parser</span>
+                <span className={styles.featureTag}>Executor</span>
                 <span className={styles.featureTag}>Vectorized</span>
-                <span className={styles.featureTag}>Legal citations</span>
-                <span className={styles.featureTag}>Parameters</span>
+                <span className={styles.featureTag}>Microsim</span>
               </div>
             </div>
 
-            {/* cosilico-validators - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay6} ${styles.componentCardComingSoon}`}>
+            {/* autorac - DEV */}
+            <Link to="/stack/autorac" className={`${styles.componentCard} ${styles.cardDelay8}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <AutoRacIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>autorac</h3>
+                  <div className={styles.componentTagline}>AI-assisted encoding</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Feedback harness for AI statute encoding. Agents predict scores,
+                encode statutes, validate against oracles, and learn from errors.
+                Scientific experimentation infrastructure.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>Calibration</span>
+                <span className={styles.featureTag}>Experiment DB</span>
+                <span className={styles.featureTag}>Oracles</span>
+                <span className={styles.featureTag}>Feedback Loop</span>
+              </div>
+            </Link>
+
+            {/* rac-validators - DEV */}
+            <div className={`${styles.componentCard} ${styles.cardDelay9} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -237,25 +343,25 @@ export default function StackPage() {
                   <ValidatorsIcon />
                 </div>
                 <div className={styles.componentMeta}>
-                  <h3 className={styles.componentName}>cosilico-validators</h3>
+                  <h3 className={styles.componentName}>rac-validators</h3>
                   <div className={styles.componentTagline}>External validation</div>
                 </div>
               </div>
               <p className={styles.componentDescription}>
-                Validate implementations against authoritative calculators.
-                IRS tax tools, state benefit calculators, and official
-                documentation cross-referenced automatically.
+                Validate RAC implementations against PolicyEngine and TAXSIM.
+                Cross-reference results with authoritative tax calculators
+                and official IRS tools.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>IRS tools</span>
-                <span className={styles.featureTag}>State calculators</span>
-                <span className={styles.featureTag}>Auto-validation</span>
-                <span className={styles.featureTag}>CI integration</span>
+                <span className={styles.featureTag}>IRS Tools</span>
+                <span className={styles.featureTag}>State Calculators</span>
+                <span className={styles.featureTag}>Auto-Validation</span>
+                <span className={styles.featureTag}>CI Integration</span>
               </div>
             </div>
 
             {/* cosilico-compile - PLANNED */}
-            <div className={`${styles.componentCard} ${styles.cardDelay8} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay10} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusPlanned}`}>PLANNED</span>
               <div className={styles.componentHeader}>
@@ -291,60 +397,173 @@ export default function StackPage() {
             </p>
           </div>
 
-          <div className={styles.architectureWrapper}>
-            <pre className={styles.architectureDiagram}>
-{`┌─────────────────────────────────────────────────────────────────────────┐
-│                           SOURCE MATERIALS                               │
-├──────────────────┬──────────────────┬──────────────────┬────────────────┤
-│   Tax Code       │   Benefit Law    │    Microdata     │   Targets      │
-│   (IRC, state)   │   (SNAP, TANF)   │   (CPS, ACS)     │   (Census)     │
-└────────┬─────────┴────────┬─────────┴────────┬─────────┴───────┬────────┘
-         │                  │                  │                 │
-         ▼                  ▼                  │                 │
-┌─────────────────────────────────┐            │                 │
-│       `}<span className="highlight">cosilico-engine</span>{`          │            │                 │
-│                                 │            │                 │
-│  • Parse statute DSL            │            │                 │
-│  • Resolve legal citations      │            │                 │
-│  • Execute vectorized calcs     │            │                 │
-│  • Handle time-varying params   │            │                 │
-└────────────────┬────────────────┘            │                 │
-                 │                             │                 │
-                 ▼                             ▼                 ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                            `}<span className="highlight">microplex</span>{`                                     │
-│                                                                         │
-│  ┌─────────────────┐   ┌─────────────────┐   ┌─────────────────────┐   │
-│  │ Learn P(target  │   │ Synthesize      │   │ Sparse reweight     │   │
-│  │   | context)    │ → │ billions of     │ → │ to local targets    │   │
-│  │ with MAF flows  │   │ households      │   │ (county/tract)      │   │
-│  └─────────────────┘   └─────────────────┘   └─────────────────────┘   │
-└────────────────────────────────────────────────┬────────────────────────┘
-                                                 │
-                 ┌───────────────────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐   ┌───────────────────────────────────┐
-│     `}<span className="highlight">cosilico-compile</span>{`          │   │       `}<span className="highlight">cosilico-validators</span>{`        │
-│                                 │   │                                   │
-│  DSL → Python                   │   │  Compare outputs to:              │
-│  DSL → JavaScript               │   │  • IRS tax calculators            │
-│  DSL → WASM                     │   │  • State benefit tools            │
-│  DSL → SQL                      │   │  • Published statistics           │
-└────────────────┬────────────────┘   └───────────────────┬───────────────┘
-                 │                                        │
-                 └──────────────────┬─────────────────────┘
-                                    │
-                                    ▼
-                    ┌───────────────────────────────┐
-                    │       POLICY ANALYSIS         │
-                    │                               │
-                    │  • Distributional impacts     │
-                    │  • Revenue/cost estimates     │
-                    │  • Geographic breakdowns      │
-                    │  • What-if scenarios          │
-                    └───────────────────────────────┘`}
-            </pre>
+          <div className={styles.pipelineContainer}>
+            {/* Source Materials */}
+            <div className={styles.sourceRow}>
+              <div className={styles.sourceCard}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.sourceIcon}>
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                </svg>
+                <div className={styles.sourceLabel}>Tax Code</div>
+                <div className={styles.sourceExamples}>IRC, state codes</div>
+              </div>
+              <div className={styles.sourceCard}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.sourceIcon}>
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <div className={styles.sourceLabel}>Benefit Law</div>
+                <div className={styles.sourceExamples}>SNAP, TANF, SSI</div>
+              </div>
+              <div className={styles.sourceCard}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.sourceIcon}>
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <div className={styles.sourceLabel}>Microdata</div>
+                <div className={styles.sourceExamples}>CPS, ACS, SCF</div>
+              </div>
+              <div className={styles.sourceCard}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.sourceIcon}>
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <div className={styles.sourceLabel}>Targets</div>
+                <div className={styles.sourceExamples}>Census, admin data</div>
+              </div>
+            </div>
+
+            {/* Connector */}
+            <div className={styles.connectorDown}>
+              <div className={styles.connectorArrow} />
+            </div>
+
+            {/* RAC + arch row */}
+            <div className={styles.pipelineRow}>
+              <div className={styles.processingNode}>
+                <div className={styles.nodeHeader}>
+                  <div className={styles.nodeIcon}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.nodeIconSvg}>
+                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                    </svg>
+                  </div>
+                  <div className={styles.nodeName}>arch</div>
+                </div>
+                <div className={styles.nodeFeatures}>
+                  <div className={styles.nodeFeature}>Archive raw documents</div>
+                  <div className={styles.nodeFeature}>Track provenance</div>
+                  <div className={styles.nodeFeature}>Detect changes</div>
+                </div>
+              </div>
+
+              <div className={styles.connectorHorizontal} />
+
+              <div className={styles.processingNode}>
+                <div className={styles.nodeHeader}>
+                  <div className={styles.nodeIcon}>
+                    <EngineIcon />
+                  </div>
+                  <div className={styles.nodeName}>rac</div>
+                </div>
+                <div className={styles.nodeFeatures}>
+                  <div className={styles.nodeFeature}>Parse statute DSL</div>
+                  <div className={styles.nodeFeature}>Resolve citations</div>
+                  <div className={styles.nodeFeature}>Execute vectorized</div>
+                </div>
+              </div>
+
+              <div className={styles.connectorHorizontal} />
+
+              <div className={styles.processingNode}>
+                <div className={styles.nodeHeader}>
+                  <div className={styles.nodeIcon}>
+                    <AutoRacIcon />
+                  </div>
+                  <div className={styles.nodeName}>autorac</div>
+                </div>
+                <div className={styles.nodeFeatures}>
+                  <div className={styles.nodeFeature}>AI-assisted encoding</div>
+                  <div className={styles.nodeFeature}>Calibration tracking</div>
+                  <div className={styles.nodeFeature}>Feedback loop</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Connector */}
+            <div className={styles.connectorDown}>
+              <div className={styles.connectorArrow} />
+            </div>
+
+            {/* Microplex (wide) */}
+            <div className={`${styles.processingNode} ${styles.processingNodeWide}`}>
+              <div className={styles.nodeHeader}>
+                <div className={styles.nodeIcon}>
+                  <MicroplexIcon />
+                </div>
+                <div className={styles.nodeName}>microplex</div>
+              </div>
+              <div className={styles.innerFlow}>
+                <div className={styles.innerStep}>Learn P(target | context)</div>
+                <span className={styles.innerArrow}>→</span>
+                <div className={styles.innerStep}>Synthesize billions</div>
+                <span className={styles.innerArrow}>→</span>
+                <div className={styles.innerStep}>Sparse reweight to local</div>
+              </div>
+            </div>
+
+            {/* Connector */}
+            <div className={styles.connectorDown}>
+              <div className={styles.connectorArrow} />
+            </div>
+
+            {/* Compile + Validators row */}
+            <div className={styles.parallelRow}>
+              <div className={styles.processingNode}>
+                <div className={styles.nodeHeader}>
+                  <div className={styles.nodeIcon}>
+                    <CompileIcon />
+                  </div>
+                  <div className={styles.nodeName}>cosilico-compile</div>
+                </div>
+                <div className={styles.nodeFeatures}>
+                  <div className={styles.nodeFeature}>DSL → Python</div>
+                  <div className={styles.nodeFeature}>DSL → JavaScript</div>
+                  <div className={styles.nodeFeature}>DSL → WASM / SQL</div>
+                </div>
+              </div>
+
+              <div className={styles.processingNode}>
+                <div className={styles.nodeHeader}>
+                  <div className={styles.nodeIcon}>
+                    <ValidatorsIcon />
+                  </div>
+                  <div className={styles.nodeName}>rac-validators</div>
+                </div>
+                <div className={styles.nodeFeatures}>
+                  <div className={styles.nodeFeature}>PolicyEngine oracle</div>
+                  <div className={styles.nodeFeature}>TAXSIM oracle</div>
+                  <div className={styles.nodeFeature}>IRS tool comparison</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Connector */}
+            <div className={styles.connectorDown}>
+              <div className={styles.connectorArrow} />
+            </div>
+
+            {/* Output */}
+            <div className={styles.outputNode}>
+              <div className={styles.outputTitle}>Policy Analysis</div>
+              <div className={styles.outputFeatures}>
+                <span className={styles.outputFeatureTag}>Distributional impacts</span>
+                <span className={styles.outputFeatureTag}>Revenue estimates</span>
+                <span className={styles.outputFeatureTag}>Geographic breakdowns</span>
+                <span className={styles.outputFeatureTag}>What-if scenarios</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -364,7 +583,7 @@ export default function StackPage() {
                 rel="noopener noreferrer"
               >
                 <GitHubIcon />
-                GitHub organisation
+                GitHub Organization
               </a>
               <a
                 href="https://cosilicoai.github.io/microplex"
@@ -373,7 +592,7 @@ export default function StackPage() {
                 rel="noopener noreferrer"
               >
                 <DocsIcon />
-                microplex docs
+                microplex Docs
               </a>
             </div>
           </div>

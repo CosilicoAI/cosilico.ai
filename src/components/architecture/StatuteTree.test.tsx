@@ -97,9 +97,8 @@ describe("StatuteTree", () => {
         onToggle={jest.fn()}
       />
     );
-    // With mocked styles, we can't check specific class names
-    // Just verify the element renders when selected
-    expect(screen.getByText("(1) Credit Amount")).toBeInTheDocument();
+    const selectedItem = screen.getByTestId("tree-item-32/a/1");
+    expect(selectedItem).toHaveAttribute("data-selected", "true");
   });
 
   test("displays file name for leaf nodes", () => {

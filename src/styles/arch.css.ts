@@ -216,6 +216,16 @@ export const descriptionParagraph = style({
   marginBottom: vars.space.lg,
 });
 
+export const inlineLink = style({
+  color: vars.color.accent,
+  textDecoration: 'none',
+  borderBottom: `1px solid transparent`,
+  transition: 'border-color 0.2s ease',
+  ':hover': {
+    borderBottom: `1px solid ${vars.color.accent}`,
+  },
+});
+
 export const descriptionList = style({
   listStyle: 'none',
   padding: 0,
