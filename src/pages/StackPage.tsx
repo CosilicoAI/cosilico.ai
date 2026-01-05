@@ -91,6 +91,16 @@ const FusionGanIcon = () => (
   </svg>
 );
 
+const MicrosynthIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <rect x="3" y="3" width="7" height="7" />
+    <rect x="14" y="3" width="7" height="7" />
+    <rect x="3" y="14" width="7" height="7" />
+    <rect x="14" y="14" width="7" height="7" />
+    <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" strokeDasharray="2 1" />
+  </svg>
+);
+
 export default function StackPage() {
   return (
     <PageLayout>
@@ -100,7 +110,7 @@ export default function StackPage() {
           <div className={styles.heroGlow} />
           <div className={styles.heroContent}>
             <div className={styles.heroBadge}>INFRASTRUCTURE</div>
-            <h1 className={styles.heroTitle}>The Cosilico Stack</h1>
+            <h1 className={styles.heroTitle}>The Cosilico stack</h1>
             <p className={styles.heroSubtitle}>
               Open-source tools for building tax and benefit microsimulation systems.
               From encoded law to calibrated populations.
@@ -246,8 +256,34 @@ export default function StackPage() {
               </div>
             </Link>
 
+            {/* microsynth - IN DEV */}
+            <Link to="/stack/microsynth" className={`${styles.componentCard} ${styles.cardDelay6}`}>
+              <div className={styles.componentCardGlow} />
+              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}>
+                  <MicrosynthIcon />
+                </div>
+                <div className={styles.componentMeta}>
+                  <h3 className={styles.componentName}>microsynth</h3>
+                  <div className={styles.componentTagline}>Synthesis experiments</div>
+                </div>
+              </div>
+              <p className={styles.componentDescription}>
+                Multi-source synthesis experiment tracking. ZI-QDNN models for
+                CPS+SIPP+PSID fusion. Coverage metrics, holdout validation,
+                and per-record analysis.
+              </p>
+              <div className={styles.componentFeatures}>
+                <span className={styles.featureTag}>ZI-QDNN</span>
+                <span className={styles.featureTag}>Coverage Tracking</span>
+                <span className={styles.featureTag}>Multi-Survey</span>
+                <span className={styles.featureTag}>Experiment DB</span>
+              </div>
+            </Link>
+
             {/* rac (DSL) - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay6} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay7} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -273,7 +309,7 @@ export default function StackPage() {
             </div>
 
             {/* autorac - DEV */}
-            <Link to="/stack/autorac" className={`${styles.componentCard} ${styles.cardDelay7}`}>
+            <Link to="/stack/autorac" className={`${styles.componentCard} ${styles.cardDelay8}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -299,7 +335,7 @@ export default function StackPage() {
             </Link>
 
             {/* rac-validators - DEV */}
-            <div className={`${styles.componentCard} ${styles.cardDelay8} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay9} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
@@ -325,7 +361,7 @@ export default function StackPage() {
             </div>
 
             {/* cosilico-compile - PLANNED */}
-            <div className={`${styles.componentCard} ${styles.cardDelay9} ${styles.componentCardComingSoon}`}>
+            <div className={`${styles.componentCard} ${styles.cardDelay10} ${styles.componentCardComingSoon}`}>
               <div className={styles.componentCardGlow} />
               <span className={`${styles.statusBadge} ${styles.statusPlanned}`}>PLANNED</span>
               <div className={styles.componentHeader}>
@@ -355,7 +391,7 @@ export default function StackPage() {
         {/* Architecture */}
         <section className={styles.architectureSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>How It Fits Together</h2>
+            <h2 className={styles.sectionTitle}>How it fits together</h2>
             <p className={styles.sectionSubtitle}>
               From source law to policy analysis
             </p>
@@ -534,7 +570,7 @@ export default function StackPage() {
         {/* CTA */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Open Source</h2>
+            <h2 className={styles.ctaTitle}>Open source</h2>
             <p className={styles.ctaText}>
               All Cosilico tools are open source under the MIT license.
               Contributions welcome.

@@ -125,7 +125,7 @@ export default function FusionGanPage() {
           <div className={styles.featuresGrid}>
             <div className={styles.featureCard}>
               <GeneratorIcon />
-              <h3 className={styles.featureTitle}>Shared Generator</h3>
+              <h3 className={styles.featureTitle}>Shared generator</h3>
               <p className={styles.featureDescription}>
                 Single MLP generator learns the full joint distribution across all variables,
                 producing complete synthetic records from latent noise.
@@ -143,7 +143,7 @@ export default function FusionGanPage() {
 
             <div className={styles.featureCard}>
               <FusionIcon />
-              <h3 className={styles.featureTitle}>No Matching Required</h3>
+              <h3 className={styles.featureTitle}>No matching required</h3>
               <p className={styles.featureDescription}>
                 Unlike statistical matching, no shared identifiers needed. The GAN learns
                 correlations implicitly through adversarial training.
@@ -152,7 +152,7 @@ export default function FusionGanPage() {
 
             <div className={styles.featureCard}>
               <WeightIcon />
-              <h3 className={styles.featureTitle}>Weighted Training</h3>
+              <h3 className={styles.featureTitle}>Weighted training</h3>
               <p className={styles.featureDescription}>
                 Cluster or density-based weighting focuses discriminator attention on
                 rare population types for better coverage.
@@ -161,7 +161,7 @@ export default function FusionGanPage() {
 
             <div className={styles.featureCard}>
               <CorrelationIcon />
-              <h3 className={styles.featureTitle}>Cross-Source Correlations</h3>
+              <h3 className={styles.featureTitle}>Cross-source correlations</h3>
               <p className={styles.featureDescription}>
                 Learn relationships between variables never observed together (e.g.,
                 age from CPS vs capital gains from PUF).
@@ -170,7 +170,7 @@ export default function FusionGanPage() {
 
             <div className={styles.featureCard}>
               <CoverageIcon />
-              <h3 className={styles.featureTitle}>Coverage Metrics</h3>
+              <h3 className={styles.featureTitle}>Coverage metrics</h3>
               <p className={styles.featureDescription}>
                 Evaluate using holdout k-NN coverage, discriminator accuracy, and MMD
                 to ensure synthetic data matches real distributions.
@@ -181,7 +181,7 @@ export default function FusionGanPage() {
 
         {/* Interactive Demo Section */}
         <section className={styles.demoSection}>
-          <h2 className={styles.sectionTitle}>Interactive Demo</h2>
+          <h2 className={styles.sectionTitle}>Interactive demo</h2>
           <p className={styles.sectionSubtitle}>
             Adjust parameters and watch FusionGAN synthesize data in real-time.
           </p>

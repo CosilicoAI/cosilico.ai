@@ -226,7 +226,7 @@ export default function ArchitecturePage() {
         <IndexingDemo />
 
         <div className="indexing-explanation">
-          <h4>How It Works</h4>
+          <h4>How it works</h4>
           <ol>
             <li>
               <strong>PUBLISHED</strong> — Official IRS values from Revenue Procedures.
@@ -312,7 +312,7 @@ export default function ArchitecturePage() {
           </div>
 
           <div className="override-benefits">
-            <h4>Why This Design</h4>
+            <h4>Why this design</h4>
             <div className="benefit-grid">
               <div className="benefit-card">
                 <span className="benefit-icon">🎯</span>
@@ -752,7 +752,7 @@ $$ LANGUAGE SQL;`}
           </div>
 
           <div className="validation-benefits">
-            <h4>Why This Strategy Works</h4>
+            <h4>Why this strategy works</h4>
             <ul>
               <li><strong>Bug fixes validated once</strong> — Fix a bug, validate against PolicyEngine, done.</li>
               <li><strong>New targets inherit correctness</strong> — Just prove they match existing targets.</li>

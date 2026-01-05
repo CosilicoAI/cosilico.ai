@@ -112,7 +112,7 @@ const MultiSurveyFusionExplainer: React.FC = () => {
   return (
     <section className={styles.flowsSection}>
       <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Multi-Survey Fusion</h2>
+        <h2 className={styles.sectionTitle}>Multi-survey fusion</h2>
         <p className={styles.sectionSubtitle}>
           Stack surveys with different coverage, learn joint distribution from partial observations
         </p>
@@ -143,7 +143,7 @@ const MultiSurveyFusionExplainer: React.FC = () => {
 
           <div className={styles.flowsExplanationCard}>
             <div className={styles.flowsExplanationNumber}>+</div>
-            <h4 className={styles.flowsExplanationTitle}>Administrative Targets</h4>
+            <h4 className={styles.flowsExplanationTitle}>Administrative targets</h4>
             <p className={styles.flowsExplanationText}>
               IRS SOI totals by AGI bracket, Census demographics by state/age,
               CBO program aggregates. 5,000+ calibration constraints.
@@ -249,7 +249,7 @@ const MultiSurveyFusionExplainer: React.FC = () => {
         {/* Key insight */}
         <div className={styles.flowsKeyInsight}>
           <div className={styles.flowsKeyInsightGlow} />
-          <h4 className={styles.flowsKeyInsightTitle}>Learn from Both, Trust Neither Completely</h4>
+          <h4 className={styles.flowsKeyInsightTitle}>Learn from both, trust neither completely</h4>
           <p className={styles.flowsKeyInsightText}>
             For shared variables like wages, the flow learns from <strong>both sources</strong>: CPS provides
             low-income patterns (includes non-filers), PUF provides high-income tail (uncapped).
@@ -377,7 +377,7 @@ export default function MicroplexPage() {
         {/* Workflow */}
         <section className={styles.workflowSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>The Pipeline</h2>
+            <h2 className={styles.sectionTitle}>The pipeline</h2>
             <p className={styles.sectionSubtitle}>
               From partial survey observations to complete RAC input vectors
             </p>
@@ -392,7 +392,7 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 01</div>
-                <h3 className={styles.stageTitle}>Stack Surveys</h3>
+                <h3 className={styles.stageTitle}>Stack surveys</h3>
                 <p className={styles.stageDescription}>
                   CPS (150k persons): household structure, geography, expenses, base income.
                   PUF (300k persons): capital gains, partnership income, detailed expenses.
@@ -428,7 +428,7 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 03</div>
-                <h3 className={styles.stageTitle}>Synthesize Complete Records</h3>
+                <h3 className={styles.stageTitle}>Synthesize complete records</h3>
                 <p className={styles.stageDescription}>
                   Generate 1M+ households with ALL variables filled. No NaN gaps.
                   CPS variables + PUF variables + learned correlations.
@@ -464,7 +464,7 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>OUTPUT</div>
-                <h3 className={styles.stageTitle}>RAC Input Vectors</h3>
+                <h3 className={styles.stageTitle}>RAC input vectors</h3>
                 <p className={styles.stageDescription}>
                   Complete population with all income sources, demographics, geography, expenses.
                   Ready for RAC to compute federal/state taxes, EITC, CTC, SNAP, Medicaid, SSI, poverty.
@@ -491,7 +491,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <FusionIcon />
-              <h3 className={styles.featureTitle}>Multi-Survey Fusion</h3>
+              <h3 className={styles.featureTitle}>Multi-survey fusion</h3>
               <p className={styles.featureDescription}>
                 Stack CPS + PUF with different coverage patterns.
                 CPS: household structure, geography, non-filers.
@@ -502,7 +502,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ConditionalIcon />
-              <h3 className={styles.featureTitle}>Masked Training</h3>
+              <h3 className={styles.featureTitle}>Masked training</h3>
               <p className={styles.featureDescription}>
                 Learn joint distribution from partial observations.
                 Flow computes loss only on observed values, learns
@@ -513,7 +513,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ZeroIcon />
-              <h3 className={styles.featureTitle}>Zero-Inflated Variables</h3>
+              <h3 className={styles.featureTitle}>Zero-inflated variables</h3>
               <p className={styles.featureDescription}>
                 Capital gains, partnership income, charitable contributions
                 have many zeros. Flow learns the joint zero/positive pattern
@@ -535,7 +535,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ScaleIcon />
-              <h3 className={styles.featureTitle}>Block-Level Geography</h3>
+              <h3 className={styles.featureTitle}>Block-level geography</h3>
               <p className={styles.featureDescription}>
                 5.77M Census blocks with population-weighted assignment.
                 Derive CD, SLDU, SLDL, county, tract post-hoc.
@@ -546,7 +546,7 @@ export default function MicroplexPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <LikelihoodIcon />
-              <h3 className={styles.featureTitle}>Exact Likelihood</h3>
+              <h3 className={styles.featureTitle}>Exact likelihood</h3>
               <p className={styles.featureDescription}>
                 Normalizing flows provide tractable log-likelihood.
                 Stable training, no mode collapse. Can score any
@@ -628,7 +628,7 @@ export default function MicroplexPage() {
         <section className={styles.installSection}>
           <div className={styles.installBox}>
             <div className={styles.installBoxGlow} />
-            <h2 className={styles.installTitle}>Get Started</h2>
+            <h2 className={styles.installTitle}>Get started</h2>
             <code className={styles.installCode}>pip install microplex</code>
             <div className={styles.installLinks}>
               <a

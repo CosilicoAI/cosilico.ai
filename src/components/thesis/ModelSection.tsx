@@ -11,7 +11,7 @@ export function ModelSection() {
       <div className={styles.modelStack}>
         <div className={`${styles.stackLayer} ${styles.stackFree}`}>
           <div>
-            <h3>Open Source</h3>
+            <h3>Open source</h3>
             <p>Run it yourself. Apache 2.0 licensed. Full access to rules engine.</p>
           </div>
           <span className={styles.stackPrice}>Free</span>
@@ -40,7 +40,7 @@ export function ModelSection() {
       </div>
 
       <div className={styles.modelPrecedent}>
-        <h3>Open Source Commercial Model: Proven at Scale</h3>
+        <h3>Open source commercial model: proven at scale</h3>
         <div className={styles.precedentGrid}>
           <div className={styles.precedent}>
             <span className={styles.precedentName}>MongoDB<Cite id={14} /></span>

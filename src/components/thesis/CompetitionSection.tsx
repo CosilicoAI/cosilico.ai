@@ -93,7 +93,7 @@ export function CompetitionSection() {
         ))}
 
         <div className={styles.pricingPhilosophy}>
-          <h4>Open Source + Paid Insights</h4>
+          <h4>Open source + paid insights</h4>
           <p>
             Everything is open source—the rules engine, datasets, even the AI generator.
             You're not paying for code; you're paying for <strong>computed insights</strong>:

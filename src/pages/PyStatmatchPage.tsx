@@ -133,7 +133,7 @@ export default function PyStatmatchPage() {
         {/* Methods */}
         <section className={styles.methodsSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Matching Methods</h2>
+            <h2 className={styles.sectionTitle}>Matching methods</h2>
             <p className={styles.sectionSubtitle}>
               Multiple hot deck algorithms for different use cases
             </p>
@@ -143,7 +143,7 @@ export default function PyStatmatchPage() {
             <div className={styles.methodCard}>
               <div className={styles.methodCardGlow} />
               <NNDIcon />
-              <h3 className={styles.methodTitle}>NND Hot Deck</h3>
+              <h3 className={styles.methodTitle}>NND hot deck</h3>
               <p className={styles.methodDescription}>
                 Nearest Neighbor Distance matching. Find the closest donor
                 for each recipient based on matching variables. Supports
@@ -157,7 +157,7 @@ export default function PyStatmatchPage() {
             <div className={styles.methodCard}>
               <div className={styles.methodCardGlow} />
               <RandomIcon />
-              <h3 className={styles.methodTitle}>Random Hot Deck</h3>
+              <h3 className={styles.methodTitle}>Random hot deck</h3>
               <p className={styles.methodDescription}>
                 Probabilistic matching within strata. Randomly select donors
                 within matching cells for added variability. Useful for
@@ -171,7 +171,7 @@ export default function PyStatmatchPage() {
             <div className={styles.methodCard}>
               <div className={styles.methodCardGlow} />
               <RankIcon />
-              <h3 className={styles.methodTitle}>Rank NND Hot Deck</h3>
+              <h3 className={styles.methodTitle}>Rank NND hot deck</h3>
               <p className={styles.methodDescription}>
                 Rank-based nearest neighbor matching. Convert continuous
                 variables to ranks before matching, reducing sensitivity
@@ -201,7 +201,7 @@ export default function PyStatmatchPage() {
         {/* Features */}
         <section className={styles.featuresSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Full Toolkit</h2>
+            <h2 className={styles.sectionTitle}>Full toolkit</h2>
             <p className={styles.sectionSubtitle}>
               Everything you need for statistical matching workflows
             </p>
@@ -211,7 +211,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <DistanceIcon />
-              <h3 className={styles.featureTitle}>Distance Functions</h3>
+              <h3 className={styles.featureTitle}>Distance functions</h3>
               <p className={styles.featureDescription}>
                 Gower, Mahalanobis, Euclidean, and Manhattan distances.
                 Automatic handling of mixed variable types.
@@ -221,7 +221,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <WeightIcon />
-              <h3 className={styles.featureTitle}>Survey Weights</h3>
+              <h3 className={styles.featureTitle}>Survey weights</h3>
               <p className={styles.featureDescription}>
                 Full support for weighted matching. Calibrate weights post-match
                 and calculate design effects.
@@ -231,7 +231,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <FrechetIcon />
-              <h3 className={styles.featureTitle}>Frechet Bounds</h3>
+              <h3 className={styles.featureTitle}>Frechet bounds</h3>
               <p className={styles.featureDescription}>
                 Compute theoretical bounds on joint distributions. Quantify
                 uncertainty from conditional independence assumption.
@@ -241,7 +241,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <DiagnosticsIcon />
-              <h3 className={styles.featureTitle}>Match Diagnostics</h3>
+              <h3 className={styles.featureTitle}>Match diagnostics</h3>
               <p className={styles.featureDescription}>
                 Balance checks, standardized mean differences, variance ratios,
                 and KS tests for match quality assessment.
@@ -251,7 +251,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ValidationIcon />
-              <h3 className={styles.featureTitle}>R Validation</h3>
+              <h3 className={styles.featureTitle}>R validation</h3>
               <p className={styles.featureDescription}>
                 Tested against the original R StatMatch package. Numerical
                 parity verified with rpy2 integration tests.
@@ -261,7 +261,7 @@ export default function PyStatmatchPage() {
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <SurveyIcon />
-              <h3 className={styles.featureTitle}>Data Fusion</h3>
+              <h3 className={styles.featureTitle}>Data fusion</h3>
               <p className={styles.featureDescription}>
                 Create fused datasets from matched records. Combine variables
                 from multiple surveys into unified microdata.
@@ -334,7 +334,7 @@ fused = create_fused(
         {/* Integration Note */}
         <section className={styles.integrationSection}>
           <div className={styles.integrationCard}>
-            <h3 className={styles.integrationTitle}>Part of the Cosilico Stack</h3>
+            <h3 className={styles.integrationTitle}>Part of the Cosilico stack</h3>
             <p className={styles.integrationDescription}>
               py-statmatch is available as an optional backend in microplex.
               Use traditional statistical matching alongside neural synthesis
@@ -353,7 +353,7 @@ fused = create_fused(
         <section className={styles.installSection}>
           <div className={styles.installBox}>
             <div className={styles.installBoxGlow} />
-            <h2 className={styles.installTitle}>Get Started</h2>
+            <h2 className={styles.installTitle}>Get started</h2>
             <code className={styles.installCode}>pip install py-statmatch</code>
             <div className={styles.installLinks}>
               <a

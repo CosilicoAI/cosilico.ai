@@ -443,7 +443,7 @@ for layer in gat_layers:
             <div className={styles.phase}>
               <div className={styles.phaseMarker}>4</div>
               <div className={styles.phaseContent}>
-                <h3>Full System</h3>
+                <h3>Full system</h3>
                 <p>Multi-survey fusion, complete events, calibration, geographic mobility</p>
               </div>
             </div>

@@ -108,7 +108,7 @@ export default function StructurePage() {
       <section className={styles.audienceContent}>
         {activeAudience === "investors" && (
           <div className={styles.contentPanel}>
-            <h2>For Investors</h2>
+            <h2>For investors</h2>
 
             <div className={styles.contentSection}>
               <h3>Why the structure matters</h3>
@@ -232,7 +232,7 @@ export default function StructurePage() {
 
         {activeAudience === "partners" && (
           <div className={styles.contentPanel}>
-            <h2>For Partners & Customers</h2>
+            <h2>For partners & customers</h2>
 
             <div className={styles.contentSection}>
               <h3>Which organization should I work with?</h3>

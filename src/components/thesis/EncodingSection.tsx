@@ -48,7 +48,7 @@ export function EncodingSection() {
       </div>
 
       <div className={styles.encodingOracles}>
-        <h3>The Oracle Stack</h3>
+        <h3>The oracle stack</h3>
         <div className={styles.oracleGrid}>
           <div className={styles.oracleCard}>
             <h4>PolicyEngine-US</h4>
@@ -73,10 +73,10 @@ export function EncodingSection() {
       </div>
 
       <div className={styles.encodingMoat}>
-        <h3>Why This Changes the Moat</h3>
+        <h3>Why this changes the moat</h3>
         <div className={styles.moatComparison}>
           <div className={styles.moatOld}>
-            <h4>Old Moat</h4>
+            <h4>Old moat</h4>
             <ul>
               <li>Lines of code in rules engine</li>
               <li>Number of programs encoded</li>
@@ -84,7 +84,7 @@ export function EncodingSection() {
             </ul>
           </div>
           <div className={styles.moatNew}>
-            <h4>New Moat</h4>
+            <h4>New moat</h4>
             <ul>
               <li>Training infrastructure + verification harness</li>
               <li>Ability to encode any new program rapidly</li>

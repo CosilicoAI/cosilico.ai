@@ -130,7 +130,7 @@ export default function HomePage() {
                 <path d="M3 12h2M19 12h2" />
               </svg>
             </div>
-            <h3 className={styles.productCardH3}>Full Profile</h3>
+            <h3 className={styles.productCardH3}>Full profile</h3>
             <p className={styles.productCardP}>
               Partial household in, complete financial profile out.
               Predictions plus calculations combined.
@@ -145,7 +145,7 @@ export default function HomePage() {
                 <path d="M8 7h8M8 11h8M8 15h5" />
               </svg>
             </div>
-            <h3 className={styles.productCardH3}>Law Archive</h3>
+            <h3 className={styles.productCardH3}>Law archive</h3>
             <p className={styles.productCardP}>
               Structured US statute text with historical versions.
               All 54 titles of the US Code.
@@ -160,19 +160,19 @@ export default function HomePage() {
         <h2 className={styles.useCasesH2}>Who queries the simulation?</h2>
         <div className={styles.useCaseGrid}>
           <div className={styles.useCase}>
-            <h4 className={styles.useCaseH4}>Financial Services</h4>
+            <h4 className={styles.useCaseH4}>Financial services</h4>
             <p className={styles.useCaseP}>"How will rate changes affect default risk across our portfolio?"</p>
           </div>
           <div className={styles.useCase}>
-            <h4 className={styles.useCaseH4}>Government Agencies</h4>
+            <h4 className={styles.useCaseH4}>Government agencies</h4>
             <p className={styles.useCaseP}>"What's the 10-year cost of this bill?"</p>
           </div>
           <div className={styles.useCase}>
-            <h4 className={styles.useCaseH4}>Asset Managers</h4>
+            <h4 className={styles.useCaseH4}>Asset managers</h4>
             <p className={styles.useCaseP}>"Which sectors win under each candidate's tax plan?"</p>
           </div>
           <div className={styles.useCase}>
-            <h4 className={styles.useCaseH4}>AI Agents</h4>
+            <h4 className={styles.useCaseH4}>AI agents</h4>
             <p className={styles.useCaseP}>"Calculate this household's benefits eligibility."</p>
           </div>
           <div className={styles.useCase}>
@@ -230,10 +230,10 @@ export default function HomePage() {
         <h2 className={styles.ctaH2}>Query the simulation.</h2>
         <div className={styles.ctaButtons}>
           <a href="https://docs.cosilico.ai" className={styles.btnPrimary}>
-            Get Started
+            Get started
           </a>
           <a href="mailto:hello@cosilico.ai" className={styles.btnSecondary}>
-            Talk to Us
+            Talk to us
           </a>
         </div>
       </section>
