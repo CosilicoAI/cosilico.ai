@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
 import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource, getAgentTranscripts, AgentTranscript, getTranscriptsBySession, getSDKSessions, getSDKSessionEvents, SDKSession, SDKSessionEvent } from "../lib/supabase";
+import SDKSessionViewer from "../components/SDKSessionViewer";
 
 // ============================================
 // TYPES
@@ -1252,328 +1253,163 @@ export default function ExperimentLabPage() {
           {activeTab === "sdk" && (
             <section className={styles.tableSection}>
               <h2 className={styles.sectionTitle}>
-                SDK Orchestrator Sessions
+                Encoding Missions
                 <span className={styles.sectionCount}>{sdkSessions.length}</span>
               </h2>
 
               {sdkSessions.length === 0 ? (
                 <div style={{
-                  padding: '40px',
+                  padding: '60px 40px',
                   textAlign: 'center',
-                  color: '#888',
-                  background: 'rgba(0, 212, 255, 0.05)',
-                  borderRadius: '8px',
-                  border: '1px dashed rgba(0, 212, 255, 0.3)'
+                  background: 'linear-gradient(180deg, rgba(0, 212, 255, 0.03) 0%, transparent 100%)',
+                  borderRadius: '16px',
+                  border: '1px dashed rgba(0, 212, 255, 0.2)',
                 }}>
-                  <div style={{ fontSize: '32px', marginBottom: '16px' }}>📭</div>
-                  <div>No SDK sessions synced yet.</div>
-                  <div style={{ fontSize: '13px', marginTop: '8px', opacity: 0.7 }}>
-                    Run <code style={{ background: 'rgba(0, 212, 255, 0.1)', padding: '2px 6px', borderRadius: '4px' }}>autorac sync-sdk-sessions</code> to sync sessions from experiments.db
+                  <div style={{ fontSize: '48px', marginBottom: '20px', opacity: 0.6 }}>🚀</div>
+                  <div style={{ fontSize: '18px', color: '#ccc', marginBottom: '8px' }}>No missions recorded yet</div>
+                  <div style={{ fontSize: '13px', color: '#666' }}>
+                    Run <code style={{ background: 'rgba(0, 212, 255, 0.1)', padding: '3px 8px', borderRadius: '4px', color: '#00d4ff' }}>autorac sync-sdk-sessions</code> to sync from experiments.db
                   </div>
                 </div>
+              ) : selectedSDKSession ? (
+                // Full Mission Viewer
+                <SDKSessionViewer
+                  session={selectedSDKSession}
+                  events={sdkSessionEvents}
+                  onClose={() => {
+                    setSelectedSDKSession(null);
+                    setSdkSessionEvents([]);
+                  }}
+                />
               ) : (
-                <div>
+                // Mission List
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {sdkSessions.map((session) => {
                     const duration = session.ended_at
                       ? Math.round((new Date(session.ended_at).getTime() - new Date(session.started_at).getTime()) / 1000)
                       : null;
-                    const isSelected = selectedSDKSession?.id === session.id;
 
                     return (
-                      <div key={session.id} style={{ marginBottom: '16px' }}>
-                        <div
-                          onClick={() => handleSelectSDKSession(session)}
-                          style={{
-                            background: isSelected ? 'rgba(0, 212, 255, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                            border: isSelected ? '1px solid #00d4ff' : '1px solid rgba(255, 255, 255, 0.1)',
-                            borderRadius: '8px',
-                            padding: '16px 20px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease',
-                          }}
-                        >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                              <span style={{
-                                background: '#00d4ff',
-                                color: '#08080c',
-                                padding: '4px 10px',
-                                borderRadius: '4px',
-                                fontSize: '12px',
-                                fontWeight: 600,
-                              }}>
-                                SDK
-                              </span>
-                              <code style={{
-                                fontSize: '14px',
-                                color: '#00ff88',
-                                background: 'rgba(0, 255, 136, 0.1)',
-                                padding: '4px 8px',
-                                borderRadius: '4px'
-                              }}>
-                                {session.id}
-                              </code>
-                            </div>
-                            <span style={{ color: '#888', fontSize: '13px' }}>
-                              {new Date(session.started_at).toLocaleDateString()} {new Date(session.started_at).toLocaleTimeString()}
-                            </span>
-                          </div>
+                      <div
+                        key={session.id}
+                        onClick={() => handleSelectSDKSession(session)}
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.03) 0%, rgba(0, 255, 136, 0.02) 100%)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: '12px',
+                          padding: '20px 24px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          position: 'relative',
+                          overflow: 'hidden',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(0, 212, 255, 0.3)';
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                          e.currentTarget.style.transform = 'translateY(0)';
+                        }}
+                      >
+                        {/* Glow accent */}
+                        <div style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '2px',
+                          background: 'linear-gradient(90deg, #00d4ff, #00ff88, #a78bfa)',
+                          opacity: 0.6,
+                        }} />
 
-                          <div style={{ display: 'flex', gap: '24px', fontSize: '13px', color: '#ccc' }}>
-                            <span>
-                              <span style={{ color: '#888' }}>Events:</span>{' '}
-                              <span style={{ color: '#00d4ff' }}>{session.event_count}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <span style={{
+                              background: 'linear-gradient(135deg, #00d4ff 0%, #0088cc 100%)',
+                              color: '#000',
+                              padding: '6px 12px',
+                              borderRadius: '20px',
+                              fontSize: '10px',
+                              fontWeight: 700,
+                              letterSpacing: '1px',
+                              textTransform: 'uppercase',
+                            }}>
+                              Mission
                             </span>
-                            {duration && (
-                              <span>
-                                <span style={{ color: '#888' }}>Duration:</span>{' '}
-                                <span style={{ color: '#ffaa00' }}>{Math.floor(duration / 60)}m {duration % 60}s</span>
-                              </span>
-                            )}
-                            <span>
-                              <span style={{ color: '#888' }}>Tokens:</span>{' '}
-                              <span style={{ color: '#00ff88' }}>{(session.input_tokens + session.output_tokens).toLocaleString()}</span>
-                            </span>
-                            <span>
-                              <span style={{ color: '#888' }}>Cost:</span>{' '}
-                              <span style={{ color: '#ff6b35' }}>${session.estimated_cost_usd.toFixed(2)}</span>
-                            </span>
-                            {session.model && (
-                              <span>
-                                <span style={{ color: '#888' }}>Model:</span>{' '}
-                                <span style={{ color: '#aaa' }}>{session.model.replace('claude-', '').replace('-20251101', '')}</span>
-                              </span>
-                            )}
+                            <code style={{
+                              fontSize: '16px',
+                              fontWeight: 600,
+                              color: '#00ff88',
+                              fontFamily: "'JetBrains Mono', monospace",
+                            }}>
+                              {session.id}
+                            </code>
+                          </div>
+                          <div style={{ textAlign: 'right' }}>
+                            <div style={{ fontSize: '12px', color: '#888' }}>
+                              {new Date(session.started_at).toLocaleDateString()}
+                            </div>
+                            <div style={{ fontSize: '11px', color: '#666', fontFamily: "'JetBrains Mono', monospace" }}>
+                              {new Date(session.started_at).toLocaleTimeString()}
+                            </div>
                           </div>
                         </div>
 
-                        {/* Expanded Session Details */}
-                        {isSelected && sdkSessionEvents.length > 0 && (() => {
-                          // Analyze events for summary
-                          const toolCounts: Record<string, number> = {};
-                          const phases: { name: string; startTime: Date; endTime: Date; eventCount: number }[] = [];
-                          let currentPhase: { name: string; startTime: Date; endTime: Date; eventCount: number } | null = null;
-
-                          sdkSessionEvents.forEach((event) => {
-                            // Count tool usage
-                            if (event.tool_name) {
-                              toolCounts[event.tool_name] = (toolCounts[event.tool_name] || 0) + 1;
-                            }
-
-                            // Detect phase changes from metadata or content
-                            const metadata = event.metadata as Record<string, unknown> | null;
-                            const phaseName = metadata?.phase as string || null;
-                            const agentType = metadata?.agent_type as string || null;
-
-                            if (phaseName || (event.event_type === 'agent_start' && agentType)) {
-                              const name = phaseName || agentType || 'Unknown';
-                              if (!currentPhase || currentPhase.name !== name) {
-                                if (currentPhase) {
-                                  currentPhase.endTime = new Date(event.timestamp);
-                                  phases.push(currentPhase);
-                                }
-                                currentPhase = {
-                                  name,
-                                  startTime: new Date(event.timestamp),
-                                  endTime: new Date(event.timestamp),
-                                  eventCount: 0,
-                                };
-                              }
-                            }
-
-                            if (currentPhase) {
-                              currentPhase.eventCount++;
-                              currentPhase.endTime = new Date(event.timestamp);
-                            }
-                          });
-
-                          // Push final phase
-                          if (currentPhase) {
-                            phases.push(currentPhase);
-                          }
-
-                          // Sort tools by usage count
-                          const sortedTools = Object.entries(toolCounts)
-                            .sort((a, b) => b[1] - a[1])
-                            .slice(0, 10);
-
-                          // Get top events by type
-                          const eventTypeCounts: Record<string, number> = {};
-                          sdkSessionEvents.forEach(e => {
-                            eventTypeCounts[e.event_type] = (eventTypeCounts[e.event_type] || 0) + 1;
-                          });
-
-                          return (
-                            <div style={{
-                              marginTop: '8px',
-                              background: 'rgba(0, 0, 0, 0.3)',
-                              border: '1px solid rgba(0, 212, 255, 0.2)',
-                              borderRadius: '8px',
-                              overflow: 'hidden',
-                            }}>
-                              {/* Summary Section */}
-                              <div style={{
-                                padding: '16px 20px',
-                                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                                display: 'flex',
-                                gap: '32px',
-                                flexWrap: 'wrap',
-                              }}>
-                                {/* Tool Usage */}
-                                <div style={{ flex: '1 1 200px' }}>
-                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px', fontWeight: 600 }}>TOP TOOLS USED</div>
-                                  {sortedTools.length === 0 ? (
-                                    <div style={{ color: '#666', fontSize: '12px' }}>No tools detected</div>
-                                  ) : (
-                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                                      {sortedTools.map(([tool, count]) => (
-                                        <span key={tool} style={{
-                                          background: 'rgba(0, 212, 255, 0.1)',
-                                          color: '#00d4ff',
-                                          padding: '4px 8px',
-                                          borderRadius: '4px',
-                                          fontSize: '11px',
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          gap: '4px',
-                                        }}>
-                                          {tool}
-                                          <span style={{ color: '#00ff88', fontWeight: 600 }}>×{count}</span>
-                                        </span>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* Event Breakdown */}
-                                <div style={{ flex: '1 1 200px' }}>
-                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px', fontWeight: 600 }}>EVENT BREAKDOWN</div>
-                                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '12px' }}>
-                                    {Object.entries(eventTypeCounts).map(([type, count]) => (
-                                      <span key={type} style={{ color: '#ccc' }}>
-                                        <span style={{
-                                          color: type === 'tool_use' ? '#00d4ff'
-                                            : type === 'tool_result' ? '#00ff88'
-                                            : type === 'assistant' ? '#ffaa00'
-                                            : type.includes('agent') ? '#a78bfa'
-                                            : '#888'
-                                        }}>
-                                          {type}:
-                                        </span> {count}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Phase Timeline (if detected) */}
-                              {phases.length > 0 && (
-                                <div style={{
-                                  padding: '16px 20px',
-                                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                                }}>
-                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '12px', fontWeight: 600 }}>WORKFLOW PHASES</div>
-                                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                                    {phases.map((phase, idx) => {
-                                      const durationMs = phase.endTime.getTime() - phase.startTime.getTime();
-                                      const durationSec = Math.round(durationMs / 1000);
-                                      return (
-                                        <div key={idx} style={{
-                                          background: 'rgba(139, 92, 246, 0.1)',
-                                          border: '1px solid rgba(139, 92, 246, 0.3)',
-                                          borderRadius: '6px',
-                                          padding: '8px 12px',
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          gap: '8px',
-                                        }}>
-                                          <span style={{ color: '#a78bfa', fontWeight: 600, fontSize: '12px' }}>
-                                            {phase.name.replace('cosilico:', '')}
-                                          </span>
-                                          <span style={{ color: '#888', fontSize: '11px' }}>
-                                            {durationSec}s • {phase.eventCount} events
-                                          </span>
-                                          {idx < phases.length - 1 && (
-                                            <span style={{ color: '#555' }}>→</span>
-                                          )}
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* Raw Events (collapsible) */}
-                              <details style={{ padding: '16px' }}>
-                                <summary style={{
-                                  cursor: 'pointer',
-                                  color: '#888',
-                                  fontSize: '13px',
-                                  marginBottom: '12px',
-                                }}>
-                                  View all {sdkSessionEvents.length} events
-                                </summary>
-                                <div style={{ maxHeight: '400px', overflow: 'auto' }}>
-                                  {sdkSessionEvents.map((event) => (
-                                    <div key={event.id} style={{
-                                      padding: '8px 12px',
-                                      marginBottom: '4px',
-                                      background: event.event_type === 'tool_use' ? 'rgba(0, 212, 255, 0.05)'
-                                        : event.event_type === 'tool_result' ? 'rgba(0, 255, 136, 0.05)'
-                                        : 'rgba(255, 255, 255, 0.02)',
-                                      borderRadius: '4px',
-                                      borderLeft: event.event_type === 'tool_use' ? '3px solid #00d4ff'
-                                        : event.event_type === 'tool_result' ? '3px solid #00ff88'
-                                        : event.event_type === 'assistant' ? '3px solid #ffaa00'
-                                        : event.event_type.includes('agent') ? '3px solid #a78bfa'
-                                        : '3px solid #555',
-                                      fontSize: '12px',
-                                    }}>
-                                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                          <span style={{ color: '#666' }}>#{event.sequence}</span>
-                                          <span style={{
-                                            color: event.event_type === 'tool_use' ? '#00d4ff'
-                                              : event.event_type === 'tool_result' ? '#00ff88'
-                                              : event.event_type === 'assistant' ? '#ffaa00'
-                                              : event.event_type.includes('agent') ? '#a78bfa'
-                                              : '#888',
-                                            fontWeight: 600,
-                                            textTransform: 'uppercase',
-                                            fontSize: '10px',
-                                          }}>
-                                            {event.event_type}
-                                          </span>
-                                          {event.tool_name && (
-                                            <code style={{ color: '#00d4ff', background: 'rgba(0, 212, 255, 0.1)', padding: '2px 6px', borderRadius: '3px' }}>
-                                              {event.tool_name}
-                                            </code>
-                                          )}
-                                        </div>
-                                        <span style={{ color: '#555', fontSize: '10px' }}>
-                                          {new Date(event.timestamp).toLocaleTimeString()}
-                                        </span>
-                                      </div>
-                                      {event.content && (
-                                        <div style={{
-                                          color: '#999',
-                                          fontSize: '11px',
-                                          whiteSpace: 'pre-wrap',
-                                          wordBreak: 'break-word',
-                                          maxHeight: '100px',
-                                          overflow: 'hidden',
-                                          textOverflow: 'ellipsis',
-                                        }}>
-                                          {event.content.length > 300 ? event.content.slice(0, 300) + '...' : event.content}
-                                        </div>
-                                      )}
-                                    </div>
-                                  ))}
-                                </div>
-                              </details>
+                        {/* Stats Grid */}
+                        <div style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+                          gap: '16px',
+                        }}>
+                          <div>
+                            <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Duration</div>
+                            <div style={{ fontSize: '16px', fontWeight: 600, color: '#00d4ff', fontFamily: "'JetBrains Mono', monospace" }}>
+                              {duration ? `${Math.floor(duration / 60)}m ${duration % 60}s` : '—'}
                             </div>
-                          );
-                        })()}
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Events</div>
+                            <div style={{ fontSize: '16px', fontWeight: 600, color: '#a78bfa', fontFamily: "'JetBrains Mono', monospace" }}>
+                              {session.event_count.toLocaleString()}
+                            </div>
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Tokens</div>
+                            <div style={{ fontSize: '16px', fontWeight: 600, color: '#00ff88', fontFamily: "'JetBrains Mono', monospace" }}>
+                              {(session.input_tokens + session.output_tokens).toLocaleString()}
+                            </div>
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Cost</div>
+                            <div style={{ fontSize: '16px', fontWeight: 600, color: '#ff6b35', fontFamily: "'JetBrains Mono', monospace" }}>
+                              ${session.estimated_cost_usd.toFixed(2)}
+                            </div>
+                          </div>
+                          {session.model && (
+                            <div>
+                              <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Model</div>
+                              <div style={{ fontSize: '13px', color: '#ccc' }}>
+                                {session.model.replace('claude-', '').replace('-20251101', '')}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Click hint */}
+                        <div style={{
+                          marginTop: '16px',
+                          paddingTop: '12px',
+                          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                          <span style={{ fontSize: '12px', color: '#666' }}>
+                            Click to explore mission details
+                          </span>
+                          <span style={{ color: '#00d4ff', fontSize: '14px' }}>→</span>
+                        </div>
                       </div>
                     );
                   })}
