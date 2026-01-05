@@ -1347,75 +1347,233 @@ export default function ExperimentLabPage() {
                           </div>
                         </div>
 
-                        {/* Expanded Event Timeline */}
-                        {isSelected && sdkSessionEvents.length > 0 && (
-                          <div style={{
-                            marginTop: '8px',
-                            background: 'rgba(0, 0, 0, 0.3)',
-                            border: '1px solid rgba(0, 212, 255, 0.2)',
-                            borderRadius: '8px',
-                            padding: '16px',
-                            maxHeight: '500px',
-                            overflow: 'auto',
-                          }}>
-                            <div style={{ marginBottom: '12px', fontSize: '13px', color: '#888' }}>
-                              Showing {sdkSessionEvents.length} events (max 500)
-                            </div>
-                            {sdkSessionEvents.map((event, idx) => (
-                              <div key={event.id} style={{
-                                padding: '8px 12px',
-                                marginBottom: '4px',
-                                background: event.event_type === 'tool_use' ? 'rgba(0, 212, 255, 0.05)'
-                                  : event.event_type === 'tool_result' ? 'rgba(0, 255, 136, 0.05)'
-                                  : 'rgba(255, 255, 255, 0.02)',
-                                borderRadius: '4px',
-                                borderLeft: event.event_type === 'tool_use' ? '3px solid #00d4ff'
-                                  : event.event_type === 'tool_result' ? '3px solid #00ff88'
-                                  : event.event_type === 'assistant' ? '3px solid #ffaa00'
-                                  : '3px solid #555',
-                                fontSize: '12px',
+                        {/* Expanded Session Details */}
+                        {isSelected && sdkSessionEvents.length > 0 && (() => {
+                          // Analyze events for summary
+                          const toolCounts: Record<string, number> = {};
+                          const phases: { name: string; startTime: Date; endTime: Date; eventCount: number }[] = [];
+                          let currentPhase: { name: string; startTime: Date; endTime: Date; eventCount: number } | null = null;
+
+                          sdkSessionEvents.forEach((event) => {
+                            // Count tool usage
+                            if (event.tool_name) {
+                              toolCounts[event.tool_name] = (toolCounts[event.tool_name] || 0) + 1;
+                            }
+
+                            // Detect phase changes from metadata or content
+                            const metadata = event.metadata as Record<string, unknown> | null;
+                            const phaseName = metadata?.phase as string || null;
+                            const agentType = metadata?.agent_type as string || null;
+
+                            if (phaseName || (event.event_type === 'agent_start' && agentType)) {
+                              const name = phaseName || agentType || 'Unknown';
+                              if (!currentPhase || currentPhase.name !== name) {
+                                if (currentPhase) {
+                                  currentPhase.endTime = new Date(event.timestamp);
+                                  phases.push(currentPhase);
+                                }
+                                currentPhase = {
+                                  name,
+                                  startTime: new Date(event.timestamp),
+                                  endTime: new Date(event.timestamp),
+                                  eventCount: 0,
+                                };
+                              }
+                            }
+
+                            if (currentPhase) {
+                              currentPhase.eventCount++;
+                              currentPhase.endTime = new Date(event.timestamp);
+                            }
+                          });
+
+                          // Push final phase
+                          if (currentPhase) {
+                            phases.push(currentPhase);
+                          }
+
+                          // Sort tools by usage count
+                          const sortedTools = Object.entries(toolCounts)
+                            .sort((a, b) => b[1] - a[1])
+                            .slice(0, 10);
+
+                          // Get top events by type
+                          const eventTypeCounts: Record<string, number> = {};
+                          sdkSessionEvents.forEach(e => {
+                            eventTypeCounts[e.event_type] = (eventTypeCounts[e.event_type] || 0) + 1;
+                          });
+
+                          return (
+                            <div style={{
+                              marginTop: '8px',
+                              background: 'rgba(0, 0, 0, 0.3)',
+                              border: '1px solid rgba(0, 212, 255, 0.2)',
+                              borderRadius: '8px',
+                              overflow: 'hidden',
+                            }}>
+                              {/* Summary Section */}
+                              <div style={{
+                                padding: '16px 20px',
+                                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                                display: 'flex',
+                                gap: '32px',
+                                flexWrap: 'wrap',
                               }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                    <span style={{ color: '#666' }}>#{event.sequence}</span>
-                                    <span style={{
-                                      color: event.event_type === 'tool_use' ? '#00d4ff'
-                                        : event.event_type === 'tool_result' ? '#00ff88'
-                                        : event.event_type === 'assistant' ? '#ffaa00'
-                                        : '#888',
-                                      fontWeight: 600,
-                                      textTransform: 'uppercase',
-                                      fontSize: '10px',
-                                    }}>
-                                      {event.event_type}
-                                    </span>
-                                    {event.tool_name && (
-                                      <code style={{ color: '#00d4ff', background: 'rgba(0, 212, 255, 0.1)', padding: '2px 6px', borderRadius: '3px' }}>
-                                        {event.tool_name}
-                                      </code>
-                                    )}
-                                  </div>
-                                  <span style={{ color: '#555', fontSize: '10px' }}>
-                                    {new Date(event.timestamp).toLocaleTimeString()}
-                                  </span>
+                                {/* Tool Usage */}
+                                <div style={{ flex: '1 1 200px' }}>
+                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px', fontWeight: 600 }}>TOP TOOLS USED</div>
+                                  {sortedTools.length === 0 ? (
+                                    <div style={{ color: '#666', fontSize: '12px' }}>No tools detected</div>
+                                  ) : (
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                                      {sortedTools.map(([tool, count]) => (
+                                        <span key={tool} style={{
+                                          background: 'rgba(0, 212, 255, 0.1)',
+                                          color: '#00d4ff',
+                                          padding: '4px 8px',
+                                          borderRadius: '4px',
+                                          fontSize: '11px',
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: '4px',
+                                        }}>
+                                          {tool}
+                                          <span style={{ color: '#00ff88', fontWeight: 600 }}>×{count}</span>
+                                        </span>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
-                                {event.content && (
-                                  <div style={{
-                                    color: '#999',
-                                    fontSize: '11px',
-                                    whiteSpace: 'pre-wrap',
-                                    wordBreak: 'break-word',
-                                    maxHeight: '100px',
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                  }}>
-                                    {event.content.length > 300 ? event.content.slice(0, 300) + '...' : event.content}
+
+                                {/* Event Breakdown */}
+                                <div style={{ flex: '1 1 200px' }}>
+                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '8px', fontWeight: 600 }}>EVENT BREAKDOWN</div>
+                                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '12px' }}>
+                                    {Object.entries(eventTypeCounts).map(([type, count]) => (
+                                      <span key={type} style={{ color: '#ccc' }}>
+                                        <span style={{
+                                          color: type === 'tool_use' ? '#00d4ff'
+                                            : type === 'tool_result' ? '#00ff88'
+                                            : type === 'assistant' ? '#ffaa00'
+                                            : type.includes('agent') ? '#a78bfa'
+                                            : '#888'
+                                        }}>
+                                          {type}:
+                                        </span> {count}
+                                      </span>
+                                    ))}
                                   </div>
-                                )}
+                                </div>
                               </div>
-                            ))}
-                          </div>
-                        )}
+
+                              {/* Phase Timeline (if detected) */}
+                              {phases.length > 0 && (
+                                <div style={{
+                                  padding: '16px 20px',
+                                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                                }}>
+                                  <div style={{ color: '#888', fontSize: '11px', marginBottom: '12px', fontWeight: 600 }}>WORKFLOW PHASES</div>
+                                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                                    {phases.map((phase, idx) => {
+                                      const durationMs = phase.endTime.getTime() - phase.startTime.getTime();
+                                      const durationSec = Math.round(durationMs / 1000);
+                                      return (
+                                        <div key={idx} style={{
+                                          background: 'rgba(139, 92, 246, 0.1)',
+                                          border: '1px solid rgba(139, 92, 246, 0.3)',
+                                          borderRadius: '6px',
+                                          padding: '8px 12px',
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: '8px',
+                                        }}>
+                                          <span style={{ color: '#a78bfa', fontWeight: 600, fontSize: '12px' }}>
+                                            {phase.name.replace('cosilico:', '')}
+                                          </span>
+                                          <span style={{ color: '#888', fontSize: '11px' }}>
+                                            {durationSec}s • {phase.eventCount} events
+                                          </span>
+                                          {idx < phases.length - 1 && (
+                                            <span style={{ color: '#555' }}>→</span>
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Raw Events (collapsible) */}
+                              <details style={{ padding: '16px' }}>
+                                <summary style={{
+                                  cursor: 'pointer',
+                                  color: '#888',
+                                  fontSize: '13px',
+                                  marginBottom: '12px',
+                                }}>
+                                  View all {sdkSessionEvents.length} events
+                                </summary>
+                                <div style={{ maxHeight: '400px', overflow: 'auto' }}>
+                                  {sdkSessionEvents.map((event) => (
+                                    <div key={event.id} style={{
+                                      padding: '8px 12px',
+                                      marginBottom: '4px',
+                                      background: event.event_type === 'tool_use' ? 'rgba(0, 212, 255, 0.05)'
+                                        : event.event_type === 'tool_result' ? 'rgba(0, 255, 136, 0.05)'
+                                        : 'rgba(255, 255, 255, 0.02)',
+                                      borderRadius: '4px',
+                                      borderLeft: event.event_type === 'tool_use' ? '3px solid #00d4ff'
+                                        : event.event_type === 'tool_result' ? '3px solid #00ff88'
+                                        : event.event_type === 'assistant' ? '3px solid #ffaa00'
+                                        : event.event_type.includes('agent') ? '3px solid #a78bfa'
+                                        : '3px solid #555',
+                                      fontSize: '12px',
+                                    }}>
+                                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                          <span style={{ color: '#666' }}>#{event.sequence}</span>
+                                          <span style={{
+                                            color: event.event_type === 'tool_use' ? '#00d4ff'
+                                              : event.event_type === 'tool_result' ? '#00ff88'
+                                              : event.event_type === 'assistant' ? '#ffaa00'
+                                              : event.event_type.includes('agent') ? '#a78bfa'
+                                              : '#888',
+                                            fontWeight: 600,
+                                            textTransform: 'uppercase',
+                                            fontSize: '10px',
+                                          }}>
+                                            {event.event_type}
+                                          </span>
+                                          {event.tool_name && (
+                                            <code style={{ color: '#00d4ff', background: 'rgba(0, 212, 255, 0.1)', padding: '2px 6px', borderRadius: '3px' }}>
+                                              {event.tool_name}
+                                            </code>
+                                          )}
+                                        </div>
+                                        <span style={{ color: '#555', fontSize: '10px' }}>
+                                          {new Date(event.timestamp).toLocaleTimeString()}
+                                        </span>
+                                      </div>
+                                      {event.content && (
+                                        <div style={{
+                                          color: '#999',
+                                          fontSize: '11px',
+                                          whiteSpace: 'pre-wrap',
+                                          wordBreak: 'break-word',
+                                          maxHeight: '100px',
+                                          overflow: 'hidden',
+                                          textOverflow: 'ellipsis',
+                                        }}>
+                                          {event.content.length > 300 ? event.content.slice(0, 300) + '...' : event.content}
+                                        </div>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </details>
+                            </div>
+                          );
+                        })()}
                       </div>
                     );
                   })}
