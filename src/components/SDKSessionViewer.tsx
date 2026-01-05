@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { SDKSession, SDKSessionEvent } from '../lib/supabase';
+import * as styles from './SDKSessionViewer.css';
 
 // ============================================
 // TYPES
@@ -17,360 +18,6 @@ interface Phase {
   status: 'success' | 'error' | 'warning' | 'pending';
   toolsUsed: Record<string, number>;
 }
-
-interface ParsedEvent {
-  event: SDKSessionEvent;
-  thinking?: string;
-  output?: string;
-  toolName?: string;
-  toolInput?: string;
-  error?: string;
-}
-
-// ============================================
-// STYLES (Mission Control Theme)
-// ============================================
-
-const styles = {
-  container: {
-    background: 'linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)',
-    borderRadius: '16px',
-    border: '1px solid rgba(0, 212, 255, 0.15)',
-    overflow: 'hidden',
-    position: 'relative' as const,
-  },
-
-  // Scanline overlay for that retro-futuristic feel
-  scanlines: {
-    position: 'absolute' as const,
-    inset: 0,
-    background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.01) 2px, rgba(0, 212, 255, 0.01) 4px)',
-    pointerEvents: 'none' as const,
-    zIndex: 10,
-  },
-
-  // Header with mission ID and key stats
-  header: {
-    padding: '24px 32px',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-    background: 'linear-gradient(90deg, rgba(0, 212, 255, 0.05) 0%, transparent 50%, rgba(0, 255, 136, 0.05) 100%)',
-  },
-
-  missionId: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    marginBottom: '16px',
-  },
-
-  missionBadge: {
-    background: 'linear-gradient(135deg, #00d4ff 0%, #0088cc 100%)',
-    color: '#000',
-    padding: '6px 14px',
-    borderRadius: '20px',
-    fontSize: '11px',
-    fontWeight: 700,
-    letterSpacing: '1px',
-    textTransform: 'uppercase' as const,
-  },
-
-  missionCode: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: '20px',
-    color: '#00ff88',
-    textShadow: '0 0 20px rgba(0, 255, 136, 0.3)',
-  },
-
-  missionTime: {
-    marginLeft: 'auto',
-    color: '#666',
-    fontSize: '13px',
-    fontFamily: "'JetBrains Mono', monospace",
-  },
-
-  // Telemetry stats bar
-  telemetry: {
-    display: 'flex',
-    gap: '32px',
-    flexWrap: 'wrap' as const,
-  },
-
-  telemetryItem: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '4px',
-  },
-
-  telemetryLabel: {
-    fontSize: '10px',
-    color: '#666',
-    textTransform: 'uppercase' as const,
-    letterSpacing: '1px',
-  },
-
-  telemetryValue: {
-    fontSize: '18px',
-    fontWeight: 600,
-    fontFamily: "'JetBrains Mono', monospace",
-  },
-
-  // Phase trajectory (horizontal timeline)
-  trajectory: {
-    padding: '32px',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-    position: 'relative' as const,
-  },
-
-  trajectoryLabel: {
-    fontSize: '10px',
-    color: '#666',
-    textTransform: 'uppercase' as const,
-    letterSpacing: '1.5px',
-    marginBottom: '20px',
-  },
-
-  trajectoryLine: {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'relative' as const,
-  },
-
-  trajectoryConnector: {
-    flex: 1,
-    height: '2px',
-    background: 'linear-gradient(90deg, rgba(0, 212, 255, 0.3), rgba(0, 255, 136, 0.3))',
-    position: 'relative' as const,
-  },
-
-  phaseNode: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    gap: '8px',
-    cursor: 'pointer',
-    transition: 'transform 0.2s ease',
-    zIndex: 2,
-  },
-
-  phaseIcon: {
-    width: '48px',
-    height: '48px',
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '20px',
-    border: '2px solid',
-    transition: 'all 0.3s ease',
-    position: 'relative' as const,
-  },
-
-  phaseGlow: {
-    position: 'absolute' as const,
-    inset: '-4px',
-    borderRadius: '50%',
-    opacity: 0.5,
-    filter: 'blur(8px)',
-    animation: 'pulse 2s ease-in-out infinite',
-  },
-
-  phaseName: {
-    fontSize: '11px',
-    fontWeight: 600,
-    letterSpacing: '0.5px',
-    textTransform: 'uppercase' as const,
-  },
-
-  phaseDuration: {
-    fontSize: '10px',
-    fontFamily: "'JetBrains Mono', monospace",
-    opacity: 0.7,
-  },
-
-  // Phase detail panel
-  phaseDetail: {
-    margin: '0 32px 32px',
-    background: 'rgba(0, 0, 0, 0.4)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    borderRadius: '12px',
-    overflow: 'hidden',
-  },
-
-  phaseDetailHeader: {
-    padding: '20px 24px',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    background: 'rgba(255, 255, 255, 0.02)',
-  },
-
-  phaseDetailTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-
-  phaseDetailStats: {
-    display: 'flex',
-    gap: '24px',
-    fontSize: '12px',
-  },
-
-  // Event timeline within phase
-  eventTimeline: {
-    padding: '24px',
-  },
-
-  eventCard: {
-    marginBottom: '16px',
-    borderRadius: '8px',
-    overflow: 'hidden',
-    border: '1px solid rgba(255, 255, 255, 0.08)',
-    transition: 'border-color 0.2s ease',
-  },
-
-  eventHeader: {
-    padding: '12px 16px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    cursor: 'pointer',
-  },
-
-  eventType: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-  },
-
-  eventTypeIcon: {
-    width: '24px',
-    height: '24px',
-    borderRadius: '4px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '12px',
-  },
-
-  eventContent: {
-    padding: '16px',
-    borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-  },
-
-  // Chain of thought (thinking) display
-  thinkingBubble: {
-    background: 'linear-gradient(135deg, rgba(255, 170, 0, 0.08) 0%, rgba(255, 170, 0, 0.03) 100%)',
-    border: '1px solid rgba(255, 170, 0, 0.2)',
-    borderRadius: '12px',
-    padding: '16px 20px',
-    marginBottom: '12px',
-    position: 'relative' as const,
-  },
-
-  thinkingLabel: {
-    position: 'absolute' as const,
-    top: '-10px',
-    left: '16px',
-    background: '#12121a',
-    padding: '2px 10px',
-    fontSize: '10px',
-    color: '#ffaa00',
-    fontWeight: 600,
-    letterSpacing: '1px',
-    textTransform: 'uppercase' as const,
-    borderRadius: '4px',
-  },
-
-  thinkingText: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: '12px',
-    lineHeight: 1.7,
-    color: '#ccc',
-    whiteSpace: 'pre-wrap' as const,
-    maxHeight: '300px',
-    overflow: 'auto',
-  },
-
-  // Tool call display
-  toolCall: {
-    background: 'rgba(0, 212, 255, 0.05)',
-    border: '1px solid rgba(0, 212, 255, 0.2)',
-    borderRadius: '8px',
-    overflow: 'hidden',
-  },
-
-  toolHeader: {
-    background: 'rgba(0, 212, 255, 0.1)',
-    padding: '10px 16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    borderBottom: '1px solid rgba(0, 212, 255, 0.15)',
-  },
-
-  toolName: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: '13px',
-    fontWeight: 600,
-    color: '#00d4ff',
-  },
-
-  toolInput: {
-    padding: '12px 16px',
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: '11px',
-    color: '#888',
-    whiteSpace: 'pre-wrap' as const,
-    maxHeight: '200px',
-    overflow: 'auto',
-  },
-
-  // Output display
-  outputBlock: {
-    background: 'rgba(0, 255, 136, 0.05)',
-    border: '1px solid rgba(0, 255, 136, 0.2)',
-    borderRadius: '8px',
-    padding: '16px',
-  },
-
-  outputText: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: '12px',
-    color: '#00ff88',
-    whiteSpace: 'pre-wrap' as const,
-    maxHeight: '200px',
-    overflow: 'auto',
-  },
-
-  // Error display
-  errorBlock: {
-    background: 'rgba(255, 68, 102, 0.08)',
-    border: '1px solid rgba(255, 68, 102, 0.3)',
-    borderRadius: '8px',
-    padding: '16px',
-  },
-
-  errorText: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: '12px',
-    color: '#ff4466',
-  },
-
-  // No data state
-  emptyState: {
-    padding: '80px 40px',
-    textAlign: 'center' as const,
-    color: '#666',
-  },
-
-  emptyIcon: {
-    fontSize: '48px',
-    marginBottom: '16px',
-    opacity: 0.5,
-  },
-};
 
 // ============================================
 // PHASE DEFINITIONS
@@ -401,7 +48,7 @@ function parseEvents(events: SDKSessionEvent[]): { phases: Phase[]; totalTokens:
   let currentPhase: Phase | null = null;
   let totalInput = 0;
   let totalOutput = 0;
-  let totalCost = 0;
+  const totalCost = 0;
 
   events.forEach((event) => {
     const metadata = event.metadata as Record<string, unknown> | null;
@@ -501,7 +148,7 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
   const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set());
 
   // Parse events into phases
-  const { phases, totalTokens, totalCost } = useMemo(() => parseEvents(events), [events]);
+  const { phases } = useMemo(() => parseEvents(events), [events]);
 
   // Calculate duration
   const duration = session.ended_at
@@ -530,10 +177,10 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
 
   if (events.length === 0) {
     return (
-      <div style={styles.container}>
-        <div style={styles.scanlines} />
-        <div style={styles.emptyState}>
-          <div style={styles.emptyIcon}>📭</div>
+      <div className={styles.container}>
+        <div className={styles.scanlines} />
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>📭</div>
           <div>No events recorded for this session</div>
         </div>
       </div>
@@ -541,71 +188,66 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.scanlines} />
+    <div className={styles.container}>
+      <div className={styles.scanlines} />
 
       {/* Mission Header */}
-      <div style={styles.header}>
-        <div style={styles.missionId}>
-          <span style={styles.missionBadge}>Encoding Mission</span>
-          <code style={styles.missionCode}>{session.id}</code>
-          <span style={styles.missionTime}>
+      <div className={styles.header}>
+        <div className={styles.missionId}>
+          <span className={styles.missionBadge}>Encoding Mission</span>
+          <code className={styles.missionCode}>{session.id}</code>
+          <span className={styles.missionTime}>
             {new Date(session.started_at).toLocaleString()}
           </span>
           {onClose && (
-            <button
-              onClick={onClose}
-              style={{
-                background: 'transparent',
-                border: '1px solid rgba(255,255,255,0.2)',
-                color: '#888',
-                padding: '6px 12px',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                marginLeft: '12px',
-              }}
-            >
+            <button onClick={onClose} className={styles.closeButton}>
               Close ✕
             </button>
           )}
         </div>
 
         {/* Telemetry Bar */}
-        <div style={styles.telemetry}>
-          <div style={styles.telemetryItem}>
-            <span style={styles.telemetryLabel}>Duration</span>
-            <span style={{ ...styles.telemetryValue, color: '#00d4ff' }}>
+        <div className={styles.telemetry}>
+          <div className={styles.telemetryItem}>
+            <span className={styles.telemetryLabel}>Duration</span>
+            <span className={styles.telemetryValue} style={{ color: '#00d4ff' }}>
               {duration ? formatDuration(duration) : '—'}
             </span>
           </div>
-          <div style={styles.telemetryItem}>
-            <span style={styles.telemetryLabel}>Phases</span>
-            <span style={{ ...styles.telemetryValue, color: '#a78bfa' }}>
+          <div className={styles.telemetryItem}>
+            <span className={styles.telemetryLabel}>Phases</span>
+            <span className={styles.telemetryValue} style={{ color: '#a78bfa' }}>
               {phases.length}
             </span>
           </div>
-          <div style={styles.telemetryItem}>
-            <span style={styles.telemetryLabel}>Events</span>
-            <span style={{ ...styles.telemetryValue, color: '#00ff88' }}>
+          <div className={styles.telemetryItem}>
+            <span className={styles.telemetryLabel}>Events</span>
+            <span className={styles.telemetryValue} style={{ color: '#00ff88' }}>
               {events.length.toLocaleString()}
             </span>
           </div>
-          <div style={styles.telemetryItem}>
-            <span style={styles.telemetryLabel}>Tokens</span>
-            <span style={{ ...styles.telemetryValue, color: '#ffaa00' }}>
+          <div className={styles.telemetryItem}>
+            <span className={styles.telemetryLabel}>Tokens</span>
+            <span className={styles.telemetryValue} style={{ color: '#ffaa00' }}>
               {(session.input_tokens + session.output_tokens).toLocaleString()}
             </span>
           </div>
-          <div style={styles.telemetryItem}>
-            <span style={styles.telemetryLabel}>Cost</span>
-            <span style={{ ...styles.telemetryValue, color: '#ff6b35' }}>
+          <div className={styles.telemetryItem}>
+            <span className={styles.telemetryLabel}>Cost</span>
+            <span className={styles.telemetryValue} style={{ color: '#ff6b35' }}>
               ${session.estimated_cost_usd.toFixed(2)}
             </span>
           </div>
           {longestPhase && (
-            <div style={styles.telemetryItem}>
-              <span style={styles.telemetryLabel}>Slowest Phase</span>
-              <span style={{ ...styles.telemetryValue, color: PHASE_CONFIG[longestPhase.name]?.color || '#888', fontSize: '14px' }}>
+            <div className={styles.telemetryItem}>
+              <span className={styles.telemetryLabel}>Slowest Phase</span>
+              <span
+                className={styles.telemetryValue}
+                style={{
+                  color: PHASE_CONFIG[longestPhase.name]?.color || '#888',
+                  fontSize: '14px'
+                }}
+              >
                 {longestPhase.icon} {longestPhase.displayName}
               </span>
             </div>
@@ -614,9 +256,9 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
       </div>
 
       {/* Phase Trajectory */}
-      <div style={styles.trajectory}>
-        <div style={styles.trajectoryLabel}>Mission Trajectory</div>
-        <div style={styles.trajectoryLine}>
+      <div className={styles.trajectory}>
+        <div className={styles.trajectoryLabel}>Mission Trajectory</div>
+        <div className={styles.trajectoryLine}>
           {phases.map((phase, idx) => {
             const isExpanded = expandedPhase === phase.name;
             const phaseDuration = phase.endTime.getTime() - phase.startTime.getTime();
@@ -625,15 +267,12 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
             return (
               <React.Fragment key={`${phase.name}-${idx}`}>
                 <div
-                  style={{
-                    ...styles.phaseNode,
-                    transform: isExpanded ? 'scale(1.1)' : 'scale(1)',
-                  }}
+                  className={`${styles.phaseNode} ${isExpanded ? styles.phaseNodeExpanded : ''}`}
                   onClick={() => setExpandedPhase(isExpanded ? null : phase.name)}
                 >
                   <div
+                    className={styles.phaseIcon}
                     style={{
-                      ...styles.phaseIcon,
                       background: isExpanded ? config.color : 'transparent',
                       borderColor: config.color,
                       color: isExpanded ? '#000' : config.color,
@@ -642,28 +281,19 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                   >
                     {phase.status === 'error' ? '⚠️' : phase.icon}
                     {isExpanded && (
-                      <div style={{ ...styles.phaseGlow, background: config.color }} />
+                      <div className={styles.phaseGlow} style={{ background: config.color }} />
                     )}
                   </div>
-                  <span style={{ ...styles.phaseName, color: config.color }}>
+                  <span className={styles.phaseName} style={{ color: config.color }}>
                     {phase.displayName}
                   </span>
-                  <span style={{ ...styles.phaseDuration, color: config.color }}>
+                  <span className={styles.phaseDuration} style={{ color: config.color }}>
                     {formatDuration(phaseDuration)}
                   </span>
                 </div>
                 {idx < phases.length - 1 && (
-                  <div style={styles.trajectoryConnector}>
-                    <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      color: '#444',
-                      fontSize: '12px',
-                    }}>
-                      →
-                    </div>
+                  <div className={styles.trajectoryConnector}>
+                    <div className={styles.trajectoryArrow}>→</div>
                   </div>
                 )}
               </React.Fragment>
@@ -682,31 +312,27 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
         const sortedTools = Object.entries(phase.toolsUsed).sort((a, b) => b[1] - a[1]);
 
         return (
-          <div style={styles.phaseDetail}>
-            <div style={{ ...styles.phaseDetailHeader, borderLeft: `4px solid ${config.color}` }}>
-              <div style={styles.phaseDetailTitle}>
-                <span style={{ fontSize: '24px' }}>{phase.icon}</span>
+          <div className={styles.phaseDetail}>
+            <div
+              className={styles.phaseDetailHeader}
+              style={{ borderLeft: `4px solid ${config.color}` }}
+            >
+              <div className={styles.phaseDetailTitle}>
+                <span className={styles.phaseDetailIcon}>{phase.icon}</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: 600, color: config.color }}>
+                  <div className={styles.phaseDetailName} style={{ color: config.color }}>
                     {phase.displayName} Phase
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                  <div className={styles.phaseDetailMeta}>
                     {phase.events.length} events • {formatDuration(phaseDuration)}
                   </div>
                 </div>
               </div>
-              <div style={styles.phaseDetailStats}>
+              <div className={styles.phaseDetailStats}>
                 {sortedTools.length > 0 && (
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     {sortedTools.slice(0, 5).map(([tool, count]) => (
-                      <span key={tool} style={{
-                        background: 'rgba(0, 212, 255, 0.1)',
-                        color: '#00d4ff',
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        fontSize: '11px',
-                        fontFamily: "'JetBrains Mono', monospace",
-                      }}>
+                      <span key={tool} className={styles.toolBadge}>
                         {tool} ×{count}
                       </span>
                     ))}
@@ -716,9 +342,9 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
             </div>
 
             {/* Event Timeline */}
-            <div style={styles.eventTimeline}>
-              {phase.events.map((event, idx) => {
-                const isExpanded = expandedEvents.has(event.id);
+            <div className={styles.eventTimeline}>
+              {phase.events.map((event) => {
+                const isEventExpanded = expandedEvents.has(event.id);
                 const thinking = extractThinking(event.content);
                 const metadata = event.metadata as Record<string, unknown> | null;
 
@@ -758,57 +384,59 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                 return (
                   <div
                     key={event.id}
+                    className={styles.eventCard}
                     style={{
-                      ...styles.eventCard,
                       background: bgColor,
-                      borderColor: isExpanded ? typeColor : borderColor,
+                      borderColor: isEventExpanded ? typeColor : borderColor,
                     }}
                   >
                     <div
-                      style={styles.eventHeader}
+                      className={styles.eventHeader}
                       onClick={() => toggleEvent(event.id)}
                     >
-                      <div style={styles.eventType}>
-                        <div style={{
-                          ...styles.eventTypeIcon,
-                          background: `${typeColor}20`,
-                          color: typeColor,
-                        }}>
+                      <div className={styles.eventType}>
+                        <div
+                          className={styles.eventTypeIcon}
+                          style={{
+                            background: `${typeColor}20`,
+                            color: typeColor,
+                          }}
+                        >
                           {typeIcon}
                         </div>
                         <div>
-                          <div style={{ fontSize: '12px', fontWeight: 600, color: typeColor, textTransform: 'uppercase' }}>
+                          <div className={styles.eventTypeName} style={{ color: typeColor }}>
                             {event.tool_name || event.event_type.replace('agent_', '')}
                           </div>
-                          <div style={{ fontSize: '10px', color: '#666', marginTop: '2px' }}>
+                          <div className={styles.eventMeta}>
                             #{event.sequence} • {new Date(event.timestamp).toLocaleTimeString()}
                           </div>
                         </div>
                       </div>
-                      <span style={{ color: typeColor, fontSize: '12px' }}>
-                        {isExpanded ? '▼' : '▶'}
+                      <span className={styles.eventChevron} style={{ color: typeColor }}>
+                        {isEventExpanded ? '▼' : '▶'}
                       </span>
                     </div>
 
-                    {isExpanded && (
-                      <div style={styles.eventContent}>
+                    {isEventExpanded && (
+                      <div className={styles.eventContent}>
                         <>
                           {/* Chain of Thought */}
                           {thinking && (
-                            <div style={styles.thinkingBubble}>
-                              <span style={styles.thinkingLabel}>Chain of Thought</span>
-                              <pre style={styles.thinkingText}>{thinking}</pre>
+                            <div className={styles.thinkingBubble}>
+                              <span className={styles.thinkingLabel}>Chain of Thought</span>
+                              <pre className={styles.thinkingText}>{thinking}</pre>
                             </div>
                           )}
 
                           {/* Tool Input */}
                           {event.tool_name && event.content && (
-                            <div style={styles.toolCall}>
-                              <div style={styles.toolHeader}>
+                            <div className={styles.toolCall}>
+                              <div className={styles.toolHeader}>
                                 <span>🔧</span>
-                                <span style={styles.toolName}>{event.tool_name}</span>
+                                <span className={styles.toolName}>{event.tool_name}</span>
                               </div>
-                              <pre style={styles.toolInput}>
+                              <pre className={styles.toolInput}>
                                 {event.content.length > 2000 ? event.content.slice(0, 2000) + '...' : event.content}
                               </pre>
                             </div>
@@ -816,8 +444,8 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
 
                           {/* Output */}
                           {!event.tool_name && event.content && !thinking && (
-                            <div style={styles.outputBlock}>
-                              <pre style={styles.outputText}>
+                            <div className={styles.outputBlock}>
+                              <pre className={styles.outputText}>
                                 {event.content.length > 2000 ? event.content.slice(0, 2000) + '...' : event.content}
                               </pre>
                             </div>
@@ -825,8 +453,8 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
 
                           {/* Error */}
                           {metadata?.error && (
-                            <div style={styles.errorBlock}>
-                              <pre style={styles.errorText}>{String(metadata.error)}</pre>
+                            <div className={styles.errorBlock}>
+                              <pre className={styles.errorText}>{String(metadata.error)}</pre>
                             </div>
                           )}
                         </>
@@ -842,18 +470,10 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
 
       {/* Quick Stats Footer */}
       {!expandedPhase && phases.length > 0 && (
-        <div style={{ padding: '20px 32px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', color: '#666', fontSize: '13px' }}>
+        <div className={styles.footer}>
           Click a phase above to explore events and chain-of-thought
         </div>
       )}
-
-      {/* CSS Animation for glow effect */}
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.1); }
-        }
-      `}</style>
     </div>
   );
 }
