@@ -120,7 +120,7 @@ export default function PyStatmatchPage() {
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                Frechet Bounds
+                Frechet bounds
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>

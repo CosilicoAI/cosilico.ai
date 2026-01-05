@@ -5,7 +5,7 @@ import * as styles from "../../styles/thesis.css";
 export function ModelSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>7. Business Model</h2>
+      <h2>7. Business model</h2>
       <p>Open source core. Commercial APIs. Proven at scale.</p>
 
       <div className={styles.modelStack}>
@@ -18,14 +18,14 @@ export function ModelSection() {
         </div>
         <div className={`${styles.stackLayer} ${styles.stackApi}`}>
           <div>
-            <h3>API Usage</h3>
+            <h3>API usage</h3>
             <p>Hosted, managed, &lt;100ms latency. Pay per call.</p>
           </div>
           <span className={styles.stackPrice}>$0.001-0.01/call</span>
         </div>
         <div className={`${styles.stackLayer} ${styles.stackData}`}>
           <div>
-            <h3>Data Enrichment</h3>
+            <h3>Data enrichment</h3>
             <p>Predict household attributes at scale. Batch or real-time.</p>
           </div>
           <span className={styles.stackPrice}>$0.10-1.00/record</span>
@@ -58,7 +58,7 @@ export function ModelSection() {
       </div>
 
       <div className={styles.comparables}>
-        <h3>Comparable Outcomes</h3>
+        <h3>Comparable outcomes</h3>
         <div className={styles.comparableGrid}>
           <div className={styles.comparable}>
             <span className={styles.comparableName}>Avalara<Cite id={7} /></span>

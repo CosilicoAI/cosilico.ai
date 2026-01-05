@@ -6,7 +6,7 @@ import * as styles from "../../styles/thesis.css";
 export function MarketsSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>5. The Markets</h2>
+      <h2>5. The markets</h2>
       <p>We sit at the infrastructure layer beneath multiple large markets.</p>
       <div className={styles.marketCards}>
         {nodes.filter((n) => n.type === "market").map((market) => (
@@ -22,25 +22,25 @@ export function MarketsSection() {
       </div>
 
       <div className={styles.marketAdditional}>
-        <h3>Additional Markets</h3>
+        <h3>Additional markets</h3>
         <div className={styles.marketCards}>
           <div className={styles.marketCard}>
-            <h3>Financial Planning</h3>
+            <h3>Financial planning</h3>
             <div className={styles.marketSize}>$3.6B → $14B<Cite id={20} /></div>
             <p>16.3% CAGR. Retirement, estate planning, wealth management all need tax/benefit calculations.</p>
           </div>
           <div className={styles.marketCard}>
-            <h3>Corporate Tax Software</h3>
+            <h3>Corporate tax software</h3>
             <div className={styles.marketSize}>$12.9B → $24.1B<Cite id={18} /></div>
             <p>Large enterprises: 52.87% of market. API-based ERP integrations accelerating.</p>
           </div>
           <div className={styles.marketCard}>
-            <h3>Global Tax Tech</h3>
+            <h3>Global tax tech</h3>
             <div className={styles.marketSize}>$18.5B → $36.7B<Cite id={19} /></div>
             <p>Cross-border payments: $31.6T → $50T by 2032. 45% of jurisdictions expect tax complexity to increase.</p>
           </div>
           <div className={styles.marketCard}>
-            <h3>Policy Research</h3>
+            <h3>Policy research</h3>
             <div className={styles.marketSize}>$2B+</div>
             <p>Think tanks, government agencies, academics. Legislative scoring, distributional analysis, reform modeling.</p>
           </div>

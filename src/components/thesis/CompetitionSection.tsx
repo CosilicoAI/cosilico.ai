@@ -7,7 +7,7 @@ import * as styles from "../../styles/thesis.css";
 export function CompetitionSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>6. Competitive Landscape</h2>
+      <h2>6. Competitive landscape</h2>
       <p>No one combines income tax + benefits + prediction + simulation.</p>
 
       <div className={styles.competitiveTableContainer}>
@@ -64,7 +64,7 @@ export function CompetitionSection() {
       </div>
 
       <div className={styles.pricingComparison}>
-        <h3>Competitive Pricing Analysis</h3>
+        <h3>Competitive pricing analysis</h3>
         <p>Our pricing is informed by extensive market research across each product category.</p>
 
         {pricingComps.map(pc => (

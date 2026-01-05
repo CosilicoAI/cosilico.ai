@@ -76,8 +76,8 @@ export default function ThesisPage() {
 
       {/* Hero */}
       <section className={styles.thesisHero}>
-        <p className={styles.thesisLabel}>Research Prospectus</p>
-        <h1 className={styles.heroTitle}>Society, in Silico</h1>
+        <p className={styles.thesisLabel}>Research prospectus</p>
+        <h1 className={styles.heroTitle}>Society, in silico</h1>
         <p className={styles.thesisSubtitle}>
           We're building the simulation of the economy that everyone can query.
         </p>
@@ -153,10 +153,10 @@ export default function ThesisPage() {
         <p>We're raising a seed round to turn this into production infrastructure.</p>
         <div className={styles.ctaButtons}>
           <a href="mailto:max@cosilico.ai" className={styles.btnPrimary}>
-            Get in Touch
+            Get in touch
           </a>
           <a href="/" className={styles.btnSecondary}>
-            ← Back to Home
+            ← Back to home
           </a>
         </div>
       </section>

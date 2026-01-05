@@ -61,6 +61,7 @@
     "@playwright/test": "^1.55.0",
     "@vanilla-extract/jest-transform": "^1.1.20",
     "http-server": "^14.1.1",
+    "identity-obj-proxy": "^3.0.0",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
     "stylelint-declaration-strict-value": "^1.10.11"

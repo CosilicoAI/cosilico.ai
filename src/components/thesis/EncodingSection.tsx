@@ -4,7 +4,7 @@ import * as styles from "../../styles/thesis.css";
 export function EncodingSection() {
   return (
     <div className={styles.thesisContent}>
-      <h2>4. AI-Assisted Encoding</h2>
+      <h2>4. AI-assisted encoding</h2>
       <p>
         The traditional approach to encoding policy is manual translation: read the statute, write the code.
         This doesn't scale. Instead, we use <strong>existing implementations as verification oracles</strong> to
@@ -12,7 +12,7 @@ export function EncodingSection() {
       </p>
 
       <div className={styles.encodingInsight}>
-        <h3>The Insight</h3>
+        <h3>The insight</h3>
         <p>
           PolicyEngine + TAXSIM aren't just calculators—they're <strong>training data factories</strong>.
           We can generate unlimited (statute, scenario, expected_output) tuples and use them to train
@@ -21,7 +21,7 @@ export function EncodingSection() {
       </div>
 
       <div className={styles.encodingLoop}>
-        <h3>Test-Driven Development at Scale</h3>
+        <h3>Test-driven development at scale</h3>
         <p>This isn't one-shot code generation. It's an iterative agentic loop:</p>
         <div className={styles.loopSteps}>
           <div className={styles.loopStep}>
@@ -63,7 +63,7 @@ export function EncodingSection() {
             <p>Academic gold standard, independent implementation</p>
           </div>
           <div className={styles.oracleCard}>
-            <h4>IRS Examples</h4>
+            <h4>IRS examples</h4>
             <p>Official published scenarios</p>
           </div>
         </div>
@@ -99,7 +99,7 @@ export function EncodingSection() {
       </div>
 
       <div className={styles.encodingScale}>
-        <h3>Scaling Path</h3>
+        <h3>Scaling path</h3>
         <p>Once the system learns to encode US federal tax from statute + test cases, the same approach works for:</p>
         <div className={styles.scaleGrid}>
           <div className={styles.scaleItem}>State tax codes <span className={styles.scaleMult}>50x</span></div>
@@ -111,7 +111,7 @@ export function EncodingSection() {
 
       <div className={styles.encodingTechnical}>
         <a href="https://github.com/CosilicoAI/cosilico-engine/blob/master/docs/AI_ENCODING.md" target="_blank" rel="noopener noreferrer" className={styles.technicalLink}>
-          Technical Deep Dive: Reward Functions, Oracle Stack, Agent Architecture →
+          Technical deep dive: reward functions, oracle stack, agent architecture →
         </a>
       </div>
     </div>

@@ -92,7 +92,7 @@ describe('ValidationPage', () => {
     render(<ValidationPage />);
 
     await waitFor(() => {
-      expect(screen.getByText('Validation Dashboard')).toBeInTheDocument();
+      expect(screen.getByText('Validation dashboard')).toBeInTheDocument();
     });
 
     expect(screen.getByText('Test CPS')).toBeInTheDocument();
@@ -104,7 +104,7 @@ describe('ValidationPage', () => {
     render(<ValidationPage />);
 
     await waitFor(() => {
-      expect(screen.getByText('Validation Dashboard')).toBeInTheDocument();
+      expect(screen.getByText('Validation dashboard')).toBeInTheDocument();
     });
 
     expect(screen.getAllByText('98.00%').length).toBeGreaterThan(0); // Match rate appears multiple times
