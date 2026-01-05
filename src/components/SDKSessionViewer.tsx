@@ -311,6 +311,11 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
         const phaseDuration = phase.endTime.getTime() - phase.startTime.getTime();
         const sortedTools = Object.entries(phase.toolsUsed).sort((a, b) => b[1] - a[1]);
 
+        // Get phase cost from agent_end event metadata
+        const endEvent = phase.events.find(e => e.event_type === 'agent_end');
+        const phaseCost = (endEvent?.metadata as Record<string, unknown>)?.cost_usd as number | undefined;
+        const phaseSummary = (endEvent?.metadata as Record<string, unknown>)?.summary as string | undefined;
+
         return (
           <div className={styles.phaseDetail}>
             <div
@@ -322,9 +327,19 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                 <div>
                   <div className={styles.phaseDetailName} style={{ color: config.color }}>
                     {phase.displayName} Phase
+                    {phaseCost && phaseCost > 0 && (
+                      <span style={{ color: '#ff6b35', marginLeft: '12px', fontSize: '14px' }}>
+                        ${phaseCost.toFixed(2)}
+                      </span>
+                    )}
                   </div>
                   <div className={styles.phaseDetailMeta}>
                     {phase.events.length} events • {formatDuration(phaseDuration)}
+                    {phaseSummary && (
+                      <span style={{ marginLeft: '8px', color: '#666' }}>
+                        — {phaseSummary}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -404,12 +419,29 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                         >
                           {typeIcon}
                         </div>
-                        <div>
-                          <div className={styles.eventTypeName} style={{ color: typeColor }}>
-                            {event.tool_name || event.event_type.replace('agent_', '')}
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <>
+                              <div className={styles.eventTypeName} style={{ color: typeColor }}>
+                                {event.tool_name || event.event_type.replace('agent_', '')}
+                              </div>
+                              {/* Show summary if available */}
+                              {metadata?.summary && (
+                                <span style={{ color: '#999', fontSize: '11px', fontWeight: 400 }}>
+                                  — {String(metadata.summary).slice(0, 80)}{String(metadata.summary).length > 80 ? '...' : ''}
+                                </span>
+                              )}
+                            </>
                           </div>
                           <div className={styles.eventMeta}>
-                            #{event.sequence} • {new Date(event.timestamp).toLocaleTimeString()}
+                            <>
+                              #{event.sequence} • {new Date(event.timestamp).toLocaleTimeString()}
+                              {metadata?.cost_usd && Number(metadata.cost_usd) > 0 && (
+                                <span style={{ color: '#ff6b35', marginLeft: '8px' }}>
+                                  ${Number(metadata.cost_usd).toFixed(2)}
+                                </span>
+                              )}
+                            </>
                           </div>
                         </div>
                       </div>
