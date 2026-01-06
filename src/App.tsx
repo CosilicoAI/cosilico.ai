@@ -27,6 +27,9 @@ import PopdgpEvalPage from "./pages/PopdgpEvalPage";
 import PopdgpPage from "./pages/PopdgpPage";
 import MicrosynthPage from "./pages/MicrosynthPage";
 import DesignPage from "./pages/DesignPage";
+import BrandPage from "./pages/BrandPage";
+import WritingGuidePage from "./pages/WritingGuidePage";
+import AssetsPage from "./pages/AssetsPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 // Scroll to top on route change
@@ -70,6 +73,12 @@ function App() {
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/portal" element={<PortalPage />} />
+          {/* Brand */}
+          <Route path="/brand" element={<BrandPage />} />
+          <Route path="/brand/design" element={<DesignPage />} />
+          <Route path="/brand/writing" element={<WritingGuidePage />} />
+          <Route path="/brand/assets" element={<AssetsPage />} />
+          {/* Legacy redirect */}
           <Route path="/design" element={<DesignPage />} />
         </Routes>
       </div>

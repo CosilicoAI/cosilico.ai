@@ -51,6 +51,20 @@ export const hero = style({
   paddingBottom: `${vars.space['2xl']} !important`,
 });
 
+export const breadcrumb = style({
+  fontSize: '0.85rem',
+  color: vars.color.textMuted,
+  marginBottom: vars.space.md,
+});
+
+export const breadcrumbLink = style({
+  color: vars.color.accent,
+  textDecoration: 'none',
+  ':hover': {
+    textDecoration: 'underline',
+  },
+});
+
 export const heroTitle = style({
   fontSize: 'clamp(2.5rem, 8vw, 4rem)',
   fontWeight: 600,

@@ -925,6 +925,59 @@ export const DiamondIcon: React.FC<IconProps> = ({
   </svg>
 );
 
+export const DownloadIcon: React.FC<IconProps> = ({
+  variant = defaultProps.variant,
+  size = defaultProps.size,
+  className,
+}) => (
+  <svg
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    className={className}
+    {...getStrokeProps(variant)}
+  >
+    {variant === 'duotone' && (
+      <rect x="3" y="15" width="18" height="6" rx="1" fill="currentColor" opacity={0.15} />
+    )}
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
+
+export const CosilicoLogo: React.FC<IconProps> = ({
+  size = defaultProps.size,
+  className,
+}) => (
+  <svg
+    viewBox="0 0 64 64"
+    width={size}
+    height={size}
+    className={className}
+  >
+    {/* Back crystal - simulation */}
+    <polygon
+      points="26,12 38,20 38,32 26,40 14,32 14,20"
+      fill="#00d4ff"
+      opacity="0.25"
+    />
+    <polygon
+      points="26,12 38,20 38,32 26,40 14,32 14,20"
+      fill="none"
+      stroke="#00d4ff"
+      strokeWidth="2"
+    />
+    {/* Front crystal - society */}
+    <polygon
+      points="38,24 50,32 50,44 38,52 26,44 26,32"
+      fill="none"
+      stroke="#40e8ff"
+      strokeWidth="2"
+    />
+  </svg>
+);
+
 // Export all icons as a collection for the design system page
 export const allIcons = {
   // Analytics/Data
@@ -975,6 +1028,8 @@ export const allIcons = {
   CircleIcon,
   CodeIcon,
   DiamondIcon,
+  DownloadIcon,
+  CosilicoLogo,
 } as const;
 
 export type IconName = keyof typeof allIcons;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as styles from '../styles/design.css';
 import { vars } from '../theme.css';
 import PageLayout from '../components/PageLayout';
@@ -78,6 +79,10 @@ export default function DesignPage() {
       <div className={styles.design}>
         {/* Hero */}
         <section className={styles.hero}>
+          <div className={styles.breadcrumb}>
+            <Link to="/brand" className={styles.breadcrumbLink}>Brand</Link>
+            {" / "}Design
+          </div>
           <h1 className={styles.heroTitle}>Design system</h1>
           <p className={styles.heroSubtitle}>
             Tokens, typography, and icons for building consistent Cosilico interfaces.
