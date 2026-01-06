@@ -116,8 +116,39 @@ export default function WritingGuidePage() {
             <h2 className={styles.sectionTitle}>Voice and tone</h2>
             <p className={styles.sectionIntro}>
               Cosilico's voice is technical but accessible. We explain complex concepts
-              clearly without dumbing them down.
+              clearly without dumbing them down. When writing about our products, the tone
+              can be more natural and conversational.
             </p>
+
+            <div className={styles.rule}>
+              <h3 className={styles.ruleTitle}>Use active voice</h3>
+              <p className={styles.ruleDescription}>
+                Write in active voice. The subject should perform the action, not receive it.
+              </p>
+
+              <div className={styles.examplesGrid}>
+                <div className={styles.exampleGood}>
+                  <div className={styles.exampleLabelGood}>
+                    <CheckIcon size={14} /> Active
+                  </div>
+                  <div className={styles.exampleText}>
+                    RAC encodes tax law as executable rules.<br />
+                    The validator found 3 discrepancies.<br />
+                    We validate against PolicyEngine.
+                  </div>
+                </div>
+                <div className={styles.exampleBad}>
+                  <div className={styles.exampleLabelBad}>
+                    <XIcon size={14} /> Passive
+                  </div>
+                  <div className={styles.exampleText}>
+                    Tax law is encoded by RAC as executable rules.<br />
+                    3 discrepancies were found by the validator.<br />
+                    Validation is performed against PolicyEngine.
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className={styles.rule}>
               <h3 className={styles.ruleTitle}>Be direct</h3>
@@ -192,6 +223,37 @@ export default function WritingGuidePage() {
                   </div>
                   <div className={styles.exampleText}>
                     RAC revolutionizes tax computation with groundbreaking AI.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.rule}>
+              <h3 className={styles.ruleTitle}>Present numbers dispassionately</h3>
+              <p className={styles.ruleDescription}>
+                When presenting numbers from our platform, let the data speak for itself.
+                Avoid adjectives or adverbs that aren't backed by the numbers themselves.
+              </p>
+
+              <div className={styles.examplesGrid}>
+                <div className={styles.exampleGood}>
+                  <div className={styles.exampleLabelGood}>
+                    <CheckIcon size={14} /> Dispassionate
+                  </div>
+                  <div className={styles.exampleText}>
+                    The policy increases benefits by $1,200/year for the median household.<br />
+                    Validation passed 49,847 of 50,000 test cases (99.7%).<br />
+                    The reform costs $12B annually.
+                  </div>
+                </div>
+                <div className={styles.exampleBad}>
+                  <div className={styles.exampleLabelBad}>
+                    <XIcon size={14} /> Editorialized
+                  </div>
+                  <div className={styles.exampleText}>
+                    The policy dramatically boosts benefits by an impressive $1,200/year.<br />
+                    Validation achieved outstanding results with remarkable accuracy.<br />
+                    The reform has a surprisingly modest cost of just $12B.
                   </div>
                 </div>
               </div>
