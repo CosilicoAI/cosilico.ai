@@ -9,7 +9,7 @@ export interface IconProps {
 }
 
 const defaultProps: Required<Pick<IconProps, 'variant' | 'size'>> = {
-  variant: 'outline',
+  variant: 'duotone',
   size: 24,
 };
 

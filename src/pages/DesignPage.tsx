@@ -56,7 +56,7 @@ const iconSizeTokens = [
 ];
 
 export default function DesignPage() {
-  const [iconVariant, setIconVariant] = useState<IconStyle>('outline');
+  const [iconVariant, setIconVariant] = useState<IconStyle>('duotone');
   const [iconSearch, setIconSearch] = useState('');
   const [toast, setToast] = useState<string | null>(null);
 
@@ -203,7 +203,7 @@ export default function DesignPage() {
                   key={size.name}
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: vars.space.sm }}
                 >
-                  <Icon size={parseInt(size.value)} variant="outline" />
+                  <Icon size={parseInt(size.value)} variant="duotone" />
                   <span className={styles.radiusLabel}>{size.name} ({size.value})</span>
                 </div>
               );
