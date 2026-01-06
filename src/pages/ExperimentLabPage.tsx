@@ -3,6 +3,15 @@ import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/experimentLab.css";
 import { getEncodingRuns, EncodingRun as SupabaseEncodingRun, DataSource, getAgentTranscripts, AgentTranscript, getTranscriptsBySession, getSDKSessions, getSDKSessionEvents, SDKSession, SDKSessionEvent } from "../lib/supabase";
 import SDKSessionViewer from "../components/SDKSessionViewer";
+import {
+  WarningIcon,
+  CheckIcon,
+  XIcon,
+  TargetIcon,
+  RocketIcon,
+  DocumentIcon,
+  FolderIcon,
+} from "../components/icons";
 
 // ============================================
 // TYPES
@@ -31,9 +40,9 @@ interface ExperimentRun {
 const DATA_SOURCE_INFO: Record<DataSource, { label: string; color: string; warning: boolean }> = {
   reviewer_agent: { label: 'Reviewer Agent', color: '#00ff88', warning: false },
   ci_only: { label: 'CI Only', color: '#ffaa00', warning: true },
-  mock: { label: '⚠️ MOCK', color: '#ff4466', warning: true },
-  manual_estimate: { label: '⚠️ Manual Estimate', color: '#ff6b35', warning: true },
-  unknown: { label: '⚠️ Unknown', color: '#ff4466', warning: true },
+  mock: { label: 'MOCK', color: '#ff4466', warning: true },
+  manual_estimate: { label: 'Manual Estimate', color: '#ff6b35', warning: true },
+  unknown: { label: 'Unknown', color: '#ff4466', warning: true },
 };
 
 // ============================================
@@ -477,7 +486,7 @@ export default function ExperimentLabPage() {
               boxShadow: '0 4px 20px rgba(255, 68, 102, 0.4)',
               border: '2px solid rgba(255, 255, 255, 0.3)'
             }}>
-              <span style={{ fontSize: '28px' }}>⚠️</span>
+              <WarningIcon size={28} />
               <div>
                 <div style={{ marginBottom: '4px' }}>MOCK DATA - NOT REAL</div>
                 <div style={{ fontWeight: 400, fontSize: '14px', opacity: 0.9 }}>
@@ -502,7 +511,7 @@ export default function ExperimentLabPage() {
               boxShadow: '0 4px 20px rgba(255, 170, 0, 0.3)',
               border: '2px solid rgba(255, 255, 255, 0.3)'
             }}>
-              <span style={{ fontSize: '28px' }}>⚠️</span>
+              <WarningIcon size={28} />
               <div>
                 <div style={{ marginBottom: '4px' }}>DATA SOURCE WARNING</div>
                 <div style={{ fontWeight: 400, fontSize: '14px', opacity: 0.9 }}>
@@ -524,7 +533,7 @@ export default function ExperimentLabPage() {
               fontWeight: 600,
               fontSize: '14px',
             }}>
-              <span style={{ fontSize: '20px' }}>✓</span>
+              <CheckIcon size={20} />
               <div>Live data from Supabase ({totalRuns} runs) - All scores verified by reviewer agents</div>
             </div>
           )}
@@ -624,7 +633,7 @@ export default function ExperimentLabPage() {
                         <td className={styles.citationCell}>
                           {run.citation}
                           {run.hasIssues && (
-                            <span style={{ color: "#ff4466", marginLeft: "8px" }}>⚠</span>
+                            <span style={{ color: "#ff4466", marginLeft: "8px" }}><WarningIcon size={14} /></span>
                           )}
                         </td>
                         <td className={styles.timestampCell}>{formatTime(run.timestamp)}</td>
@@ -651,7 +660,7 @@ export default function ExperimentLabPage() {
                               lastIter.success ? styles.iterationSuccess : styles.iterationFailed
                             }`}
                           >
-                            {run.iterations.length} {lastIter.success ? "✓" : "✗"}
+                            {run.iterations.length} {lastIter.success ? <CheckIcon size={12} /> : <XIcon size={12} />}
                           </span>
                         </td>
                         <td className={styles.durationCell}>{formatDuration(totalDuration)}</td>
@@ -749,7 +758,7 @@ export default function ExperimentLabPage() {
                                     color: run.iterations[run.iterations.length - 1]?.success ? '#00ff88' : '#ff4466',
                                     fontWeight: 600,
                                   }}>
-                                    {run.iterations.length} {run.iterations[run.iterations.length - 1]?.success ? '✓' : '✗'}
+                                    {run.iterations.length} {run.iterations[run.iterations.length - 1]?.success ? <CheckIcon size={14} /> : <XIcon size={14} />}
                                   </div>
                                 </div>
                                 <div>
@@ -781,8 +790,8 @@ export default function ExperimentLabPage() {
                                   CALIBRATION
                                   <span style={{ fontWeight: 400, marginLeft: '8px', color: '#666' }}>(predicted vs final)</span>
                                 </div>
-                                <div style={{ color: '#666', fontStyle: 'italic', fontSize: '13px' }}>
-                                  ⚠️ Calibration data not yet captured. Requires pre-run predictions from encoder agent.
+                                <div style={{ color: '#666', fontStyle: 'italic', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <WarningIcon size={14} /> Calibration data not yet captured. Requires pre-run predictions from encoder agent.
                                 </div>
                               </div>
 
@@ -833,7 +842,7 @@ export default function ExperimentLabPage() {
                                     color: '#666',
                                     fontSize: '13px',
                                   }}>
-                                    📄 No PR linked
+                                    <DocumentIcon size={14} /> No PR linked
                                   </div>
                                   <div style={{
                                     padding: '8px 16px',
@@ -843,7 +852,7 @@ export default function ExperimentLabPage() {
                                     color: '#666',
                                     fontSize: '13px',
                                   }}>
-                                    🎯 No beads issues
+                                    <TargetIcon size={14} /> No beads issues
                                   </div>
                                   <div style={{
                                     padding: '8px 16px',
@@ -853,7 +862,7 @@ export default function ExperimentLabPage() {
                                     color: '#666',
                                     fontSize: '13px',
                                   }}>
-                                    📁 {run.citation.replace(' USC ', '/').replace('§ ', '')}
+                                    <FolderIcon size={14} /> {run.citation.replace(' USC ', '/').replace('§ ', '')}
                                   </div>
                                 </div>
                               </div>
@@ -1265,7 +1274,7 @@ export default function ExperimentLabPage() {
                   borderRadius: '16px',
                   border: '1px dashed rgba(0, 212, 255, 0.2)',
                 }}>
-                  <div style={{ fontSize: '48px', marginBottom: '20px', opacity: 0.6 }}>🚀</div>
+                  <div style={{ marginBottom: '20px', opacity: 0.6 }}><RocketIcon size={48} /></div>
                   <div style={{ fontSize: '18px', color: '#ccc', marginBottom: '8px' }}>No missions recorded yet</div>
                   <div style={{ fontSize: '13px', color: '#666' }}>
                     Run <code style={{ background: 'rgba(0, 212, 255, 0.1)', padding: '3px 8px', borderRadius: '4px', color: '#00d4ff' }}>autorac sync-sdk-sessions</code> to sync from experiments.db

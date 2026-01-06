@@ -1,15 +1,36 @@
 import React, { useState, useMemo } from 'react';
 import { SDKSession, SDKSessionEvent } from '../lib/supabase';
 import * as styles from './SDKSessionViewer.css';
+import {
+  SearchIcon,
+  LightningIcon,
+  TargetIcon,
+  ClipboardIcon,
+  ChartIcon,
+  CalculatorIcon,
+  RulerIcon,
+  LinkIcon,
+  PackageIcon,
+  MailboxIcon,
+  NotepadIcon,
+  WrenchIcon,
+  ThoughtIcon,
+  RobotIcon,
+  CheckIcon,
+  WarningIcon,
+  IconProps,
+} from './icons';
 
 // ============================================
 // TYPES
 // ============================================
 
+type IconComponent = React.FC<IconProps>;
+
 interface Phase {
   name: string;
   displayName: string;
-  icon: string;
+  icon: IconComponent;
   startTime: Date;
   endTime: Date;
   events: SDKSessionEvent[];
@@ -23,20 +44,20 @@ interface Phase {
 // PHASE DEFINITIONS
 // ============================================
 
-const PHASE_CONFIG: Record<string, { displayName: string; icon: string; color: string }> = {
-  analysis: { displayName: 'Analysis', icon: '🔍', color: '#a78bfa' },
-  encoding: { displayName: 'Encoding', icon: '⚡', color: '#00d4ff' },
-  oracle: { displayName: 'Oracle', icon: '🎯', color: '#00ff88' },
-  review: { displayName: 'Review', icon: '📋', color: '#ffaa00' },
-  report: { displayName: 'Report', icon: '📊', color: '#ff6b35' },
+const PHASE_CONFIG: Record<string, { displayName: string; icon: IconComponent; color: string }> = {
+  analysis: { displayName: 'Analysis', icon: SearchIcon, color: '#a78bfa' },
+  encoding: { displayName: 'Encoding', icon: LightningIcon, color: '#00d4ff' },
+  oracle: { displayName: 'Oracle', icon: TargetIcon, color: '#00ff88' },
+  review: { displayName: 'Review', icon: ClipboardIcon, color: '#ffaa00' },
+  report: { displayName: 'Report', icon: ChartIcon, color: '#ff6b35' },
   // Agent types
-  'cosilico:Statute Analyzer': { displayName: 'Analyzer', icon: '🔍', color: '#a78bfa' },
-  'cosilico:RAC Encoder': { displayName: 'Encoder', icon: '⚡', color: '#00d4ff' },
-  'cosilico:Encoding Validator': { displayName: 'Validator', icon: '🎯', color: '#00ff88' },
-  'cosilico:rac-reviewer': { displayName: 'RAC Review', icon: '📋', color: '#ffaa00' },
-  'cosilico:Formula Reviewer': { displayName: 'Formula', icon: '🧮', color: '#ff6b35' },
-  'cosilico:Parameter Reviewer': { displayName: 'Params', icon: '📐', color: '#00d4ff' },
-  'cosilico:Integration Reviewer': { displayName: 'Integration', icon: '🔗', color: '#a78bfa' },
+  'cosilico:Statute Analyzer': { displayName: 'Analyzer', icon: SearchIcon, color: '#a78bfa' },
+  'cosilico:RAC Encoder': { displayName: 'Encoder', icon: LightningIcon, color: '#00d4ff' },
+  'cosilico:Encoding Validator': { displayName: 'Validator', icon: TargetIcon, color: '#00ff88' },
+  'cosilico:rac-reviewer': { displayName: 'RAC Review', icon: ClipboardIcon, color: '#ffaa00' },
+  'cosilico:Formula Reviewer': { displayName: 'Formula', icon: CalculatorIcon, color: '#ff6b35' },
+  'cosilico:Parameter Reviewer': { displayName: 'Params', icon: RulerIcon, color: '#00d4ff' },
+  'cosilico:Integration Reviewer': { displayName: 'Integration', icon: LinkIcon, color: '#a78bfa' },
 };
 
 // ============================================
@@ -61,7 +82,7 @@ function parseEvents(events: SDKSessionEvent[]): { phases: Phase[]; totalTokens:
         phases.push(currentPhase);
       }
 
-      const config = PHASE_CONFIG[phaseName] || { displayName: phaseName.replace('cosilico:', ''), icon: '📦', color: '#888' };
+      const config = PHASE_CONFIG[phaseName] || { displayName: phaseName.replace('cosilico:', ''), icon: PackageIcon, color: '#888' };
 
       currentPhase = {
         name: phaseName,
@@ -180,7 +201,7 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
       <div className={styles.container}>
         <div className={styles.scanlines} />
         <div className={styles.emptyState}>
-          <div className={styles.emptyIcon}>📭</div>
+          <div className={styles.emptyIcon}><MailboxIcon size={32} /></div>
           <div>No events recorded for this session</div>
         </div>
       </div>
@@ -248,7 +269,7 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                   fontSize: '14px'
                 }}
               >
-                {longestPhase.icon} {longestPhase.displayName}
+                <longestPhase.icon size={14} /> {longestPhase.displayName}
               </span>
             </div>
           )}
@@ -279,7 +300,7 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                       boxShadow: isExpanded ? `0 0 30px ${config.color}50` : 'none',
                     }}
                   >
-                    {phase.status === 'error' ? '⚠️' : phase.icon}
+                    {phase.status === 'error' ? <WarningIcon size={18} /> : <phase.icon size={18} />}
                     {isExpanded && (
                       <div className={styles.phaseGlow} style={{ background: config.color }} />
                     )}
@@ -323,7 +344,7 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
               style={{ borderLeft: `4px solid ${config.color}` }}
             >
               <div className={styles.phaseDetailTitle}>
-                <span className={styles.phaseDetailIcon}>{phase.icon}</span>
+                <span className={styles.phaseDetailIcon}><phase.icon size={24} /></span>
                 <div>
                   <div className={styles.phaseDetailName} style={{ color: config.color }}>
                     {phase.displayName} Phase
@@ -367,33 +388,33 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                 let bgColor = 'rgba(255, 255, 255, 0.02)';
                 let borderColor = 'rgba(255, 255, 255, 0.1)';
                 let typeColor = '#888';
-                let typeIcon = '📝';
+                let TypeIcon: IconComponent = NotepadIcon;
 
                 if (event.event_type === 'tool_use' || event.tool_name) {
                   bgColor = 'rgba(0, 212, 255, 0.03)';
                   borderColor = 'rgba(0, 212, 255, 0.2)';
                   typeColor = '#00d4ff';
-                  typeIcon = '🔧';
+                  TypeIcon = WrenchIcon;
                 } else if (event.event_type === 'tool_result') {
                   bgColor = 'rgba(0, 255, 136, 0.03)';
                   borderColor = 'rgba(0, 255, 136, 0.2)';
                   typeColor = '#00ff88';
-                  typeIcon = '✓';
+                  TypeIcon = CheckIcon;
                 } else if (event.event_type === 'assistant') {
                   bgColor = 'rgba(255, 170, 0, 0.03)';
                   borderColor = 'rgba(255, 170, 0, 0.2)';
                   typeColor = '#ffaa00';
-                  typeIcon = '💭';
+                  TypeIcon = ThoughtIcon;
                 } else if (event.event_type.includes('error') || metadata?.error) {
                   bgColor = 'rgba(255, 68, 102, 0.05)';
                   borderColor = 'rgba(255, 68, 102, 0.3)';
                   typeColor = '#ff4466';
-                  typeIcon = '⚠️';
+                  TypeIcon = WarningIcon;
                 } else if (event.event_type.includes('agent')) {
                   bgColor = 'rgba(167, 139, 250, 0.03)';
                   borderColor = 'rgba(167, 139, 250, 0.2)';
                   typeColor = '#a78bfa';
-                  typeIcon = '🤖';
+                  TypeIcon = RobotIcon;
                 }
 
                 return (
@@ -417,7 +438,7 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                             color: typeColor,
                           }}
                         >
-                          {typeIcon}
+                          <TypeIcon size={14} />
                         </div>
                         <div style={{ flex: 1 }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -465,7 +486,7 @@ export default function SDKSessionViewer({ session, events, onClose }: SDKSessio
                           {event.tool_name && event.content && (
                             <div className={styles.toolCall}>
                               <div className={styles.toolHeader}>
-                                <span>🔧</span>
+                                <WrenchIcon size={14} />
                                 <span className={styles.toolName}>{event.tool_name}</span>
                               </div>
                               <pre className={styles.toolInput}>

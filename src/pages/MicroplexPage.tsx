@@ -1,6 +1,7 @@
 import React from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/microplex.css";
+import { DiamondIcon, CheckIcon, XIcon, PartialIcon } from "../components/icons";
 
 // Icons for workflow stages
 const DataSourcesIcon = () => (
@@ -352,19 +353,19 @@ export default function MicroplexPage() {
             </p>
             <div className={styles.heroPills}>
               <span className={styles.pill}>
-                <span className={styles.pillIcon}>◆</span>
+                <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
                 CPS + PUF Fusion
               </span>
               <span className={styles.pill}>
-                <span className={styles.pillIcon}>◆</span>
+                <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
                 Masked MAF Training
               </span>
               <span className={styles.pill}>
-                <span className={styles.pillIcon}>◆</span>
+                <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
                 5,000+ Calibration Targets
               </span>
               <span className={styles.pill}>
-                <span className={styles.pillIcon}>◆</span>
+                <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
                 L0 Sparse Reweighting
               </span>
             </div>
@@ -579,45 +580,45 @@ export default function MicroplexPage() {
               <tbody>
                 <tr>
                   <td>Multi-survey fusion</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.partialMark}>~</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
+                  <td><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
+                  <td><span className={styles.partialMark}><PartialIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
                 </tr>
                 <tr>
                   <td>Learns joint distribution</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.partialMark}>~</span></td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.partialMark}><PartialIcon size={16} /></span></td>
                 </tr>
                 <tr>
                   <td>Masked training</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
                 </tr>
                 <tr>
                   <td>Sparse L0 calibration</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.partialMark}>~</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
+                  <td><span className={styles.partialMark}><PartialIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
                 </tr>
                 <tr>
                   <td>Scalable synthesis</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.checkMark}>✓</span></td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
                 </tr>
                 <tr>
                   <td>Block-level geography</td>
-                  <td className={styles.microplexCell}><span className={styles.checkMark}>✓</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
-                  <td><span className={styles.crossMark}>✗</span></td>
+                  <td className={styles.microplexCell}><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
+                  <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
                 </tr>
               </tbody>
             </table>

@@ -4,11 +4,56 @@ import { StatuteTree } from "../components/architecture/StatuteTree";
 import { IndexingDemo } from "../components/architecture/IndexingDemo";
 import { STATUTE_TREE, CODE_SAMPLES } from "../components/architecture/StatuteData";
 import PageLayout from "../components/PageLayout";
+import {
+  CheckIcon,
+  LinkIcon,
+  TestTubeIcon,
+  ChartIcon,
+  ScrollIcon,
+  DocumentIcon,
+  ClipboardIcon,
+  WrenchIcon,
+  TargetIcon,
+  RobotIcon,
+  LightningIcon,
+  PackageIcon,
+  DatabaseIcon,
+  GlobeIcon,
+  SyncIcon,
+  GovernmentIcon,
+  CalendarIcon,
+  MoneyIcon,
+  HouseIcon,
+  PeopleIcon,
+  WaveIcon,
+  USFlagIcon,
+  UKFlagIcon,
+  CloudIcon,
+  CircleIcon,
+  CodeIcon,
+  PartialIcon,
+  XIcon,
+  NotepadIcon,
+  IconProps,
+} from "../components/icons";
 
-const VALIDATORS = [
+type IconComponent = React.FC<IconProps>;
+
+interface Validator {
+  id: string;
+  icon: IconComponent;
+  title: string;
+  short: string;
+  boxTitle: string;
+  boxDesc: string;
+  metrics: { value: string; label: string }[];
+  highlight?: boolean;
+}
+
+const VALIDATORS: Validator[] = [
   {
     id: "syntax",
-    icon: "✓",
+    icon: CheckIcon,
     title: "Syntax valid",
     short: "DSL parses without errors",
     boxTitle: "DSL parser validation",
@@ -20,7 +65,7 @@ const VALIDATORS = [
   },
   {
     id: "refs",
-    icon: "🔗",
+    icon: LinkIcon,
     title: "References resolve",
     short: "All statute paths exist",
     boxTitle: "Reference graph validation",
@@ -32,7 +77,7 @@ const VALIDATORS = [
   },
   {
     id: "tests",
-    icon: "🧪",
+    icon: TestTubeIcon,
     title: "TDD tests",
     short: "Our tests—authoritative, statute-derived",
     boxTitle: "Test-driven development",
@@ -44,7 +89,7 @@ const VALIDATORS = [
   },
   {
     id: "consensus",
-    icon: "📊",
+    icon: ChartIcon,
     title: "External validation",
     short: "Comparison with TAXSIM, PolicyEngine, others",
     boxTitle: "External tool validation report",
@@ -162,7 +207,7 @@ export default function ArchitecturePage() {
         <div className={styles.explorerContainer}>
           <div className={styles.explorerTree}>
             <div className={styles.treeHeader}>
-              <span className={styles.treeIcon}>📜</span>
+              <span className={styles.treeIcon}><ScrollIcon size={16} /></span>
               <span className={styles.treeTitle}>26 USC</span>
               <span className={styles.treeSubtitle}>Internal Revenue Code</span>
             </div>
@@ -180,7 +225,7 @@ export default function ArchitecturePage() {
           <div className={styles.explorerCode}>
             <div className={styles.codeHeader}>
               <div className={styles.codePathGroup}>
-                <span className={styles.codeIcon}>📄</span>
+                <span className={styles.codeIcon}><DocumentIcon size={16} /></span>
                 {selected && selectedCode ? (
                   <>
                     <span className={styles.codePath}>statute/26/{selected}/{selectedCode.file}</span>
@@ -255,7 +300,7 @@ export default function ArchitecturePage() {
           <div className="override-flow">
             <div className="override-stage">
               <div className="stage-box statute-stage">
-                <span className="stage-icon">📜</span>
+                <span className="stage-icon"><ScrollIcon size={20} /></span>
                 <h5>Statute files</h5>
                 <code className="stage-path">statute/26/32/b/2/A/base_amounts.yaml</code>
                 <p className="stage-desc">Raw statutory values from 26 USC §32</p>
@@ -272,7 +317,7 @@ export default function ArchitecturePage() {
               <div className="stage-arrow">↓ Overrides</div>
 
               <div className="stage-box irs-stage">
-                <span className="stage-icon">📋</span>
+                <span className="stage-icon"><ClipboardIcon size={20} /></span>
                 <h5>IRS guidance</h5>
                 <code className="stage-path">irs/rev-proc-2023-34/eitc-2024.yaml</code>
                 <p className="stage-desc">Inflation-adjusted values with override declarations</p>
@@ -290,7 +335,7 @@ export default function ArchitecturePage() {
               <div className="stage-arrow">↓ resolves to</div>
 
               <div className="stage-box resolution-stage">
-                <span className="stage-icon">⚙️</span>
+                <span className="stage-icon"><WrenchIcon size={20} /></span>
                 <h5>Engine resolution</h5>
                 <p className="stage-desc">Formula references statute, engine returns IRS value</p>
                 <div className="resolution-logic">
@@ -315,22 +360,22 @@ export default function ArchitecturePage() {
             <h4>Why this design</h4>
             <div className="benefit-grid">
               <div className="benefit-card">
-                <span className="benefit-icon">🎯</span>
+                <span className="benefit-icon"><TargetIcon size={16} /></span>
                 <h5>Explicit declarations</h5>
                 <p>IRS files declare <code>overrides:</code> attribute — no implicit matching</p>
               </div>
               <div className="benefit-card">
-                <span className="benefit-icon">🔗</span>
+                <span className="benefit-icon"><LinkIcon size={16} /></span>
                 <h5>Authoritative chain</h5>
                 <p>IRS guidance → regulation → statute — clear precedence</p>
               </div>
               <div className="benefit-card">
-                <span className="benefit-icon">📍</span>
+                <span className="benefit-icon"><TargetIcon size={16} /></span>
                 <h5>Stable references</h5>
                 <p>Formulas reference statute paths — overrides are transparent</p>
               </div>
               <div className="benefit-card">
-                <span className="benefit-icon">✓</span>
+                <span className="benefit-icon"><CheckIcon size={16} /></span>
                 <h5>Audit trail</h5>
                 <p>Every value traces to its source document and version</p>
               </div>
@@ -350,7 +395,7 @@ export default function ArchitecturePage() {
         <div className="rl-diagram">
           <div className="rl-flow">
             <div className="rl-node input">
-              <div className="rl-icon">📜</div>
+              <div className="rl-icon"><ScrollIcon size={24} /></div>
               <h4>Legal text</h4>
               <p>Statute sections, regulations, IRS guidance</p>
             </div>
@@ -358,7 +403,7 @@ export default function ArchitecturePage() {
             <div className="rl-arrow">→</div>
 
             <div className="rl-node agent">
-              <div className="rl-icon">🤖</div>
+              <div className="rl-icon"><RobotIcon size={24} /></div>
               <h4>DSL agent</h4>
               <p>LLM with domain-specific prompting</p>
             </div>
@@ -366,7 +411,7 @@ export default function ArchitecturePage() {
             <div className="rl-arrow">→</div>
 
             <div className="rl-node output">
-              <div className="rl-icon">⚡</div>
+              <div className="rl-icon"><LightningIcon size={24} /></div>
               <h4>Cosilico DSL</h4>
               <p>Executable statute-organized code</p>
             </div>
@@ -379,7 +424,7 @@ export default function ArchitecturePage() {
                 className={`validator-card ${selectedValidator === v.id ? "selected" : ""}`}
                 onClick={() => setSelectedValidator(v.id)}
               >
-                <span className="validator-icon">{v.icon}</span>
+                <span className="validator-icon"><v.icon size={16} /></span>
                 <h5>{v.title}</h5>
                 <p>{v.short}</p>
               </div>
@@ -392,7 +437,7 @@ export default function ArchitecturePage() {
             return (
               <div className={`validator-detail-box ${v.id}`}>
                 <div className="validator-detail-header">
-                  <span className="validator-detail-icon">{v.icon}</span>
+                  <span className="validator-detail-icon"><v.icon size={20} /></span>
                   <span className="validator-detail-title">{v.boxTitle}</span>
                 </div>
                 <p>{v.boxDesc}</p>
@@ -464,12 +509,12 @@ export default function ArchitecturePage() {
               <div className="la-box sources">
                 <h4>Official sources</h4>
                 <div className="source-list">
-                  <span className="source-item">📜 USLM XML (uscode.house.gov)</span>
-                  <span className="source-item">📋 IRS Rev. Procs (irs.gov)</span>
-                  <span className="source-item">🏛️ State codes + guidance</span>
+                  <span className="source-item"><ScrollIcon size={14} /> USLM XML (uscode.house.gov)</span>
+                  <span className="source-item"><ClipboardIcon size={14} /> IRS Rev. Procs (irs.gov)</span>
+                  <span className="source-item"><GovernmentIcon size={14} /> State codes + guidance</span>
                 </div>
                 <div className="source-crawler">
-                  <span className="crawler-badge">🔄 Daily crawler</span>
+                  <span className="crawler-badge"><SyncIcon size={14} /> Daily crawler</span>
                   <span className="crawler-desc">Detects changes via content hash</span>
                 </div>
               </div>
@@ -479,18 +524,18 @@ export default function ArchitecturePage() {
             <div className="la-archive">
               <div className="la-box archive storage-arch">
                 <div className="archive-header">
-                  <span className="archive-icon">🗄️</span>
+                  <span className="archive-icon"><DatabaseIcon size={20} /></span>
                   <h4>cosilico-atlas</h4>
                 </div>
                 <div className="storage-split">
                   <div className="storage-component">
-                    <span className="storage-icon">☁️</span>
+                    <span className="storage-icon"><CloudIcon size={16} /></span>
                     <h5>Cloudflare R2</h5>
                     <p>PDFs, HTML snapshots</p>
                     <code className="storage-path">us/guidance/irs/rp-23-34.pdf</code>
                   </div>
                   <div className="storage-component">
-                    <span className="storage-icon">🐘</span>
+                    <span className="storage-icon"><DatabaseIcon size={16} /></span>
                     <h5>Supabase Postgres</h5>
                     <p>Metadata, versions, refs</p>
                     <code className="storage-path">sources → versions → refs</code>
@@ -506,17 +551,17 @@ export default function ArchitecturePage() {
               <div className="la-arrow">↓</div>
               <div className="consumer-row">
                 <div className="la-box consumer api-consumer">
-                  <span className="consumer-icon">🌐</span>
+                  <span className="consumer-icon"><GlobeIcon size={16} /></span>
                   <h5>REST API</h5>
                   <p>GET /v1/us/guidance/irs/rp-23-34</p>
                 </div>
                 <div className="la-box consumer">
-                  <span className="consumer-icon">🤖</span>
+                  <span className="consumer-icon"><RobotIcon size={16} /></span>
                   <h5>AI Encoder</h5>
                   <p>Reads law, writes code</p>
                 </div>
                 <div className="la-box consumer">
-                  <span className="consumer-icon">⚙️</span>
+                  <span className="consumer-icon"><WrenchIcon size={16} /></span>
                   <h5>Engine</h5>
                   <p>Compiles formulas</p>
                 </div>
@@ -605,7 +650,7 @@ export default function ArchitecturePage() {
 
         <div className="compilation-flow">
           <div className="flow-stage source">
-            <div className="stage-icon">📝</div>
+            <div className="stage-icon"><NotepadIcon size={24} /></div>
             <h4>DSL source</h4>
             <pre className="code-sample">
 {`variable eitc(TaxUnit, Year, Money):
@@ -623,9 +668,9 @@ export default function ArchitecturePage() {
           <div className="flow-targets">
             <div className="target-card python">
               <div className="target-header">
-                <span className="target-icon">🐍</span>
+                <span className="target-icon"><CodeIcon size={16} /></span>
                 <h5>Python (NumPy)</h5>
-                <span className="target-status">✓ Working</span>
+                <span className="target-status"><CheckIcon size={12} /> Working</span>
               </div>
               <pre className="target-code">
 {`def eitc(inputs, params):
@@ -644,9 +689,9 @@ export default function ArchitecturePage() {
 
             <div className="target-card javascript">
               <div className="target-header">
-                <span className="target-icon">⚡</span>
+                <span className="target-icon"><LightningIcon size={16} /></span>
                 <h5>JavaScript</h5>
-                <span className="target-status">✓ Working</span>
+                <span className="target-status"><CheckIcon size={12} /> Working</span>
               </div>
               <pre className="target-code">
 {`function eitc(inputs, params) {
@@ -665,9 +710,9 @@ export default function ArchitecturePage() {
 
             <div className="target-card wasm">
               <div className="target-header">
-                <span className="target-icon">⚙️</span>
+                <span className="target-icon"><WrenchIcon size={16} /></span>
                 <h5>WebAssembly</h5>
-                <span className="target-status">○ Planned</span>
+                <span className="target-status"><CircleIcon size={12} /> Planned</span>
               </div>
               <pre className="target-code">
 {`(func $eitc (param $wages f64)
@@ -684,9 +729,9 @@ export default function ArchitecturePage() {
 
             <div className="target-card sql">
               <div className="target-header">
-                <span className="target-icon">🗄️</span>
+                <span className="target-icon"><DatabaseIcon size={16} /></span>
                 <h5>SQL</h5>
-                <span className="target-status">○ Planned</span>
+                <span className="target-status"><CircleIcon size={12} /> Planned</span>
               </div>
               <pre className="target-code">
 {`CREATE FUNCTION eitc(
@@ -720,9 +765,9 @@ $$ LANGUAGE SQL;`}
   --cases 1000`}
               </pre>
               <div className="phase-checks">
-                <span className="check">✓ Test 1000 random cases</span>
-                <span className="check">✓ Compare outputs with PolicyEngine</span>
-                <span className="check">✓ Flag any discrepancies</span>
+                <span className="check"><CheckIcon size={12} /> Test 1000 random cases</span>
+                <span className="check"><CheckIcon size={12} /> Compare outputs with PolicyEngine</span>
+                <span className="check"><CheckIcon size={12} /> Flag any discrepancies</span>
               </div>
             </div>
 
@@ -744,9 +789,9 @@ $$ LANGUAGE SQL;`}
                 <div className="cc-constraint">Must all produce identical output</div>
               </div>
               <div className="phase-checks">
-                <span className="check">✓ Same inputs → same outputs</span>
-                <span className="check">✓ Floating point precision handled consistently</span>
-                <span className="check">✓ Edge cases match exactly</span>
+                <span className="check"><CheckIcon size={12} /> Same inputs → same outputs</span>
+                <span className="check"><CheckIcon size={12} /> Floating point precision handled consistently</span>
+                <span className="check"><CheckIcon size={12} /> Edge cases match exactly</span>
               </div>
             </div>
           </div>
@@ -775,7 +820,7 @@ $$ LANGUAGE SQL;`}
           <div className="repo-tier orchestrator">
             <div className="tier-label">USER INTERFACE</div>
             <div className="repo-box main">
-              <div className="repo-icon">📦</div>
+              <div className="repo-icon"><PackageIcon size={20} /></div>
               <h4>cosilico</h4>
               <code>pip install cosilico</code>
               <ul>
@@ -794,13 +839,13 @@ $$ LANGUAGE SQL;`}
             <div className="tier-label">RULES + DATA</div>
             <div className="repo-pair">
               <div className="repo-box rules">
-                <div className="repo-flag">🇺🇸</div>
+                <div className="repo-flag"><USFlagIcon size={20} /></div>
                 <h4>cosilico-us</h4>
                 <code>statute/26/...</code>
                 <span className="repo-type">Pure rules</span>
               </div>
               <div className="repo-box data">
-                <div className="repo-icon">📊</div>
+                <div className="repo-icon"><ChartIcon size={20} /></div>
                 <h4>cosilico-us-data</h4>
                 <code>datasets/cps/...</code>
                 <span className="repo-type">Microdata builder</span>
@@ -808,13 +853,13 @@ $$ LANGUAGE SQL;`}
             </div>
             <div className="repo-pair">
               <div className="repo-box rules">
-                <div className="repo-flag">🇬🇧</div>
+                <div className="repo-flag"><UKFlagIcon size={20} /></div>
                 <h4>cosilico-uk</h4>
                 <code>statute/FA2024/...</code>
                 <span className="repo-type">Pure rules</span>
               </div>
               <div className="repo-box data">
-                <div className="repo-icon">📊</div>
+                <div className="repo-icon"><ChartIcon size={20} /></div>
                 <h4>cosilico-uk-data</h4>
                 <code>datasets/frs/...</code>
                 <span className="repo-type">Microdata builder</span>
@@ -829,22 +874,22 @@ $$ LANGUAGE SQL;`}
             <div className="tier-label">INFRASTRUCTURE</div>
             <div className="repo-row">
               <div className="repo-box engine">
-                <div className="repo-icon">⚙️</div>
+                <div className="repo-icon"><WrenchIcon size={20} /></div>
                 <h4>cosilico-engine</h4>
                 <span className="repo-type">DSL parser + executor</span>
               </div>
               <div className="repo-box data-core">
-                <div className="repo-icon">🔧</div>
+                <div className="repo-icon"><WrenchIcon size={20} /></div>
                 <h4>cosilico-data</h4>
                 <span className="repo-type">Calibration + imputation</span>
               </div>
               <div className="repo-box ai">
-                <div className="repo-icon">🤖</div>
+                <div className="repo-icon"><RobotIcon size={20} /></div>
                 <h4>cosilico-ai</h4>
                 <span className="repo-type">RL training system</span>
               </div>
               <div className="repo-box validators">
-                <div className="repo-icon">✓</div>
+                <div className="repo-icon"><CheckIcon size={20} /></div>
                 <h4>cosilico-validators</h4>
                 <span className="repo-type">Multi-system consensus</span>
               </div>
@@ -979,30 +1024,30 @@ $$ LANGUAGE SQL;`}
             <div className="data-flow-diagram">
               <div className="flow-sources">
                 <div className="flow-source">
-                  <span className="source-icon">📊</span>
+                  <span className="source-icon"><ChartIcon size={16} /></span>
                   <span>CPS ASEC</span>
                   <span className="source-vars">demographics</span>
                 </div>
                 <div className="flow-source">
-                  <span className="source-icon">💰</span>
+                  <span className="source-icon"><MoneyIcon size={16} /></span>
                   <span>IRS PUF</span>
                   <span className="source-vars">tax variables</span>
                 </div>
                 <div className="flow-source">
-                  <span className="source-icon">🏠</span>
+                  <span className="source-icon"><HouseIcon size={16} /></span>
                   <span>ACS</span>
                   <span className="source-vars">geography</span>
                 </div>
               </div>
               <div className="flow-arrow">↓</div>
               <div className="flow-model">
-                <span className="model-icon">🌊</span>
+                <span className="model-icon"><WaveIcon size={20} /></span>
                 <span className="model-name">Hierarchical Normalizing Flow</span>
                 <span className="model-detail">learns joint distribution</span>
               </div>
               <div className="flow-arrow">↓</div>
               <div className="flow-output">
-                <span className="output-icon">👥</span>
+                <span className="output-icon"><PeopleIcon size={20} /></span>
                 <span className="output-name">Synthetic population</span>
                 <span className="output-detail">full attribute set + uncertainty</span>
               </div>
@@ -1043,7 +1088,7 @@ $$ LANGUAGE SQL;`}
             <h3>Temporal dynamics</h3>
             <div className="temporal-layers">
               <div className="temporal-layer yearly">
-                <span className="layer-icon">📅</span>
+                <span className="layer-icon"><CalendarIcon size={18} /></span>
                 <span className="layer-name">Yearly panel</span>
                 <ul>
                   <li>AR(1) income growth</li>
@@ -1052,7 +1097,7 @@ $$ LANGUAGE SQL;`}
                 </ul>
               </div>
               <div className="temporal-layer intrayear">
-                <span className="layer-icon">📆</span>
+                <span className="layer-icon"><CalendarIcon size={18} /></span>
                 <span className="layer-name">Intrayear</span>
                 <ul>
                   <li>Income volatility (SDE)</li>
@@ -1073,25 +1118,25 @@ $$ LANGUAGE SQL;`}
             <div className="variable-flow-diagram">
               <div className="flow-stage">
                 <div className="stage-box survey">
-                  <span className="stage-icon">📊</span>
+                  <span className="stage-icon"><ChartIcon size={20} /></span>
                   <span className="stage-name">CPS ASEC</span>
                   <code className="stage-var">A_AGE</code>
                 </div>
                 <div className="stage-arrow">→</div>
                 <div className="stage-box downloader">
-                  <span className="stage-icon">⬇️</span>
+                  <span className="stage-icon"><SyncIcon size={20} /></span>
                   <span className="stage-name">download_cps.py</span>
                   <code className="stage-var">age</code>
                 </div>
                 <div className="stage-arrow">→</div>
                 <div className="stage-box microsim">
-                  <span className="stage-icon">⚙️</span>
+                  <span className="stage-icon"><WrenchIcon size={20} /></span>
                   <span className="stage-name">microsim.py</span>
                   <code className="stage-var">inputs["age"]</code>
                 </div>
                 <div className="stage-arrow">→</div>
                 <div className="stage-box statute">
-                  <span className="stage-icon">📜</span>
+                  <span className="stage-icon"><ScrollIcon size={20} /></span>
                   <span className="stage-name">cosilico-us</span>
                   <code className="stage-var">age &lt; 19</code>
                 </div>
@@ -1099,11 +1144,11 @@ $$ LANGUAGE SQL;`}
             </div>
             <div className="variable-flow-principle">
               <div className="principle-item">
-                <span className="principle-icon">✓</span>
+                <span className="principle-icon"><CheckIcon size={14} /></span>
                 <span className="principle-text"><strong>Primary inputs</strong>: age, income, relationship codes, tax_unit_id</span>
               </div>
               <div className="principle-item">
-                <span className="principle-icon">✗</span>
+                <span className="principle-icon"><XIcon size={14} /></span>
                 <span className="principle-text"><strong>NOT extracted</strong>: num_qualifying_children, eitc_amount, tax_liability</span>
               </div>
               <div className="principle-reason">
@@ -1122,25 +1167,25 @@ $$ LANGUAGE SQL;`}
           </p>
           <div className="validation-loop-diagram">
             <div className="loop-node source">
-              <span className="node-icon">📊</span>
+              <span className="node-icon"><ChartIcon size={18} /></span>
               <h5>Data sources</h5>
               <span className="node-detail">CPS + PUF</span>
             </div>
             <div className="loop-arrow">→</div>
             <div className="loop-node model">
-              <span className="node-icon">🌊</span>
+              <span className="node-icon"><WaveIcon size={18} /></span>
               <h5>Normalizing flow</h5>
               <span className="node-detail">Learn P(tax_vars | demographics)</span>
             </div>
             <div className="loop-arrow">→</div>
             <div className="loop-node output">
-              <span className="node-icon">👥</span>
+              <span className="node-icon"><PeopleIcon size={18} /></span>
               <h5>Synthetic data</h5>
               <span className="node-detail">CPS structure + PUF-like tax vars</span>
             </div>
             <div className="loop-arrow">→</div>
             <div className="loop-node validators">
-              <span className="node-icon">✓</span>
+              <span className="node-icon"><CheckIcon size={18} /></span>
               <h5>Validators</h5>
               <span className="node-detail">vs PE ECPS, IRS SOI, PUF</span>
             </div>
@@ -1192,42 +1237,42 @@ $$ LANGUAGE SQL;`}
           <h3>Implementation status</h3>
           <div className="status-grid">
             <div className="status-item done">
-              <span className="status-icon">✓</span>
+              <span className="status-icon"><CheckIcon size={14} /></span>
               <span className="status-label">Core entities</span>
               <span className="status-detail">Person, Household, TaxUnit, Geography, Periods</span>
             </div>
             <div className="status-item done">
-              <span className="status-icon">✓</span>
+              <span className="status-icon"><CheckIcon size={14} /></span>
               <span className="status-label">CPS data loader</span>
               <span className="status-detail">Download, parse, cache CPS ASEC</span>
             </div>
             <div className="status-item done">
-              <span className="status-icon">✓</span>
+              <span className="status-icon"><CheckIcon size={14} /></span>
               <span className="status-label">Gradient calibration</span>
               <span className="status-detail">PyTorch optimizer, 76% loss reduction</span>
             </div>
             <div className="status-item done">
-              <span className="status-icon">✓</span>
+              <span className="status-icon"><CheckIcon size={14} /></span>
               <span className="status-label">Calibration dashboard</span>
               <span className="status-detail">Real-time metrics at /calibration</span>
             </div>
             <div className="status-item progress">
-              <span className="status-icon">◐</span>
+              <span className="status-icon"><PartialIcon size={14} /></span>
               <span className="status-label">Validation framework</span>
               <span className="status-detail">Comparing to PE ECPS and IRS SOI</span>
             </div>
             <div className="status-item progress">
-              <span className="status-icon">◐</span>
+              <span className="status-icon"><PartialIcon size={14} /></span>
               <span className="status-label">Normalizing flow</span>
               <span className="status-detail">Conditional MAF for tax variables</span>
             </div>
             <div className="status-item pending">
-              <span className="status-icon">○</span>
+              <span className="status-icon"><CircleIcon size={14} /></span>
               <span className="status-label">CPS/PUF fusion</span>
               <span className="status-detail">Joint model preserving correlations</span>
             </div>
             <div className="status-item pending">
-              <span className="status-icon">○</span>
+              <span className="status-icon"><CircleIcon size={14} /></span>
               <span className="status-label">Temporal dynamics</span>
               <span className="status-detail">Panel AR(1) + intrayear SDE</span>
             </div>
@@ -1264,65 +1309,65 @@ $$ LANGUAGE SQL;`}
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Citation-based paths</div>
-            <div className="comparison-cell yes">✓ statute/26/32/a</div>
-            <div className="comparison-cell no">✗ arbitrary names</div>
-            <div className="comparison-cell no">✗ arbitrary names</div>
-            <div className="comparison-cell no">✗ arbitrary names</div>
-            <div className="comparison-cell no">✗ none</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> statute/26/32/a</div>
+            <div className="comparison-cell no"><XIcon size={12} /> arbitrary names</div>
+            <div className="comparison-cell no"><XIcon size={12} /> arbitrary names</div>
+            <div className="comparison-cell no"><XIcon size={12} /> arbitrary names</div>
+            <div className="comparison-cell no"><XIcon size={12} /> none</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Automatic indexing</div>
-            <div className="comparison-cell yes">✓ three-tier resolution</div>
-            <div className="comparison-cell partial">◐ parameter files</div>
-            <div className="comparison-cell no">✗ manual</div>
-            <div className="comparison-cell partial">◐ JSON parameters</div>
-            <div className="comparison-cell no">✗ hard-coded</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> three-tier resolution</div>
+            <div className="comparison-cell partial"><PartialIcon size={12} /> parameter files</div>
+            <div className="comparison-cell no"><XIcon size={12} /> manual</div>
+            <div className="comparison-cell partial"><PartialIcon size={12} /> JSON parameters</div>
+            <div className="comparison-cell no"><XIcon size={12} /> hard-coded</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">AI-assisted authoring</div>
-            <div className="comparison-cell yes">✓ RL + multi-system consensus</div>
-            <div className="comparison-cell no">✗ manual only</div>
-            <div className="comparison-cell no">✗ manual only</div>
-            <div className="comparison-cell no">✗ manual only</div>
-            <div className="comparison-cell no">✗ manual only</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> RL + multi-system consensus</div>
+            <div className="comparison-cell no"><XIcon size={12} /> manual only</div>
+            <div className="comparison-cell no"><XIcon size={12} /> manual only</div>
+            <div className="comparison-cell no"><XIcon size={12} /> manual only</div>
+            <div className="comparison-cell no"><XIcon size={12} /> manual only</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Cross-system validation</div>
-            <div className="comparison-cell yes">✓ consensus engine</div>
-            <div className="comparison-cell partial">◐ vs TAXSIM</div>
-            <div className="comparison-cell no">✗ none</div>
-            <div className="comparison-cell no">✗ none</div>
-            <div className="comparison-cell no">✗ TaxAct-aligned</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> consensus engine</div>
+            <div className="comparison-cell partial"><PartialIcon size={12} /> vs TAXSIM</div>
+            <div className="comparison-cell no"><XIcon size={12} /> none</div>
+            <div className="comparison-cell no"><XIcon size={12} /> none</div>
+            <div className="comparison-cell no"><XIcon size={12} /> TaxAct-aligned</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Benefits + taxes</div>
-            <div className="comparison-cell yes">✓ integrated</div>
-            <div className="comparison-cell yes">✓ integrated</div>
-            <div className="comparison-cell yes">✓ integrated</div>
-            <div className="comparison-cell no">✗ taxes only</div>
-            <div className="comparison-cell no">✗ taxes only</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> integrated</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> integrated</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> integrated</div>
+            <div className="comparison-cell no"><XIcon size={12} /> taxes only</div>
+            <div className="comparison-cell no"><XIcon size={12} /> taxes only</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Microsimulation</div>
-            <div className="comparison-cell yes">✓ built-in</div>
-            <div className="comparison-cell yes">✓ US + UK + Canada</div>
-            <div className="comparison-cell yes">✓ multiple countries</div>
-            <div className="comparison-cell yes">✓ US federal</div>
-            <div className="comparison-cell yes">✓ US federal + states</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> built-in</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> US + UK + Canada</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> multiple countries</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> US federal</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> US federal + states</div>
           </div>
 
           <div className="comparison-row">
             <div className="comparison-cell feature">Open source</div>
-            <div className="comparison-cell yes">✓ Apache 2.0</div>
-            <div className="comparison-cell yes">✓ AGPL</div>
-            <div className="comparison-cell yes">✓ AGPL</div>
-            <div className="comparison-cell yes">✓ MIT</div>
-            <div className="comparison-cell partial">◐ source available</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> Apache 2.0</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> AGPL</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> AGPL</div>
+            <div className="comparison-cell yes"><CheckIcon size={12} /> MIT</div>
+            <div className="comparison-cell partial"><PartialIcon size={12} /> source available</div>
           </div>
         </div>
 

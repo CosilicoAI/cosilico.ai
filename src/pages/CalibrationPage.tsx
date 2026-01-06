@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from "react";
 import * as styles from "../styles/calibration.css";
 import PageLayout from "../components/PageLayout";
+import {
+  ChartIcon,
+  MoneyIcon,
+  WarningIcon,
+  TargetIcon,
+  CheckIcon,
+  PeopleIcon,
+  HospitalIcon,
+  RulerIcon,
+  USFlagIcon,
+  UKFlagIcon,
+} from "../components/icons";
 
 interface CalibrationTarget {
   name: string;
@@ -300,7 +312,7 @@ export default function CalibrationPage() {
         <div className={styles.summaryGrid}>
           <div className={styles.summaryCard[getErrorClass(returnsError)]}>
             <div className={styles.cardHeader}>
-              <span className={styles.cardIcon}>📊</span>
+              <span className={styles.cardIcon}><ChartIcon size={20} /></span>
               <span className={styles.cardLabel}>Total returns</span>
             </div>
             <div className={styles.cardComparison}>
@@ -325,7 +337,7 @@ export default function CalibrationPage() {
 
           <div className={styles.summaryCard[getErrorClass(agiError)]}>
             <div className={styles.cardHeader}>
-              <span className={styles.cardIcon}>💰</span>
+              <span className={styles.cardIcon}><MoneyIcon size={20} /></span>
               <span className={styles.cardLabel}>Total AGI</span>
             </div>
             <div className={styles.cardComparison}>
@@ -350,7 +362,7 @@ export default function CalibrationPage() {
 
           <div className={styles.summaryCard.status}>
             <div className={styles.cardHeader}>
-              <span className={styles.cardIcon}>⚠️</span>
+              <span className={styles.cardIcon}><WarningIcon size={20} /></span>
               <span className={styles.cardLabel}>Coverage status</span>
             </div>
             <div className={styles.statusIndicators}>
@@ -379,7 +391,7 @@ export default function CalibrationPage() {
 
           <div className={styles.resultsOverview}>
             <div className={styles.resultCard}>
-              <div className={styles.resultIcon}>🎯</div>
+              <div className={styles.resultIcon}><TargetIcon size={24} /></div>
               <div className={styles.resultValue}>
                 {(calibrationResults.metadata.initial_loss * 100).toFixed(1)}% → {(calibrationResults.metadata.final_loss * 100).toFixed(1)}%
               </div>
@@ -388,17 +400,17 @@ export default function CalibrationPage() {
               </div>
             </div>
             <div className={styles.resultCard}>
-              <div className={styles.resultIcon}>📊</div>
+              <div className={styles.resultIcon}><ChartIcon size={24} /></div>
               <div className={styles.resultValue}>{formatNumber(calibrationResults.summary.total_population_calibrated, "count")}</div>
               <div className={styles.resultLabel}>Calibrated population</div>
             </div>
             <div className={styles.resultCard}>
-              <div className={styles.resultIcon}>💰</div>
+              <div className={styles.resultIcon}><MoneyIcon size={24} /></div>
               <div className={styles.resultValue}>${formatNumber(calibrationResults.summary.total_agi_calibrated, "dollars")}</div>
               <div className={styles.resultLabel}>Total Calibrated AGI</div>
             </div>
             <div className={styles.resultCard}>
-              <div className={styles.resultIcon}>✓</div>
+              <div className={styles.resultIcon}><CheckIcon size={24} /></div>
               <div className={styles.resultValue}>
                 {calibrationResults.targets.filter(t => Math.abs(t.relative_error) < 0.02).length}/{calibrationResults.targets.length}
               </div>
@@ -503,7 +515,7 @@ export default function CalibrationPage() {
         <div className={styles.categoryCoverageGrid}>
           <div className={styles.coverageCategory}>
             <div className={styles.coverageHeader}>
-              <div className={styles.coverageIcon}>💰</div>
+              <div className={styles.coverageIcon}><MoneyIcon size={20} /></div>
               <h4>IRS SOI Tax</h4>
             </div>
             <div className={styles.coverageStats}>
@@ -547,7 +559,7 @@ export default function CalibrationPage() {
 
           <div className={styles.coverageCategory}>
             <div className={styles.coverageHeader}>
-              <div className={styles.coverageIcon}>👥</div>
+              <div className={styles.coverageIcon}><PeopleIcon size={20} /></div>
               <h4>Demographics</h4>
             </div>
             <div className={styles.coverageStats}>
@@ -587,7 +599,7 @@ export default function CalibrationPage() {
 
           <div className={styles.coverageCategory}>
             <div className={styles.coverageHeader}>
-              <div className={styles.coverageIcon}>🏥</div>
+              <div className={styles.coverageIcon}><HospitalIcon size={20} /></div>
               <h4>Benefit programs</h4>
             </div>
             <div className={styles.coverageStats}>
@@ -631,7 +643,7 @@ export default function CalibrationPage() {
 
           <div className={styles.coverageCategory}>
             <div className={styles.coverageHeader}>
-              <div className={styles.coverageIcon}>🏥</div>
+              <div className={styles.coverageIcon}><HospitalIcon size={20} /></div>
               <h4>Healthcare</h4>
             </div>
             <div className={styles.coverageStats}>
@@ -671,7 +683,7 @@ export default function CalibrationPage() {
 
           <div className={styles.coverageCategory}>
             <div className={styles.coverageHeader}>
-              <div className={styles.coverageIcon}>📊</div>
+              <div className={styles.coverageIcon}><ChartIcon size={20} /></div>
               <h4>Tax expenditures</h4>
             </div>
             <div className={styles.coverageStats}>
@@ -863,7 +875,7 @@ export default function CalibrationPage() {
         <div className={styles.pipelineFlow}>
           <div className={styles.pipelineStage}>
             <div className={styles.stageHeader}>
-              <div className={styles.stageIcon}>📊</div>
+              <div className={styles.stageIcon}><ChartIcon size={24} /></div>
               <h4>Microdata</h4>
             </div>
             <div className="stage-details">
@@ -877,7 +889,7 @@ export default function CalibrationPage() {
 
           <div className={styles.pipelineStage}>
             <div className={styles.stageHeader}>
-              <div className={styles.stageIcon}>🎯</div>
+              <div className={styles.stageIcon}><TargetIcon size={24} /></div>
               <h4>Targets DB</h4>
             </div>
             <div className="stage-details">
@@ -891,7 +903,7 @@ export default function CalibrationPage() {
 
           <div className={styles.pipelineStage}>
             <div className={styles.stageHeader}>
-              <div className={styles.stageIcon}>⚖️</div>
+              <div className={styles.stageIcon}><RulerIcon size={24} /></div>
               <h4>Calibrated weights</h4>
             </div>
             <div className="stage-details">
@@ -993,7 +1005,7 @@ export default function CalibrationPage() {
           <div className={styles.sourcesList}>
             <div className={styles.sourceDetail.us}>
               <div className={styles.sourceDetailHeader}>
-                <span className={styles.sourceFlag}>🇺🇸</span>
+                <span className={styles.sourceFlag}><USFlagIcon size={20} /></span>
                 <h5>IRS Statistics of Income (SOI)</h5>
                 <span className={styles.sourceJurisdiction}>United States</span>
               </div>
@@ -1025,7 +1037,7 @@ export default function CalibrationPage() {
 
             <div className={styles.sourceDetail.us}>
               <div className={styles.sourceDetailHeader}>
-                <span className={styles.sourceFlag}>🇺🇸</span>
+                <span className={styles.sourceFlag}><USFlagIcon size={20} /></span>
                 <h5>Census Bureau CPS ASEC</h5>
                 <span className={styles.sourceJurisdiction}>United States</span>
               </div>
@@ -1049,7 +1061,7 @@ export default function CalibrationPage() {
 
             <div className={styles.sourceDetail.uk}>
               <div className={styles.sourceDetailHeader}>
-                <span className={styles.sourceFlag}>🇬🇧</span>
+                <span className={styles.sourceFlag}><UKFlagIcon size={20} /></span>
                 <h5>OBR economic forecasts</h5>
                 <span className={styles.sourceJurisdiction}>United Kingdom</span>
               </div>
@@ -1069,7 +1081,7 @@ export default function CalibrationPage() {
 
             <div className={styles.sourceDetail.uk}>
               <div className={styles.sourceDetailHeader}>
-                <span className={styles.sourceFlag}>🇬🇧</span>
+                <span className={styles.sourceFlag}><UKFlagIcon size={20} /></span>
                 <h5>ONS family resources survey</h5>
                 <span className={styles.sourceJurisdiction}>United Kingdom</span>
               </div>

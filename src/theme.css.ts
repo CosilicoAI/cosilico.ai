@@ -67,6 +67,12 @@ export const vars = createGlobalThemeContract({
     normal: 'duration-normal',
     slow: 'duration-slow',
   },
+  icon: {
+    sm: 'icon-sm',
+    md: 'icon-md',
+    lg: 'icon-lg',
+    xl: 'icon-xl',
+  },
 });
 
 // Implement the theme (actual values)
@@ -126,6 +132,12 @@ createGlobalTheme(':root', vars, {
     fast: '150ms',
     normal: '250ms',
     slow: '400ms',
+  },
+  icon: {
+    sm: '16px',
+    md: '20px',
+    lg: '24px',
+    xl: '32px',
   },
 });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import PageLayout from "../components/PageLayout";
 import { styles } from "../styles/experiment.css";
+import { XIcon, CheckIcon, WarningIcon } from "../components/icons";
 
 // Current agent configuration - pulled from cosilico-encoder
 const SYSTEM_PROMPT = `Encode tax law into .rac code that matches the oracle.
@@ -150,7 +151,7 @@ const ExperimentPage: React.FC = () => {
 
           <div className={styles.resultCardFailure}>
             <div className={styles.resultHeader}>
-              <span className={styles.resultStatus}>❌ Failed</span>
+              <span className={styles.resultStatus}><XIcon size={16} /> Failed</span>
               <span className={styles.resultAccuracy}>0% accuracy</span>
             </div>
 
@@ -194,11 +195,11 @@ const ExperimentPage: React.FC = () => {
             <ol className={styles.toolCallsList}>
               <li>
                 <code>read_file("docs/RAC_SPEC.md", "engine")</code>
-                <span className={styles.toolCallNote}>✓ Read the spec</span>
+                <span className={styles.toolCallNote}><CheckIcon size={14} /> Read the spec</span>
               </li>
               <li>
                 <code>query_statute(26, "63")</code>
-                <span className={styles.toolCallNote}>⚠️ Whole section, not subsection</span>
+                <span className={styles.toolCallNote}><WarningIcon size={14} /> Whole section, not subsection</span>
               </li>
             </ol>
             <p className={styles.observation}>

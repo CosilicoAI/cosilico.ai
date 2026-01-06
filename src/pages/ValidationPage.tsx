@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ValidationResults } from "../types/validation";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/validation.css";
+import { CheckIcon } from "../components/icons";
 
 export default function ValidationPage() {
   const [data, setData] = useState<ValidationResults | null>(null);
@@ -156,7 +157,7 @@ export default function ValidationPage() {
               <div className={styles.validatorStatus}>
                 {validator.available ? (
                   <>
-                    <span className={styles.statusIcon}>✓</span>
+                    <span className={styles.statusIcon}><CheckIcon size={16} /></span>
                     <span>{formatNumber(validator.householdsCovered)} households</span>
                   </>
                 ) : (

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/autorac.css";
+import { CheckIcon, XIcon } from "../components/icons";
 
 // Icons
 const EncodeIcon = () => (
@@ -224,12 +225,12 @@ export default function AutoRacPage() {
                   <div className={styles.workflowInnerConnector}>↓</div>
                   <div className={styles.workflowInnerBranch}>
                     <div className={styles.workflowBranchFail}>
-                      <span className={styles.workflowBranchLabel}>✗ Fail</span>
+                      <span className={styles.workflowBranchLabel}><XIcon size={14} /> Fail</span>
                       <span>Fix errors, retry (max 3)</span>
                       <div className={styles.workflowRetryArrow}>↺</div>
                     </div>
                     <div className={styles.workflowBranchPass}>
-                      <span className={styles.workflowBranchLabel}>✓ Pass</span>
+                      <span className={styles.workflowBranchLabel}><CheckIcon size={14} /> Pass</span>
                       <span>Log to experiment DB, next item</span>
                     </div>
                   </div>

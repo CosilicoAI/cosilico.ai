@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/pluginDashboard.css";
+import {
+  CheckIcon,
+  XIcon,
+  ChartIcon,
+  TargetIcon,
+  LightningIcon,
+  MicroscopeIcon,
+} from "../components/icons";
 
 // Real data from cosilico-validators encoding sessions
 const ENCODING_DATA = {
@@ -153,14 +161,14 @@ export default function PluginDashboardPage() {
         {/* Status Summary */}
         <section className={styles.statusRow}>
           <div className={styles.statusCard}>
-            <div className={`${styles.statusIcon} ${styles.statusIconPassed}`}>✓</div>
+            <div className={`${styles.statusIcon} ${styles.statusIconPassed}`}><CheckIcon size={24} /></div>
             <div className={styles.statusInfo}>
               <span className={styles.statusCount}>{passedVars.length}</span>
               <span className={styles.statusLabel}>Passed</span>
             </div>
           </div>
           <div className={styles.statusCard}>
-            <div className={`${styles.statusIcon} ${styles.statusIconFailed}`}>✗</div>
+            <div className={`${styles.statusIcon} ${styles.statusIconFailed}`}><XIcon size={24} /></div>
             <div className={styles.statusInfo}>
               <span className={styles.statusCount}>{failedVars.length}</span>
               <span className={styles.statusLabel}>Failed</span>
@@ -257,22 +265,22 @@ export default function PluginDashboardPage() {
           <h2 className={styles.sectionTitle}>Validation stack</h2>
           <div className={styles.techGrid}>
             <div className={styles.techCard}>
-              <div className={styles.techIcon}>🔬</div>
+              <div className={styles.techIcon}><MicroscopeIcon size={24} /></div>
               <div className={styles.techName}>PolicyEngine-US</div>
               <div className={styles.techDesc}>Primary validator</div>
             </div>
             <div className={styles.techCard}>
-              <div className={styles.techIcon}>📊</div>
+              <div className={styles.techIcon}><ChartIcon size={24} /></div>
               <div className={styles.techName}>Consensus engine</div>
               <div className={styles.techDesc}>Multi-validator agreement</div>
             </div>
             <div className={styles.techCard}>
-              <div className={styles.techIcon}>🎯</div>
+              <div className={styles.techIcon}><TargetIcon size={24} /></div>
               <div className={styles.techName}>$15 Tolerance</div>
               <div className={styles.techDesc}>Match threshold</div>
             </div>
             <div className={styles.techCard}>
-              <div className={styles.techIcon}>⚡</div>
+              <div className={styles.techIcon}><LightningIcon size={24} /></div>
               <div className={styles.techName}>Thompson sampling</div>
               <div className={styles.techDesc}>Plugin selection</div>
             </div>

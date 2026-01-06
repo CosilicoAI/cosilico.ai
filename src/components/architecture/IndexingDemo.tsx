@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as styles from "../../styles/architecture.css";
+import { WarningIcon } from "../icons";
 
 export function IndexingDemo() {
   const [year, setYear] = useState(2024);
@@ -141,7 +142,7 @@ export function IndexingDemo() {
 
         {tier === "published" && yearValues.published === 0 && (
           <div className={styles.fallbackNotice}>
-            <span className={styles.noticeIcon}>⚠</span>
+            <span className={styles.noticeIcon}><WarningIcon size={16} /></span>
             <span>No published value for {year} — automatic fallback to PROJECTED</span>
           </div>
         )}

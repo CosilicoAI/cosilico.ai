@@ -25,6 +25,8 @@ import ProgressPage from "./pages/ProgressPage";
 import PortalPage from "./pages/PortalPage";
 import PopdgpEvalPage from "./pages/PopdgpEvalPage";
 import PopdgpPage from "./pages/PopdgpPage";
+import MicrosynthPage from "./pages/MicrosynthPage";
+import DesignPage from "./pages/DesignPage";
 import CosilicoPipeline from "./components/CosilicoPipeline";
 
 // Scroll to top on route change
@@ -64,9 +66,11 @@ function App() {
           <Route path="/stack/fusiongan" element={<FusionGanPage />} />
           <Route path="/stack/popdgp" element={<PopdgpPage />} />
           <Route path="/stack/popdgp/eval" element={<PopdgpEvalPage />} />
+          <Route path="/stack/microsynth" element={<MicrosynthPage />} />
           <Route path="/architecture/encoding/experiment" element={<ExperimentPage />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/portal" element={<PortalPage />} />
+          <Route path="/design" element={<DesignPage />} />
         </Routes>
       </div>
     </BrowserRouter>

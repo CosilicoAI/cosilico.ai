@@ -1,5 +1,6 @@
 import React from "react";
 import * as styles from "../../styles/thesis.css";
+import { USFlagIcon, UKFlagIcon, CanadaFlagIcon } from "../icons";
 
 export function TractionSection() {
   return (
@@ -71,17 +72,17 @@ export function TractionSection() {
         <h3>Geographic coverage</h3>
         <div className={styles.coverageGrid}>
           <div className={`${styles.coverageItem} ${styles.coverageLive}`}>
-            <span className={styles.coverageFlag}>🇺🇸</span>
+            <span className={styles.coverageFlag}><USFlagIcon size={20} /></span>
             <span className={`${styles.coverageStatus} ${styles.coverageStatusLive}`}>Live</span>
             <span className={styles.coverageDetail}>Federal + 50 states</span>
           </div>
           <div className={`${styles.coverageItem} ${styles.coverageLive}`}>
-            <span className={styles.coverageFlag}>🇬🇧</span>
+            <span className={styles.coverageFlag}><UKFlagIcon size={20} /></span>
             <span className={`${styles.coverageStatus} ${styles.coverageStatusLive}`}>Live</span>
             <span className={styles.coverageDetail}>UK tax & benefits</span>
           </div>
           <div className={`${styles.coverageItem} ${styles.coverageProgress}`}>
-            <span className={styles.coverageFlag}>🇨🇦</span>
+            <span className={styles.coverageFlag}><CanadaFlagIcon size={20} /></span>
             <span className={`${styles.coverageStatus} ${styles.coverageStatusProgress}`}>In progress</span>
             <span className={styles.coverageDetail}>Canada (50% complete)</span>
           </div>

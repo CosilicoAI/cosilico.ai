@@ -1,6 +1,7 @@
 import React from "react";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/popdgp.css";
+import { XIcon } from "../components/icons";
 
 // Architecture diagram as SVG-like components
 const ArchitectureDiagram = () => (
@@ -251,22 +252,22 @@ export default function PopdgpPage() {
           <h2 className={styles.sectionTitle}>The Problem</h2>
           <div className={styles.problemGrid}>
             <div className={styles.problemCard}>
-              <div className={styles.problemIcon}>❌</div>
+              <div className={styles.problemIcon}><XIcon size={24} /></div>
               <h3>Static Hierarchies</h3>
               <p>Existing synthesizers treat household→person as fixed. But people marry, divorce, have children, and move.</p>
             </div>
             <div className={styles.problemCard}>
-              <div className={styles.problemIcon}>❌</div>
+              <div className={styles.problemIcon}><XIcon size={24} /></div>
               <h3>Independent Trajectories</h3>
               <p>Modeling each person separately ignores within-household correlations. Spouse incomes are correlated.</p>
             </div>
             <div className={styles.problemCard}>
-              <div className={styles.problemIcon}>❌</div>
+              <div className={styles.problemIcon}><XIcon size={24} /></div>
               <h3>Deterministic Outputs</h3>
               <p>Point estimates miss uncertainty. Two similar people can have very different wealth trajectories.</p>
             </div>
             <div className={styles.problemCard}>
-              <div className={styles.problemIcon}>❌</div>
+              <div className={styles.problemIcon}><XIcon size={24} /></div>
               <h3>Partial Observations</h3>
               <p>SIPP has different variables than PSID than SCF. Can't just concatenate.</p>
             </div>
