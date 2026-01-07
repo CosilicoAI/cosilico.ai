@@ -57,7 +57,7 @@ export default function StructurePage() {
           <div className={styles.orgHeader}>
             <img src="/cosilico-logo-dark.svg" alt="Cosilico logo" className={styles.orgLogo} />
             <h2>Cosilico</h2>
-            <span className={styles.orgType}>For-Profit (C-Corp)</span>
+            <span className={styles.orgType}>Public Benefit Corporation</span>
           </div>
           <div className={styles.orgBody}>
             <h3>Platform & Infrastructure</h3>
@@ -76,9 +76,9 @@ export default function StructurePage() {
 
         <div className={styles.orgRelationship}>
           <div className={styles.relationshipArrow}>
-            <span className={styles.arrowLabel}>Subcontracts</span>
+            <span className={styles.arrowLabel}>Shared open-source code</span>
             <div className={styles.arrowLine}></div>
-            <span className={styles.arrowLabel}>Research tools built on platform</span>
+            <span className={styles.arrowLabel}>No financial relationship</span>
           </div>
         </div>
 
@@ -126,9 +126,9 @@ export default function StructurePage() {
             <div className={styles.contentSection}>
               <h3>The relationship</h3>
               <ul>
-                <li>PolicyEngine is a <strong>customer</strong> of Cosilico (uses our APIs at-cost)</li>
-                <li>PolicyEngine may <strong>subcontract to Cosilico</strong> when grants require platform work</li>
-                <li>PolicyEngine serves as a <strong>lighthouse customer</strong> demonstrating platform capabilities</li>
+                <li>PolicyEngine runs Cosilico's <strong>open-source tools</strong> on its own infrastructure</li>
+                <li><strong>No financial relationship</strong>—separate organizations, shared mission</li>
+                <li>PolicyEngine serves as a <strong>lighthouse user</strong> demonstrating platform capabilities</li>
                 <li>The same founding team runs both (for now)</li>
               </ul>
             </div>
@@ -142,11 +142,11 @@ export default function StructurePage() {
                 </div>
                 <div className={styles.benefitCard}>
                   <h4>Built-in credibility</h4>
-                  <p>PolicyEngine's government users (UK Treasury, US Congress) validate the platform.</p>
+                  <p>PolicyEngine's government users (No 10, US Congress) validate the platform.</p>
                 </div>
                 <div className={styles.benefitCard}>
-                  <h4>Grant pipeline</h4>
-                  <p>Foundation grants to PE can flow to Cosilico as subcontracts. Additional revenue channel.</p>
+                  <h4>Open-source adoption</h4>
+                  <p>PE's widespread use of Cosilico's open-source tools demonstrates real-world value.</p>
                 </div>
                 <div className={styles.benefitCard}>
                   <h4>Mission alignment</h4>
@@ -168,9 +168,8 @@ export default function StructurePage() {
                 PolicyEngine uses those funds for research, analysis, and public tools.
               </p>
               <p>
-                When the work requires platform infrastructure, PolicyEngine may
-                <strong> subcontract to Cosilico</strong> at fair-market rates. This is similar to
-                how a grantee might pay AWS for hosting or a contractor for development.
+                PolicyEngine runs Cosilico's <strong>open-source tools</strong> on its own infrastructure.
+                There's no financial relationship between the organizations—your grant funds research, not platform fees.
               </p>
             </div>
 
@@ -219,7 +218,7 @@ export default function StructurePage() {
                 </div>
                 <div className={styles.flowStep}>
                   <span className={styles.stepNum}>3</span>
-                  <span className={styles.stepText}>PE uses Cosilico APIs for simulations (may subcontract)</span>
+                  <span className={styles.stepText}>PE runs Cosilico's open-source tools on PE infrastructure</span>
                 </div>
                 <div className={styles.flowStep}>
                   <span className={styles.stepNum}>4</span>
@@ -292,7 +291,7 @@ export default function StructurePage() {
               <h3>The same expertise, different delivery</h3>
               <p>
                 Both organizations are founded by the same team that built PolicyEngine's
-                models used by the UK Government and US Congress. Whether you need
+                models used by No 10 and US Congress. Whether you need
                 infrastructure (Cosilico) or custom research (PolicyEngine), you're
                 getting the same underlying expertise.
               </p>
