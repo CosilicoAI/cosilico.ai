@@ -234,26 +234,23 @@ the cost of the thrifty food plan reduced by
 `}<span className="keyword">declaration</span>{` `}<span className="keyword">scope</span>{` `}<span className="type">SnapAllotment</span>{`:
   `}<span className="keyword">input</span>{` household_size `}<span className="keyword">content</span>{` `}<span className="type">integer</span>{`
   `}<span className="keyword">input</span>{` net_income `}<span className="keyword">content</span>{` `}<span className="type">money</span>{`
+  `}<span className="keyword">internal</span>{` contribution_rate `}<span className="keyword">content</span>{` `}<span className="type">decimal</span>{`
   `}<span className="keyword">internal</span>{` max_allotment `}<span className="keyword">content</span>{` `}<span className="type">money</span>{`
   `}<span className="keyword">output</span>{` allotment `}<span className="keyword">content</span>{` `}<span className="type">money</span>{`
 
 `}<span className="keyword">scope</span>{` `}<span className="type">SnapAllotment</span>{`:
+  `}<span className="keyword">definition</span>{` contribution_rate `}<span className="keyword">equals</span>{` `}<span className="number">30%</span>{`
   `}<span className="keyword">definition</span>{` max_allotment `}<span className="keyword">equals</span>{`
     `}<span className="keyword">match</span>{` household_size `}<span className="keyword">with pattern</span>{`
-    | `}<span className="number">1</span>{` -> `}<span className="number">$292</span>{`
-    | `}<span className="number">2</span>{` -> `}<span className="number">$536</span>{`
-    | `}<span className="number">3</span>{` -> `}<span className="number">$768</span>{`
-    | `}<span className="number">4</span>{` -> `}<span className="number">$975</span>{`
+    | `}<span className="number">1</span>{` -> `}<span className="number">$292</span>{` | `}<span className="number">2</span>{` -> `}<span className="number">$536</span>{` | `}<span className="number">3</span>{` -> `}<span className="number">$768</span>{` | `}<span className="number">4</span>{` -> `}<span className="number">$975</span>{`
 
   `}<span className="keyword">definition</span>{` allotment `}<span className="keyword">equals</span>{`
-    `}<span className="keyword">if</span>{` max_allotment - net_income * `}<span className="number">30%</span>{` >= `}<span className="number">$0</span>{`
-    `}<span className="keyword">then</span>{` max_allotment - net_income * `}<span className="number">30%</span>{`
+    `}<span className="keyword">if</span>{` max_allotment - net_income * contribution_rate >= `}<span className="number">$0</span>{`
+    `}<span className="keyword">then</span>{` max_allotment - net_income * contribution_rate
     `}<span className="keyword">else</span>{` `}<span className="number">$0</span>{`
 
-`}<span className="comment"># Beautiful literate style, but:</span>{`
-`}<span className="comment"># - Magic numbers in formulas ($292, 30%)</span>{`
-`}<span className="comment"># - No temporal versioning built-in</span>{`
-`}<span className="comment"># - Custom syntax to learn</span>
+`}<span className="comment"># Literate style, but no temporal versioning:</span>{`
+`}<span className="comment"># What was contribution_rate in 1990? 2015? 2024?</span>
   </pre>
 );
 
