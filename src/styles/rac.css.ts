@@ -115,6 +115,43 @@ export const codeBlock = style({
   animationFillMode: 'backwards',
 });
 
+export const exampleBar = style({
+  display: 'flex',
+  gap: vars.space.sm,
+  padding: vars.space.md,
+  background: 'rgba(0, 0, 0, 0.4)',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+  flexWrap: 'wrap',
+});
+
+export const examplePill = style({
+  padding: `${vars.space.sm} ${vars.space.lg}`,
+  background: 'transparent',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  borderRadius: vars.radius['2xl'],
+  color: vars.color.textMuted,
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  fontWeight: 500,
+  cursor: 'pointer',
+  transition: `all ${vars.duration.fast} ${vars.ease.out}`,
+  whiteSpace: 'nowrap',
+  ':hover': {
+    color: vars.color.textSecondary,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+});
+
+export const examplePillActive = style({
+  color: vars.color.accent,
+  borderColor: vars.color.accent,
+  background: 'rgba(0, 212, 255, 0.1)',
+  ':hover': {
+    color: vars.color.accent,
+    borderColor: vars.color.accent,
+  },
+});
+
 export const tabBar = style({
   display: 'flex',
   gap: '2px',
@@ -236,6 +273,7 @@ export const multiFileCode = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space.lg,
+  marginTop: `-${vars.space.md}`,
 });
 
 export const fileSection = style({});
