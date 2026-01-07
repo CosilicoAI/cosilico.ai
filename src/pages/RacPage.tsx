@@ -326,7 +326,7 @@ export default function RacPage() {
                 <td className={styles.noSupport}>Comments</td>
                 <td className={styles.neutralSupport}>Metadata</td>
                 <td className={styles.neutralSupport}>Literate</td>
-                <td className={styles.hasSupport}>First-class</td>
+                <td className={styles.hasSupport}>Filepath</td>
               </tr>
               <tr>
                 <td>Temporal versioning</td>
