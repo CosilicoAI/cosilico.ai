@@ -366,7 +366,7 @@ export default function RacPage() {
               <tr>
                 <td>No magic numbers</td>
                 <td className={styles.noSupport}>Allowed</td>
-                <td className={styles.hasSupport}>Enforced</td>
+                <td className={styles.noSupport}>Allowed</td>
                 <td className={styles.noSupport}>Allowed</td>
                 <td className={styles.hasSupport}>Enforced</td>
               </tr>
