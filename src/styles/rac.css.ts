@@ -402,6 +402,75 @@ export const comparisonNote = style({
   color: vars.color.textSecondary,
   textAlign: 'center',
   fontStyle: 'italic',
+  marginBottom: vars.space['2xl'],
+});
+
+// ============================================
+// SIDE-BY-SIDE COMPARISON
+// ============================================
+
+export const sideBySection = style({
+  marginTop: vars.space['2xl'],
+});
+
+export const sideBySideTitle = style({
+  fontSize: '1.5rem',
+  textAlign: 'center',
+  marginBottom: vars.space.xl,
+  color: vars.color.text,
+});
+
+export const sideBySideGrid = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: vars.space.lg,
+  '@media': {
+    '(max-width: 900px)': {
+      gridTemplateColumns: '1fr',
+    },
+  },
+});
+
+export const sideBySideBlock = style({
+  background: 'rgba(0, 0, 0, 0.4)',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  borderRadius: vars.radius.lg,
+  overflow: 'hidden',
+});
+
+export const sideBySideHeader = style({
+  padding: `${vars.space.sm} ${vars.space.lg}`,
+  background: 'rgba(255, 255, 255, 0.03)',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+});
+
+export const sideBySideHeaderRac = style({
+  background: 'rgba(0, 255, 136, 0.05)',
+  borderBottom: '1px solid rgba(0, 255, 136, 0.15)',
+});
+
+export const sideBySideHeaderPE = style({
+  background: 'rgba(0, 212, 255, 0.05)',
+  borderBottom: '1px solid rgba(0, 212, 255, 0.15)',
+});
+
+export const sideBySideLabel = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.8rem',
+  color: vars.color.textSecondary,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+});
+
+export const sideBySidePre = style({
+  fontFamily: vars.font.mono,
+  fontSize: '0.75rem',
+  lineHeight: 1.5,
+  color: vars.color.textSecondary,
+  padding: vars.space.lg,
+  margin: 0,
+  overflowX: 'auto',
+  whiteSpace: 'pre',
 });
 
 // ============================================

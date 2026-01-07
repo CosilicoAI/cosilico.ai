@@ -317,6 +317,150 @@ export default function RacPage() {
             DMN excels at business process decisions. RAC is for encoding statutes
             where auditability, temporal accuracy, and legal traceability matter.
           </p>
+
+          <div className={styles.sideBySection}>
+            <h3 className={styles.sideBySideTitle}>Same rule, different formats</h3>
+
+            {/* DMN vs RAC */}
+            <div className={styles.sideBySideGrid}>
+              <div className={styles.sideBySideBlock}>
+                <div className={styles.sideBySideHeader}>
+                  <span className={styles.sideBySideLabel}>DMN (XML + FEEL)</span>
+                </div>
+                <pre className={styles.sideBySidePre}>
+{`<definitions xmlns="https://www.omg.org/spec/DMN/...">
+  <inputData id="net_income" name="net_income">
+    <variable typeRef="number"/>
+  </inputData>
+  <inputData id="household_size" name="household_size">
+    <variable typeRef="number"/>
+  </inputData>
+
+  <decision id="snap_allotment" name="SNAP Allotment">
+    <variable name="snap_allotment" typeRef="number"/>
+    <informationRequirement>
+      <requiredInput href="#net_income"/>
+    </informationRequirement>
+    <literalExpression>
+      <text>
+        max(0, max_allotment[household_size]
+             - net_income * 0.30)
+      </text>
+    </literalExpression>
+  </decision>
+
+  <!-- Where does 0.30 come from? When did it
+       take effect? What statute? DMN doesn't say. -->
+</definitions>`}
+                </pre>
+              </div>
+
+              <div className={styles.sideBySideBlock}>
+                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderRac}`}>
+                  <span className={styles.sideBySideLabel}>RAC (YAML + Python)</span>
+                </div>
+                <pre className={styles.sideBySidePre}>
+{`# 7 USC § 2017(a) - SNAP Allotment
+
+text: |
+  The allotment shall equal the thrifty food plan
+  reduced by 30% of household income.
+
+parameter contribution_rate:
+  description: "Household contribution share"
+  reference: "7 USC 2017(a)"
+  values:
+    2024-01-01: 0.30
+    1977-01-01: 0.30
+
+variable snap_allotment:
+  entity: Household
+  period: Month
+  dtype: Money
+  formula: |
+    max(0, max_allotment[household_size]
+         - net_income * contribution_rate)
+  tests:
+    - inputs: {household_size: 4, net_income: 500}
+      expect: 825`}
+                </pre>
+              </div>
+            </div>
+
+            {/* OpenFisca vs RAC */}
+            <div className={styles.sideBySideGrid} style={{ marginTop: '1.5rem' }}>
+              <div className={styles.sideBySideBlock}>
+                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderPE}`}>
+                  <span className={styles.sideBySideLabel}>OpenFisca / PolicyEngine (Python)</span>
+                </div>
+                <pre className={styles.sideBySidePre}>
+{`# variables/snap_allotment.py
+class snap_allotment(Variable):
+    entity = Household
+    definition_period = MONTH
+    value_type = float
+    label = "SNAP allotment"
+
+    def formula(household, period, parameters):
+        size = household("household_size", period)
+        income = household("snap_net_income", period)
+        max_allot = parameters(period).gov.usda.snap \\
+            .max_allotment[size]
+        rate = parameters(period).gov.usda.snap \\
+            .contribution_rate
+        return max_(0, max_allot - income * rate)
+
+# parameters/gov/usda/snap/contribution_rate.yaml
+description: Household contribution rate
+values:
+  2024-01-01: 0.30
+  1977-01-01: 0.30
+
+# tests/snap_allotment.yaml (separate file)
+- period: 2024-01
+  input:
+    household_size: 4
+    snap_net_income: 500
+  output:
+    snap_allotment: 825`}
+                </pre>
+              </div>
+
+              <div className={styles.sideBySideBlock}>
+                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderRac}`}>
+                  <span className={styles.sideBySideLabel}>RAC (single file)</span>
+                </div>
+                <pre className={styles.sideBySidePre}>
+{`# statute/7/2017/a.rac - 7 USC § 2017(a)
+
+text: |
+  The allotment shall equal the thrifty food plan
+  reduced by 30% of household income.
+
+parameter contribution_rate:
+  description: "Household contribution share"
+  reference: "7 USC 2017(a)"
+  values:
+    2024-01-01: 0.30
+    1977-01-01: 0.30
+
+variable snap_allotment:
+  entity: Household
+  period: Month
+  dtype: Money
+  formula: |
+    max(0, max_allotment[household_size]
+         - snap_net_income * contribution_rate)
+  tests:
+    - inputs: {household_size: 4, snap_net_income: 500}
+      expect: 825
+
+# One file. Statute text, parameters, formula, tests.
+# File path = legal citation. No Python required.`}
+                </pre>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* CTA */}
