@@ -112,7 +112,6 @@ export default function RacPage() {
 `}<span className="keyword">parameter</span>{` `}<span className="variable">max_allotment</span>{`:
   `}<span className="field">description:</span>{` `}<span className="string">"Maximum monthly SNAP benefit by household size"</span>{`
   `}<span className="field">unit:</span>{` `}<span className="type">USD</span>{`
-  `}<span className="field">index:</span>{` `}<span className="type">household_size</span>{`
   `}<span className="field">values:</span>{`
     `}<span className="number">2024-10-01</span>{`: [`}<span className="number">292</span>{`, `}<span className="number">536</span>{`, `}<span className="number">768</span>{`, `}<span className="number">975</span>{`, `}<span className="number">1159</span>{`, `}<span className="number">1391</span>{`, `}<span className="number">1536</span>{`, `}<span className="number">1756</span>{`]
 
@@ -171,8 +170,8 @@ export default function RacPage() {
               <div className={styles.featureIcon}><FormulaIcon /></div>
               <h3 className={styles.featureTitle}>No magic numbers</h3>
               <p className={styles.featureDescription}>
-                Only -1, 0, 1 allowed in formulas. Parameter values must appear
-                in statute text. CI enforces automatically.
+                Only small integers (-1 to 3) allowed in formulas. All policy values
+                must come from parameters with citations.
               </p>
             </div>
 
@@ -248,6 +247,11 @@ export default function RacPage() {
                 <td>Enumeration type (filing status, etc.)</td>
                 <td><code>enum FilingStatus:</code></td>
               </tr>
+              <tr>
+                <td><code>function name:</code></td>
+                <td>Reusable helper function</td>
+                <td><code>function bracket_tax:</code></td>
+              </tr>
             </tbody>
           </table>
         </section>
@@ -262,7 +266,7 @@ export default function RacPage() {
             </p>
             <div className={styles.ctaLinks}>
               <a
-                href="https://github.com/CosilicoAI/cosilico-us/blob/main/RAC_SPEC.md"
+                href="https://github.com/CosilicoAI/rac/blob/main/docs/RAC_SPEC.md"
                 className={styles.ctaLink}
                 target="_blank"
                 rel="noopener noreferrer"
