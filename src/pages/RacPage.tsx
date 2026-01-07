@@ -378,6 +378,73 @@ export default function RacPage() {
           </table>
         </section>
 
+        {/* More RAC Examples */}
+        <section className={styles.examplesSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>More RAC examples</h2>
+            <p className={styles.sectionSubtitle}>
+              Each file encodes exactly one statutory subsection. Values come from the statute text itself.
+            </p>
+          </div>
+
+          <div className={styles.examplesGrid}>
+            <div className={styles.exampleCard}>
+              <span className={styles.codeFilename}>
+                <FileIcon />
+                statute/26/63/c/2/A.rac
+              </span>
+              <pre className={styles.codePre}>
+{`# 26 USC § 63(c)(2)(A) - Standard deduction (joint)
+
+`}<span className="keyword">text:</span>{` |
+  (A) 200 percent of the dollar amount in effect under
+  subparagraph (C) for the taxable year in the case of—
+  (i) a joint return, or (ii) a surviving spouse
+
+`}<span className="keyword">parameter</span>{` `}<span className="variable">joint_multiplier</span>{`:
+  `}<span className="field">description:</span>{` `}<span className="string">"Multiplier for joint returns"</span>{`
+  `}<span className="field">values:</span>{`
+    `}<span className="number">1988-01-01</span>{`: `}<span className="number">2</span>{`  `}<span className="comment"># "200 percent"</span>{`
+
+`}<span className="keyword">variable</span>{` `}<span className="variable">basic_std_ded_joint</span>{`:
+  `}<span className="field">imports:</span>{` [`}<span className="string">26/63/c/2/C#basic_std_ded_other</span>{`]
+  `}<span className="field">entity:</span>{` `}<span className="type">TaxUnit</span>{`
+  `}<span className="field">dtype:</span>{` `}<span className="type">Money</span>{`
+  `}<span className="field">formula:</span>{` |
+    `}<span className="keyword">return</span>{` basic_std_ded_other * joint_multiplier`}
+              </pre>
+            </div>
+
+            <div className={styles.exampleCard}>
+              <span className={styles.codeFilename}>
+                <FileIcon />
+                statute/ny/tax/606/d.rac
+              </span>
+              <pre className={styles.codePre}>
+{`# NY Tax Law § 606(d) - NY Earned Income Credit
+
+`}<span className="keyword">text:</span>{` |
+  § 606(d) For taxable years beginning after 2002, a resident
+  individual who is allowed the earned income credit under
+  section 32 of the IRC shall be allowed a credit equal to
+  thirty percent of such federal credit.
+
+`}<span className="keyword">parameter</span>{` `}<span className="variable">ny_eitc_rate</span>{`:
+  `}<span className="field">description:</span>{` `}<span className="string">"NY EITC as % of federal"</span>{`
+  `}<span className="field">values:</span>{`
+    `}<span className="number">2003-01-01</span>{`: `}<span className="number">0.30</span>{`  `}<span className="comment"># "thirty percent"</span>{`
+
+`}<span className="keyword">variable</span>{` `}<span className="variable">ny_eitc</span>{`:
+  `}<span className="field">imports:</span>{` [`}<span className="string">26/32#eitc</span>{` `}<span className="keyword">as</span>{` `}<span className="variable">federal_eitc</span>{`]
+  `}<span className="field">entity:</span>{` `}<span className="type">TaxUnit</span>{`
+  `}<span className="field">dtype:</span>{` `}<span className="type">Money</span>{`
+  `}<span className="field">formula:</span>{` |
+    `}<span className="keyword">return</span>{` federal_eitc * ny_eitc_rate`}
+              </pre>
+            </div>
+          </div>
+        </section>
+
         {/* Features Grid */}
         <section className={styles.featuresSection}>
           <div className={styles.sectionHeader}>

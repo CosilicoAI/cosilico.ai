@@ -241,6 +241,33 @@ export const multiFileCode = style({
 export const fileSection = style({});
 
 // ============================================
+// MORE EXAMPLES SECTION
+// ============================================
+
+export const examplesSection = style({
+  paddingTop: `${vars.space['2xl']} !important`,
+});
+
+export const examplesGrid = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: vars.space.xl,
+  '@media': {
+    '(max-width: 900px)': {
+      gridTemplateColumns: '1fr',
+    },
+  },
+});
+
+export const exampleCard = style({
+  background: 'rgba(0, 0, 0, 0.4)',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  borderRadius: vars.radius.lg,
+  overflow: 'hidden',
+  padding: vars.space.lg,
+});
+
+// ============================================
 // FEATURES GRID
 // ============================================
 
