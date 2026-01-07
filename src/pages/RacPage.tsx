@@ -404,11 +404,9 @@ class snap_allotment(Variable):
     def formula(household, period, parameters):
         size = household("household_size", period)
         income = household("snap_net_income", period)
-        max_allot = parameters(period).gov.usda.snap \\
-            .max_allotment[size]
-        rate = parameters(period).gov.usda.snap \\
-            .contribution_rate
-        return max_(0, max_allot - income * rate)
+        p = parameters(period).gov.usda.snap
+        return max_(0, p.max_allotment[size]
+                       - income * p.contribution_rate)
 
 # parameters/gov/usda/snap/contribution_rate.yaml
 description: Household contribution rate
@@ -418,11 +416,8 @@ values:
 
 # tests/snap_allotment.yaml (separate file)
 - period: 2024-01
-  input:
-    household_size: 4
-    snap_net_income: 500
-  output:
-    snap_allotment: 825`}
+  input: {household_size: 4, snap_net_income: 500}
+  output: {snap_allotment: 825}`}
                 </pre>
               </div>
 
@@ -453,10 +448,85 @@ variable snap_allotment:
          - snap_net_income * contribution_rate)
   tests:
     - inputs: {household_size: 4, snap_net_income: 500}
-      expect: 825
+      expect: 825`}
+                </pre>
+              </div>
+            </div>
 
-# One file. Statute text, parameters, formula, tests.
-# File path = legal citation. No Python required.`}
+            {/* Catala vs RAC */}
+            <div className={styles.sideBySideGrid} style={{ marginTop: '1.5rem' }}>
+              <div className={styles.sideBySideBlock}>
+                <div className={styles.sideBySideHeader}>
+                  <span className={styles.sideBySideLabel}>Catala (Literate programming)</span>
+                </div>
+                <pre className={styles.sideBySidePre}>
+{`@@Section 2017(a) - SNAP Allotment@@
+
+/*
+The value of the allotment shall be equal to
+the cost of the thrifty food plan reduced by
+30 percent of the household's income.
+*/
+
+declaration scope SnapAllotment:
+  input household_size content integer
+  input net_income content money
+  internal max_allotment content money
+  output allotment content money
+
+scope SnapAllotment:
+  definition max_allotment equals
+    match household_size with pattern
+    | 1 -> $292
+    | 2 -> $536
+    | 3 -> $768
+    | 4 -> $975
+
+  definition allotment equals
+    if max_allotment - net_income * 30% >= $0
+    then max_allotment - net_income * 30%
+    else $0
+
+# Beautiful literate style, but:
+# - Magic numbers in formulas ($292, 30%)
+# - No temporal versioning built-in
+# - Custom syntax (not Python/YAML)`}
+                </pre>
+              </div>
+
+              <div className={styles.sideBySideBlock}>
+                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderRac}`}>
+                  <span className={styles.sideBySideLabel}>RAC</span>
+                </div>
+                <pre className={styles.sideBySidePre}>
+{`# statute/7/2017/a.rac - 7 USC § 2017(a)
+
+text: |
+  The allotment shall equal the thrifty food plan
+  reduced by 30% of household income.
+
+parameter contribution_rate:
+  reference: "7 USC 2017(a)"
+  values:
+    2024-01-01: 0.30
+    1977-01-01: 0.30  # Same since inception
+
+parameter max_allotment:
+  reference: "USDA FNS"
+  values:
+    2024-10-01: [292, 536, 768, 975, ...]
+    2023-10-01: [281, 516, 740, 939, ...]
+
+variable snap_allotment:
+  entity: Household
+  period: Month
+  dtype: Money
+  formula: |
+    max(0, max_allotment[household_size]
+         - snap_net_income * contribution_rate)
+
+# All values parameterized with history.
+# Python syntax. Inline tests. LLM-friendly.`}
                 </pre>
               </div>
             </div>
