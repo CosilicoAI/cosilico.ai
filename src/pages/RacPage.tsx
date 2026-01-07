@@ -256,6 +256,69 @@ export default function RacPage() {
           </table>
         </section>
 
+        {/* Comparison Section */}
+        <section className={styles.comparisonSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Why not DMN?</h2>
+            <p className={styles.sectionSubtitle}>
+              Decision Model and Notation is an industry standard for business rules.
+              RAC is purpose-built for law.
+            </p>
+          </div>
+
+          <table className={styles.comparisonTable}>
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>DMN</th>
+                <th>RAC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Legal citations</td>
+                <td className={styles.noSupport}>Comments only</td>
+                <td className={styles.hasSupport}>First-class syntax</td>
+              </tr>
+              <tr>
+                <td>Temporal versioning</td>
+                <td className={styles.noSupport}>External tooling</td>
+                <td className={styles.hasSupport}>Built-in effective dates</td>
+              </tr>
+              <tr>
+                <td>Formula language</td>
+                <td className={styles.neutralSupport}>FEEL (custom syntax)</td>
+                <td className={styles.hasSupport}>Python subset</td>
+              </tr>
+              <tr>
+                <td>File format</td>
+                <td className={styles.noSupport}>XML</td>
+                <td className={styles.hasSupport}>YAML</td>
+              </tr>
+              <tr>
+                <td>Inline tests</td>
+                <td className={styles.noSupport}>Separate test suites</td>
+                <td className={styles.hasSupport}>Co-located with formulas</td>
+              </tr>
+              <tr>
+                <td>Cross-references</td>
+                <td className={styles.neutralSupport}>Business Knowledge Models</td>
+                <td className={styles.hasSupport}>Statute path imports</td>
+              </tr>
+              <tr>
+                <td>AI generation</td>
+                <td className={styles.noSupport}>Complex XML structure</td>
+                <td className={styles.hasSupport}>LLM-friendly format</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p className={styles.comparisonNote}>
+            DMN excels at business process decisions. RAC is for encoding statutes
+            where auditability, temporal accuracy, and legal traceability matter.
+          </p>
+        </section>
+
         {/* CTA */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContent}>

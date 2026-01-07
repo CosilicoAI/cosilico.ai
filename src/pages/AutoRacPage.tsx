@@ -76,6 +76,31 @@ const BackIcon = () => (
   </svg>
 );
 
+const ParallelIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <path d="M4 4h4v4H4z" />
+    <path d="M16 4h4v4h-4z" />
+    <path d="M4 16h4v4H4z" />
+    <path d="M16 16h4v4h-4z" />
+    <path d="M12 4v16" />
+    <path d="M4 12h16" />
+  </svg>
+);
+
+const PluginIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.componentIconSvg}>
+    <path d="M12 2v6" />
+    <path d="M12 22v-4" />
+    <circle cx="12" cy="12" r="4" />
+    <path d="M4.93 4.93l4.24 4.24" />
+    <path d="M14.83 14.83l4.24 4.24" />
+    <path d="M2 12h6" />
+    <path d="M16 12h6" />
+    <path d="M4.93 19.07l4.24-4.24" />
+    <path d="M14.83 9.17l4.24-4.24" />
+  </svg>
+);
+
 export default function AutoRacPage() {
   return (
     <PageLayout>
@@ -87,10 +112,62 @@ export default function AutoRacPage() {
             <div className={styles.heroBadge}>AI ENCODING</div>
             <h1 className={styles.heroTitle}>AutoRAC</h1>
             <p className={styles.heroSubtitle}>
-              Automated statute encoding with continuous feedback.
-              AI agents encode, validate, and learn through full session tracking.
-              Journey-based experimentation for autonomous legal rule extraction.
+              AI-assisted statute encoding infrastructure.
+              Two approaches: interactive Claude Code plugin for exploration,
+              or Agent SDK for parallel batch encoding.
             </p>
+          </div>
+        </section>
+
+        {/* Two Approaches */}
+        <section className={styles.componentsSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Two encoding approaches</h2>
+            <p className={styles.sectionSubtitle}>
+              Choose the right tool for your encoding workflow
+            </p>
+          </div>
+
+          <div className={styles.componentsGrid}>
+            <div className={`${styles.componentCard} ${styles.delay1}`}>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}><PluginIcon /></div>
+                <div>
+                  <div className={styles.componentTitle}>Interactive (Claude Code)</div>
+                  <div className={styles.componentFile}>Recommended for exploration</div>
+                </div>
+              </div>
+              <p className={styles.componentDesc}>
+                Uses Claude Code with Max subscription. No API billing.
+                Run <code>/encode "26 USC 32"</code> and watch the agent work.
+              </p>
+              <div className={styles.componentFeatures}>
+                <div className={styles.componentFeature}>Claude Code plugin integration</div>
+                <div className={styles.componentFeature}>Full session transcript tracking</div>
+                <div className={styles.componentFeature}>Interactive debugging and iteration</div>
+                <div className={styles.componentFeature}>No per-token costs</div>
+              </div>
+            </div>
+
+            <div className={`${styles.componentCard} ${styles.delay2}`}>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}><ParallelIcon /></div>
+                <div>
+                  <div className={styles.componentTitle}>Programmatic (Agent SDK)</div>
+                  <div className={styles.componentFile}>For batch/parallel encoding</div>
+                </div>
+              </div>
+              <p className={styles.componentDesc}>
+                Uses Claude Agent SDK with API key. Pay per token,
+                but enables massive parallelization—10x faster for batch jobs.
+              </p>
+              <div className={styles.componentFeatures}>
+                <div className={styles.componentFeature}>encode_batch(requests, max_concurrent=10)</div>
+                <div className={styles.componentFeature}>Parallel encoding agents</div>
+                <div className={styles.componentFeature}>CI/CD pipeline integration</div>
+                <div className={styles.componentFeature}>Scales to hundreds of statutes</div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -98,14 +175,6 @@ export default function AutoRacPage() {
         <section className={styles.loopSection}>
           <div className={styles.loopDiagram}>
             <div className={`${styles.loopNode} ${styles.loopNodeActive}`}>
-              <div className={styles.loopNodeIcon}><SessionIcon /></div>
-              <span className={styles.loopNodeLabel}>Session</span>
-              <span className={styles.loopNodeDesc}>Track journey</span>
-            </div>
-
-            <div className={styles.loopArrow} />
-
-            <div className={styles.loopNode}>
               <div className={styles.loopNodeIcon}><EncodeIcon /></div>
               <span className={styles.loopNodeLabel}>Encode</span>
               <span className={styles.loopNodeDesc}>Statute → RAC</span>
@@ -116,7 +185,7 @@ export default function AutoRacPage() {
             <div className={styles.loopNode}>
               <div className={styles.loopNodeIcon}><ValidateIcon /></div>
               <span className={styles.loopNodeLabel}>Validate</span>
-              <span className={styles.loopNodeDesc}>CI + Oracles</span>
+              <span className={styles.loopNodeDesc}>3-tier pipeline</span>
             </div>
 
             <div className={styles.loopArrow} />
@@ -124,127 +193,58 @@ export default function AutoRacPage() {
             <div className={styles.loopNode}>
               <div className={styles.loopNodeIcon}><LearnIcon /></div>
               <span className={styles.loopNodeLabel}>Learn</span>
-              <span className={styles.loopNodeDesc}>Analyze sessions</span>
+              <span className={styles.loopNodeDesc}>Calibrate predictions</span>
+            </div>
+
+            <div className={styles.loopArrow} />
+
+            <div className={styles.loopNode}>
+              <div className={styles.loopNodeIcon}><SessionIcon /></div>
+              <span className={styles.loopNodeLabel}>Improve</span>
+              <span className={styles.loopNodeDesc}>Better prompts</span>
             </div>
           </div>
         </section>
 
-        {/* Encode Workflow Detail */}
+        {/* 3-Tier Validation */}
         <section className={styles.workflowSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>/encode Workflow</h2>
+            <h2 className={styles.sectionTitle}>3-tier validation pipeline</h2>
             <p className={styles.sectionSubtitle}>
-              Detailed steps when encoding a statute
+              Validation runs in order—oracles generate comparison data for LLM reviewers
             </p>
           </div>
 
           <div className={styles.workflowContainer}>
-            {/* Step 1: Command */}
+            {/* Tier 1: CI */}
             <div className={styles.workflowStep}>
               <div className={styles.workflowStepNumber}>1</div>
               <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>/encode "26 USC 1"</div>
-                <div className={styles.workflowStepDesc}>User invokes encode command with citation</div>
+                <div className={styles.workflowStepTitle}>CI validation</div>
+                <div className={styles.workflowStepDesc}>
+                  <code>rac pytest</code> — instant, free
+                  <br />Catches syntax errors, format issues, missing imports
+                </div>
+                <div className={styles.workflowInnerBranch} style={{ marginTop: '1rem' }}>
+                  <div className={styles.workflowBranchFail}>
+                    <span className={styles.workflowBranchLabel}><XIcon size={14} /> Fail</span>
+                    <span>Fix errors, retry (max 3)</span>
+                  </div>
+                  <div className={styles.workflowBranchPass}>
+                    <span className={styles.workflowBranchLabel}><CheckIcon size={14} /> Pass</span>
+                    <span>Proceed to oracles</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div className={styles.workflowConnector} />
 
-            {/* Step 2: Fetch */}
-            <div className={styles.workflowStep}>
+            {/* Tier 2: Oracles */}
+            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
               <div className={styles.workflowStepNumber}>2</div>
               <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>Fetch Statute</div>
-                <div className={styles.workflowStepDesc}>
-                  <code>autorac statute "26 USC 1"</code>
-                  <br />Extract from arch USC XML
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.workflowConnector} />
-
-            {/* Step 3: Structure Discovery & Chunking */}
-            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
-              <div className={styles.workflowStepNumber}>3</div>
-              <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>Discover Structure & Chunk</div>
-                <div className={styles.workflowStepDesc}>
-                  Parse subsections, auto-chunk by complexity, build leaf-first queue
-                </div>
-                <div className={styles.workflowChunking}>
-                  <div className={styles.workflowChunkRule}>
-                    <span className={styles.workflowChunkType}>Simple leaf</span>
-                    <span className={styles.workflowChunkArrow}>→</span>
-                    <span className={styles.workflowChunkAction}>1 session</span>
-                  </div>
-                  <div className={styles.workflowChunkRule}>
-                    <span className={styles.workflowChunkType}>Leaf cluster</span>
-                    <span className={styles.workflowChunkArrow}>→</span>
-                    <span className={styles.workflowChunkAction}>siblings together</span>
-                  </div>
-                  <div className={styles.workflowChunkRule}>
-                    <span className={styles.workflowChunkType}>Complex section</span>
-                    <span className={styles.workflowChunkArrow}>→</span>
-                    <span className={styles.workflowChunkAction}>split into N sessions</span>
-                  </div>
-                  <div className={styles.workflowChunkRule}>
-                    <span className={styles.workflowChunkType}>Container</span>
-                    <span className={styles.workflowChunkArrow}>→</span>
-                    <span className={styles.workflowChunkAction}>auto after children</span>
-                  </div>
-                </div>
-                <div className={styles.workflowTree}>
-                  <div>Session 1: 26/1/h/1/*.rac (TCJA brackets)</div>
-                  <div>Session 2: 26/1/h/2-6.rac (adjustments)</div>
-                  <div>Session 3: 26/1/h.rac (container)</div>
-                  <div>...</div>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.workflowConnector} />
-
-            {/* Step 4: Encode Loop */}
-            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
-              <div className={styles.workflowStepNumber}>4</div>
-              <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>Encode Each Subsection</div>
-                <div className={styles.workflowStepDesc}>For each item in queue:</div>
-
-                <div className={styles.workflowInnerLoop}>
-                  <div className={styles.workflowInnerStep}>
-                    <span className={styles.workflowInnerLabel}>4a</span>
-                    <span>RAC Encoder agent writes .rac file</span>
-                  </div>
-                  <div className={styles.workflowInnerConnector}>↓</div>
-                  <div className={styles.workflowInnerStep}>
-                    <span className={styles.workflowInnerLabel}>4b</span>
-                    <span>Run CI validation (rac pytest suite)</span>
-                  </div>
-                  <div className={styles.workflowInnerConnector}>↓</div>
-                  <div className={styles.workflowInnerBranch}>
-                    <div className={styles.workflowBranchFail}>
-                      <span className={styles.workflowBranchLabel}><XIcon size={14} /> Fail</span>
-                      <span>Fix errors, retry (max 3)</span>
-                      <div className={styles.workflowRetryArrow}>↺</div>
-                    </div>
-                    <div className={styles.workflowBranchPass}>
-                      <span className={styles.workflowBranchLabel}><CheckIcon size={14} /> Pass</span>
-                      <span>Log to experiment DB, next item</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.workflowConnector} />
-
-            {/* Step 5: Oracles (run BEFORE LLM reviewers) */}
-            <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
-              <div className={styles.workflowStepNumber}>5</div>
-              <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>External Oracles</div>
+                <div className={styles.workflowStepTitle}>External oracles</div>
                 <div className={styles.workflowOracles}>
                   <div className={styles.workflowOracle}>
                     <span className={styles.workflowOracleIcon}>PE</span>
@@ -256,18 +256,19 @@ export default function AutoRacPage() {
                   </div>
                 </div>
                 <div className={styles.workflowStepDesc}>
-                  Fast (~10s), free - generates comparison data for LLM reviewers
+                  Fast (~10s), free — generates comparison data for LLM reviewers.
+                  <br />Run test cases through external calculators to find discrepancies.
                 </div>
               </div>
             </div>
 
             <div className={styles.workflowConnector} />
 
-            {/* Step 6: LLM Reviewers (use oracle context) */}
+            {/* Tier 3: LLM Reviewers */}
             <div className={`${styles.workflowStep} ${styles.workflowStepLarge}`}>
-              <div className={styles.workflowStepNumber}>6</div>
+              <div className={styles.workflowStepNumber}>3</div>
               <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>LLM Reviewers</div>
+                <div className={styles.workflowStepTitle}>LLM reviewers</div>
                 <div className={styles.workflowValidators}>
                   <div className={styles.workflowValidator}>RAC Reviewer</div>
                   <div className={styles.workflowValidator}>Formula Reviewer</div>
@@ -275,7 +276,8 @@ export default function AutoRacPage() {
                   <div className={styles.workflowValidator}>Integration Reviewer</div>
                 </div>
                 <div className={styles.workflowStepDesc}>
-                  Receive oracle comparison data to diagnose WHY discrepancies exist
+                  Receive oracle comparison data to diagnose WHY discrepancies exist.
+                  <br />No subjective scores—identify specific issues.
                 </div>
                 <div className={styles.workflowBeadsFlow}>
                   <span className={styles.workflowBeadsLabel}>Issues found?</span>
@@ -288,30 +290,12 @@ export default function AutoRacPage() {
               </div>
             </div>
 
-            <div className={styles.workflowConnector} />
-
-            {/* Step 7: Log */}
-            <div className={styles.workflowStep}>
-              <div className={styles.workflowStepNumber}>7</div>
-              <div className={styles.workflowStepContent}>
-                <div className={styles.workflowStepTitle}>Log & Learn</div>
-                <div className={styles.workflowStepDesc}>
-                  Record predictions vs actuals for calibration
-                  <div className={styles.workflowMetrics}>
-                    <span>Iterations: predicted vs actual</span>
-                    <span>Scores: RAC, Formula, Param, Integration</span>
-                    <span>Suggestions for framework improvement</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Learning Feedback Loop */}
             <div className={styles.workflowLearningLoop}>
               <div className={styles.workflowLearningArrow}>
                 <span className={styles.workflowLearningIcon}>↻</span>
                 <span className={styles.workflowLearningText}>
-                  Calibration data improves encoder prompts, pattern library, and validation rules
+                  Calibration data improves encoder prompts and validation rules
                 </span>
               </div>
             </div>
@@ -321,9 +305,9 @@ export default function AutoRacPage() {
         {/* Components */}
         <section className={styles.componentsSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Infrastructure</h2>
+            <h2 className={styles.sectionTitle}>Architecture</h2>
             <p className={styles.sectionSubtitle}>
-              Session logging and journey tracking for encoding experiments
+              Core components of the encoding infrastructure
             </p>
           </div>
 
@@ -332,60 +316,41 @@ export default function AutoRacPage() {
               <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}><JourneyIcon /></div>
                 <div>
-                  <div className={styles.componentTitle}>Session Logging</div>
-                  <div className={styles.componentFile}>session_logging.py</div>
+                  <div className={styles.componentTitle}>Encoder backends</div>
+                  <div className={styles.componentFile}>backends.py</div>
                 </div>
               </div>
               <p className={styles.componentDesc}>
-                Full Claude Code session transcript tracking. Captures every tool call,
-                validation result, and decision path for post-hoc analysis.
+                Abstraction layer for encoding execution. Swap between Claude Code
+                (subprocess) and Agent SDK (API) without changing the workflow.
               </p>
               <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>Full session transcripts</div>
-                <div className={styles.componentFeature}>Automatic event capture via hooks</div>
-                <div className={styles.componentFeature}>Journey-based tracking</div>
+                <div className={styles.componentFeature}>ClaudeCodeBackend (Max subscription)</div>
+                <div className={styles.componentFeature}>AgentSDKBackend (API parallelization)</div>
+                <div className={styles.componentFeature}>Unified EncoderRequest/Response interface</div>
               </div>
             </div>
 
             <div className={`${styles.componentCard} ${styles.delay2}`}>
               <div className={styles.componentHeader}>
-                <div className={styles.componentIcon}><TerminalIcon /></div>
-                <div>
-                  <div className={styles.componentTitle}>CLI Commands</div>
-                  <div className={styles.componentFile}>cli.py</div>
-                </div>
-              </div>
-              <p className={styles.componentDesc}>
-                Rich command-line interface for managing sessions, viewing history,
-                and analyzing encoding patterns.
-              </p>
-              <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>session-start, session-end</div>
-                <div className={styles.componentFeature}>sessions, session-show, session-stats</div>
-                <div className={styles.componentFeature}>log-event for custom events</div>
-              </div>
-            </div>
-
-            <div className={`${styles.componentCard} ${styles.delay3}`}>
-              <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}><PipelineIcon /></div>
                 <div>
-                  <div className={styles.componentTitle}>Validator Pipeline</div>
+                  <div className={styles.componentTitle}>Validator pipeline</div>
                   <div className={styles.componentFile}>validator_pipeline.py</div>
                 </div>
               </div>
               <p className={styles.componentDesc}>
-                Three-tier validation: CI catches syntax, oracles generate comparison data,
-                LLM reviewers diagnose issues using oracle context.
+                Orchestrates the 3-tier validation flow. Runs CI first,
+                then oracles, then LLM reviewers with oracle context.
               </p>
               <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>Tier 1: CI (rac pytest) - instant</div>
-                <div className={styles.componentFeature}>Tier 2: Oracles (PE/TAXSIM) - fast, ~10s</div>
-                <div className={styles.componentFeature}>Tier 3: LLM reviewers - uses oracle context</div>
+                <div className={styles.componentFeature}>Parallel oracle execution</div>
+                <div className={styles.componentFeature}>Oracle results feed LLM context</div>
+                <div className={styles.componentFeature}>Issue creation via beads</div>
               </div>
             </div>
 
-            <div className={`${styles.componentCard} ${styles.delay4}`}>
+            <div className={`${styles.componentCard} ${styles.delay3}`}>
               <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}><DatabaseIcon /></div>
                 <div>
@@ -394,122 +359,122 @@ export default function AutoRacPage() {
                 </div>
               </div>
               <p className={styles.componentDesc}>
-                SQLite database storing sessions, events, and outcomes for
-                pattern analysis and learning.
+                SQLite database storing encoding runs, validation results,
+                and calibration data for learning.
               </p>
               <div className={styles.componentFeatures}>
-                <div className={styles.componentFeature}>Session and event storage</div>
-                <div className={styles.componentFeature}>Outcome tracking</div>
-                <div className={styles.componentFeature}>Pattern analysis queries</div>
+                <div className={styles.componentFeature}>encoding_id, file, timestamp</div>
+                <div className={styles.componentFeature}>iterations, errors, fixes</div>
+                <div className={styles.componentFeature}>final_scores, session_transcript</div>
+              </div>
+            </div>
+
+            <div className={`${styles.componentCard} ${styles.delay4}`}>
+              <div className={styles.componentHeader}>
+                <div className={styles.componentIcon}><TerminalIcon /></div>
+                <div>
+                  <div className={styles.componentTitle}>Calibration metrics</div>
+                  <div className={styles.componentFile}>metrics.py</div>
+                </div>
+              </div>
+              <p className={styles.componentDesc}>
+                Track prediction accuracy over time. Compare predicted iterations
+                to actual, measure encoder reliability.
+              </p>
+              <div className={styles.componentFeatures}>
+                <div className={styles.componentFeature}>MSE, MAE, bias per metric</div>
+                <div className={styles.componentFeature}>Trend analysis over time</div>
+                <div className={styles.componentFeature}>Confidence calibration</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Session Stats Example */}
+        {/* Usage Examples */}
         <section className={styles.calibrationSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Session Analytics</h2>
+            <h2 className={styles.sectionTitle}>Usage examples</h2>
             <p className={styles.sectionSubtitle}>
-              Sample output from session-stats command
+              Interactive and programmatic encoding patterns
             </p>
           </div>
 
           <div className={styles.calibrationCard}>
             <div className={styles.calibrationHeader}>
-              $ autorac session-stats --last 30d
+              Interactive (Claude Code Plugin)
             </div>
             <div className={styles.calibrationContent}>
-              <table className={styles.calibrationTable}>
-                <thead>
-                  <tr>
-                    <th>Metric</th>
-                    <th>Sessions</th>
-                    <th>Events</th>
-                    <th>Success</th>
-                    <th>Avg Duration</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>EITC encoding</td>
-                    <td className={styles.metricNeutral}>12</td>
-                    <td className={styles.metricNeutral}>847</td>
-                    <td className={styles.metricPositive}>92%</td>
-                    <td className={styles.metricNeutral}>24m</td>
-                  </tr>
-                  <tr>
-                    <td>CTC encoding</td>
-                    <td className={styles.metricNeutral}>8</td>
-                    <td className={styles.metricNeutral}>623</td>
-                    <td className={styles.metricPositive}>88%</td>
-                    <td className={styles.metricNeutral}>31m</td>
-                  </tr>
-                  <tr>
-                    <td>SNAP encoding</td>
-                    <td className={styles.metricNeutral}>15</td>
-                    <td className={styles.metricNeutral}>1,204</td>
-                    <td className={styles.metricNeutral}>75%</td>
-                    <td className={styles.metricNeutral}>42m</td>
-                  </tr>
-                  <tr>
-                    <td>Validation runs</td>
-                    <td className={styles.metricNeutral}>35</td>
-                    <td className={styles.metricNeutral}>2,674</td>
-                    <td className={styles.metricPositive}>94%</td>
-                    <td className={styles.metricNeutral}>8m</td>
-                  </tr>
-                </tbody>
-              </table>
+              <pre style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--color-text-secondary)', margin: 0, whiteSpace: 'pre-wrap' }}>
+{`# 1. Install cosilico-claude plugin
+# 2. In Claude Code, run:
+/encode "26 USC 32"
+
+# Agent workflow:
+# - Fetches statute from arch
+# - Writes .rac file to rac-us/statute/26/32.rac
+# - Runs CI validation
+# - Compares against PolicyEngine + TAXSIM
+# - Logs journey to experiment DB`}
+              </pre>
+            </div>
+          </div>
+
+          <div className={styles.calibrationCard} style={{ marginTop: '1.5rem' }}>
+            <div className={styles.calibrationHeader}>
+              Programmatic (Agent SDK)
+            </div>
+            <div className={styles.calibrationContent}>
+              <pre style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--color-text-secondary)', margin: 0, whiteSpace: 'pre-wrap' }}>
+{`from autorac import AgentSDKBackend, EncoderRequest
+from pathlib import Path
+
+backend = AgentSDKBackend()  # Requires ANTHROPIC_API_KEY
+
+# Encode 50 statutes in parallel
+requests = [
+    EncoderRequest(
+        citation=f"26 USC {section}",
+        statute_text=texts[section],
+        output_path=Path(f"rac-us/statute/26/{section}.rac"),
+    )
+    for section in sections
+]
+
+responses = await backend.encode_batch(requests, max_concurrent=10)`}
+              </pre>
             </div>
           </div>
         </section>
 
-        {/* CLI Reference */}
+        {/* Installation */}
         <section className={styles.calibrationSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>CLI Reference</h2>
+            <h2 className={styles.sectionTitle}>Installation</h2>
             <p className={styles.sectionSubtitle}>
-              Session management commands
+              Get started with AutoRAC
             </p>
           </div>
 
           <div className={styles.calibrationCard}>
             <div className={styles.calibrationHeader}>
-              Session Lifecycle
+              pip install
             </div>
             <div className={styles.calibrationContent}>
               <table className={styles.calibrationTable}>
                 <thead>
                   <tr>
-                    <th>Command</th>
-                    <th>Description</th>
+                    <th>Package</th>
+                    <th>Use case</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>session-start</td>
-                    <td className={styles.metricNeutral}>Begin a new encoding session with goal and metadata</td>
+                    <td><code>pip install autorac</code></td>
+                    <td className={styles.metricNeutral}>CLI backend only (Claude Code integration)</td>
                   </tr>
                   <tr>
-                    <td>session-end</td>
-                    <td className={styles.metricNeutral}>Complete session with outcome (success/failure/partial)</td>
-                  </tr>
-                  <tr>
-                    <td>log-event</td>
-                    <td className={styles.metricNeutral}>Record custom events during a session</td>
-                  </tr>
-                  <tr>
-                    <td>sessions</td>
-                    <td className={styles.metricNeutral}>List all sessions with filters and sorting</td>
-                  </tr>
-                  <tr>
-                    <td>session-show</td>
-                    <td className={styles.metricNeutral}>View full session transcript and events</td>
-                  </tr>
-                  <tr>
-                    <td>session-stats</td>
-                    <td className={styles.metricNeutral}>Aggregate statistics across sessions</td>
+                    <td><code>pip install autorac[sdk]</code></td>
+                    <td className={styles.metricNeutral}>With Agent SDK for parallel batch encoding</td>
                   </tr>
                 </tbody>
               </table>
@@ -520,10 +485,10 @@ export default function AutoRacPage() {
         {/* CTA */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Journey-Based Learning</h2>
+            <h2 className={styles.ctaTitle}>Start encoding statutes</h2>
             <p className={styles.ctaText}>
-              Track complete encoding journeys from start to finish.
-              Every session contributes to understanding what works and why.
+              Use Claude Code for interactive exploration or the Agent SDK
+              for batch encoding at scale.
             </p>
             <div className={styles.ctaLinks}>
               <Link

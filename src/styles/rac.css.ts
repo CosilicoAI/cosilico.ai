@@ -327,6 +327,84 @@ globalStyle(`${structureTable} code`, {
 });
 
 // ============================================
+// COMPARISON TABLE
+// ============================================
+
+export const comparisonSection = style({
+  paddingTop: `${vars.space['3xl']} !important`,
+});
+
+export const comparisonTable = style({
+  width: '100%',
+  borderCollapse: 'collapse',
+  background: 'rgba(0, 0, 0, 0.3)',
+  borderRadius: vars.radius.xl,
+  overflow: 'hidden',
+  marginBottom: vars.space.xl,
+});
+
+globalStyle(`${comparisonTable} th`, {
+  textAlign: 'left',
+  padding: vars.space.lg,
+  background: 'rgba(0, 0, 0, 0.3)',
+  fontFamily: vars.font.display,
+  fontWeight: 600,
+  fontSize: '0.9rem',
+  color: vars.color.textSecondary,
+  borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+});
+
+globalStyle(`${comparisonTable} th:nth-child(2)`, {
+  textAlign: 'center',
+  color: vars.color.textMuted,
+});
+
+globalStyle(`${comparisonTable} th:nth-child(3)`, {
+  textAlign: 'center',
+  color: vars.color.success,
+});
+
+globalStyle(`${comparisonTable} td`, {
+  padding: vars.space.lg,
+  borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+  verticalAlign: 'middle',
+});
+
+globalStyle(`${comparisonTable} td:first-child`, {
+  fontWeight: 500,
+  color: vars.color.text,
+});
+
+globalStyle(`${comparisonTable} td:nth-child(2), ${comparisonTable} td:nth-child(3)`, {
+  textAlign: 'center',
+  fontSize: '0.9rem',
+});
+
+globalStyle(`${comparisonTable} tr:last-child td`, {
+  borderBottom: 'none',
+});
+
+export const hasSupport = style({
+  color: vars.color.success,
+  background: 'rgba(0, 255, 136, 0.05)',
+});
+
+export const noSupport = style({
+  color: vars.color.textMuted,
+});
+
+export const neutralSupport = style({
+  color: vars.color.amber,
+});
+
+export const comparisonNote = style({
+  fontSize: '0.95rem',
+  color: vars.color.textSecondary,
+  textAlign: 'center',
+  fontStyle: 'italic',
+});
+
+// ============================================
 // CTA
 // ============================================
 
