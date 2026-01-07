@@ -233,12 +233,15 @@ globalStyle(`${codePre} .variable`, {
 });
 
 globalStyle(`${codePre} .filepath`, {
-  color: vars.color.textSecondary,
-  fontWeight: 500,
+  color: vars.color.success,
+  fontWeight: 400,
   display: 'block',
-  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-  paddingBottom: vars.space.sm,
+  marginTop: vars.space.lg,
   marginBottom: vars.space.sm,
+});
+
+globalStyle(`${codePre} .filepath:first-child`, {
+  marginTop: 0,
 });
 
 // ============================================

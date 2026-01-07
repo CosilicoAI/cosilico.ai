@@ -72,12 +72,8 @@ const formatInfo: Record<FormatTab, { label: string; filenames: string[]; note: 
   dmn: { label: 'DMN', filenames: ['snap_decision.dmn'], note: 'XML + FEEL expression language' },
   openfisca: {
     label: 'OpenFisca/PolicyEngine',
-    filenames: [
-      'variables/gov/usda/snap/snap_normal_allotment.py',
-      'parameters/gov/usda/snap/expected_contribution.yaml',
-      'tests/policy/baseline/gov/usda/snap/snap_normal_allotment.yaml',
-    ],
-    note: 'Python + YAML'
+    filenames: [],
+    note: 'Python + YAML (3 files)'
   },
   catala: { label: 'Catala', filenames: ['snap.catala_en'], note: 'Literate programming' },
 };
