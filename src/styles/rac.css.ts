@@ -232,17 +232,13 @@ globalStyle(`${codePre} .variable`, {
   color: vars.color.text,
 });
 
-globalStyle(`${codePre} .filepath`, {
-  color: vars.color.success,
-  fontWeight: 400,
-  display: 'block',
-  marginTop: vars.space.lg,
-  marginBottom: vars.space.sm,
+export const multiFileCode = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.lg,
 });
 
-globalStyle(`${codePre} .filepath:first-child`, {
-  marginTop: 0,
-});
+export const fileSection = style({});
 
 // ============================================
 // FEATURES GRID

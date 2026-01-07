@@ -160,10 +160,14 @@ const DmnCode = () => (
 
 // OpenFisca/PolicyEngine code with syntax highlighting
 const OpenFiscaCode = () => (
-  <pre className={styles.codePre}>
-<span className="filepath">📄 variables/gov/usda/snap/snap_normal_allotment.py</span>{`
-
-`}<span className="keyword">from</span>{` policyengine_us.model_api `}<span className="keyword">import</span>{` *
+  <div className={styles.multiFileCode}>
+    <div className={styles.fileSection}>
+      <span className={styles.codeFilename}>
+        <FileIcon />
+        variables/gov/usda/snap/snap_normal_allotment.py
+      </span>
+      <pre className={styles.codePre}>
+<span className="keyword">from</span>{` policyengine_us.model_api `}<span className="keyword">import</span>{` *
 
 `}<span className="keyword">class</span>{` `}<span className="type">snap_normal_allotment</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
@@ -175,36 +179,45 @@ const OpenFiscaCode = () => (
     defined_for = `}<span className="string">"is_snap_eligible"</span>{`
 
     `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(spm_unit, period, parameters):
-        expected_contribution = spm_unit(`}<span className="string">"snap_expected_contribution"</span>{`, period)
-        max_allotment = spm_unit(`}<span className="string">"snap_max_allotment"</span>{`, period)
-        min_allotment = spm_unit(`}<span className="string">"snap_min_allotment"</span>{`, period)
-        `}<span className="keyword">return</span>{` max_(min_allotment, max_allotment - expected_contribution)
-
-
-`}<span className="filepath">📄 parameters/gov/usda/snap/expected_contribution.yaml</span>{`
-
-`}<span className="field">description:</span>{` `}<span className="string">"Expected food contribution per dollar of earnings"</span>{`
+        contribution = spm_unit(`}<span className="string">"snap_expected_contribution"</span>{`, period)
+        max_allot = spm_unit(`}<span className="string">"snap_max_allotment"</span>{`, period)
+        min_allot = spm_unit(`}<span className="string">"snap_min_allotment"</span>{`, period)
+        `}<span className="keyword">return</span>{` max_(min_allot, max_allot - contribution)`}
+      </pre>
+    </div>
+    <div className={styles.fileSection}>
+      <span className={styles.codeFilename}>
+        <FileIcon />
+        parameters/gov/usda/snap/expected_contribution.yaml
+      </span>
+      <pre className={styles.codePre}>
+<span className="field">description:</span>{` `}<span className="string">"Expected food contribution per dollar of earnings"</span>{`
 `}<span className="field">values:</span>{`
   `}<span className="number">2005-01-01</span>{`: `}<span className="number">0.3</span>{`
 `}<span className="field">metadata:</span>{`
   `}<span className="field">unit:</span>{` /1
   `}<span className="field">reference:</span>{`
-    - `}<span className="field">title:</span>{` `}<span className="string">"7 U.S. Code § 2017 - Value of allotment"</span>{`
-      `}<span className="field">href:</span>{` `}<span className="string">"https://www.law.cornell.edu/uscode/text/7/2017#a"</span>{`
-
-
-`}<span className="filepath">📄 tests/policy/baseline/gov/usda/snap/snap_normal_allotment.yaml</span>{`
-
-- `}<span className="field">name:</span>{` `}<span className="string">"SNAP eligible household with (max - contribution) {'>'} min."</span>{`
+    - `}<span className="field">title:</span>{` `}<span className="string">"7 U.S. Code § 2017"</span>{`
+      `}<span className="field">href:</span>{` `}<span className="string">"https://law.cornell.edu/uscode/text/7/2017#a"</span>
+      </pre>
+    </div>
+    <div className={styles.fileSection}>
+      <span className={styles.codeFilename}>
+        <FileIcon />
+        tests/.../snap_normal_allotment.yaml
+      </span>
+      <pre className={styles.codePre}>
+{`- `}<span className="field">name:</span>{` `}<span className="string">"SNAP eligible household"</span>{`
   `}<span className="field">period:</span>{` `}<span className="number">2022</span>{`
   `}<span className="field">input:</span>{`
     `}<span className="field">is_snap_eligible:</span>{` `}<span className="keyword">true</span>{`
     `}<span className="field">snap_expected_contribution:</span>{` `}<span className="number">1</span>{`
     `}<span className="field">snap_max_allotment:</span>{` `}<span className="number">3</span>{`
-    `}<span className="field">snap_min_allotment:</span>{` `}<span className="number">1</span>{`
   `}<span className="field">output:</span>{`
     `}<span className="field">snap_normal_allotment:</span>{` `}<span className="number">2</span>
-  </pre>
+      </pre>
+    </div>
+  </div>
 );
 
 // Catala code with syntax highlighting
