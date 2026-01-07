@@ -67,11 +67,19 @@ const VersionIcon = () => (
 
 type FormatTab = 'rac' | 'dmn' | 'openfisca' | 'catala';
 
-const formatInfo: Record<FormatTab, { label: string; filename: string; note: string }> = {
-  rac: { label: 'RAC', filename: 'statute/7/2017/a.rac', note: 'Single file with everything' },
-  dmn: { label: 'DMN', filename: 'snap_decision.dmn', note: 'XML + FEEL expression language' },
-  openfisca: { label: 'OpenFisca', filename: '3 separate files', note: 'Python + YAML' },
-  catala: { label: 'Catala', filename: 'snap.catala_en', note: 'Literate programming' },
+const formatInfo: Record<FormatTab, { label: string; filenames: string[]; note: string }> = {
+  rac: { label: 'RAC', filenames: ['statute/7/2017/a.rac'], note: 'Single file with everything' },
+  dmn: { label: 'DMN', filenames: ['snap_decision.dmn'], note: 'XML + FEEL expression language' },
+  openfisca: {
+    label: 'OpenFisca/PolicyEngine',
+    filenames: [
+      'variables/gov/usda/snap/snap_normal_allotment.py',
+      'parameters/gov/usda/snap/expected_contribution.yaml',
+      'tests/policy/baseline/gov/usda/snap/snap_normal_allotment.yaml',
+    ],
+    note: 'Python + YAML'
+  },
+  catala: { label: 'Catala', filenames: ['snap.catala_en'], note: 'Literate programming' },
 };
 
 // RAC code with syntax highlighting
@@ -154,41 +162,52 @@ const DmnCode = () => (
   </pre>
 );
 
-// OpenFisca code with syntax highlighting
+// OpenFisca/PolicyEngine code with syntax highlighting
 const OpenFiscaCode = () => (
   <pre className={styles.codePre}>
-<span className="comment"># FILE 1: variables/snap_allotment.py</span>{`
+<span className="comment"># variables/gov/usda/snap/snap_normal_allotment.py</span>{`
 
-`}<span className="keyword">class</span>{` `}<span className="type">snap_allotment</span>{`(`}<span className="type">Variable</span>{`):
-    entity = `}<span className="type">Household</span>{`
-    definition_period = `}<span className="type">MONTH</span>{`
+`}<span className="keyword">from</span>{` policyengine_us.model_api `}<span className="keyword">import</span>{` *
+
+`}<span className="keyword">class</span>{` `}<span className="type">snap_normal_allotment</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
-    label = `}<span className="string">"SNAP allotment"</span>{`
+    entity = `}<span className="type">SPMUnit</span>{`
+    definition_period = `}<span className="type">MONTH</span>{`
+    label = `}<span className="string">"SNAP normal allotment"</span>{`
+    reference = `}<span className="string">"https://www.law.cornell.edu/uscode/text/7/2017#a"</span>{`
+    unit = `}<span className="type">USD</span>{`
+    defined_for = `}<span className="string">"is_snap_eligible"</span>{`
 
-    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(household, period, parameters):
-        size = household(`}<span className="string">"household_size"</span>{`, period)
-        income = household(`}<span className="string">"snap_net_income"</span>{`, period)
-        p = parameters(period).gov.usda.snap
-        `}<span className="keyword">return</span>{` max_(`}<span className="number">0</span>{`, p.max_allotment[size]
-                       - income * p.contribution_rate)
+    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(spm_unit, period, parameters):
+        expected_contribution = spm_unit(`}<span className="string">"snap_expected_contribution"</span>{`, period)
+        max_allotment = spm_unit(`}<span className="string">"snap_max_allotment"</span>{`, period)
+        min_allotment = spm_unit(`}<span className="string">"snap_min_allotment"</span>{`, period)
+        `}<span className="keyword">return</span>{` max_(min_allotment, max_allotment - expected_contribution)
 
 
-`}<span className="comment"># FILE 2: parameters/gov/usda/snap/contribution_rate.yaml</span>{`
+`}<span className="comment"># parameters/gov/usda/snap/expected_contribution.yaml</span>{`
 
-`}<span className="field">description:</span>{` `}<span className="string">"Household contribution rate"</span>{`
+`}<span className="field">description:</span>{` `}<span className="string">"Expected food contribution per dollar of earnings"</span>{`
 `}<span className="field">values:</span>{`
-  `}<span className="number">2024-01-01</span>{`: `}<span className="number">0.30</span>{`
-  `}<span className="number">1977-01-01</span>{`: `}<span className="number">0.30</span>{`
+  `}<span className="number">2005-01-01</span>{`: `}<span className="number">0.3</span>{`
+`}<span className="field">metadata:</span>{`
+  `}<span className="field">unit:</span>{` /1
+  `}<span className="field">reference:</span>{`
+    - `}<span className="field">title:</span>{` `}<span className="string">"7 U.S. Code § 2017 - Value of allotment"</span>{`
+      `}<span className="field">href:</span>{` `}<span className="string">"https://www.law.cornell.edu/uscode/text/7/2017#a"</span>{`
 
 
-`}<span className="comment"># FILE 3: tests/snap_allotment.yaml</span>{`
+`}<span className="comment"># tests/policy/baseline/gov/usda/snap/snap_normal_allotment.yaml</span>{`
 
-- `}<span className="field">period:</span>{` `}<span className="number">2024-01</span>{`
+- `}<span className="field">name:</span>{` `}<span className="string">"SNAP eligible household with (max - contribution) {'>'} min."</span>{`
+  `}<span className="field">period:</span>{` `}<span className="number">2022</span>{`
   `}<span className="field">input:</span>{`
-    `}<span className="field">household_size:</span>{` `}<span className="number">4</span>{`
-    `}<span className="field">snap_net_income:</span>{` `}<span className="number">500</span>{`
+    `}<span className="field">is_snap_eligible:</span>{` `}<span className="keyword">true</span>{`
+    `}<span className="field">snap_expected_contribution:</span>{` `}<span className="number">1</span>{`
+    `}<span className="field">snap_max_allotment:</span>{` `}<span className="number">3</span>{`
+    `}<span className="field">snap_min_allotment:</span>{` `}<span className="number">1</span>{`
   `}<span className="field">output:</span>{`
-    `}<span className="field">snap_allotment:</span>{` `}<span className="number">825</span>
+    `}<span className="field">snap_normal_allotment:</span>{` `}<span className="number">2</span>
   </pre>
 );
 
@@ -263,10 +282,14 @@ export default function RacPage() {
               ))}
             </div>
             <div className={styles.codeHeader}>
-              <span className={styles.codeFilename}>
-                <FileIcon />
-                {formatInfo[activeTab].filename}
-              </span>
+              <div className={styles.codeFilenames}>
+                {formatInfo[activeTab].filenames.map((filename, i) => (
+                  <span key={i} className={styles.codeFilename}>
+                    <FileIcon />
+                    {filename}
+                  </span>
+                ))}
+              </div>
               <span className={styles.codeCitation}>{formatInfo[activeTab].note}</span>
             </div>
             <div className={styles.codeContent}>
@@ -292,9 +315,9 @@ export default function RacPage() {
               <tr>
                 <th>Capability</th>
                 <th>DMN</th>
-                <th>OpenFisca</th>
+                <th>OpenFisca/PE</th>
                 <th>Catala</th>
-                <th>RAC</th>
+                <th className={styles.racColumnHeader}>RAC</th>
               </tr>
             </thead>
             <tbody>

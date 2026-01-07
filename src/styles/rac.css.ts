@@ -158,9 +158,15 @@ export const codeHeader = style({
   borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
 });
 
+export const codeFilenames = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.xs,
+});
+
 export const codeFilename = style({
   fontFamily: vars.font.mono,
-  fontSize: '0.9rem',
+  fontSize: '0.85rem',
   color: vars.color.textSecondary,
   display: 'flex',
   alignItems: 'center',
@@ -388,14 +394,13 @@ globalStyle(`${comparisonTable} th`, {
   borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
 });
 
-globalStyle(`${comparisonTable} th:nth-child(2)`, {
+globalStyle(`${comparisonTable} th:nth-child(n+2)`, {
   textAlign: 'center',
   color: vars.color.textMuted,
 });
 
-globalStyle(`${comparisonTable} th:nth-child(3)`, {
-  textAlign: 'center',
-  color: vars.color.success,
+export const racColumnHeader = style({
+  color: `${vars.color.success} !important`,
 });
 
 globalStyle(`${comparisonTable} td`, {
