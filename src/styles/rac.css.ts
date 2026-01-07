@@ -115,6 +115,40 @@ export const codeBlock = style({
   animationFillMode: 'backwards',
 });
 
+export const tabBar = style({
+  display: 'flex',
+  gap: '2px',
+  padding: vars.space.sm,
+  background: 'rgba(0, 0, 0, 0.3)',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+});
+
+export const tab = style({
+  padding: `${vars.space.sm} ${vars.space.lg}`,
+  background: 'transparent',
+  border: 'none',
+  borderRadius: vars.radius.md,
+  color: vars.color.textMuted,
+  fontFamily: vars.font.mono,
+  fontSize: '0.85rem',
+  fontWeight: 500,
+  cursor: 'pointer',
+  transition: `all ${vars.duration.fast} ${vars.ease.out}`,
+  ':hover': {
+    color: vars.color.textSecondary,
+    background: 'rgba(255, 255, 255, 0.05)',
+  },
+});
+
+export const tabActive = style({
+  color: vars.color.success,
+  background: 'rgba(0, 255, 136, 0.1)',
+  ':hover': {
+    color: vars.color.success,
+    background: 'rgba(0, 255, 136, 0.15)',
+  },
+});
+
 export const codeHeader = style({
   display: 'flex',
   alignItems: 'center',

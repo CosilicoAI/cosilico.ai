@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/rac.css";
@@ -65,7 +65,173 @@ const VersionIcon = () => (
   </svg>
 );
 
+type FormatTab = 'rac' | 'dmn' | 'openfisca' | 'catala';
+
+const formatInfo: Record<FormatTab, { label: string; filename: string; note: string }> = {
+  rac: { label: 'RAC', filename: 'statute/7/2017/a.rac', note: 'Single file with everything' },
+  dmn: { label: 'DMN', filename: 'snap_decision.dmn', note: 'XML + FEEL expression language' },
+  openfisca: { label: 'OpenFisca', filename: '3 separate files', note: 'Python + YAML' },
+  catala: { label: 'Catala', filename: 'snap.catala_en', note: 'Literate programming' },
+};
+
+// RAC code with syntax highlighting
+const RacCode = () => (
+  <pre className={styles.codePre}>
+{`# SNAP Allotment - 7 USC § 2017(a)
+
+`}<span className="comment"># Statute text for reference and LLM context</span>{`
+`}<span className="keyword">text:</span>{` |
+  The value of the allotment shall be equal to the cost of the
+  thrifty food plan reduced by 30 percent of the household's income.
+
+`}<span className="comment"># Time-varying policy values with legal citations</span>{`
+`}<span className="keyword">parameter</span>{` `}<span className="variable">contribution_rate</span>{`:
+  `}<span className="field">description:</span>{` `}<span className="string">"Household contribution as share of net income"</span>{`
+  `}<span className="field">reference:</span>{` `}<span className="string">"7 USC 2017(a)"</span>{`
+  `}<span className="field">values:</span>{`
+    `}<span className="number">2024-01-01</span>{`: `}<span className="number">0.30</span>{`
+    `}<span className="number">1977-01-01</span>{`: `}<span className="number">0.30</span>{`
+
+`}<span className="keyword">parameter</span>{` `}<span className="variable">max_allotment</span>{`:
+  `}<span className="field">description:</span>{` `}<span className="string">"Maximum monthly SNAP benefit by household size"</span>{`
+  `}<span className="field">reference:</span>{` `}<span className="string">"USDA FNS"</span>{`
+  `}<span className="field">values:</span>{`
+    `}<span className="number">2024-10-01</span>{`: [`}<span className="number">292</span>{`, `}<span className="number">536</span>{`, `}<span className="number">768</span>{`, `}<span className="number">975</span>{`, `}<span className="number">1159</span>{`]
+    `}<span className="number">2023-10-01</span>{`: [`}<span className="number">281</span>{`, `}<span className="number">516</span>{`, `}<span className="number">740</span>{`, `}<span className="number">939</span>{`, `}<span className="number">1116</span>{`]
+
+`}<span className="comment"># Computed variable with formula</span>{`
+`}<span className="keyword">variable</span>{` `}<span className="variable">snap_allotment</span>{`:
+  `}<span className="field">imports:</span>{` [`}<span className="string">7/2014/a#snap_eligible</span>{`, `}<span className="string">7/2014/e#snap_net_income</span>{`]
+  `}<span className="field">entity:</span>{` `}<span className="type">Household</span>{`
+  `}<span className="field">period:</span>{` `}<span className="type">Month</span>{`
+  `}<span className="field">dtype:</span>{` `}<span className="type">Money</span>{`
+  `}<span className="field">formula:</span>{` |
+    `}<span className="keyword">if not</span>{` snap_eligible:
+      `}<span className="keyword">return</span>{` `}<span className="number">0</span>{`
+    benefit = max_allotment[household_size] - snap_net_income * contribution_rate
+    `}<span className="keyword">return</span>{` max(`}<span className="number">0</span>{`, benefit)
+  `}<span className="field">tests:</span>{`
+    - `}<span className="field">inputs:</span>{` {'{'}household_size: `}<span className="number">4</span>{`, snap_net_income: `}<span className="number">500</span>{`, snap_eligible: `}<span className="keyword">true</span>{`{'}'}
+      `}<span className="field">expect:</span>{` `}<span className="number">825</span>{`
+`}
+  </pre>
+);
+
+// DMN code with syntax highlighting
+const DmnCode = () => (
+  <pre className={styles.codePre}>
+<span className="comment">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>{`
+`}<span className="tag">&lt;definitions</span>{` `}<span className="field">xmlns</span>{`=`}<span className="string">"https://www.omg.org/spec/DMN/20191111/MODEL/"</span>{`
+             `}<span className="field">name</span>{`=`}<span className="string">"SNAP_Allotment"</span>{`&gt;`}
+
+  <span className="tag">&lt;inputData</span>{` `}<span className="field">id</span>{`=`}<span className="string">"net_income"</span>{` `}<span className="field">name</span>{`=`}<span className="string">"net_income"</span>{`&gt;
+    `}<span className="tag">&lt;variable</span>{` `}<span className="field">typeRef</span>{`=`}<span className="string">"number"</span>{`/&gt;
+  `}<span className="tag">&lt;/inputData&gt;</span>
+
+  <span className="tag">&lt;inputData</span>{` `}<span className="field">id</span>{`=`}<span className="string">"household_size"</span>{` `}<span className="field">name</span>{`=`}<span className="string">"household_size"</span>{`&gt;
+    `}<span className="tag">&lt;variable</span>{` `}<span className="field">typeRef</span>{`=`}<span className="string">"number"</span>{`/&gt;
+  `}<span className="tag">&lt;/inputData&gt;</span>
+
+  <span className="tag">&lt;decision</span>{` `}<span className="field">id</span>{`=`}<span className="string">"snap_allotment"</span>{` `}<span className="field">name</span>{`=`}<span className="string">"SNAP Allotment"</span>{`&gt;
+    `}<span className="tag">&lt;variable</span>{` `}<span className="field">name</span>{`=`}<span className="string">"snap_allotment"</span>{` `}<span className="field">typeRef</span>{`=`}<span className="string">"number"</span>{`/&gt;
+    `}<span className="tag">&lt;informationRequirement&gt;</span>{`
+      `}<span className="tag">&lt;requiredInput</span>{` `}<span className="field">href</span>{`=`}<span className="string">"#net_income"</span>{`/&gt;
+    `}<span className="tag">&lt;/informationRequirement&gt;</span>{`
+    `}<span className="tag">&lt;informationRequirement&gt;</span>{`
+      `}<span className="tag">&lt;requiredInput</span>{` `}<span className="field">href</span>{`=`}<span className="string">"#household_size"</span>{`/&gt;
+    `}<span className="tag">&lt;/informationRequirement&gt;</span>{`
+    `}<span className="tag">&lt;literalExpression&gt;</span>{`
+      `}<span className="tag">&lt;text&gt;</span>{`
+        max(`}<span className="number">0</span>{`, max_allotment[household_size] - net_income * `}<span className="number">0.30</span>{`)
+      `}<span className="tag">&lt;/text&gt;</span>{`
+    `}<span className="tag">&lt;/literalExpression&gt;</span>{`
+  `}<span className="tag">&lt;/decision&gt;</span>
+
+  <span className="comment">&lt;!-- Where does 0.30 come from? When did it take effect?</span>{`
+`}<span className="comment">       What's the legal citation? DMN doesn't say. --&gt;</span>
+
+<span className="tag">&lt;/definitions&gt;</span>
+  </pre>
+);
+
+// OpenFisca code with syntax highlighting
+const OpenFiscaCode = () => (
+  <pre className={styles.codePre}>
+<span className="comment"># FILE 1: variables/snap_allotment.py</span>{`
+
+`}<span className="keyword">class</span>{` `}<span className="type">snap_allotment</span>{`(`}<span className="type">Variable</span>{`):
+    entity = `}<span className="type">Household</span>{`
+    definition_period = `}<span className="type">MONTH</span>{`
+    value_type = `}<span className="type">float</span>{`
+    label = `}<span className="string">"SNAP allotment"</span>{`
+
+    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(household, period, parameters):
+        size = household(`}<span className="string">"household_size"</span>{`, period)
+        income = household(`}<span className="string">"snap_net_income"</span>{`, period)
+        p = parameters(period).gov.usda.snap
+        `}<span className="keyword">return</span>{` max_(`}<span className="number">0</span>{`, p.max_allotment[size]
+                       - income * p.contribution_rate)
+
+
+`}<span className="comment"># FILE 2: parameters/gov/usda/snap/contribution_rate.yaml</span>{`
+
+`}<span className="field">description:</span>{` `}<span className="string">"Household contribution rate"</span>{`
+`}<span className="field">values:</span>{`
+  `}<span className="number">2024-01-01</span>{`: `}<span className="number">0.30</span>{`
+  `}<span className="number">1977-01-01</span>{`: `}<span className="number">0.30</span>{`
+
+
+`}<span className="comment"># FILE 3: tests/snap_allotment.yaml</span>{`
+
+- `}<span className="field">period:</span>{` `}<span className="number">2024-01</span>{`
+  `}<span className="field">input:</span>{`
+    `}<span className="field">household_size:</span>{` `}<span className="number">4</span>{`
+    `}<span className="field">snap_net_income:</span>{` `}<span className="number">500</span>{`
+  `}<span className="field">output:</span>{`
+    `}<span className="field">snap_allotment:</span>{` `}<span className="number">825</span>
+  </pre>
+);
+
+// Catala code with syntax highlighting
+const CatalaCode = () => (
+  <pre className={styles.codePre}>
+<span className="comment">@@Section 2017(a) - SNAP Allotment@@</span>{`
+
+`}<span className="comment">/*
+The value of the allotment shall be equal to
+the cost of the thrifty food plan reduced by
+30 percent of the household's income.
+*/</span>{`
+
+`}<span className="keyword">declaration</span>{` `}<span className="keyword">scope</span>{` `}<span className="type">SnapAllotment</span>{`:
+  `}<span className="keyword">input</span>{` household_size `}<span className="keyword">content</span>{` `}<span className="type">integer</span>{`
+  `}<span className="keyword">input</span>{` net_income `}<span className="keyword">content</span>{` `}<span className="type">money</span>{`
+  `}<span className="keyword">internal</span>{` max_allotment `}<span className="keyword">content</span>{` `}<span className="type">money</span>{`
+  `}<span className="keyword">output</span>{` allotment `}<span className="keyword">content</span>{` `}<span className="type">money</span>{`
+
+`}<span className="keyword">scope</span>{` `}<span className="type">SnapAllotment</span>{`:
+  `}<span className="keyword">definition</span>{` max_allotment `}<span className="keyword">equals</span>{`
+    `}<span className="keyword">match</span>{` household_size `}<span className="keyword">with pattern</span>{`
+    | `}<span className="number">1</span>{` -> `}<span className="number">$292</span>{`
+    | `}<span className="number">2</span>{` -> `}<span className="number">$536</span>{`
+    | `}<span className="number">3</span>{` -> `}<span className="number">$768</span>{`
+    | `}<span className="number">4</span>{` -> `}<span className="number">$975</span>{`
+
+  `}<span className="keyword">definition</span>{` allotment `}<span className="keyword">equals</span>{`
+    `}<span className="keyword">if</span>{` max_allotment - net_income * `}<span className="number">30%</span>{` >= `}<span className="number">$0</span>{`
+    `}<span className="keyword">then</span>{` max_allotment - net_income * `}<span className="number">30%</span>{`
+    `}<span className="keyword">else</span>{` `}<span className="number">$0</span>{`
+
+`}<span className="comment"># Beautiful literate style, but:</span>{`
+`}<span className="comment"># - Magic numbers in formulas ($292, 30%)</span>{`
+`}<span className="comment"># - No temporal versioning built-in</span>{`
+`}<span className="comment"># - Custom syntax to learn</span>
+  </pre>
+);
+
 export default function RacPage() {
+  const [activeTab, setActiveTab] = useState<FormatTab>('rac');
+
   return (
     <PageLayout>
       <div className={styles.page}>
@@ -82,60 +248,114 @@ export default function RacPage() {
           </div>
         </section>
 
-        {/* Main Example */}
+        {/* Tabbed Code Example */}
         <section className={styles.codeSection}>
           <div className={`${styles.codeBlock} ${styles.delay1}`}>
+            <div className={styles.tabBar}>
+              {(Object.keys(formatInfo) as FormatTab[]).map((tab) => (
+                <button
+                  key={tab}
+                  className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ''}`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {formatInfo[tab].label}
+                </button>
+              ))}
+            </div>
             <div className={styles.codeHeader}>
               <span className={styles.codeFilename}>
                 <FileIcon />
-                statute/7/2017/a.rac
+                {formatInfo[activeTab].filename}
               </span>
-              <span className={styles.codeCitation}>7 USC &sect; 2017(a)</span>
+              <span className={styles.codeCitation}>{formatInfo[activeTab].note}</span>
             </div>
             <div className={styles.codeContent}>
-              <pre className={styles.codePre}>
-{`# SNAP Allotment Formula
-
-`}<span className="comment"># Statute text (for reference and LLM context)</span>{`
-`}<span className="keyword">text:</span>{` |
-  The value of the allotment shall be equal to the cost of the
-  thrifty food plan reduced by 30 percent of the household's income.
-
-`}<span className="comment"># Time-varying policy values</span>{`
-`}<span className="keyword">parameter</span>{` `}<span className="variable">contribution_rate</span>{`:
-  `}<span className="field">description:</span>{` `}<span className="string">"Household contribution as share of net income"</span>{`
-  `}<span className="field">source:</span>{` `}<span className="string">"USDA FNS"</span>{`
-  `}<span className="field">values:</span>{`
-    `}<span className="number">2024-01-01</span>{`: `}<span className="number">0.30</span>{`
-    `}<span className="number">1977-01-01</span>{`: `}<span className="number">0.30</span>{`
-
-`}<span className="keyword">parameter</span>{` `}<span className="variable">max_allotment</span>{`:
-  `}<span className="field">description:</span>{` `}<span className="string">"Maximum monthly SNAP benefit by household size"</span>{`
-  `}<span className="field">unit:</span>{` `}<span className="type">USD</span>{`
-  `}<span className="field">values:</span>{`
-    `}<span className="number">2024-10-01</span>{`: [`}<span className="number">292</span>{`, `}<span className="number">536</span>{`, `}<span className="number">768</span>{`, `}<span className="number">975</span>{`, `}<span className="number">1159</span>{`, `}<span className="number">1391</span>{`, `}<span className="number">1536</span>{`, `}<span className="number">1756</span>{`]
-
-`}<span className="comment"># Computed variable with formula</span>{`
-`}<span className="keyword">variable</span>{` `}<span className="variable">snap_allotment</span>{`:
-  `}<span className="field">imports:</span>{` [`}<span className="string">7/2014/a#snap_eligible</span>{`, `}<span className="string">7/2014/e#snap_net_income</span>{`]
-  `}<span className="field">entity:</span>{` `}<span className="type">Household</span>{`
-  `}<span className="field">period:</span>{` `}<span className="type">Month</span>{`
-  `}<span className="field">dtype:</span>{` `}<span className="type">Money</span>{`
-  `}<span className="field">formula:</span>{` |
-    `}<span className="keyword">if not</span>{` snap_eligible:
-      `}<span className="keyword">return</span>{` `}<span className="number">0</span>{`
-    benefit = max_allotment[household_size] - snap_net_income * contribution_rate
-    `}<span className="keyword">return</span>{` max(`}<span className="number">0</span>{`, benefit)
-
-  `}<span className="comment"># Inline tests</span>{`
-  `}<span className="field">tests:</span>{`
-    - `}<span className="field">name:</span>{` `}<span className="string">"Family of 4, $500 net income"</span>{`
-      `}<span className="field">inputs:</span>{` {'{'}household_size: 4, snap_net_income: 500, snap_eligible: true{'}'}
-      `}<span className="field">expect:</span>{` `}<span className="number">825</span>{`
-`}
-              </pre>
+              {activeTab === 'rac' && <RacCode />}
+              {activeTab === 'dmn' && <DmnCode />}
+              {activeTab === 'openfisca' && <OpenFiscaCode />}
+              {activeTab === 'catala' && <CatalaCode />}
             </div>
           </div>
+        </section>
+
+        {/* Comparison Table */}
+        <section className={styles.comparisonSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Format comparison</h2>
+            <p className={styles.sectionSubtitle}>
+              RAC is purpose-built for encoding law with auditability and temporal accuracy.
+            </p>
+          </div>
+
+          <table className={styles.comparisonTable}>
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>DMN</th>
+                <th>OpenFisca</th>
+                <th>Catala</th>
+                <th>RAC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Legal citations</td>
+                <td className={styles.noSupport}>Comments</td>
+                <td className={styles.neutralSupport}>Metadata</td>
+                <td className={styles.neutralSupport}>Literate</td>
+                <td className={styles.hasSupport}>First-class</td>
+              </tr>
+              <tr>
+                <td>Temporal versioning</td>
+                <td className={styles.noSupport}>External</td>
+                <td className={styles.hasSupport}>Built-in</td>
+                <td className={styles.noSupport}>Manual</td>
+                <td className={styles.hasSupport}>Built-in</td>
+              </tr>
+              <tr>
+                <td>Formula language</td>
+                <td className={styles.neutralSupport}>FEEL</td>
+                <td className={styles.hasSupport}>Python</td>
+                <td className={styles.neutralSupport}>Custom</td>
+                <td className={styles.hasSupport}>Python</td>
+              </tr>
+              <tr>
+                <td>File format</td>
+                <td className={styles.noSupport}>XML</td>
+                <td className={styles.neutralSupport}>Py + YAML</td>
+                <td className={styles.neutralSupport}>Custom</td>
+                <td className={styles.hasSupport}>YAML</td>
+              </tr>
+              <tr>
+                <td>Self-contained</td>
+                <td className={styles.noSupport}>No</td>
+                <td className={styles.noSupport}>3+ files</td>
+                <td className={styles.hasSupport}>Yes</td>
+                <td className={styles.hasSupport}>Yes</td>
+              </tr>
+              <tr>
+                <td>Inline tests</td>
+                <td className={styles.noSupport}>Separate</td>
+                <td className={styles.noSupport}>Separate</td>
+                <td className={styles.noSupport}>Separate</td>
+                <td className={styles.hasSupport}>Co-located</td>
+              </tr>
+              <tr>
+                <td>No magic numbers</td>
+                <td className={styles.noSupport}>Allowed</td>
+                <td className={styles.hasSupport}>Enforced</td>
+                <td className={styles.noSupport}>Allowed</td>
+                <td className={styles.hasSupport}>Enforced</td>
+              </tr>
+              <tr>
+                <td>LLM-friendly</td>
+                <td className={styles.noSupport}>XML verbose</td>
+                <td className={styles.neutralSupport}>Python</td>
+                <td className={styles.neutralSupport}>Custom</td>
+                <td className={styles.hasSupport}>YAML simple</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         {/* Features Grid */}
@@ -177,7 +397,7 @@ export default function RacPage() {
 
             <div className={`${styles.featureCard} ${styles.delay4}`}>
               <div className={styles.featureIcon}><ImportIcon /></div>
-              <h3 className={styles.featureTitle}>Cross-References</h3>
+              <h3 className={styles.featureTitle}>Cross-references</h3>
               <p className={styles.featureDescription}>
                 Import variables from other statutes using <code>path#variable</code> syntax.
                 Dependencies are explicit.
@@ -254,283 +474,6 @@ export default function RacPage() {
               </tr>
             </tbody>
           </table>
-        </section>
-
-        {/* Comparison Section */}
-        <section className={styles.comparisonSection}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Why not DMN?</h2>
-            <p className={styles.sectionSubtitle}>
-              Decision Model and Notation is an industry standard for business rules.
-              RAC is purpose-built for law.
-            </p>
-          </div>
-
-          <table className={styles.comparisonTable}>
-            <thead>
-              <tr>
-                <th>Capability</th>
-                <th>DMN</th>
-                <th>RAC</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Legal citations</td>
-                <td className={styles.noSupport}>Comments only</td>
-                <td className={styles.hasSupport}>First-class syntax</td>
-              </tr>
-              <tr>
-                <td>Temporal versioning</td>
-                <td className={styles.noSupport}>External tooling</td>
-                <td className={styles.hasSupport}>Built-in effective dates</td>
-              </tr>
-              <tr>
-                <td>Formula language</td>
-                <td className={styles.neutralSupport}>FEEL (custom syntax)</td>
-                <td className={styles.hasSupport}>Python subset</td>
-              </tr>
-              <tr>
-                <td>File format</td>
-                <td className={styles.noSupport}>XML</td>
-                <td className={styles.hasSupport}>YAML</td>
-              </tr>
-              <tr>
-                <td>Inline tests</td>
-                <td className={styles.noSupport}>Separate test suites</td>
-                <td className={styles.hasSupport}>Co-located with formulas</td>
-              </tr>
-              <tr>
-                <td>Cross-references</td>
-                <td className={styles.neutralSupport}>Business Knowledge Models</td>
-                <td className={styles.hasSupport}>Statute path imports</td>
-              </tr>
-              <tr>
-                <td>AI generation</td>
-                <td className={styles.noSupport}>Complex XML structure</td>
-                <td className={styles.hasSupport}>LLM-friendly format</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p className={styles.comparisonNote}>
-            DMN excels at business process decisions. RAC is for encoding statutes
-            where auditability, temporal accuracy, and legal traceability matter.
-          </p>
-
-          <div className={styles.sideBySection}>
-            <h3 className={styles.sideBySideTitle}>Same rule, different formats</h3>
-
-            {/* DMN vs RAC */}
-            <div className={styles.sideBySideGrid}>
-              <div className={styles.sideBySideBlock}>
-                <div className={styles.sideBySideHeader}>
-                  <span className={styles.sideBySideLabel}>DMN (XML + FEEL)</span>
-                </div>
-                <pre className={styles.sideBySidePre}>
-{`<definitions xmlns="https://www.omg.org/spec/DMN/...">
-  <inputData id="net_income" name="net_income">
-    <variable typeRef="number"/>
-  </inputData>
-  <inputData id="household_size" name="household_size">
-    <variable typeRef="number"/>
-  </inputData>
-
-  <decision id="snap_allotment" name="SNAP Allotment">
-    <variable name="snap_allotment" typeRef="number"/>
-    <informationRequirement>
-      <requiredInput href="#net_income"/>
-    </informationRequirement>
-    <literalExpression>
-      <text>
-        max(0, max_allotment[household_size]
-             - net_income * 0.30)
-      </text>
-    </literalExpression>
-  </decision>
-
-  <!-- Where does 0.30 come from? When did it
-       take effect? What statute? DMN doesn't say. -->
-</definitions>`}
-                </pre>
-              </div>
-
-              <div className={styles.sideBySideBlock}>
-                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderRac}`}>
-                  <span className={styles.sideBySideLabel}>RAC (YAML + Python)</span>
-                </div>
-                <pre className={styles.sideBySidePre}>
-{`# 7 USC § 2017(a) - SNAP Allotment
-
-text: |
-  The allotment shall equal the thrifty food plan
-  reduced by 30% of household income.
-
-parameter contribution_rate:
-  description: "Household contribution share"
-  reference: "7 USC 2017(a)"
-  values:
-    2024-01-01: 0.30
-    1977-01-01: 0.30
-
-variable snap_allotment:
-  entity: Household
-  period: Month
-  dtype: Money
-  formula: |
-    max(0, max_allotment[household_size]
-         - net_income * contribution_rate)
-  tests:
-    - inputs: {household_size: 4, net_income: 500}
-      expect: 825`}
-                </pre>
-              </div>
-            </div>
-
-            {/* OpenFisca vs RAC */}
-            <div className={styles.sideBySideGrid} style={{ marginTop: '1.5rem' }}>
-              <div className={styles.sideBySideBlock}>
-                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderPE}`}>
-                  <span className={styles.sideBySideLabel}>OpenFisca / PolicyEngine (Python)</span>
-                </div>
-                <pre className={styles.sideBySidePre}>
-{`# variables/snap_allotment.py
-class snap_allotment(Variable):
-    entity = Household
-    definition_period = MONTH
-    value_type = float
-    label = "SNAP allotment"
-
-    def formula(household, period, parameters):
-        size = household("household_size", period)
-        income = household("snap_net_income", period)
-        p = parameters(period).gov.usda.snap
-        return max_(0, p.max_allotment[size]
-                       - income * p.contribution_rate)
-
-# parameters/gov/usda/snap/contribution_rate.yaml
-description: Household contribution rate
-values:
-  2024-01-01: 0.30
-  1977-01-01: 0.30
-
-# tests/snap_allotment.yaml (separate file)
-- period: 2024-01
-  input: {household_size: 4, snap_net_income: 500}
-  output: {snap_allotment: 825}`}
-                </pre>
-              </div>
-
-              <div className={styles.sideBySideBlock}>
-                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderRac}`}>
-                  <span className={styles.sideBySideLabel}>RAC (single file)</span>
-                </div>
-                <pre className={styles.sideBySidePre}>
-{`# statute/7/2017/a.rac - 7 USC § 2017(a)
-
-text: |
-  The allotment shall equal the thrifty food plan
-  reduced by 30% of household income.
-
-parameter contribution_rate:
-  description: "Household contribution share"
-  reference: "7 USC 2017(a)"
-  values:
-    2024-01-01: 0.30
-    1977-01-01: 0.30
-
-variable snap_allotment:
-  entity: Household
-  period: Month
-  dtype: Money
-  formula: |
-    max(0, max_allotment[household_size]
-         - snap_net_income * contribution_rate)
-  tests:
-    - inputs: {household_size: 4, snap_net_income: 500}
-      expect: 825`}
-                </pre>
-              </div>
-            </div>
-
-            {/* Catala vs RAC */}
-            <div className={styles.sideBySideGrid} style={{ marginTop: '1.5rem' }}>
-              <div className={styles.sideBySideBlock}>
-                <div className={styles.sideBySideHeader}>
-                  <span className={styles.sideBySideLabel}>Catala (Literate programming)</span>
-                </div>
-                <pre className={styles.sideBySidePre}>
-{`@@Section 2017(a) - SNAP Allotment@@
-
-/*
-The value of the allotment shall be equal to
-the cost of the thrifty food plan reduced by
-30 percent of the household's income.
-*/
-
-declaration scope SnapAllotment:
-  input household_size content integer
-  input net_income content money
-  internal max_allotment content money
-  output allotment content money
-
-scope SnapAllotment:
-  definition max_allotment equals
-    match household_size with pattern
-    | 1 -> $292
-    | 2 -> $536
-    | 3 -> $768
-    | 4 -> $975
-
-  definition allotment equals
-    if max_allotment - net_income * 30% >= $0
-    then max_allotment - net_income * 30%
-    else $0
-
-# Beautiful literate style, but:
-# - Magic numbers in formulas ($292, 30%)
-# - No temporal versioning built-in
-# - Custom syntax (not Python/YAML)`}
-                </pre>
-              </div>
-
-              <div className={styles.sideBySideBlock}>
-                <div className={`${styles.sideBySideHeader} ${styles.sideBySideHeaderRac}`}>
-                  <span className={styles.sideBySideLabel}>RAC</span>
-                </div>
-                <pre className={styles.sideBySidePre}>
-{`# statute/7/2017/a.rac - 7 USC § 2017(a)
-
-text: |
-  The allotment shall equal the thrifty food plan
-  reduced by 30% of household income.
-
-parameter contribution_rate:
-  reference: "7 USC 2017(a)"
-  values:
-    2024-01-01: 0.30
-    1977-01-01: 0.30  # Same since inception
-
-parameter max_allotment:
-  reference: "USDA FNS"
-  values:
-    2024-10-01: [292, 536, 768, 975, ...]
-    2023-10-01: [281, 516, 740, 939, ...]
-
-variable snap_allotment:
-  entity: Household
-  period: Month
-  dtype: Money
-  formula: |
-    max(0, max_allotment[household_size]
-         - snap_net_income * contribution_rate)
-
-# All values parameterized with history.
-# Python syntax. Inline tests. LLM-friendly.`}
-                </pre>
-              </div>
-            </div>
-          </div>
         </section>
 
         {/* CTA */}
