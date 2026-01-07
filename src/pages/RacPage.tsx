@@ -165,7 +165,7 @@ const DmnCode = () => (
 // OpenFisca/PolicyEngine code with syntax highlighting
 const OpenFiscaCode = () => (
   <pre className={styles.codePre}>
-<span className="comment"># variables/gov/usda/snap/snap_normal_allotment.py</span>{`
+<span className="filepath">📄 variables/gov/usda/snap/snap_normal_allotment.py</span>{`
 
 `}<span className="keyword">from</span>{` policyengine_us.model_api `}<span className="keyword">import</span>{` *
 
@@ -185,7 +185,7 @@ const OpenFiscaCode = () => (
         `}<span className="keyword">return</span>{` max_(min_allotment, max_allotment - expected_contribution)
 
 
-`}<span className="comment"># parameters/gov/usda/snap/expected_contribution.yaml</span>{`
+`}<span className="filepath">📄 parameters/gov/usda/snap/expected_contribution.yaml</span>{`
 
 `}<span className="field">description:</span>{` `}<span className="string">"Expected food contribution per dollar of earnings"</span>{`
 `}<span className="field">values:</span>{`
@@ -197,7 +197,7 @@ const OpenFiscaCode = () => (
       `}<span className="field">href:</span>{` `}<span className="string">"https://www.law.cornell.edu/uscode/text/7/2017#a"</span>{`
 
 
-`}<span className="comment"># tests/policy/baseline/gov/usda/snap/snap_normal_allotment.yaml</span>{`
+`}<span className="filepath">📄 tests/policy/baseline/gov/usda/snap/snap_normal_allotment.yaml</span>{`
 
 - `}<span className="field">name:</span>{` `}<span className="string">"SNAP eligible household with (max - contribution) {'>'} min."</span>{`
   `}<span className="field">period:</span>{` `}<span className="number">2022</span>{`

@@ -232,6 +232,15 @@ globalStyle(`${codePre} .variable`, {
   color: vars.color.text,
 });
 
+globalStyle(`${codePre} .filepath`, {
+  color: vars.color.textSecondary,
+  fontWeight: 500,
+  display: 'block',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+  paddingBottom: vars.space.sm,
+  marginBottom: vars.space.sm,
+});
+
 // ============================================
 // FEATURES GRID
 // ============================================
