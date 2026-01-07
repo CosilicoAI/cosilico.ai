@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 import * as styles from "../styles/microplex.css";
 import { DiamondIcon, CheckIcon, XIcon, PartialIcon } from "../components/icons";
@@ -13,10 +14,10 @@ const DataSourcesIcon = () => (
   </svg>
 );
 
-const FlowIcon = () => (
+const ModelIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.stageIconSvg}>
+    <circle cx="12" cy="12" r="3" />
     <path d="M12 2v4m0 12v4M2 12h4m12 0h4" />
-    <circle cx="12" cy="12" r="4" />
     <path d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
   </svg>
 );
@@ -26,6 +27,13 @@ const SynthesizeIcon = () => (
     <path d="M12 2L2 7l10 5 10-5-10-5z" />
     <path d="M2 17l10 5 10-5" />
     <path d="M2 12l10 5 10-5" />
+  </svg>
+);
+
+const GeoIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.stageIconSvg}>
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
   </svg>
 );
 
@@ -59,7 +67,7 @@ const ArrowDown = () => (
 );
 
 // Feature icons
-const ConditionalIcon = () => (
+const QuantileIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.featureIcon}>
     <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
   </svg>
@@ -68,7 +76,8 @@ const ConditionalIcon = () => (
 const ZeroIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.featureIcon}>
     <circle cx="12" cy="12" r="10" />
-    <path d="M12 6v6l4 2" />
+    <path d="M8 12h8" />
+    <circle cx="12" cy="12" r="3" fill="currentColor" />
   </svg>
 );
 
@@ -98,10 +107,10 @@ const ScaleIcon = () => (
   </svg>
 );
 
-const LikelihoodIcon = () => (
+const CoverageIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.featureIcon}>
-    <path d="M3 3v18h18" />
-    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
+    <path d="M9 11l3 3L22 4" />
+    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
   </svg>
 );
 
@@ -115,7 +124,7 @@ const MultiSurveyFusionExplainer: React.FC = () => {
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Multi-survey fusion</h2>
         <p className={styles.sectionSubtitle}>
-          Stack surveys with different coverage, learn joint distribution from partial observations
+          Stack CPS, SIPP, and PSID with different coverage, learn joint distribution via ZI-QDNN
         </p>
       </div>
 
@@ -127,29 +136,29 @@ const MultiSurveyFusionExplainer: React.FC = () => {
             <h4 className={styles.flowsExplanationTitle}>Current Population Survey</h4>
             <p className={styles.flowsExplanationText}>
               Household structure, demographics, geography, base income.
-              Includes non-filers. Top-coded wages, underreported investment income.
+              Cross-sectional annual snapshot. Top-coded wages, underreported investment income.
             </p>
-            <code className={styles.flowsMath}>150k persons, 54k households</code>
+            <code className={styles.flowsMath}>144k persons, state-level geo</code>
           </div>
 
           <div className={styles.flowsExplanationCard}>
-            <div className={styles.flowsExplanationNumber}>PUF</div>
-            <h4 className={styles.flowsExplanationTitle}>IRS Public Use File</h4>
+            <div className={styles.flowsExplanationNumber}>SIPP</div>
+            <h4 className={styles.flowsExplanationTitle}>Survey of Income and Program Participation</h4>
             <p className={styles.flowsExplanationText}>
-              Capital gains, partnership/S-corp income, detailed expenses.
-              Uncapped income. No geography, missing non-filers.
+              Panel structure with lags for transition modeling. Monthly income,
+              education, race, marital status. income(t) → income(t+1) dynamics.
             </p>
-            <code className={styles.flowsMath}>208k tax units → 300k persons</code>
+            <code className={styles.flowsMath}>477k person-waves, 4 waves</code>
           </div>
 
           <div className={styles.flowsExplanationCard}>
-            <div className={styles.flowsExplanationNumber}>+</div>
-            <h4 className={styles.flowsExplanationTitle}>Administrative targets</h4>
+            <div className={styles.flowsExplanationNumber}>PSID</div>
+            <h4 className={styles.flowsExplanationTitle}>Panel Study of Income Dynamics</h4>
             <p className={styles.flowsExplanationText}>
-              IRS SOI totals by AGI bracket, Census demographics by state/age,
-              CBO program aggregates. 5,000+ calibration constraints.
+              Long-running panel since 1968. Wealth, food stamps, taxable income.
+              Smaller sample but rich longitudinal history.
             </p>
-            <code className={styles.flowsMath}>L0 calibration removes implausible combos</code>
+            <code className={styles.flowsMath}>9k persons, multi-decade panel</code>
           </div>
         </div>
 
@@ -160,88 +169,75 @@ const MultiSurveyFusionExplainer: React.FC = () => {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px", position: "relative", zIndex: 1, width: "100%" }}>
 
             <div style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", color: "#707088", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              Variable Coverage by Source
+              Variable coverage by source
             </div>
 
-            <div style={{ width: "100%", maxWidth: "600px", display: "flex", flexDirection: "column", gap: "8px" }}>
-              {/* Shared variables */}
+            <div style={{ width: "100%", maxWidth: "700px", display: "flex", flexDirection: "column", gap: "8px" }}>
+              {/* All three have these */}
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Wages, SE income</div>
+                <div style={{ width: "140px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Age, sex</div>
                 <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS (top-coded)</div>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF (uncapped)</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>CPS</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>SIPP</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #ffaa00, #cc8800)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>PSID</div>
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Interest, dividends</div>
+                <div style={{ width: "140px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Annual income</div>
                 <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS (underreported)</div>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF (detailed)</div>
-                </div>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#a0a0b0", textAlign: "right" }}>Pension, Social Security</div>
-                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS</div>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>wage_income</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>total*12</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #ffaa00, #cc8800)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>wage_income</div>
                 </div>
               </div>
 
               {/* Divider */}
               <div style={{ height: "1px", background: "rgba(255,255,255,0.1)", margin: "8px 0" }} />
 
-              {/* CPS only */}
+              {/* SIPP only */}
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>Household structure</div>
+                <div style={{ width: "140px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Income lag (t-1)</div>
                 <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS only</div>
-                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#505060" }}>—</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>total_income_lag1</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#505060" }}>—</div>
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>State, county, block</div>
+                <div style={{ width: "140px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Education, race</div>
                 <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS only</div>
-                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
-                </div>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>Medical, childcare expense</div>
-                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>CPS only</div>
-                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#505060" }}>—</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>SIPP</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#505060" }}>—</div>
                 </div>
               </div>
 
               {/* Divider */}
               <div style={{ height: "1px", background: "rgba(255,255,255,0.1)", margin: "8px 0" }} />
 
-              {/* PUF only */}
+              {/* CPS/PSID only */}
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Capital gains (LT/ST)</div>
+                <div style={{ width: "140px", fontSize: "0.75rem", color: "#00d4ff", textAlign: "right" }}>State FIPS</div>
                 <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF only</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00d4ff, #00a8cc)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>CPS</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#505060" }}>—</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #ffaa00, #cc8800)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>PSID</div>
                 </div>
               </div>
+
+              {/* PSID only */}
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Partnership, S-corp income</div>
+                <div style={{ width: "140px", fontSize: "0.75rem", color: "#ffaa00", textAlign: "right" }}>Food stamps, wealth</div>
                 <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF only</div>
-                </div>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{ width: "160px", fontSize: "0.75rem", color: "#00ff88", textAlign: "right" }}>Charitable, mortgage int.</div>
-                <div style={{ flex: 1, height: "20px", display: "flex", gap: "2px" }}>
-                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#505060" }}>missing</div>
-                  <div style={{ flex: 1, background: "linear-gradient(90deg, #00ff88, #00cc6a)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: "#000" }}>PUF only</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "3px 0 0 3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#505060" }}>—</div>
+                  <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#505060" }}>—</div>
+                  <div style={{ flex: 1, background: "linear-gradient(90deg, #ffaa00, #cc8800)", borderRadius: "0 3px 3px 0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "#000" }}>PSID</div>
                 </div>
               </div>
             </div>
 
             <div style={{ fontSize: "0.75rem", color: "#505068", textAlign: "center", maxWidth: "520px" }}>
-              Stack 450k records with partial observations. Masked MAF learns joint distribution, fills all gaps at synthesis.
+              Stack 630k records with partial observations. ZI-QDNN learns conditional distributions, survey dummies capture survey-specific patterns.
             </div>
 
           </div>
@@ -250,12 +246,12 @@ const MultiSurveyFusionExplainer: React.FC = () => {
         {/* Key insight */}
         <div className={styles.flowsKeyInsight}>
           <div className={styles.flowsKeyInsightGlow} />
-          <h4 className={styles.flowsKeyInsightTitle}>Learn from both, trust neither completely</h4>
+          <h4 className={styles.flowsKeyInsightTitle}>Learn from all, generate complete records</h4>
           <p className={styles.flowsKeyInsightText}>
-            For shared variables like wages, the flow learns from <strong>both sources</strong>: CPS provides
-            low-income patterns (includes non-filers), PUF provides high-income tail (uncapped).
-            L0 calibration to IRS SOI totals then removes implausible combinations and corrects marginal distributions.
-            The result: complete input vectors for RAC to compute taxes and benefits.
+            Each survey contributes what it measures best: CPS provides geography and household structure,
+            SIPP provides <strong>transition dynamics</strong> (income(t) → income(t+1)) via panel lags,
+            PSID provides wealth and program participation.
+            The ZI-QDNN learns the joint distribution across all sources, generating synthetic records with all variables filled.
           </p>
         </div>
       </div>
@@ -283,13 +279,13 @@ const RacInputsSection: React.FC = () => {
             <tr>
               <th>Category</th>
               <th>Variables (microplex synthesizes)</th>
-              <th>RAC Computes</th>
+              <th>RAC computes</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Demographics</td>
-              <td>age, sex, race, marital status, disability, citizenship</td>
+              <td>age, sex, race, marital status, education</td>
               <td>Filing status eligibility</td>
             </tr>
             <tr>
@@ -299,33 +295,23 @@ const RacInputsSection: React.FC = () => {
             </tr>
             <tr>
               <td>Geography</td>
-              <td>state, county, block → CD, SLDU, SLDL</td>
+              <td>state → census block (by population) → CD, SLDU, SLDL</td>
               <td>State tax rules, benefit eligibility</td>
             </tr>
             <tr>
-              <td>Wage Income</td>
-              <td>employment income, self-employment income</td>
-              <td>Payroll tax, earned income</td>
+              <td>Income</td>
+              <td>wage income, self-employment, investment income</td>
+              <td>AGI, taxable income, payroll tax</td>
             </tr>
             <tr>
-              <td>Investment</td>
-              <td>interest, dividends (ordinary/qualified), capital gains (LT/ST)</td>
-              <td>Investment income tax, NIIT</td>
+              <td>Transitions</td>
+              <td>income(t-1) → income(t) from SIPP panel</td>
+              <td>Eligibility changes over time</td>
             </tr>
             <tr>
-              <td>Business</td>
-              <td>partnership income, S-corp income, rental income</td>
-              <td>QBI deduction, SE tax</td>
-            </tr>
-            <tr>
-              <td>Retirement</td>
-              <td>Social Security, pension (taxable/nontaxable), IRA distributions</td>
-              <td>SS taxation, retirement credits</td>
-            </tr>
-            <tr>
-              <td>Expenses</td>
-              <td>medical OOP, childcare, housing cost, property tax, charitable, mortgage interest</td>
-              <td>Itemized deductions, CDCTC</td>
+              <td>Programs</td>
+              <td>food stamps, Social Security from PSID</td>
+              <td>Benefit amounts, phase-outs</td>
             </tr>
           </tbody>
         </table>
@@ -348,26 +334,31 @@ export default function MicroplexPage() {
             <div className={styles.heroBadge}>COSILICO DATA</div>
             <h1 className={styles.heroTitle}>microplex</h1>
             <p className={styles.heroSubtitle}>
-              Multi-survey fusion using normalizing flows with masked training.
-              Synthesize complete input vectors from CPS + IRS PUF for RAC microsimulation.
+              Multi-survey synthesis using ZI-QDNN (Zero-Inflated Quantile DNN).
+              Stack CPS + SIPP + PSID, synthesize complete populations, calibrate to Census.
             </p>
             <div className={styles.heroPills}>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
-                CPS + PUF Fusion
+                CPS + SIPP + PSID
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
-                Masked MAF Training
+                ZI-QDNN Synthesis
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
-                5,000+ Calibration Targets
+                Census Block Assignment
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}><DiamondIcon size={10} variant="filled" /></span>
-                L0 Sparse Reweighting
+                L0 Calibration
               </span>
+            </div>
+            <div style={{ marginTop: "24px" }}>
+              <Link to="/stack/microsynth" style={{ color: "#00d4ff", fontSize: "0.9rem", textDecoration: "none", borderBottom: "1px solid rgba(0,212,255,0.3)" }}>
+                View synthesis experiments →
+              </Link>
             </div>
           </div>
         </section>
@@ -380,7 +371,7 @@ export default function MicroplexPage() {
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>The pipeline</h2>
             <p className={styles.sectionSubtitle}>
-              From partial survey observations to complete RAC input vectors
+              From partial survey observations to calibrated synthetic populations
             </p>
           </div>
 
@@ -395,11 +386,12 @@ export default function MicroplexPage() {
                 <div className={styles.stageNumber}>STAGE 01</div>
                 <h3 className={styles.stageTitle}>Stack surveys</h3>
                 <p className={styles.stageDescription}>
-                  CPS (150k persons): household structure, geography, expenses, base income.
-                  PUF (300k persons): capital gains, partnership income, detailed expenses.
-                  Mark missing values as NaN.
+                  CPS (144k): household structure, geography, base income.
+                  SIPP (477k): panel lags for transitions, education, race.
+                  PSID (9k): food stamps, wealth, long-run dynamics.
+                  Add survey dummies to encode source-specific patterns.
                 </p>
-                <code className={styles.stageCode}>stacked = concat([cps, puf], mark_missing=True)</code>
+                <code className={styles.stageCode}>stacked = concat([cps, sipp, psid], survey_dummies=True)</code>
               </div>
             </div>
 
@@ -407,17 +399,17 @@ export default function MicroplexPage() {
 
             <div className={`${styles.workflowStage} ${styles.stageDelay2}`}>
               <div className={styles.stageIcon}>
-                <FlowIcon />
+                <ModelIcon />
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 02</div>
-                <h3 className={styles.stageTitle}>Masked MAF Training</h3>
+                <h3 className={styles.stageTitle}>Train ZI-QDNN</h3>
                 <p className={styles.stageDescription}>
-                  Train normalizing flow on 450k records with partial observations.
-                  Loss computed only on observed values. Flow learns joint distribution
-                  from both sources simultaneously.
+                  Zero-Inflated Quantile DNN with two heads: P(income=0) classification head
+                  for the point mass at zero, quantile regression head (τ=0.05 to 0.95) for
+                  the positive income distribution. No log transforms needed.
                 </p>
-                <code className={styles.stageCode}>flow.fit(stacked, mask=observed, weights=survey_weights)</code>
+                <code className={styles.stageCode}>model = ZIQDNN(predictors, target="annual_income")</code>
               </div>
             </div>
 
@@ -429,13 +421,13 @@ export default function MicroplexPage() {
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 03</div>
-                <h3 className={styles.stageTitle}>Synthesize complete records</h3>
+                <h3 className={styles.stageTitle}>Synthesize</h3>
                 <p className={styles.stageDescription}>
-                  Generate 1M+ households with ALL variables filled. No NaN gaps.
-                  CPS variables + PUF variables + learned correlations.
-                  Assign census blocks by state × population probability.
+                  Generate synthetic records by sampling from the learned conditional distribution.
+                  Use training predictors to generate income values. Zero/positive sampled from
+                  learned P(zero), positive values interpolated from quantile predictions.
                 </p>
-                <code className={styles.stageCode}>synthetic = flow.sample(n=1_000_000)</code>
+                <code className={styles.stageCode}>synthetic = model.sample(X_train) # 445k records</code>
               </div>
             </div>
 
@@ -443,15 +435,33 @@ export default function MicroplexPage() {
 
             <div className={`${styles.workflowStage} ${styles.stageDelay4}`}>
               <div className={styles.stageIcon}>
-                <ReweightIcon />
+                <GeoIcon />
               </div>
               <div className={styles.stageContent}>
                 <div className={styles.stageNumber}>STAGE 04</div>
-                <h3 className={styles.stageTitle}>L0 Calibration</h3>
+                <h3 className={styles.stageTitle}>Assign census blocks</h3>
                 <p className={styles.stageDescription}>
-                  Sparse reweighting to 5,000+ targets: IRS SOI income totals (including capital gains!),
-                  Census demographics by state/age, CBO program aggregates.
-                  Implausible combinations get zero weight.
+                  Assign each synthetic record to a census block randomly, weighted by population.
+                  5.77M blocks nationwide. From block, derive CD, SLDU, SLDL, county, tract.
+                  Geographic distribution matches Census before calibration.
+                </p>
+                <code className={styles.stageCode}>block = sample(blocks, weights=population, state=state_fips)</code>
+              </div>
+            </div>
+
+            <ArrowDown />
+
+            <div className={`${styles.workflowStage} ${styles.stageDelay5}`}>
+              <div className={styles.stageIcon}>
+                <ReweightIcon />
+              </div>
+              <div className={styles.stageContent}>
+                <div className={styles.stageNumber}>STAGE 05</div>
+                <h3 className={styles.stageTitle}>Calibrate</h3>
+                <p className={styles.stageDescription}>
+                  Sparse L0 reweighting to administrative targets: Census demographics by state/age,
+                  IRS SOI income totals, CBO program aggregates. Most weights stay near 1,
+                  implausible record types get zero weight.
                 </p>
                 <code className={styles.stageCode}>calibrate(synthetic, targets, l0_lambda=5e-6)</code>
               </div>
@@ -467,7 +477,7 @@ export default function MicroplexPage() {
                 <div className={styles.stageNumber}>OUTPUT</div>
                 <h3 className={styles.stageTitle}>RAC input vectors</h3>
                 <p className={styles.stageDescription}>
-                  Complete population with all income sources, demographics, geography, expenses.
+                  Complete synthetic population with demographics, income, geography, transitions.
                   Ready for RAC to compute federal/state taxes, EITC, CTC, SNAP, Medicaid, SSI, poverty.
                 </p>
                 <code className={styles.stageCode}>rac.compute(synthetic) → taxes, benefits, poverty</code>
@@ -494,42 +504,42 @@ export default function MicroplexPage() {
               <FusionIcon />
               <h3 className={styles.featureTitle}>Multi-survey fusion</h3>
               <p className={styles.featureDescription}>
-                Stack CPS + PUF with different coverage patterns.
-                CPS: household structure, geography, non-filers.
-                PUF: capital gains, partnership income, high-income tail.
+                Stack CPS + SIPP + PSID with different coverage.
+                Survey dummies let the model learn source-specific patterns
+                while sharing structure across all three.
               </p>
             </div>
 
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
-              <ConditionalIcon />
-              <h3 className={styles.featureTitle}>Masked training</h3>
+              <QuantileIcon />
+              <h3 className={styles.featureTitle}>Quantile regression</h3>
               <p className={styles.featureDescription}>
-                Learn joint distribution from partial observations.
-                Flow computes loss only on observed values, learns
-                correlations between variables across surveys.
+                Learn the full conditional distribution, not just the mean.
+                19 quantiles (τ=0.05 to 0.95) capture income distribution shape
+                including heavy tails and skewness.
               </p>
             </div>
 
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <ZeroIcon />
-              <h3 className={styles.featureTitle}>Zero-inflated variables</h3>
+              <h3 className={styles.featureTitle}>Zero-inflated</h3>
               <p className={styles.featureDescription}>
-                Capital gains, partnership income, charitable contributions
-                have many zeros. Flow learns the joint zero/positive pattern
-                without explicit mixture models.
+                Income has a point mass at zero (22% of records).
+                Separate classification head predicts P(income=0),
+                quantile head handles positive values only.
               </p>
             </div>
 
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
               <SparseIcon />
-              <h3 className={styles.featureTitle}>L0 Calibration</h3>
+              <h3 className={styles.featureTitle}>L0 calibration</h3>
               <p className={styles.featureDescription}>
                 Hard Concrete gates for sparse weight adjustment.
-                Match 5,000+ targets while keeping most weights unchanged.
-                Implausible record types get zero weight automatically.
+                Match thousands of targets while keeping most weights near 1.
+                Implausible combinations get zero weight automatically.
               </p>
             </div>
 
@@ -546,12 +556,12 @@ export default function MicroplexPage() {
 
             <div className={styles.featureCard}>
               <div className={styles.featureCardGlow} />
-              <LikelihoodIcon />
-              <h3 className={styles.featureTitle}>Exact likelihood</h3>
+              <CoverageIcon />
+              <h3 className={styles.featureTitle}>Coverage validation</h3>
               <p className={styles.featureDescription}>
-                Normalizing flows provide tractable log-likelihood.
-                Stable training, no mode collapse. Can score any
-                record against the learned distribution.
+                NN distance from holdout to synthetic measures coverage.
+                Median coverage ~0.000001 means synthetic data
+                covers the real distribution extremely well.
               </p>
             </div>
           </div>
@@ -593,7 +603,7 @@ export default function MicroplexPage() {
                   <td><span className={styles.partialMark}><PartialIcon size={16} /></span></td>
                 </tr>
                 <tr>
-                  <td>Masked training</td>
+                  <td>Panel dynamics (t-1 → t)</td>
                   <td className={styles.microplexCell}><span className={styles.checkMark}><CheckIcon size={16} /></span></td>
                   <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
                   <td><span className={styles.crossMark}><XIcon size={16} /></span></td>
@@ -667,6 +677,18 @@ export default function MicroplexPage() {
                 </svg>
                 Docs
               </a>
+              <Link
+                to="/stack/microsynth"
+                className={styles.installLink}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.installLinkIcon}>
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                </svg>
+                Experiments
+              </Link>
             </div>
           </div>
         </section>
