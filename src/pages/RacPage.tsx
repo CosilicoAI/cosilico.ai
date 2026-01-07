@@ -68,7 +68,7 @@ const VersionIcon = () => (
 type FormatTab = 'rac' | 'dmn' | 'openfisca' | 'catala';
 
 const formatInfo: Record<FormatTab, { label: string; filenames: string[]; note: string }> = {
-  rac: { label: 'RAC', filenames: ['statute/7/2017/a.rac'], note: 'Single file with everything' },
+  rac: { label: 'RAC', filenames: ['statute/26/1411/a.rac'], note: 'Single file with everything' },
   dmn: { label: 'DMN', filenames: ['snap_decision.dmn'], note: 'XML + FEEL expression language' },
   openfisca: {
     label: 'OpenFisca/PolicyEngine',
@@ -81,42 +81,33 @@ const formatInfo: Record<FormatTab, { label: string; filenames: string[]; note: 
 // RAC code with syntax highlighting
 const RacCode = () => (
   <pre className={styles.codePre}>
-{`# SNAP Allotment - 7 USC § 2017(a)
+{`# 26 USC § 1411(a) - Net Investment Income Tax
 
-`}<span className="comment"># Statute text for reference and LLM context</span>{`
 `}<span className="keyword">text:</span>{` |
-  The value of the allotment shall be equal to the cost of the
-  thrifty food plan reduced by 30 percent of the household's income.
+  (a) In general.— There is hereby imposed a tax equal to 3.8 percent
+  of the lesser of— (1) net investment income, or (2) modified AGI
+  in excess of the threshold amount.
 
-`}<span className="comment"># Time-varying policy values with legal citations</span>{`
-`}<span className="keyword">parameter</span>{` `}<span className="variable">contribution_rate</span>{`:
-  `}<span className="field">description:</span>{` `}<span className="string">"Household contribution as share of net income"</span>{`
-  `}<span className="field">reference:</span>{` `}<span className="string">"7 USC 2017(a)"</span>{`
+`}<span className="keyword">parameter</span>{` `}<span className="variable">niit_rate</span>{`:
+  `}<span className="field">description:</span>{` `}<span className="string">"Tax rate on net investment income"</span>{`
+  `}<span className="field">unit:</span>{` `}<span className="type">rate</span>{`
   `}<span className="field">values:</span>{`
-    `}<span className="number">2024-01-01</span>{`: `}<span className="number">0.30</span>{`
-    `}<span className="number">1977-01-01</span>{`: `}<span className="number">0.30</span>{`
+    `}<span className="number">2013-01-01</span>{`: `}<span className="number">0.038</span>{`
 
-`}<span className="keyword">parameter</span>{` `}<span className="variable">max_allotment</span>{`:
-  `}<span className="field">description:</span>{` `}<span className="string">"Maximum monthly SNAP benefit by household size"</span>{`
-  `}<span className="field">reference:</span>{` `}<span className="string">"USDA FNS"</span>{`
-  `}<span className="field">values:</span>{`
-    `}<span className="number">2024-10-01</span>{`: [`}<span className="number">292</span>{`, `}<span className="number">536</span>{`, `}<span className="number">768</span>{`, `}<span className="number">975</span>{`, `}<span className="number">1159</span>{`]
-    `}<span className="number">2023-10-01</span>{`: [`}<span className="number">281</span>{`, `}<span className="number">516</span>{`, `}<span className="number">740</span>{`, `}<span className="number">939</span>{`, `}<span className="number">1116</span>{`]
-
-`}<span className="comment"># Computed variable with formula</span>{`
-`}<span className="keyword">variable</span>{` `}<span className="variable">snap_allotment</span>{`:
-  `}<span className="field">imports:</span>{` [`}<span className="string">7/2014/a#snap_eligible</span>{`, `}<span className="string">7/2014/e#snap_net_income</span>{`]
-  `}<span className="field">entity:</span>{` `}<span className="type">Household</span>{`
-  `}<span className="field">period:</span>{` `}<span className="type">Month</span>{`
+`}<span className="keyword">variable</span>{` `}<span className="variable">net_investment_income_tax</span>{`:
+  `}<span className="field">imports:</span>{`
+    - `}<span className="string">26/1411/c#net_investment_income</span>{`
+    - `}<span className="string">26/1411/b#threshold_amount</span>{`
+  `}<span className="field">entity:</span>{` `}<span className="type">TaxUnit</span>{`
+  `}<span className="field">period:</span>{` `}<span className="type">Year</span>{`
   `}<span className="field">dtype:</span>{` `}<span className="type">Money</span>{`
   `}<span className="field">formula:</span>{` |
-    `}<span className="keyword">if not</span>{` snap_eligible:
-      `}<span className="keyword">return</span>{` `}<span className="number">0</span>{`
-    benefit = max_allotment[household_size] - snap_net_income * contribution_rate
-    `}<span className="keyword">return</span>{` max(`}<span className="number">0</span>{`, benefit)
+    excess_magi = max(`}<span className="number">0</span>{`, modified_agi - threshold_amount)
+    `}<span className="keyword">return</span>{` niit_rate * min(net_investment_income, excess_magi)
   `}<span className="field">tests:</span>{`
-    - `}<span className="field">inputs:</span>{` {'{'}household_size: `}<span className="number">4</span>{`, snap_net_income: `}<span className="number">500</span>{`, snap_eligible: `}<span className="keyword">true</span>{`{'}'}
-      `}<span className="field">expect:</span>{` `}<span className="number">825</span>{`
+    - `}<span className="field">inputs:</span>{` {'{'}modified_agi: `}<span className="number">300000</span>{`, threshold_amount: `}<span className="number">250000</span>{`,
+               net_investment_income: `}<span className="number">80000</span>{`{'}'}
+      `}<span className="field">expect:</span>{` `}<span className="number">1900</span>{`  `}<span className="comment"># 3.8% × min(80k, 50k)</span>{`
 `}
   </pre>
 );
