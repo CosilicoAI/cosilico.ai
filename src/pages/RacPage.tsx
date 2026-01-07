@@ -391,6 +391,32 @@ export default function RacPage() {
             <div className={styles.exampleCard}>
               <span className={styles.codeFilename}>
                 <FileIcon />
+                statute/26/36B/b/3/A.rac
+              </span>
+              <pre className={styles.codePre}>
+{`# 26 USC § 36B(b)(3)(A) - ACA Premium Tax Credit
+
+`}<span className="keyword">text:</span>{` |
+  The applicable percentage for any taxpayer whose household
+  income is within an income tier shall increase, on a
+  sliding scale... from the initial percentage to the final
+  percentage for such income tier.
+
+`}<span className="keyword">parameter</span>{` `}<span className="variable">ptc_applicable_pct</span>{`:
+  `}<span className="field">description:</span>{` `}<span className="string">"Premium contribution % by FPL tier"</span>{`
+  `}<span className="field">values:</span>{`
+    `}<span className="number">2021-01-01</span>{`:  `}<span className="comment"># ARPA temporary rates</span>{`
+      `}<span className="number">150</span>{`: [`}<span className="number">0.00</span>{`, `}<span className="number">0.00</span>{`]  `}<span className="comment"># up to 150% FPL</span>{`
+      `}<span className="number">200</span>{`: [`}<span className="number">0.00</span>{`, `}<span className="number">0.02</span>{`]  `}<span className="comment"># 150-200% FPL</span>{`
+      `}<span className="number">250</span>{`: [`}<span className="number">0.02</span>{`, `}<span className="number">0.04</span>{`]
+      `}<span className="number">300</span>{`: [`}<span className="number">0.04</span>{`, `}<span className="number">0.06</span>{`]
+      `}<span className="number">400</span>{`: [`}<span className="number">0.06</span>{`, `}<span className="number">0.085</span>{`]`}
+              </pre>
+            </div>
+
+            <div className={styles.exampleCard}>
+              <span className={styles.codeFilename}>
+                <FileIcon />
                 statute/26/63/c/2/A.rac
               </span>
               <pre className={styles.codePre}>
