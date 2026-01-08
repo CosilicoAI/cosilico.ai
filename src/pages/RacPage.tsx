@@ -284,12 +284,12 @@ const DmnCode = ({ example }: { example: ExampleType }) => {
   `}<span className="tag">&lt;decision</span>{` `}<span className="field">id</span>{`=`}<span className="string">"applicable_pct"</span>{`&gt;
     `}<span className="tag">&lt;literalExpression&gt;</span>{`
       `}<span className="tag">&lt;text&gt;</span>{`
-        if fpl &lt;= `}<span className="number">150</span>{` then `}<span className="number">0</span>{`
-        else if fpl &lt;= `}<span className="number">200</span>{` then
+        if fpl `}{'<='}{` `}<span className="number">150</span>{` then `}<span className="number">0</span>{`
+        else if fpl `}{'<='}{` `}<span className="number">200</span>{` then
           (`}<span className="number">0.02</span>{` - `}<span className="number">0</span>{`) * (fpl - `}<span className="number">150</span>{`) / `}<span className="number">50</span>{`
-        else if fpl &lt;= `}<span className="number">250</span>{` then
+        else if fpl `}{'<='}{` `}<span className="number">250</span>{` then
           `}<span className="number">0.02</span>{` + (`}<span className="number">0.04</span>{` - `}<span className="number">0.02</span>{`) * (fpl - `}<span className="number">200</span>{`) / `}<span className="number">50</span>{`
-        else if fpl &lt;= `}<span className="number">300</span>{` then
+        else if fpl `}{'<='}{` `}<span className="number">300</span>{` then
           `}<span className="number">0.04</span>{` + (`}<span className="number">0.06</span>{` - `}<span className="number">0.04</span>{`) * (fpl - `}<span className="number">250</span>{`) / `}<span className="number">50</span>{`
         else `}<span className="number">0.085</span>{`
       `}<span className="tag">&lt;/text&gt;</span>{`
