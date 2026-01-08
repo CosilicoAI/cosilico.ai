@@ -87,25 +87,25 @@ const getFilename = (example: ExampleType, format: FormatTab): string[] => {
     'niit': {
       rac: ['statute/26/1411/a.rac'],
       dmn: ['niit.dmn'],
-      openfisca: [],
+      openfisca: ['variables/gov/irs/tax/federal_income/net_investment_income_tax.py'],
       catala: ['niit.catala_en'],
     },
     'aca-ptc': {
       rac: ['statute/26/36B/b/3/A.rac'],
       dmn: ['aca_ptc.dmn'],
-      openfisca: [],
+      openfisca: ['variables/gov/aca/ptc/aca_required_contribution_percentage.py'],
       catala: ['aca_ptc.catala_en'],
     },
     'std-ded': {
       rac: ['statute/26/63/c/2/A.rac'],
       dmn: ['standard_deduction.dmn'],
-      openfisca: [],
+      openfisca: ['variables/gov/irs/income/taxable_income/deductions/standard_deduction/basic_standard_deduction.py'],
       catala: ['standard_deduction.catala_en'],
     },
     'ny-eitc': {
       rac: ['statute/ny/tax/606/d.rac'],
       dmn: ['ny_eitc.dmn'],
-      openfisca: [],
+      openfisca: ['variables/gov/states/ny/tax/income/credits/ny_eitc.py'],
       catala: ['ny_eitc.catala_en'],
     },
   };
@@ -343,13 +343,6 @@ const OpenFiscaCode = ({ example }: { example: ExampleType }) => {
   if (example === 'niit') {
     return (
       <div className={styles.multiFileCode}>
-        <div className={styles.codeHeader}>
-          <span className={styles.codeFilename}>
-            <FileIcon />
-            variables/gov/irs/tax/federal_income/net_investment_income_tax.py
-          </span>
-          <span className={styles.codeCitation}>Python + YAML (3 files)</span>
-        </div>
         <pre className={styles.codePre}>
 <span className="keyword">class</span>{` `}<span className="type">net_investment_income_tax</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
@@ -400,13 +393,6 @@ const OpenFiscaCode = ({ example }: { example: ExampleType }) => {
   if (example === 'aca-ptc') {
     return (
       <div className={styles.multiFileCode}>
-        <div className={styles.codeHeader}>
-          <span className={styles.codeFilename}>
-            <FileIcon />
-            variables/gov/aca/ptc/aca_required_contribution_percentage.py
-          </span>
-          <span className={styles.codeCitation}>Python + YAML (3 files)</span>
-        </div>
         <pre className={styles.codePre}>
 <span className="keyword">class</span>{` `}<span className="type">aca_required_contribution_percentage</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
@@ -465,13 +451,6 @@ const OpenFiscaCode = ({ example }: { example: ExampleType }) => {
   if (example === 'std-ded') {
     return (
       <div className={styles.multiFileCode}>
-        <div className={styles.codeHeader}>
-          <span className={styles.codeFilename}>
-            <FileIcon />
-            variables/gov/irs/income/taxable_income/deductions/standard_deduction/basic_standard_deduction.py
-          </span>
-          <span className={styles.codeCitation}>Python + YAML (3 files)</span>
-        </div>
         <pre className={styles.codePre}>
 <span className="keyword">class</span>{` `}<span className="type">basic_standard_deduction</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
@@ -525,13 +504,6 @@ const OpenFiscaCode = ({ example }: { example: ExampleType }) => {
   // ny-eitc
   return (
     <div className={styles.multiFileCode}>
-      <div className={styles.codeHeader}>
-        <span className={styles.codeFilename}>
-          <FileIcon />
-          variables/gov/states/ny/tax/income/credits/ny_eitc.py
-        </span>
-        <span className={styles.codeCitation}>Python + YAML (3 files)</span>
-      </div>
       <pre className={styles.codePre}>
 <span className="keyword">class</span>{` `}<span className="type">ny_eitc</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
@@ -743,19 +715,17 @@ export default function RacPage() {
                 </button>
               ))}
             </div>
-            {activeTab !== 'openfisca' && (
-              <div className={styles.codeHeader}>
-                <div className={styles.codeFilenames}>
-                  {filenames.map((filename, i) => (
-                    <span key={i} className={styles.codeFilename}>
-                      <FileIcon />
-                      {filename}
-                    </span>
-                  ))}
-                </div>
-                <span className={styles.codeCitation}>{getNote(activeTab)}</span>
+            <div className={styles.codeHeader}>
+              <div className={styles.codeFilenames}>
+                {filenames.map((filename, i) => (
+                  <span key={i} className={styles.codeFilename}>
+                    <FileIcon />
+                    {filename}
+                  </span>
+                ))}
               </div>
-            )}
+              <span className={styles.codeCitation}>{getNote(activeTab)}</span>
+            </div>
             <div className={styles.codeContent}>
               {activeTab === 'rac' && <RacCode example={activeExample} />}
               {activeTab === 'dmn' && <DmnCode example={activeExample} />}
