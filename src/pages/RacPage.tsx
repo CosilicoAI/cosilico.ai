@@ -279,22 +279,25 @@ const DmnCode = ({ example }: { example: ExampleType }) => {
       <pre className={styles.codePre}>
 <span className="comment">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>{`
 `}<span className="tag">&lt;definitions</span>{` `}<span className="field">name</span>{`=`}<span className="string">"ACA_PTC"</span>{`&gt;
-  `}<span className="tag">&lt;inputData</span>{` `}<span className="field">id</span>{`=`}<span className="string">"household_income_pct_fpl"</span>{`/&gt;
+  `}<span className="tag">&lt;inputData</span>{` `}<span className="field">id</span>{`=`}<span className="string">"fpl"</span>{`/&gt;
 
   `}<span className="tag">&lt;decision</span>{` `}<span className="field">id</span>{`=`}<span className="string">"applicable_pct"</span>{`&gt;
     `}<span className="tag">&lt;literalExpression&gt;</span>{`
       `}<span className="tag">&lt;text&gt;</span>{`
-        `}<span className="comment">/* Linear interpolation within tier */</span>{`
-        if fpl {'<='} `}<span className="number">150</span>{` then `}<span className="number">0.00</span>{`
-        else if fpl {'<='} `}<span className="number">200</span>{` then
-          `}<span className="number">0.00</span>{` + (`}<span className="number">0.02</span>{` - `}<span className="number">0.00</span>{`) * (fpl - `}<span className="number">150</span>{`) / `}<span className="number">50</span>{`
-        else if fpl {'<='} `}<span className="number">250</span>{` then
+        if fpl &lt;= `}<span className="number">150</span>{` then `}<span className="number">0</span>{`
+        else if fpl &lt;= `}<span className="number">200</span>{` then
+          (`}<span className="number">0.02</span>{` - `}<span className="number">0</span>{`) * (fpl - `}<span className="number">150</span>{`) / `}<span className="number">50</span>{`
+        else if fpl &lt;= `}<span className="number">250</span>{` then
           `}<span className="number">0.02</span>{` + (`}<span className="number">0.04</span>{` - `}<span className="number">0.02</span>{`) * (fpl - `}<span className="number">200</span>{`) / `}<span className="number">50</span>{`
-        `}<span className="comment">/* ...more tiers */</span>{`
+        else if fpl &lt;= `}<span className="number">300</span>{` then
+          `}<span className="number">0.04</span>{` + (`}<span className="number">0.06</span>{` - `}<span className="number">0.04</span>{`) * (fpl - `}<span className="number">250</span>{`) / `}<span className="number">50</span>{`
+        else `}<span className="number">0.085</span>{`
       `}<span className="tag">&lt;/text&gt;</span>{`
     `}<span className="tag">&lt;/literalExpression&gt;</span>{`
-    `}<span className="comment">&lt;!-- Magic numbers everywhere. No temporal versioning. --&gt;</span>{`
   `}<span className="tag">&lt;/decision&gt;</span>
+
+  <span className="comment">&lt;!-- Where do 150, 200, 250, 300, 0.02, 0.04, 0.06, 0.085 come from?
+       DMN has no temporal versioning or legal citations. --&gt;</span>
 <span className="tag">&lt;/definitions&gt;</span>
       </pre>
     );
@@ -602,16 +605,22 @@ sliding scale from the initial to final percentage.
   `}<span className="keyword">output</span>{` applicable_pct `}<span className="keyword">content</span>{` `}<span className="type">decimal</span>{`
 
 `}<span className="keyword">scope</span>{` `}<span className="type">PremiumTaxCredit</span>{`:
-  `}<span className="comment"># Manual interpolation - no built-in support</span>{`
   `}<span className="keyword">definition</span>{` applicable_pct `}<span className="keyword">equals</span>{`
     `}<span className="keyword">if</span>{` fpl {'<='} `}<span className="number">150</span>{` `}<span className="keyword">then</span>{` `}<span className="number">0.00</span>{`
     `}<span className="keyword">else if</span>{` fpl {'<='} `}<span className="number">200</span>{` `}<span className="keyword">then</span>{`
-      `}<span className="number">0.00</span>{` + (`}<span className="number">0.02</span>{` - `}<span className="number">0.00</span>{`) * (fpl - `}<span className="number">150</span>{`) / `}<span className="number">50</span>{`
+      (`}<span className="number">0.02</span>{` - `}<span className="number">0.00</span>{`) * (fpl - `}<span className="number">150</span>{`) / `}<span className="number">50</span>{`
     `}<span className="keyword">else if</span>{` fpl {'<='} `}<span className="number">250</span>{` `}<span className="keyword">then</span>{`
       `}<span className="number">0.02</span>{` + (`}<span className="number">0.04</span>{` - `}<span className="number">0.02</span>{`) * (fpl - `}<span className="number">200</span>{`) / `}<span className="number">50</span>{`
-    `}<span className="comment"># ...more tiers</span>{`
+    `}<span className="keyword">else if</span>{` fpl {'<='} `}<span className="number">300</span>{` `}<span className="keyword">then</span>{`
+      `}<span className="number">0.04</span>{` + (`}<span className="number">0.06</span>{` - `}<span className="number">0.04</span>{`) * (fpl - `}<span className="number">250</span>{`) / `}<span className="number">50</span>{`
+    `}<span className="keyword">else</span>{` `}<span className="number">0.085</span>{`
 
-`}<span className="comment"># No temporal versioning - which year's rates?</span>
+`}<span className="comment"># Values hardcoded - no temporal versioning</span>{`
+
+`}<span className="comment"># Test: 190% FPL {'->'}  0.016 (interpolated)</span>{`
+`}<span className="keyword">declaration</span>{` `}<span className="keyword">scope</span>{` `}<span className="type">Test</span>{`:
+  `}<span className="keyword">assertion</span>{` (`}<span className="type">PremiumTaxCredit</span>{` `}<span className="keyword">where</span>{` fpl = `}<span className="number">190</span>{`)
+    .applicable_pct = `}<span className="number">0.016</span>
       </pre>
     );
   }
