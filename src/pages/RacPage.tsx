@@ -282,19 +282,18 @@ const DmnCode = ({ example }: { example: ExampleType }) => {
   `}<span className="tag">&lt;inputData</span>{` `}<span className="field">id</span>{`=`}<span className="string">"household_income_pct_fpl"</span>{`/&gt;
 
   `}<span className="tag">&lt;decision</span>{` `}<span className="field">id</span>{`=`}<span className="string">"applicable_pct"</span>{`&gt;
-    `}<span className="tag">&lt;decisionTable</span>{`&gt;
-      `}<span className="tag">&lt;input</span>{` `}<span className="field">label</span>{`=`}<span className="string">"FPL %"</span>{`/&gt;
-      `}<span className="tag">&lt;output</span>{` `}<span className="field">label</span>{`=`}<span className="string">"Pct"</span>{`/&gt;
-      `}<span className="tag">&lt;rule&gt;</span>{`
-        `}<span className="tag">&lt;inputEntry&gt;</span>{`[`}<span className="number">0</span>{`..`}<span className="number">150</span>{`]`}<span className="tag">&lt;/inputEntry&gt;</span>{`
-        `}<span className="tag">&lt;outputEntry&gt;</span><span className="number">0.00</span><span className="tag">&lt;/outputEntry&gt;</span>{`
-      `}<span className="tag">&lt;/rule&gt;</span>{`
-      `}<span className="tag">&lt;rule&gt;</span>{`
-        `}<span className="tag">&lt;inputEntry&gt;</span>{`(`}<span className="number">150</span>{`..`}<span className="number">200</span>{`]`}<span className="tag">&lt;/inputEntry&gt;</span>{`
-        `}<span className="tag">&lt;outputEntry&gt;</span><span className="number">0.02</span><span className="tag">&lt;/outputEntry&gt;</span>{`
-      `}<span className="tag">&lt;/rule&gt;</span>{`
-      `}<span className="comment">&lt;!-- No temporal versioning - which year's rates? --&gt;</span>{`
-    `}<span className="tag">&lt;/decisionTable&gt;</span>{`
+    `}<span className="tag">&lt;literalExpression&gt;</span>{`
+      `}<span className="tag">&lt;text&gt;</span>{`
+        `}<span className="comment">/* Linear interpolation within tier */</span>{`
+        if fpl {'<='} `}<span className="number">150</span>{` then `}<span className="number">0.00</span>{`
+        else if fpl {'<='} `}<span className="number">200</span>{` then
+          `}<span className="number">0.00</span>{` + (`}<span className="number">0.02</span>{` - `}<span className="number">0.00</span>{`) * (fpl - `}<span className="number">150</span>{`) / `}<span className="number">50</span>{`
+        else if fpl {'<='} `}<span className="number">250</span>{` then
+          `}<span className="number">0.02</span>{` + (`}<span className="number">0.04</span>{` - `}<span className="number">0.02</span>{`) * (fpl - `}<span className="number">200</span>{`) / `}<span className="number">50</span>{`
+        `}<span className="comment">/* ...more tiers */</span>{`
+      `}<span className="tag">&lt;/text&gt;</span>{`
+    `}<span className="tag">&lt;/literalExpression&gt;</span>{`
+    `}<span className="comment">&lt;!-- Magic numbers everywhere. No temporal versioning. --&gt;</span>{`
   `}<span className="tag">&lt;/decision&gt;</span>
 <span className="tag">&lt;/definitions&gt;</span>
       </pre>
@@ -344,200 +343,243 @@ const OpenFiscaCode = ({ example }: { example: ExampleType }) => {
   if (example === 'niit') {
     return (
       <div className={styles.multiFileCode}>
-        <div className={styles.fileSection}>
+        <div className={styles.codeHeader}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            variables/gov/irs/niit.py
+            variables/gov/irs/tax/federal_income/net_investment_income_tax.py
           </span>
-          <pre className={styles.codePre}>
+          <span className={styles.codeCitation}>Python + YAML (3 files)</span>
+        </div>
+        <pre className={styles.codePre}>
 <span className="keyword">class</span>{` `}<span className="type">net_investment_income_tax</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
     entity = `}<span className="type">TaxUnit</span>{`
     definition_period = `}<span className="type">YEAR</span>{`
-    reference = `}<span className="string">"https://law.cornell.edu/uscode/text/26/1411"</span>{`
+    reference = `}<span className="string">"https://www.law.cornell.edu/uscode/text/26/1411"</span>{`
+    unit = `}<span className="type">USD</span>{`
 
-    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, p):
-        rate = p(period).gov.irs.niit.rate
-        nii = tax_unit(`}<span className="string">"net_investment_income"</span>{`, period)
-        threshold = tax_unit(`}<span className="string">"niit_threshold"</span>{`, period)
-        excess = max_(`}<span className="number">0</span>{`, tax_unit(`}<span className="string">"modified_agi"</span>{`, period) - threshold)
-        `}<span className="keyword">return</span>{` rate * min_(nii, excess)`}
-          </pre>
-        </div>
+    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, parameters):
+        p = parameters(period).gov.irs.investment.net_investment_income_tax
+        threshold = p.threshold[tax_unit(`}<span className="string">"filing_status"</span>{`, period)]
+        excess_agi = max_(`}<span className="number">0</span>{`, tax_unit(`}<span className="string">"adjusted_gross_income"</span>{`, period) - threshold)
+        base = min_(max_(`}<span className="number">0</span>{`, tax_unit(`}<span className="string">"net_investment_income"</span>{`, period)), excess_agi)
+        `}<span className="keyword">return</span>{` p.rate * base`}
+        </pre>
         <div className={styles.fileSection}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            parameters/gov/irs/niit/rate.yaml
+            parameters/gov/irs/investment/net_investment_income_tax/rate.yaml
           </span>
-          <pre className={styles.codePre}>
-<span className="field">description:</span>{` `}<span className="string">"NIIT rate"</span>{`
+        </div>
+        <pre className={styles.codePre}>
+<span className="field">description:</span>{` `}<span className="string">"Net Investment Income Tax rate"</span>{`
+`}<span className="field">metadata:</span>{`
+  `}<span className="field">unit:</span>{` `}<span className="string">"currency-USD"</span>{`
 `}<span className="field">values:</span>{`
   `}<span className="number">2013-01-01</span>{`: `}<span className="number">0.038</span>
-          </pre>
-        </div>
+        </pre>
         <div className={styles.fileSection}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            tests/gov/irs/niit.yaml
+            tests/gov/irs/tax/federal_income/net_investment_income_tax.yaml
           </span>
-          <pre className={styles.codePre}>
-{`- `}<span className="field">name:</span>{` `}<span className="string">"Basic NIIT"</span>{`
-  `}<span className="field">period:</span>{` `}<span className="number">2024</span>{`
-  `}<span className="field">input:</span>{`
-    `}<span className="field">modified_agi:</span>{` `}<span className="number">300000</span>{`
-    `}<span className="field">net_investment_income:</span>{` `}<span className="number">80000</span>{`
-    `}<span className="field">niit_threshold:</span>{` `}<span className="number">250000</span>{`
-  `}<span className="field">output:</span>{`
-    `}<span className="field">net_investment_income_tax:</span>{` `}<span className="number">1900</span>
-          </pre>
         </div>
+        <pre className={styles.codePre}>
+{`- `}<span className="field">name:</span>{` `}<span className="string">"Rental income just above threshold"</span>{`
+  `}<span className="field">period:</span>{` `}<span className="number">2019</span>{`
+  `}<span className="field">input:</span>{`
+    `}<span className="field">adjusted_gross_income:</span>{` `}<span className="number">205_000</span>{`
+    `}<span className="field">rental_income:</span>{` `}<span className="number">205_000</span>{`
+    `}<span className="field">filing_status:</span>{` `}<span className="string">"SINGLE"</span>{`
+  `}<span className="field">output:</span>{`
+    `}<span className="field">net_investment_income_tax:</span>{` `}<span className="number">190</span>
+        </pre>
       </div>
     );
   }
   if (example === 'aca-ptc') {
     return (
       <div className={styles.multiFileCode}>
-        <div className={styles.fileSection}>
+        <div className={styles.codeHeader}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            variables/gov/hhs/aca/ptc.py
+            variables/gov/aca/ptc/aca_required_contribution_percentage.py
           </span>
-          <pre className={styles.codePre}>
-<span className="keyword">class</span>{` `}<span className="type">applicable_percentage</span>{`(`}<span className="type">Variable</span>{`):
+          <span className={styles.codeCitation}>Python + YAML (3 files)</span>
+        </div>
+        <pre className={styles.codePre}>
+<span className="keyword">class</span>{` `}<span className="type">aca_required_contribution_percentage</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
     entity = `}<span className="type">TaxUnit</span>{`
     definition_period = `}<span className="type">YEAR</span>{`
+    reference = `}<span className="string">"https://law.cornell.edu/uscode/text/26/36B#b_3_A"</span>{`
 
-    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, p):
-        fpl_pct = tax_unit(`}<span className="string">"household_income_pct_fpl"</span>{`, period)
-        pct_table = p(period).gov.hhs.aca.ptc.applicable_pct
-        `}<span className="keyword">return</span>{` pct_table.calc(fpl_pct)`}
-          </pre>
-        </div>
+    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, parameters):
+        magi_frac = tax_unit(`}<span className="string">"aca_magi_fraction"</span>{`, period)
+        p = parameters(period).gov.aca.required_contribution_percentage
+        `}<span className="keyword">return</span>{` np.interp(magi_frac, p.thresholds, p.amounts)`}
+        </pre>
         <div className={styles.fileSection}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            parameters/gov/hhs/aca/ptc/applicable_pct.yaml
+            parameters/gov/aca/required_contribution_percentage.yaml
           </span>
-          <pre className={styles.codePre}>
-<span className="field">description:</span>{` `}<span className="string">"Applicable percentage by FPL"</span>{`
+        </div>
+        <pre className={styles.codePre}>
+<span className="field">description:</span>{` `}<span className="string">"ACA PTC phase out rate by MAGI % FPL"</span>{`
 `}<span className="field">brackets:</span>{`
-  - `}<span className="field">threshold:</span>{` `}<span className="number">150</span>{`
-    `}<span className="field">rate:</span>{` `}<span className="number">0.00</span>{`
-  - `}<span className="field">threshold:</span>{` `}<span className="number">200</span>{`
-    `}<span className="field">rate:</span>{` `}<span className="number">0.02</span>
-          </pre>
-        </div>
+  - `}<span className="field">threshold:</span>{`
+      `}<span className="number">2021-01-01</span>{`: `}<span className="number">0</span>{`
+    `}<span className="field">amount:</span>{`
+      `}<span className="number">2021-01-01</span>{`: `}<span className="number">0</span>{`       `}<span className="comment"># ARPA: 0% at 0</span>{`
+      `}<span className="number">2026-01-01</span>{`: `}<span className="number">0.021</span>{`   `}<span className="comment"># Revert</span>{`
+  - `}<span className="field">threshold:</span>{`
+      `}<span className="number">2021-01-01</span>{`: `}<span className="number">1.50</span>{`
+    `}<span className="field">amount:</span>{`
+      `}<span className="number">2021-01-01</span>{`: `}<span className="number">0.0</span>{`     `}<span className="comment"># ARPA: 0% at 150%</span>{`
+      `}<span className="number">2026-01-01</span>{`: `}<span className="number">0.0419</span>{`  `}<span className="comment"># Revert</span>{`
+  - `}<span className="field">threshold:</span>{`
+      `}<span className="number">2021-01-01</span>{`: `}<span className="number">2.00</span>{`
+    `}<span className="field">amount:</span>{`
+      `}<span className="number">2021-01-01</span>{`: `}<span className="number">0.02</span>{`    `}<span className="comment"># ARPA</span>{`
+      `}<span className="number">2026-01-01</span>{`: `}<span className="number">0.066</span>{`   `}<span className="comment"># Revert</span>
+        </pre>
         <div className={styles.fileSection}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            tests/gov/hhs/aca/ptc.yaml
+            tests/gov/aca/ptc/aca_required_contribution_percentage.yaml
           </span>
-          <pre className={styles.codePre}>
-{`- `}<span className="field">name:</span>{` `}<span className="string">"175% FPL"</span>{`
-  `}<span className="field">period:</span>{` `}<span className="number">2024</span>{`
-  `}<span className="field">input:</span>{`
-    `}<span className="field">household_income_pct_fpl:</span>{` `}<span className="number">175</span>{`
-  `}<span className="field">output:</span>{`
-    `}<span className="field">applicable_percentage:</span>{` `}<span className="number">0.01</span>
-          </pre>
         </div>
+        <pre className={styles.codePre}>
+{`- `}<span className="field">name:</span>{` `}<span className="string">"Interpolation at 190% FPL"</span>{`
+  `}<span className="field">period:</span>{` `}<span className="number">2022</span>{`
+  `}<span className="field">absolute_error_margin:</span>{` `}<span className="number">0.00001</span>{`
+  `}<span className="field">input:</span>{`
+    `}<span className="field">aca_magi_fraction:</span>{` `}<span className="number">1.90</span>{`
+  `}<span className="field">output:</span>{`
+    `}<span className="field">aca_required_contribution_percentage:</span>{` `}<span className="number">0.0160</span>
+        </pre>
       </div>
     );
   }
   if (example === 'std-ded') {
     return (
       <div className={styles.multiFileCode}>
-        <div className={styles.fileSection}>
+        <div className={styles.codeHeader}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            variables/gov/irs/deductions/standard.py
+            variables/gov/irs/income/taxable_income/deductions/standard_deduction/basic_standard_deduction.py
           </span>
-          <pre className={styles.codePre}>
-<span className="keyword">class</span>{` `}<span className="type">basic_standard_deduction_joint</span>{`(`}<span className="type">Variable</span>{`):
+          <span className={styles.codeCitation}>Python + YAML (3 files)</span>
+        </div>
+        <pre className={styles.codePre}>
+<span className="keyword">class</span>{` `}<span className="type">basic_standard_deduction</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
     entity = `}<span className="type">TaxUnit</span>{`
     definition_period = `}<span className="type">YEAR</span>{`
+    unit = `}<span className="type">USD</span>{`
+    reference = `}<span className="string">"https://www.law.cornell.edu/uscode/text/26/63#c_2"</span>{`
 
-    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, p):
-        base = p(period).gov.irs.deductions.standard.amount.other
-        multiplier = p(period).gov.irs.deductions.standard.joint_multiplier
-        `}<span className="keyword">return</span>{` base * multiplier`}
-          </pre>
-        </div>
+    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, parameters):
+        p = parameters(period).gov.irs.deductions.standard
+        filing_status = tax_unit(`}<span className="string">"filing_status"</span>{`, period)
+        `}<span className="keyword">return</span>{` p.amount[filing_status]`}
+        </pre>
         <div className={styles.fileSection}>
           <span className={styles.codeFilename}>
             <FileIcon />
-            parameters/gov/irs/deductions/standard/joint_multiplier.yaml
+            parameters/gov/irs/deductions/standard/amount.yaml
           </span>
-          <pre className={styles.codePre}>
-<span className="field">description:</span>{` `}<span className="string">"Multiplier for joint filers"</span>{`
-`}<span className="field">values:</span>{`
-  `}<span className="number">1988-01-01</span>{`: `}<span className="number">2</span>
-          </pre>
         </div>
+        <pre className={styles.codePre}>
+<span className="field">description:</span>{` `}<span className="string">"Federal deduction from AGI if not itemizing"</span>{`
+`}<span className="field">SINGLE:</span>{`
+  `}<span className="number">2024-01-01</span>{`: `}<span className="number">14_600</span>{`
+  `}<span className="number">2025-01-01</span>{`: `}<span className="number">15_750</span>{`
+`}<span className="field">JOINT:</span>{`
+  `}<span className="number">2024-01-01</span>{`: `}<span className="number">29_200</span>{`
+  `}<span className="number">2025-01-01</span>{`: `}<span className="number">31_500</span>{`
+`}<span className="field">metadata:</span>{`
+  `}<span className="field">unit:</span>{` `}<span className="string">"currency-USD"</span>{`
+  `}<span className="field">reference:</span>{`
+    - `}<span className="field">title:</span>{` `}<span className="string">"26 U.S. Code § 63(c)"</span>{`
+      `}<span className="field">href:</span>{` `}<span className="string">"https://www.law.cornell.edu/uscode/text/26/63#c"</span>
+        </pre>
         <div className={styles.fileSection}>
           <span className={styles.codeFilename}>
             <FileIcon />
             tests/gov/irs/deductions/standard.yaml
           </span>
-          <pre className={styles.codePre}>
-{`- `}<span className="field">name:</span>{` `}<span className="string">"Joint deduction"</span>{`
+        </div>
+        <pre className={styles.codePre}>
+{`- `}<span className="field">name:</span>{` `}<span className="string">"Joint filer standard deduction"</span>{`
   `}<span className="field">period:</span>{` `}<span className="number">2024</span>{`
   `}<span className="field">input:</span>{`
     `}<span className="field">filing_status:</span>{` `}<span className="string">"JOINT"</span>{`
   `}<span className="field">output:</span>{`
-    `}<span className="field">basic_standard_deduction_joint:</span>{` `}<span className="number">29200</span>
-          </pre>
-        </div>
+    `}<span className="field">basic_standard_deduction:</span>{` `}<span className="number">29_200</span>
+        </pre>
       </div>
     );
   }
   // ny-eitc
   return (
     <div className={styles.multiFileCode}>
-      <div className={styles.fileSection}>
+      <div className={styles.codeHeader}>
         <span className={styles.codeFilename}>
           <FileIcon />
-          variables/gov/states/ny/tax/ny_eitc.py
+          variables/gov/states/ny/tax/income/credits/ny_eitc.py
         </span>
-        <pre className={styles.codePre}>
+        <span className={styles.codeCitation}>Python + YAML (3 files)</span>
+      </div>
+      <pre className={styles.codePre}>
 <span className="keyword">class</span>{` `}<span className="type">ny_eitc</span>{`(`}<span className="type">Variable</span>{`):
     value_type = `}<span className="type">float</span>{`
     entity = `}<span className="type">TaxUnit</span>{`
+    unit = `}<span className="type">USD</span>{`
     definition_period = `}<span className="type">YEAR</span>{`
+    reference = `}<span className="string">"https://www.nysenate.gov/legislation/laws/TAX/606"</span>{`
+    defined_for = `}<span className="type">StateCode.NY</span>{`
 
-    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, p):
-        federal = tax_unit(`}<span className="string">"eitc"</span>{`, period)
-        rate = p(period).gov.states.ny.tax.eitc.rate
-        `}<span className="keyword">return</span>{` federal * rate`}
-        </pre>
-      </div>
+    `}<span className="keyword">def</span>{` `}<span className="variable">formula</span>{`(tax_unit, period, parameters):
+        federal_eitc = tax_unit(`}<span className="string">"eitc"</span>{`, period)
+        p = parameters(period).gov.states.ny.tax.income.credits
+        `}<span className="keyword">return</span>{` federal_eitc * p.eitc.match`}
+      </pre>
       <div className={styles.fileSection}>
         <span className={styles.codeFilename}>
           <FileIcon />
-          parameters/gov/states/ny/tax/eitc/rate.yaml
+          parameters/gov/states/ny/tax/income/credits/eitc/match.yaml
         </span>
-        <pre className={styles.codePre}>
-<span className="field">description:</span>{` `}<span className="string">"NY EITC rate as % of federal"</span>{`
+      </div>
+      <pre className={styles.codePre}>
+<span className="field">description:</span>{` `}<span className="string">"NY matches this fraction of federal EITC"</span>{`
 `}<span className="field">values:</span>{`
-  `}<span className="number">2003-01-01</span>{`: `}<span className="number">0.30</span>
-        </pre>
-      </div>
+  `}<span className="number">1994-01-01</span>{`: `}<span className="number">0.075</span>{`
+  `}<span className="number">1995-01-01</span>{`: `}<span className="number">0.1</span>{`
+  `}<span className="number">1996-01-01</span>{`: `}<span className="number">0.2</span>{`
+  `}<span className="number">2000-01-01</span>{`: `}<span className="number">0.225</span>{`
+  `}<span className="number">2003-01-01</span>{`: `}<span className="number">0.3</span>{`
+`}<span className="field">metadata:</span>{`
+  `}<span className="field">reference:</span>{`
+    - `}<span className="field">title:</span>{` `}<span className="string">"Section 606 Credits against tax (d)"</span>{`
+      `}<span className="field">href:</span>{` `}<span className="string">"https://www.nysenate.gov/legislation/laws/TAX/606"</span>
+      </pre>
       <div className={styles.fileSection}>
         <span className={styles.codeFilename}>
           <FileIcon />
-          tests/gov/states/ny/tax/eitc.yaml
+          tests/gov/states/ny/tax/income/credits/ny_eitc.yaml
         </span>
-        <pre className={styles.codePre}>
-{`- `}<span className="field">name:</span>{` `}<span className="string">"NY EITC basic"</span>{`
+      </div>
+      <pre className={styles.codePre}>
+{`- `}<span className="field">name:</span>{` `}<span className="string">"30% match of federal EITC"</span>{`
   `}<span className="field">period:</span>{` `}<span className="number">2024</span>{`
   `}<span className="field">input:</span>{`
+    `}<span className="field">state_code:</span>{` `}<span className="string">"NY"</span>{`
     `}<span className="field">eitc:</span>{` `}<span className="number">5000</span>{`
   `}<span className="field">output:</span>{`
     `}<span className="field">ny_eitc:</span>{` `}<span className="number">1500</span>
-        </pre>
-      </div>
+      </pre>
     </div>
   );
 };
@@ -584,18 +626,20 @@ sliding scale from the initial to final percentage.
 */</span>{`
 
 `}<span className="keyword">declaration</span>{` `}<span className="keyword">scope</span>{` `}<span className="type">PremiumTaxCredit</span>{`:
-  `}<span className="keyword">input</span>{` household_income_pct_fpl `}<span className="keyword">content</span>{` `}<span className="type">decimal</span>{`
+  `}<span className="keyword">input</span>{` fpl `}<span className="keyword">content</span>{` `}<span className="type">decimal</span>{`
   `}<span className="keyword">output</span>{` applicable_pct `}<span className="keyword">content</span>{` `}<span className="type">decimal</span>{`
 
 `}<span className="keyword">scope</span>{` `}<span className="type">PremiumTaxCredit</span>{`:
+  `}<span className="comment"># Manual interpolation - no built-in support</span>{`
   `}<span className="keyword">definition</span>{` applicable_pct `}<span className="keyword">equals</span>{`
-    `}<span className="keyword">match</span>{` household_income_pct_fpl `}<span className="keyword">with pattern</span>{`
-    | x `}<span className="keyword">when</span>{` x <= `}<span className="number">150</span>{` -> `}<span className="number">0.00</span>{`
-    | x `}<span className="keyword">when</span>{` x <= `}<span className="number">200</span>{` -> `}<span className="number">0.02</span>{`
-    | x `}<span className="keyword">when</span>{` x <= `}<span className="number">250</span>{` -> `}<span className="number">0.04</span>{`
+    `}<span className="keyword">if</span>{` fpl {'<='} `}<span className="number">150</span>{` `}<span className="keyword">then</span>{` `}<span className="number">0.00</span>{`
+    `}<span className="keyword">else if</span>{` fpl {'<='} `}<span className="number">200</span>{` `}<span className="keyword">then</span>{`
+      `}<span className="number">0.00</span>{` + (`}<span className="number">0.02</span>{` - `}<span className="number">0.00</span>{`) * (fpl - `}<span className="number">150</span>{`) / `}<span className="number">50</span>{`
+    `}<span className="keyword">else if</span>{` fpl {'<='} `}<span className="number">250</span>{` `}<span className="keyword">then</span>{`
+      `}<span className="number">0.02</span>{` + (`}<span className="number">0.04</span>{` - `}<span className="number">0.02</span>{`) * (fpl - `}<span className="number">200</span>{`) / `}<span className="number">50</span>{`
+    `}<span className="comment"># ...more tiers</span>{`
 
-`}<span className="comment"># These are 2021 ARPA rates. But what about 2019? 2024?</span>{`
-`}<span className="comment"># Catala has no temporal parameter system.</span>
+`}<span className="comment"># No temporal versioning - which year's rates?</span>
       </pre>
     );
   }
@@ -699,17 +743,19 @@ export default function RacPage() {
                 </button>
               ))}
             </div>
-            <div className={styles.codeHeader}>
-              <div className={styles.codeFilenames}>
-                {filenames.map((filename, i) => (
-                  <span key={i} className={styles.codeFilename}>
-                    <FileIcon />
-                    {filename}
-                  </span>
-                ))}
+            {activeTab !== 'openfisca' && (
+              <div className={styles.codeHeader}>
+                <div className={styles.codeFilenames}>
+                  {filenames.map((filename, i) => (
+                    <span key={i} className={styles.codeFilename}>
+                      <FileIcon />
+                      {filename}
+                    </span>
+                  ))}
+                </div>
+                <span className={styles.codeCitation}>{getNote(activeTab)}</span>
               </div>
-              <span className={styles.codeCitation}>{getNote(activeTab)}</span>
-            </div>
+            )}
             <div className={styles.codeContent}>
               {activeTab === 'rac' && <RacCode example={activeExample} />}
               {activeTab === 'dmn' && <DmnCode example={activeExample} />}
