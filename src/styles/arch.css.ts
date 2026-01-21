@@ -460,6 +460,20 @@ export const sourceComingSoon = style({
   color: vars.color.amber,
 });
 
+export const sourceBadgePlanned = style({
+  display: 'inline-block',
+  padding: `2px ${vars.space.sm}`,
+  background: 'rgba(100, 100, 150, 0.15)',
+  border: '1px solid rgba(150, 150, 200, 0.3)',
+  borderRadius: vars.radius.sm,
+  fontSize: '0.7rem',
+  fontFamily: vars.font.mono,
+  color: 'rgba(180, 180, 210, 0.9)',
+  marginLeft: vars.space.sm,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+});
+
 // ============================================
 // FEATURES
 // ============================================

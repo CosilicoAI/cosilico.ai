@@ -147,8 +147,8 @@ export default function ArchPage() {
             <div className={styles.heroBadge}>UNIVERSAL LEGAL ARCHIVE</div>
             <h1 className={styles.heroTitle}>Arch</h1>
             <p className={styles.heroSubtitle}>
-              The world's law, normalized to one format. Statutes from the US, UK, Canada, EU, and NZ -
-              plus regulations, guidance, and microdata - all converted to Akoma Ntoso and indexed for AI.
+              Government law and data, normalized to one format. US federal statutes, regulations,
+              IRS guidance, and microdata - indexed for AI encoding, with multi-country expansion planned.
             </p>
             <div className={styles.heroPills}>
               <span className={styles.pill}>
@@ -157,11 +157,11 @@ export default function ArchPage() {
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                50 US States
+                US Federal
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
-                5 Countries
+                NY State
               </span>
               <span className={styles.pill}>
                 <span className={styles.pillIcon}>&#9670;</span>
@@ -188,7 +188,7 @@ export default function ArchPage() {
               <ul className={styles.descriptionList}>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  Parsers for US Code (USLM), UK Acts (CLML), Canada, NZ, and EU (Formex)
+                  US Code parser for USLM XML (8 titles live, more in progress)
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
@@ -196,15 +196,15 @@ export default function ArchPage() {
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  State statute converters for NY, CA, FL, MI, TX, and 45 more states
+                  NY state statutes via Open Legislation API; more states planned
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  IRS guidance, SSA POMS, and CMS manuals parsed from HTML/PDF
+                  IRS guidance (570+ documents) parsed from HTML/PDF
                 </li>
                 <li className={styles.descriptionItem}>
                   <CheckIcon />
-                  All documents indexed in PostgreSQL with full-text search
+                  Documents indexed in SQLite/PostgreSQL with FTS5 full-text search
                 </li>
               </ul>
             </div>
@@ -305,12 +305,12 @@ export default function ArchPage() {
                 <span className={styles.sourceBadge}>Live</span>
               </h3>
               <p className={styles.sourceDescription}>
-                All 54 titles of the United States Code from USLM. Full text with
-                hierarchical structure from title down to clause level.
+                8 titles of the United States Code from official USLM XML, including
+                Title 26 (IRC) and Title 7 (Agriculture/SNAP). More titles in progress.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>54 titles</span>
-                <span className={styles.sourceMetaItem}>XML + PDF</span>
+                <span className={styles.sourceMetaItem}>8 titles</span>
+                <span className={styles.sourceMetaItem}>20k+ sections</span>
               </div>
             </div>
 
@@ -356,11 +356,11 @@ export default function ArchPage() {
               <CodeIcon />
               <h3 className={styles.sourceTitle}>
                 Canada Acts
-                <span className={styles.sourceBadge}>Live</span>
+                <span className={styles.sourceBadgePlanned}>Planned</span>
               </h3>
               <p className={styles.sourceDescription}>
-                All consolidated federal Acts from Justice Canada's Laws Website.
-                Includes Income Tax Act, Employment Insurance, and more.
+                Federal Acts from Justice Canada's Laws Website planned for integration.
+                Will include Income Tax Act, Employment Insurance, and more.
               </p>
               <div className={styles.sourceMeta}>
                 <span className={styles.sourceMetaItem}>956 acts</span>
@@ -374,15 +374,15 @@ export default function ArchPage() {
               <CodeIcon />
               <h3 className={styles.sourceTitle}>
                 UK Legislation
-                <span className={styles.sourceBadge}>Live</span>
+                <span className={styles.sourceBadgePlanned}>Planned</span>
               </h3>
               <p className={styles.sourceDescription}>
-                UK Public General Acts from legislation.gov.uk. Full text in
-                Crown Legislation Markup Language (CLML) format.
+                UK Public General Acts from legislation.gov.uk planned for integration.
+                Will parse Crown Legislation Markup Language (CLML) format.
               </p>
               <div className={styles.sourceMeta}>
                 <span className={styles.sourceMetaItem}>3,237 acts</span>
-                <span className={styles.sourceMetaItem}>XML</span>
+                <span className={styles.sourceMetaItem}>CLML</span>
               </div>
             </div>
 
@@ -395,12 +395,12 @@ export default function ArchPage() {
                 <span className={styles.sourceBadge}>Building</span>
               </h3>
               <p className={styles.sourceDescription}>
-                Dedicated parsers for each state's unique format. NY (API), CA (bulk XML),
-                FL, MI, TX, OH, and 44 more with HTML scraping converters.
+                NY Open Legislation API integration live. Building parsers for
+                CA (bulk XML), FL, MI, TX, and other states.
               </p>
               <div className={styles.sourceMeta}>
-                <span className={styles.sourceMetaItem}>50 states</span>
-                <span className={styles.sourceMetaItem}>HTML/XML</span>
+                <span className={styles.sourceMetaItem}>NY live</span>
+                <span className={styles.sourceMetaItem}>49 planned</span>
               </div>
             </div>
 
@@ -446,11 +446,11 @@ export default function ArchPage() {
               <CodeIcon />
               <h3 className={styles.sourceTitle}>
                 New Zealand
-                <span className={styles.sourceBadge}>Live</span>
+                <span className={styles.sourceBadgePlanned}>Planned</span>
               </h3>
               <p className={styles.sourceDescription}>
-                All Acts and regulations from the NZ Parliamentary Counsel Office.
-                Full XML access with point-in-time historical versions.
+                Acts and regulations from the NZ Parliamentary Counsel Office planned
+                for integration. PCO provides XML with point-in-time versions.
               </p>
               <div className={styles.sourceMeta}>
                 <span className={styles.sourceMetaItem}>PCO XML</span>
@@ -554,10 +554,10 @@ export default function ArchPage() {
         <section className={styles.installSection}>
           <div className={styles.installBox}>
             <div className={styles.installBoxGlow} />
-            <h2 className={styles.installTitle}>Building the World's Legal Archive</h2>
+            <h2 className={styles.installTitle}>Building a universal legal archive</h2>
             <p className={styles.installSubtext}>
-              60+ converters operational. US federal (USLM + eCFR), UK (CLML), Canada, NZ,
-              and 50 US state parsers converting to Akoma Ntoso. EU coming next.
+              US federal statutes (USLM), regulations (eCFR), and IRS guidance operational.
+              NY state live via Open Legislation API. UK, Canada, NZ, EU, and more states planned.
             </p>
             <div className={styles.installLinks}>
               <a
