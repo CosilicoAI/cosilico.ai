@@ -128,10 +128,10 @@ export default function StackPage() {
           </div>
 
           <div className={styles.componentsGrid}>
-            {/* arch - DEV (foundational layer) */}
-            <Link to="/stack/arch" className={`${styles.componentCard} ${styles.cardDelay1}`}>
+            {/* arch - Rules Foundation */}
+            <a href="https://rules.foundation/#arch" className={`${styles.componentCard} ${styles.cardDelay1}`}>
               <div className={styles.componentCardGlow} />
-              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
+              <span className={`${styles.statusBadge} ${styles.statusLive}`}>RULES.FDN</span>
               <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}>
                   <ArchIcon />
@@ -152,7 +152,7 @@ export default function StackPage() {
                 <span className={styles.featureTag}>Provenance</span>
                 <span className={styles.featureTag}>Change Detection</span>
               </div>
-            </Link>
+            </a>
 
             {/* microplex - LIVE */}
             <Link to="/stack/microplex" className={`${styles.componentCard} ${styles.cardDelay2}`}>
@@ -180,10 +180,10 @@ export default function StackPage() {
               </div>
             </Link>
 
-            {/* .rac - LIVE */}
-            <Link to="/stack/.rac" className={`${styles.componentCard} ${styles.cardDelay3}`}>
+            {/* .rac - Rules Foundation */}
+            <a href="https://rules.foundation/#format" className={`${styles.componentCard} ${styles.cardDelay3}`}>
               <div className={styles.componentCardGlow} />
-              <span className={`${styles.statusBadge} ${styles.statusLive}`}>SPEC</span>
+              <span className={`${styles.statusBadge} ${styles.statusLive}`}>RULES.FDN</span>
               <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}>
                   <RacIcon />
@@ -203,7 +203,7 @@ export default function StackPage() {
                 <span className={styles.featureTag}>Inline Tests</span>
                 <span className={styles.featureTag}>Self-Contained</span>
               </div>
-            </Link>
+            </a>
 
             {/* py-statmatch - LIVE */}
             <Link to="/stack/py-statmatch" className={`${styles.componentCard} ${styles.cardDelay4}`}>
@@ -308,17 +308,17 @@ export default function StackPage() {
               </div>
             </div>
 
-            {/* autorac - DEV */}
-            <Link to="/stack/autorac" className={`${styles.componentCard} ${styles.cardDelay8}`}>
+            {/* autorac - Rules Foundation */}
+            <a href="https://rules.foundation/#autorac" className={`${styles.componentCard} ${styles.cardDelay8}`}>
               <div className={styles.componentCardGlow} />
-              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
+              <span className={`${styles.statusBadge} ${styles.statusLive}`}>RULES.FDN</span>
               <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}>
                   <AutoRacIcon />
                 </div>
                 <div className={styles.componentMeta}>
                   <h3 className={styles.componentName}>autorac</h3>
-                  <div className={styles.componentTagline}>AI-assisted encoding</div>
+                  <div className={styles.componentTagline}>AI encoding</div>
                 </div>
               </div>
               <p className={styles.componentDescription}>
@@ -332,7 +332,7 @@ export default function StackPage() {
                 <span className={styles.featureTag}>Oracles</span>
                 <span className={styles.featureTag}>Feedback Loop</span>
               </div>
-            </Link>
+            </a>
 
             {/* rac-validators - DEV */}
             <div className={`${styles.componentCard} ${styles.cardDelay9} ${styles.componentCardComingSoon}`}>
@@ -484,7 +484,7 @@ export default function StackPage() {
                   <div className={styles.nodeName}>autorac</div>
                 </div>
                 <div className={styles.nodeFeatures}>
-                  <div className={styles.nodeFeature}>AI-assisted encoding</div>
+                  <div className={styles.nodeFeature}>AI encoding</div>
                   <div className={styles.nodeFeature}>Calibration tracking</div>
                   <div className={styles.nodeFeature}>Feedback loop</div>
                 </div>
@@ -570,29 +570,29 @@ export default function StackPage() {
         {/* CTA */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>Open source</h2>
+            <h2 className={styles.ctaTitle}>Open infrastructure</h2>
             <p className={styles.ctaText}>
-              All Cosilico tools are open source under the MIT license.
-              Contributions welcome.
+              Core infrastructure (RAC, Arch, AutoRAC) is maintained by the Rules Foundation.
+              Data layer tools are open source under MIT.
             </p>
             <div className={styles.ctaLinks}>
               <a
-                href="https://github.com/CosilicoAI"
+                href="https://rules.foundation"
                 className={styles.ctaLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <GitHubIcon />
-                GitHub Organization
+                <DocsIcon />
+                Rules Foundation
               </a>
               <a
-                href="https://cosilicoai.github.io/microplex"
+                href="https://github.com/RulesFoundation"
                 className={`${styles.ctaLink} ${styles.ctaLinkSecondary}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <DocsIcon />
-                microplex Docs
+                <GitHubIcon />
+                RulesFoundation GitHub
               </a>
             </div>
           </div>

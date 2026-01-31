@@ -29,8 +29,8 @@ export default function HomePage() {
             <a href="https://docs.cosilico.ai" className={styles.btnPrimary}>
               Read the docs
             </a>
-            <a href="https://github.com/PolicyEngine" className={styles.btnSecondary}>
-              View on GitHub
+            <a href="https://rules.foundation" className={styles.btnSecondary}>
+              Open infrastructure
             </a>
           </div>
         </div>
@@ -189,10 +189,10 @@ export default function HomePage() {
       {/* Open Source */}
       <section className={styles.openSource}>
         <div className={styles.osContent}>
-          <h2 className={styles.openSourceH2}>Open infrastructure.<br />Commercial APIs.</h2>
+          <h2 className={styles.openSourceH2}>Powered by<br />Rules Foundation.</h2>
           <p className={styles.osContentP}>
-            The simulation engine is open source.
-            Run it yourself, or use our hosted APIs for scale and support.
+            Built on open infrastructure: machine-readable encodings of statutes,
+            regulations, and policy rules. Cosilico provides commercial APIs on top.
           </p>
           <div className={styles.osStats}>
             <div className={styles.osStat}>
@@ -208,6 +208,9 @@ export default function HomePage() {
               <span className={styles.osLabel}>synthetic households</span>
             </div>
           </div>
+          <a href="https://rules.foundation" className={styles.btnSecondary} style={{ marginTop: '1.5rem' }}>
+            Learn about Rules Foundation →
+          </a>
         </div>
       </section>
 

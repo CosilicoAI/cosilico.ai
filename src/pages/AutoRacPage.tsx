@@ -112,7 +112,7 @@ export default function AutoRacPage() {
             <div className={styles.heroBadge}>AI ENCODING</div>
             <h1 className={styles.heroTitle}>AutoRAC</h1>
             <p className={styles.heroSubtitle}>
-              AI-assisted statute encoding infrastructure.
+              AI statute encoding infrastructure. 100% AI-created encodings.
               Two approaches: interactive Claude Code plugin for exploration,
               or Agent SDK for parallel batch encoding.
             </p>
