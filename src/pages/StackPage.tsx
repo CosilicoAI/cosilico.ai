@@ -180,31 +180,6 @@ export default function StackPage() {
               </div>
             </Link>
 
-            {/* .rac - Rules Foundation */}
-            <a href="https://rules.foundation/#format" className={`${styles.componentCard} ${styles.cardDelay3}`}>
-              <div className={styles.componentCardGlow} />
-              <span className={`${styles.statusBadge} ${styles.statusLive}`}>RULES.FDN</span>
-              <div className={styles.componentHeader}>
-                <div className={styles.componentIcon}>
-                  <RacIcon />
-                </div>
-                <div className={styles.componentMeta}>
-                  <h3 className={styles.componentName}>.rac</h3>
-                  <div className={styles.componentTagline}>Statute encoding format</div>
-                </div>
-              </div>
-              <p className={styles.componentDescription}>
-                Self-contained statute encoding format. One file captures the law:
-                text, parameters, formulas, and tests. Filepath mirrors legal citation.
-              </p>
-              <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>Legal Citations</span>
-                <span className={styles.featureTag}>Time-Varying</span>
-                <span className={styles.featureTag}>Inline Tests</span>
-                <span className={styles.featureTag}>Self-Contained</span>
-              </div>
-            </a>
-
             {/* py-statmatch - LIVE */}
             <Link to="/stack/py-statmatch" className={`${styles.componentCard} ${styles.cardDelay4}`}>
               <div className={styles.componentCardGlow} />
