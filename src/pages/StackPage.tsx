@@ -128,31 +128,31 @@ export default function StackPage() {
           </div>
 
           <div className={styles.componentsGrid}>
-            {/* arch - Rules Foundation */}
-            <a href="https://rules.foundation/#arch" className={`${styles.componentCard} ${styles.cardDelay1}`}>
+            {/* arch - Cosilico data layer */}
+            <Link to="/stack/arch" className={`${styles.componentCard} ${styles.cardDelay1}`}>
               <div className={styles.componentCardGlow} />
-              <span className={`${styles.statusBadge} ${styles.statusLive}`}>RULES.FDN</span>
+              <span className={`${styles.statusBadge} ${styles.statusDev}`}>IN DEV</span>
               <div className={styles.componentHeader}>
                 <div className={styles.componentIcon}>
                   <ArchIcon />
                 </div>
                 <div className={styles.componentMeta}>
                   <h3 className={styles.componentName}>arch</h3>
-                  <div className={styles.componentTagline}>Foundational archive</div>
+                  <div className={styles.componentTagline}>Data foundation</div>
                 </div>
               </div>
               <p className={styles.componentDescription}>
-                Single source of truth for raw government files. Statutes,
-                regulations, IRS guidance, and state codes archived with
-                full provenance tracking.
+                Raw microdata archive and calibration targets database.
+                CPS, ACS, SCF, PUF sources plus admin aggregates for
+                geographic and demographic calibration.
               </p>
               <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>R2 Storage</span>
-                <span className={styles.featureTag}>PostgreSQL</span>
+                <span className={styles.featureTag}>Microdata</span>
+                <span className={styles.featureTag}>Calibration Targets</span>
                 <span className={styles.featureTag}>Provenance</span>
-                <span className={styles.featureTag}>Change Detection</span>
+                <span className={styles.featureTag}>Multi-Source</span>
               </div>
-            </a>
+            </Link>
 
             {/* microplex - LIVE */}
             <Link to="/stack/microplex" className={`${styles.componentCard} ${styles.cardDelay2}`}>
@@ -449,7 +449,7 @@ export default function StackPage() {
                       <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
                     </svg>
                   </div>
-                  <div className={styles.nodeName}>arch</div>
+                  <div className={styles.nodeName}>archive</div>
                 </div>
                 <div className={styles.nodeFeatures}>
                   <div className={styles.nodeFeature}>Archive raw documents</div>
@@ -572,8 +572,8 @@ export default function StackPage() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Open infrastructure</h2>
             <p className={styles.ctaText}>
-              Core infrastructure (RAC, Arch, AutoRAC) is maintained by the Rules Foundation.
-              Data layer tools are open source under MIT.
+              Core infrastructure (Archive, RAC, AutoRAC) is maintained by the Rules Foundation.
+              Data layer tools including Arch are open source under MIT.
             </p>
             <div className={styles.ctaLinks}>
               <a

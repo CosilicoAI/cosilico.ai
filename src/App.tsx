@@ -65,9 +65,11 @@ function App() {
           <Route path="/stack" element={<StackPage />} />
           {/* Redirect open infrastructure pages to Rules Foundation */}
           <Route path="/stack/.rac" element={<ExternalRedirect to="https://rules.foundation/#format" />} />
-          <Route path="/stack/arch" element={<ExternalRedirect to="https://rules.foundation/#arch" />} />
+          <Route path="/stack/archive" element={<ExternalRedirect to="https://rules.foundation/#archive" />} />
           <Route path="/stack/autorac" element={<ExternalRedirect to="https://rules.foundation/#autorac" />} />
           <Route path="/stack/autorac/lab" element={<ExternalRedirect to="https://rules.foundation/lab" />} />
+          {/* Cosilico arch - data layer (placeholder for now) */}
+          <Route path="/stack/arch" element={<StackPage />} />
           {/* Cosilico data layer pages */}
           <Route path="/stack/microplex" element={<MicroplexPage />} />
           <Route path="/stack/py-statmatch" element={<PyStatmatchPage />} />
