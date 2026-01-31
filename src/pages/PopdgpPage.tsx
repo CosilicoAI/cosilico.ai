@@ -216,14 +216,6 @@ const ArchitectureDiagram = () => (
   </div>
 );
 
-const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => (
-  <div className={styles.featureCard}>
-    <div className={styles.featureIcon}>{icon}</div>
-    <h3 className={styles.featureTitle}>{title}</h3>
-    <p className={styles.featureDesc}>{description}</p>
-  </div>
-);
-
 export default function PopdgpPage() {
   return (
     <PageLayout>

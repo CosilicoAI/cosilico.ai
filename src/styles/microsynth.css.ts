@@ -11,11 +11,6 @@ const pulseGlow = keyframes({
   "50%": { opacity: 0.8 },
 });
 
-const scanline = keyframes({
-  "0%": { transform: "translateY(-100%)" },
-  "100%": { transform: "translateY(100%)" },
-});
-
 // Page container
 export const page = style({
   minHeight: "100vh",

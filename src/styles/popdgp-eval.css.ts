@@ -12,11 +12,6 @@ import { vars } from '../theme.css';
 // ANIMATIONS
 // ============================================
 
-const fadeInUp = keyframes({
-  '0%': { opacity: 0, transform: 'translateY(24px)' },
-  '100%': { opacity: 1, transform: 'translateY(0)' },
-});
-
 const fadeIn = keyframes({
   '0%': { opacity: 0 },
   '100%': { opacity: 1 },
