@@ -142,8 +142,8 @@ export default function StackPage() {
                 </div>
               </div>
               <p className={styles.componentDescription}>
-                Single source of truth for all raw government files. Statutes,
-                regulations, guidance, microdata, and crosstabs archived with
+                Single source of truth for raw government files. Statutes,
+                regulations, IRS guidance, and state codes archived with
                 full provenance tracking.
               </p>
               <div className={styles.componentFeatures}>
