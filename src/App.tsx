@@ -65,7 +65,7 @@ function App() {
           <Route path="/stack" element={<StackPage />} />
           {/* Redirect open infrastructure pages to Rules Foundation */}
           <Route path="/stack/.rac" element={<ExternalRedirect to="https://rules.foundation/#format" />} />
-          <Route path="/stack/archive" element={<ExternalRedirect to="https://rules.foundation/#archive" />} />
+          <Route path="/stack/atlas" element={<ExternalRedirect to="https://rules.foundation/#atlas" />} />
           <Route path="/stack/autorac" element={<ExternalRedirect to="https://rules.foundation/#autorac" />} />
           <Route path="/stack/autorac/lab" element={<ExternalRedirect to="https://rules.foundation/lab" />} />
           {/* Cosilico arch - data layer (placeholder for now) */}

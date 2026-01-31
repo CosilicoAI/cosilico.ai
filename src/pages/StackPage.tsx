@@ -449,7 +449,7 @@ export default function StackPage() {
                       <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
                     </svg>
                   </div>
-                  <div className={styles.nodeName}>archive</div>
+                  <div className={styles.nodeName}>atlas</div>
                 </div>
                 <div className={styles.nodeFeatures}>
                   <div className={styles.nodeFeature}>Archive raw documents</div>
@@ -572,7 +572,7 @@ export default function StackPage() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Open infrastructure</h2>
             <p className={styles.ctaText}>
-              Core infrastructure (Archive, RAC, AutoRAC) is maintained by the Rules Foundation.
+              Core infrastructure (Atlas, RAC, AutoRAC) is maintained by the Rules Foundation.
               Data layer tools including Arch are open source under MIT.
             </p>
             <div className={styles.ctaLinks}>
