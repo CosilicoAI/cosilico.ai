@@ -257,32 +257,6 @@ export default function StackPage() {
               </div>
             </Link>
 
-
-            {/* cosilico-compile - PLANNED */}
-            <div className={`${styles.componentCard} ${styles.cardDelay10} ${styles.componentCardComingSoon}`}>
-              <div className={styles.componentCardGlow} />
-              <span className={`${styles.statusBadge} ${styles.statusPlanned}`}>PLANNED</span>
-              <div className={styles.componentHeader}>
-                <div className={styles.componentIcon}>
-                  <CompileIcon />
-                </div>
-                <div className={styles.componentMeta}>
-                  <h3 className={styles.componentName}>cosilico-compile</h3>
-                  <div className={styles.componentTagline}>Multi-target compiler</div>
-                </div>
-              </div>
-              <p className={styles.componentDescription}>
-                Compile encoded statutes to multiple targets: Python for
-                analysis, JavaScript for browsers, WASM for performance,
-                SQL for data warehouses.
-              </p>
-              <div className={styles.componentFeatures}>
-                <span className={styles.featureTag}>Python</span>
-                <span className={styles.featureTag}>JavaScript</span>
-                <span className={styles.featureTag}>WASM</span>
-                <span className={styles.featureTag}>SQL</span>
-              </div>
-            </div>
           </div>
         </section>
 
