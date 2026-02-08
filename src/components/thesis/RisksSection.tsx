@@ -43,6 +43,12 @@ export function RisksSection() {
           <p className={styles.riskQ}>What about Intuit?</p>
           <p>TurboTax doesn't have a public API. They're consumer-facing, not infrastructure. Intuit's business model is selling to end users, not enabling competitors. We're Stripe to their payment processor.</p>
         </div>
+
+        <div className={styles.riskCard}>
+          <h4>Incumbents could adopt microsimulation</h4>
+          <p className={styles.riskQ}>What stops IMPLAN or REMI from adding household-level models?</p>
+          <p>Top-down I-O and bottom-up microsimulation are fundamentally different methodologies. Governments use microsimulation for policy scoring precisely because aggregate multipliers can't capture distributional effects<Cite id={32} />. Incumbents would have to rebuild from scratch—and opening their proprietary data would cannibalize $10-50K/yr subscriptions. Our open-source approach turns this into a structural advantage.</p>
+        </div>
       </div>
     </div>
   );

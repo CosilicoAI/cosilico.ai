@@ -79,7 +79,10 @@ export default function ThesisPage() {
         <p className={styles.thesisLabel}>Research prospectus</p>
         <h1 className={styles.heroTitle}>Society, in silico</h1>
         <p className={styles.thesisSubtitle}>
-          We're building the simulation of the economy that everyone can query.
+          Computational models of society already drive financial decisions—insurance pricing,
+          credit scoring, government incentives, economic impact projections. But they're
+          closed, aggregate, and unvalidated. We're building the open alternative: a simulation
+          of the economy from the individual up that anyone can query.
         </p>
         <p className={styles.thesisMeta}>
           Every claim in this document is corroborated with a primary source.
