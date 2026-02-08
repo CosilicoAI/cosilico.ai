@@ -88,6 +88,29 @@ export function SimulationSection() {
       </div>
 
       <div className={styles.thesisContent}>
+        <div className={styles.marketAdditional}>
+          <h3>The endgame: simulate the economy from the individual up</h3>
+          <p>
+            Today's economic models work top-down—aggregate multipliers, industry-level averages,
+            national statistics. Cosilico works <strong>bottom-up</strong>: calculate every household's
+            taxes and benefits from statute, predict missing attributes in distribution, then
+            aggregate to any level—county, state, national, or custom cohort. This inverts the
+            traditional approach. Instead of estimating that "a $50M project creates 500 jobs,"
+            you simulate the 500 households those jobs go to—their tax brackets, benefit eligibility,
+            childcare costs, effective marginal rates—and roll up to precise fiscal impacts.
+          </p>
+          <p>
+            The long-term play: become the shared substrate for financial decisions across the
+            economy. Insurance companies pricing policies. Lenders assessing risk. Governments
+            evaluating incentives. Retailers optimizing locations. AI agents answering "what
+            happens if?" Every decision that depends on how policy affects people flows through
+            the simulation. Not by identifying individuals—by modeling the <strong>distribution</strong> of
+            outcomes at household resolution. The model gets more valuable with every jurisdiction
+            encoded, every data source fused, every query that reveals where the simulation
+            needs refinement.
+          </p>
+        </div>
+
         <div className={styles.platformDetails}>
           <div className={styles.platformCard}>
             <h3>Rules API</h3>

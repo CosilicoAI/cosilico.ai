@@ -221,6 +221,41 @@ export const sources: Source[] = [
     year: 2024,
     url: "https://other-docs.snowflake.com/en/collaboration/provider-listings-pricing-model",
   },
+  {
+    id: 28,
+    author: "PR Newswire",
+    title: "IMPLAN Announces Strategic Investment from Charlesbank Capital Partners",
+    year: 2024,
+    url: "https://www.prnewswire.com/news-releases/implan-announces-strategic-investment-from-charlesbank-capital-partners-302308705.html",
+  },
+  {
+    id: 29,
+    author: "BusinessWire",
+    title: "Burning Glass Technologies and Emsi Announce Merger",
+    year: 2021,
+    url: "https://www.businesswire.com/news/home/20210614005192/en/Burning-Glass-Technologies-and-Emsi-Announce-Merger-to-Provide-Deeper-Labor-Market-Insights-and-Advance-Workforce-Development",
+  },
+  {
+    id: 30,
+    author: "BEA",
+    title: "RIMS II Regional Input-Output Modeling System",
+    year: 2025,
+    url: "https://apps.bea.gov/regional/rims/rimsii/",
+  },
+  {
+    id: 31,
+    author: "Noll & Zimbalist",
+    title: "Sports, Jobs, & Taxes: Are New Stadiums Worth the Cost?",
+    year: 1997,
+    url: "https://www.brookings.edu/articles/sports-jobs-taxes-are-new-stadiums-worth-the-cost/",
+  },
+  {
+    id: 32,
+    author: "Haveman",
+    title: "On The Use and Misuse of Input-Output Based Impact Analysis in Evaluation",
+    year: 2009,
+    url: "https://www.researchgate.net/publication/43126426_On_The_Use_and_Misuse_of_Input-Output_Based_Impact_Analysis_in_Evaluation",
+  },
 ];
 
 export const competitors: Competitor[] = [
@@ -272,6 +307,18 @@ export const competitors: Competitor[] = [
     notes: "Acquired for $8.4B. Sales tax only—no income tax.",
     sourceId: 7,
   },
+  {
+    name: "IMPLAN",
+    focus: "Economic impact (I-O)",
+    incomeTax: false,
+    payrollTax: false,
+    benefits: false,
+    prediction: false,
+    simulation: false,
+    openSource: false,
+    notes: "Acquired for $100M+ (2024). Input-output multiplier models with aggregate tax rates—no household-level rules. API gated behind enterprise subscription.",
+    sourceId: 28,
+  },
 ];
 
 export const pricingComps: PricingComp[] = [
@@ -304,6 +351,16 @@ export const pricingComps: PricingComp[] = [
     ],
     cosilicoPricing: "$0.50/1K records",
     cosilicoAdvantage: "No commercial competitor. First API for population-scale policy simulation.",
+  },
+  {
+    category: "Economic Impact Analysis",
+    competitors: [
+      { name: "IMPLAN", pricing: "$10K-50K+/yr", notes: "Enterprise SaaS, API add-on costs extra. ~$7-8M ARR, acquired for $100M+", sourceId: 28 },
+      { name: "REMI", pricing: "$50K-100K+/yr", notes: "Dynamic CGE model, most sophisticated but most expensive. Used by most state governments" },
+      { name: "RIMS II (BEA)", pricing: "$150-500/region", notes: "Federal government I-O multiplier tables. Spreadsheet, no software", sourceId: 30 },
+    ],
+    cosilicoPricing: "$0.50/1K records",
+    cosilicoAdvantage: "Household-level fiscal impacts from actual statutes, not aggregate multipliers. API-first, no sales call.",
   },
   {
     category: "Data Downloads",

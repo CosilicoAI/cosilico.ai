@@ -28,6 +28,7 @@ export function GapSection() {
             <li><strong>Payroll tax:</strong> Symmetry (64M employees/year)<Cite id={11} /></li>
             <li><strong>Benefits:</strong> Benefit Kitchen (7 states only)<Cite id={12} /></li>
             <li><strong>Tax filing:</strong> Column Tax (filing, not calculation)<Cite id={10} /></li>
+            <li><strong>Economic impact:</strong> IMPLAN, REMI (aggregate multipliers, no household detail)<Cite id={28} /></li>
           </ul>
         </div>
       </div>

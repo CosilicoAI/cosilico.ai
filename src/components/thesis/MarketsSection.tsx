@@ -44,6 +44,11 @@ export function MarketsSection() {
             <div className={styles.marketSize}>$2B+</div>
             <p>Think tanks, government agencies, academics. Legislative scoring, distributional analysis, reform modeling.</p>
           </div>
+          <div className={styles.marketCard}>
+            <h3>Economic impact analysis</h3>
+            <div className={styles.marketSize}>$50-100M+<Cite id={28} /></div>
+            <p>IMPLAN ($100M+ acq.), Lightcast ($350M+ acq.<Cite id={29} />), REMI. PE paying 12-15x revenue multiples. CHIPS Act, IRA, and expanding government incentives driving demand. Incumbents use aggregate multipliers—no household-level fiscal detail.</p>
+          </div>
         </div>
       </div>
     </div>

@@ -93,6 +93,22 @@ export function AskSection() {
           </tbody>
         </table>
       </div>
+
+      <div className={styles.marketAdditional}>
+        <h3>Long-term vision</h3>
+        <p>
+          The APIs are the wedge. The endgame is becoming the shared simulation of the economy
+          that every financial decision references—the way Visa is infrastructure for payments
+          or Bloomberg is infrastructure for markets. Every insurance pricing model, lending
+          decision, government incentive evaluation, and AI agent that needs to understand how
+          policy affects people calls the same simulation. Not by tracking individuals—by
+          modeling the <strong>distribution</strong> of outcomes at household resolution from
+          the statutes up. Bottom-up simulation that's open, auditable, and available to everyone
+          is a better model than either aggregate multipliers or closed proprietary scores.
+          The more jurisdictions encoded and data sources fused, the harder it is to replicate
+          and the more valuable each query becomes.
+        </p>
+      </div>
     </div>
   );
 }

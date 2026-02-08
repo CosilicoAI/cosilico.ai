@@ -80,6 +80,16 @@ export function ModelSection() {
             <span className={styles.comparableValue}>$13.5B</span>
             <span className={styles.comparableType}>Valuation (2024)</span>
           </div>
+          <div className={styles.comparable}>
+            <span className={styles.comparableName}>IMPLAN<Cite id={28} /></span>
+            <span className={styles.comparableValue}>$100M+</span>
+            <span className={styles.comparableType}>~$8M ARR, 12-15x rev. multiple (2024)</span>
+          </div>
+          <div className={styles.comparable}>
+            <span className={styles.comparableName}>Lightcast<Cite id={29} /></span>
+            <span className={styles.comparableValue}>$350M+</span>
+            <span className={styles.comparableType}>KKR-backed, ~$105M ARR (2021)</span>
+          </div>
         </div>
       </div>
     </div>
