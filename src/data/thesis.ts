@@ -256,6 +256,20 @@ export const sources: Source[] = [
     year: 2009,
     url: "https://www.researchgate.net/publication/43126426_On_The_Use_and_Misuse_of_Input-Output_Based_Impact_Analysis_in_Evaluation",
   },
+  {
+    id: 33,
+    author: "PolicyEngine",
+    title: "PolicyEngine powers rapid policy analysis at No 10 Downing Street",
+    year: 2026,
+    url: "https://policyengine.org/us/research/policyengine-10-downing-street",
+  },
+  {
+    id: 34,
+    author: "PolicyEngine",
+    title: "How PolicyEngine's CTC Calculator informed Rhode Island Governor McKee's Child Tax Credit design",
+    year: 2026,
+    url: "https://policyengine.org/us/research/ri-ctc-calculator-press-release",
+  },
 ];
 
 export const competitors: Competitor[] = [

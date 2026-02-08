@@ -1,4 +1,5 @@
 import React from "react";
+import { Cite } from "./Citation";
 import * as styles from "../../styles/thesis.css";
 
 export function TeamSection() {
@@ -11,7 +12,7 @@ export function TeamSection() {
           <h3>Max Ghenis</h3>
           <p className={styles.teamRole}>Founder & CEO</p>
           <ul>
-            <li>Founded PolicyEngine — models used by UK Government, US Congress</li>
+            <li>Founded PolicyEngine — models used by UK Government<Cite id={33} />, US Congress, and Rhode Island Governor's office<Cite id={34} /></li>
             <li>Former Google data scientist</li>
             <li>MIT economics, UC Berkeley statistics</li>
             <li>Led team that encoded US federal + 50 states + UK + Canada</li>

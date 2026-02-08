@@ -43,6 +43,19 @@ export default function PageLayout({
 
       {/* Page content */}
       <div className={styles.content}>{children}</div>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          <span>&copy; {new Date().getFullYear()} Cosilico, Inc.</span>
+          <div className={styles.footerLinks}>
+            <a href="https://rules.foundation" className={styles.footerLink} target="_blank" rel="noopener noreferrer">Rules Foundation</a>
+            <a href="https://docs.cosilico.ai" className={styles.footerLink} target="_blank" rel="noopener noreferrer">Docs</a>
+            <a href="https://github.com/CosilicoAI" className={styles.footerLink} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="mailto:hello@cosilico.ai" className={styles.footerLink}>Contact</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
