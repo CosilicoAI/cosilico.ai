@@ -1,0 +1,10 @@
+name = "cosilico-gateway"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+MODAL_BASE_URL = "https://cosilico--cosilico-v1-web.modal.run"
+
+# Secrets (set via `wrangler secret put`):
+# SUPABASE_URL
+# SUPABASE_SERVICE_KEY

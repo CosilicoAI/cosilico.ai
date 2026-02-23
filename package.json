@@ -1,69 +1,15 @@
 {
-  "name": "cosili.co",
-  "homepage": "",
-  "version": "0.1.0",
+  "name": "cosilico",
   "private": true,
-  "dependencies": {
-    "@craco/craco": "^7.1.0",
-    "@supabase/supabase-js": "^2.45.0",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.8.0",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.126",
-    "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7",
-    "@vanilla-extract/css": "^1.18.0",
-    "@vanilla-extract/webpack-plugin": "^2.3.25",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router-dom": "^6.30.2",
-    "react-scripts": "5.0.1",
-    "recharts": "^3.6.0",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "lint:css": "stylelint 'src/**/*.css'",
-    "serve:build": "http-server ./build -p 3000 -s",
-    "e2e": "npm run build && PLAYWRIGHT_SERVED= npm run playwright:test",
-    "playwright:test": "playwright test",
-    "e2e:headed": "npm run build && PLAYWRIGHT_SERVED= npm run playwright:test -- --headed",
-    "e2e:ci": "npm run build && npm run playwright:install && PLAYWRIGHT_SERVED= npm run playwright:test",
-    "playwright:install": "playwright install --with-deps",
-    "mcp:playwright": "node mcp/playwright-server.mjs"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "clean": "turbo clean"
   },
   "devDependencies": {
-    "@modelcontextprotocol/sdk": "^1.17.4",
-    "@playwright/test": "^1.55.0",
-    "@vanilla-extract/jest-transform": "^1.1.20",
-    "http-server": "^14.1.1",
-    "identity-obj-proxy": "^3.0.0",
-    "stylelint": "^16.26.1",
-    "stylelint-config-standard": "^39.0.1",
-    "stylelint-declaration-strict-value": "^1.10.11"
-  }
+    "turbo": "^2"
+  },
+  "packageManager": "bun@1.2.4"
 }

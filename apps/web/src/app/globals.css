@@ -1,0 +1,340 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════
+   Cosilico design tokens
+   ═══════════════════════════════════════════ */
+
+@theme {
+  /* Color palette — dark void with electric accents */
+  --color-void: #030306;
+  --color-bg: #07070b;
+  --color-elevated: #0d0d14;
+  --color-card: #11111a;
+  --color-surface: #191924;
+  --color-border: #242432;
+  --color-border-subtle: #1b1b28;
+
+  --color-text: #ededf2;
+  --color-text-secondary: #b4b4c6;
+  --color-text-muted: #6c6c84;
+
+  --color-cyan: #00d4ff;
+  --color-cyan-bright: #40e8ff;
+  --color-cyan-dim: #0099bb;
+  --color-cyan-ghost: #00d4ff0a;
+  --color-amber: #ffaa00;
+  --color-green: #00ff88;
+  --color-coral: #ff4466;
+
+  /* Animation curves */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Typography — next/font sets --font-display, --font-body, --font-mono on <html> */
+:root {
+  --f-display: var(--font-display), Georgia, serif;
+  --f-body: var(--font-body), "Helvetica Neue", sans-serif;
+  --f-mono: var(--font-mono), "Fira Code", monospace;
+}
+
+/* ── Base resets ── */
+
+html {
+  background: var(--color-void);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--f-body);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-cyan) 30%, transparent);
+  color: var(--color-text);
+}
+
+/* ── Grid overlay ── */
+
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 0%, transparent 100%);
+}
+
+.grid-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(0, 212, 255, 0.04) 0%,
+    transparent 60%
+  );
+}
+
+/* ── Noise texture ── */
+
+.noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Glow effects ── */
+
+.glow-line {
+  position: relative;
+}
+
+.glow-line::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-cyan) 20%,
+    var(--color-cyan) 80%,
+    transparent
+  );
+  opacity: 0.3;
+}
+
+/* ── Code blocks ── */
+
+code,
+pre {
+  font-family: var(--f-mono);
+  font-size: 0.875em;
+}
+
+pre {
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  padding: 1.25rem;
+  overflow-x: auto;
+}
+
+/* ── Keyframes ── */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s var(--ease-out) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s var(--ease-out) both;
+}
+
+/* ── Typography utilities ── */
+
+.font-display {
+  font-family: var(--f-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: var(--f-mono);
+}
+
+/* Section eyebrow label — e.g. "PRICING", "PLATFORM" */
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cyan-dim);
+}
+
+/* Page-level heading */
+.heading-page {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Section-level heading (slightly larger, for home sections) */
+.heading-section {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Subsection heading */
+.heading-sub {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+/* Medium subsection heading */
+.heading-md {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 1.75rem;
+}
+
+/* ── Color utilities ── */
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-cyan {
+  color: var(--color-cyan);
+}
+
+/* ── Card utilities ── */
+
+.card {
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-card);
+  border-radius: 0.75rem;
+}
+
+.card-elevated {
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-elevated);
+  border-radius: 0.75rem;
+}
+
+.card:hover,
+.card-hover:hover {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+}
+
+/* ── Interactive hover utilities ── */
+
+.link-secondary {
+  color: var(--color-text-secondary);
+  transition: color 0.2s;
+}
+
+.link-secondary:hover {
+  color: var(--color-text);
+}
+
+.link-cyan {
+  color: var(--color-cyan);
+  transition: color 0.2s;
+}
+
+.link-cyan:hover {
+  color: var(--color-cyan-bright);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--color-cyan);
+  color: var(--color-void);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: var(--color-cyan-bright);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-cyan-dim);
+  color: var(--color-text);
+}
+
+/* ── Nav glass bar ── */
+
+.nav-bar {
+  background: rgba(7, 7, 11, 0.8);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border-color: var(--color-border-subtle);
+}
+
+.nav-mobile {
+  background: rgba(7, 7, 11, 0.95);
+  backdrop-filter: blur(16px);
+  border-color: var(--color-border-subtle);
+}
+
+/* ── Divider grid for gap-px card grids ── */
+
+.grid-divider {
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-border-subtle);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.grid-divider > * {
+  background: var(--color-card);
+}
