@@ -11,12 +11,20 @@
   --color-elevated: #0d0d14;
   --color-card: #11111a;
   --color-surface: #191924;
+  /* `border` and `border-subtle` are decorative hairlines (1.32:1 / 1.18:1
+     on bg). SC 1.4.11 does not require 3:1 for purely decorative rules.
+     For *interactive* boundaries — form input borders, focusable
+     dividers — use `border-strong`, which clears 3:1 against bg /
+     elevated / card / surface (asserted in contrast.test.ts). */
   --color-border: #242432;
   --color-border-subtle: #1b1b28;
+  --color-border-strong: #6a6a80;
 
   --color-text: #ededf2;
   --color-text-secondary: #b4b4c6;
-  --color-text-muted: #6c6c84;
+  /* Bumped from #6c6c84 (3.94:1 on bg, fails SC 1.4.3 4.5:1) to #8a8aa8
+     (6.02:1 on bg, 5.79:1 on elevated, 5.61:1 on card). */
+  --color-text-muted: #8a8aa8;
 
   --color-cyan: #00d4ff;
   --color-cyan-bright: #40e8ff;
@@ -25,6 +33,11 @@
   --color-amber: #ffaa00;
   --color-green: #00ff88;
   --color-coral: #ff4466;
+
+  /* Canonical SC 1.4.11 focus indicator. Cyan is 11.36:1 on bg, 9.84:1
+     on surface — well above the 3:1 minimum. Apply on every
+     interactive element's :focus-visible state. */
+  --color-focus-ring: var(--color-cyan);
 
   /* Animation curves */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -324,6 +337,42 @@ pre {
   background: rgba(7, 7, 11, 0.95);
   backdrop-filter: blur(16px);
   border-color: var(--color-border-subtle);
+}
+
+/* ── Focus indicator (SC 1.4.11) ──
+   Apply on every interactive element. Visible only on keyboard focus.
+   Modern browsers (Chromium, Safari, Firefox) render `outline` along
+   the element's existing border-radius, so rounded buttons keep their
+   shape. */
+
+*:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Form inputs ── */
+
+.input {
+  width: 100%;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-elevated);
+  color: var(--color-text);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--f-mono);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:hover {
+  border-color: var(--color-cyan-dim);
+}
+
+.input:focus-visible {
+  border-color: var(--color-cyan);
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
 }
 
 /* ── Divider grid for gap-px card grids ── */
