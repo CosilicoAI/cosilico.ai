@@ -1,28 +1,46 @@
 "use client";
 
 import { useState } from "react";
+import { SectionIntro } from "@/components/section-intro";
+import { apiProducts } from "@/lib/site-content";
 
 export default function PlaygroundPage() {
   const [income, setIncome] = useState("75000");
   const [state, setState] = useState("CA");
+  const [year, setYear] = useState("2025");
+  const [filingStatus, setFilingStatus] = useState("single");
+
+  const requestBody = `{
+  "year": ${year},
+  "location": "${state}",
+  "household": {
+    "filing_status": "${filingStatus}",
+    "employment_income": ${income}
+  }
+}`;
+
+  const curlCommand = `curl https://api.cosilico.ai/calculate \\
+  -H "Authorization: Bearer $COSILICO_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '${requestBody}'`;
 
   return (
-    <section className="relative z-10 min-h-screen pt-32 pb-24">
-      <div className="mx-auto max-w-4xl px-6">
-        <p className="eyebrow mb-4">Playground</p>
-        <h1 className="heading-page mb-8">
-          Try the <span className="italic text-secondary">simulation.</span>
-        </h1>
+    <section className="section-block page-top section-last">
+      <div className="page-wrap">
+        <SectionIntro
+          eyebrow="Playground"
+          as="h1"
+          title={<>Compose the request before you compose the UI.</>}
+          description="This page intentionally generates request scaffolds only. It does not fabricate response data. The point is to make the API shape concrete without pretending a mock console is live."
+        />
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* Input */}
-          <div className="card p-6">
-            <h2 className="font-mono mb-6 text-sm tracking-wide text-muted">
-              Input
-            </h2>
+        <div className="split-grid mt-8">
+          <div className="panel p-6">
+            <p className="section-kicker">Request composer</p>
+            <h2 className="panel-title">Household calculation scaffold</h2>
             <div className="space-y-4">
               <PlaygroundField
-                label="Income"
+                label="Employment income"
                 value={income}
                 onChange={setIncome}
               />
@@ -31,36 +49,53 @@ export default function PlaygroundPage() {
                 value={state}
                 onChange={setState}
               />
+              <PlaygroundField
+                label="Tax year"
+                value={year}
+                onChange={setYear}
+              />
+              <label className="block">
+                <span className="field-label">Filing status</span>
+                <select
+                  value={filingStatus}
+                  onChange={(event) => setFilingStatus(event.target.value)}
+                  className="field-select"
+                >
+                  <option value="single">single</option>
+                  <option value="married_joint">married_joint</option>
+                  <option value="head_of_household">head_of_household</option>
+                </select>
+              </label>
             </div>
           </div>
 
-          {/* Output */}
-          <div className="card p-6">
-            <h2 className="font-mono mb-6 text-sm tracking-wide text-muted">
-              API request
-            </h2>
-            <pre
-              className="font-mono rounded-lg p-4 text-xs leading-relaxed"
-              style={{
-                background: "var(--color-elevated)",
-                border: "1px solid var(--color-border-subtle)",
-              }}
-            >
-              <span style={{ color: "var(--color-cyan-dim)" }}>GET</span>{" "}
-              <span className="text-secondary">
-                api.cosilico.ai/calculate
-              </span>
-              {"\n  "}
-              <span className="text-muted">?income=</span>
-              <span style={{ color: "var(--color-amber)" }}>{income}</span>
-              {"\n  "}
-              <span className="text-muted">&state=</span>
-              <span style={{ color: "var(--color-amber)" }}>{state}</span>
-            </pre>
-            <p className="mt-4 text-xs text-muted">
-              API coming soon — playground will connect to live endpoints.
-            </p>
+          <div className="space-y-4">
+            <div className="panel p-6">
+              <p className="section-kicker">cURL</p>
+              <h2 className="panel-title">Command scaffold</h2>
+              <pre>{curlCommand}</pre>
+              <p className="panel-note">
+                Illustrative request scaffold. Replace the API key and payload
+                with production values.
+              </p>
+            </div>
+
+            <div className="panel p-6">
+              <p className="section-kicker">JSON payload</p>
+              <h2 className="panel-title">Body shape</h2>
+              <pre>{requestBody}</pre>
+            </div>
           </div>
+        </div>
+
+        <div className="endpoint-grid mt-8">
+          {apiProducts.map((product) => (
+            <article key={product.endpoint} className="endpoint-card">
+              <p className="story-index">{product.endpoint}</p>
+              <h2 className="endpoint-title">{product.endpoint}</h2>
+              <p className="endpoint-copy">{product.body}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -76,19 +111,12 @@ type PlaygroundFieldProps = {
 function PlaygroundField({ label, value, onChange }: PlaygroundFieldProps) {
   return (
     <label className="block">
-      <span className="font-mono mb-1.5 block text-xs text-muted">
-        {label}
-      </span>
+      <span className="field-label">{label}</span>
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="font-mono w-full rounded-lg border px-3 py-2 text-sm outline-none transition-colors focus:border-[var(--color-cyan-dim)]"
-        style={{
-          borderColor: "var(--color-border)",
-          background: "var(--color-elevated)",
-          color: "var(--color-text)",
-        }}
+        className="field-input"
       />
     </label>
   );

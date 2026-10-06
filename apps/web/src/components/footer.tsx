@@ -3,28 +3,30 @@ import { Logo } from "@/components/logo";
 
 const columns = [
   {
-    title: "Product",
+    title: "Explore",
     links: [
-      { label: "Stack", href: "/stack" },
+      { label: "Architecture", href: "/architecture" },
+      { label: "Microplex", href: "/microplex" },
+      { label: "Validation", href: "/validation" },
       { label: "Pricing", href: "/pricing" },
       { label: "Playground", href: "/playground" },
-      { label: "Documentation", href: "https://docs.cosilico.ai" },
     ],
   },
   {
-    title: "Company",
+    title: "Stack",
     links: [
-      { label: "Thesis", href: "/thesis" },
-      { label: "Architecture", href: "/architecture" },
+      { label: "Axiom Foundation", href: "https://axiom-foundation.org" },
+      { label: "Stack", href: "/stack" },
+      { label: "Arch architecture", href: "/stack/arch" },
       { label: "Brand", href: "/brand" },
     ],
   },
   {
-    title: "Open source",
+    title: "Elsewhere",
     links: [
-      { label: "Rules Foundation", href: "https://rules.foundation" },
+      { label: "Docs", href: "https://docs.cosilico.ai" },
       { label: "GitHub", href: "https://github.com/CosilicoAI" },
-      { label: "Validation", href: "/validation" },
+      { label: "hello@cosilico.ai", href: "mailto:hello@cosilico.ai" },
     ],
   },
 ];
@@ -35,32 +37,33 @@ export function Footer() {
       className="relative z-10 border-t"
       style={{ borderColor: "var(--color-border-subtle)" }}
     >
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid grid-cols-2 gap-12 md:grid-cols-4">
-          {/* Brand column */}
+      <div className="page-wrap py-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.2fr_repeat(3,minmax(0,1fr))]">
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="mb-5 flex items-center gap-3">
               <Logo size={24} />
-              <span className="font-mono text-xs tracking-widest text-muted">
+              <span className="nav-wordmark text-xs">
                 COSILICO
               </span>
             </div>
-            <p className="text-sm leading-relaxed text-muted">
+            <p className="max-w-sm text-sm leading-relaxed text-muted">
+              A managed runtime for rule encodings, calibrated populations, and
+              economic simulation.
+            </p>
+            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
               Society, in silico.
             </p>
           </div>
 
           {columns.map((col) => (
             <div key={col.title}>
-              <h4 className="eyebrow mb-4">
-                {col.title}
-              </h4>
+              <h4 className="section-kicker mb-4">{col.title}</h4>
               <ul className="flex flex-col gap-2.5">
                 {col.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="link-secondary text-sm no-underline"
+                      className="footer-link text-sm no-underline"
                     >
                       {link.label}
                     </Link>
@@ -78,7 +81,7 @@ export function Footer() {
           <p className="text-xs text-muted">Cosilico PBC</p>
           <a
             href="mailto:hello@cosilico.ai"
-            className="link-secondary text-xs no-underline"
+            className="footer-link text-xs no-underline"
           >
             hello@cosilico.ai
           </a>

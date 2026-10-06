@@ -1,116 +1,71 @@
 import type { Metadata } from "next";
+import { SectionIntro } from "@/components/section-intro";
+import { apiProducts, systemLayers } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Pricing — Cosilico",
-  description: "Open source infrastructure. Pay for compute.",
+  description: "Open-source stack. Managed runtime.",
 };
-
-const apis = [
-  {
-    endpoint: "/calculate",
-    price: "$0.02",
-    unit: "per household",
-    description:
-      "Federal + state income taxes, 100+ benefit programs, marginal rates, audit trail",
-  },
-  {
-    endpoint: "/rules",
-    price: "$0.001",
-    unit: "base per query",
-    description:
-      "Full US Code, historical versions, state codes (CA, NY, TX+). Scales with response size",
-  },
-  {
-    endpoint: "/microsim",
-    price: "$0.50",
-    unit: "per 1K records",
-    description:
-      "Population-scale simulation, custom reforms, distributional breakdowns, budget scoring",
-  },
-  {
-    endpoint: "/impute",
-    price: "$0.10",
-    unit: "per 1K records",
-    description:
-      "Complete partial records, county-level calibration, real-time economic signals, probability distributions",
-  },
-];
-
-const dataSources = [
-  {
-    host: "arch.cosilico.ai",
-    label: "Structured statute archive",
-  },
-  {
-    host: "microplex.cosilico.ai",
-    label: "Synthetic microdata, daily updates",
-  },
-];
 
 export default function PricingPage() {
   return (
-    <section className="relative z-10 min-h-screen pt-32 pb-24">
-      <div className="mx-auto max-w-4xl px-6">
-        <p className="eyebrow mb-4">Pricing</p>
-        <h1 className="heading-page mb-4">
-          Open source infrastructure.{" "}
-          <span className="italic text-secondary">Pay for compute.</span>
-        </h1>
-        <p className="mb-16 text-lg text-secondary">
-          Everything is open source. You pay for the infrastructure, API
-          convenience, fresh data, and serious compute.{" "}
-          <span className="text-cyan">$5 free credits to start.</span>
-        </p>
+    <section className="section-block page-top section-last">
+      <div className="page-wrap">
+        <SectionIntro
+          eyebrow="Pricing"
+          as="h1"
+          title={<>Everything is open source. Pricing is for the managed runtime.</>}
+          description="Cosilico should not charge for code access. It charges for hosted compute, fresh data operations, API ergonomics, access control, and operational convenience."
+        />
 
-        {/* API pricing table */}
-        <div className="mb-16 space-y-3">
-          {apis.map((api) => (
-            <div
-              key={api.endpoint}
-              className="card card-hover flex flex-col gap-4 p-6 transition-colors duration-200 sm:flex-row sm:items-center sm:justify-between"
-            >
-              <div className="flex-1">
-                <div className="mb-2">
-                  <code className="font-mono text-sm text-cyan">
-                    {api.endpoint}
-                  </code>
+        <div className="split-grid mt-8">
+          <div className="panel p-6">
+            <p className="section-kicker">Stack</p>
+            <h2 className="panel-title">What ships as code</h2>
+            <div className="ledger-list">
+              {systemLayers.stack.map((item) => (
+                <div key={item.title} className="ledger-item">
+                  <p className="item-title">{item.title}</p>
+                  <p className="item-body">{item.body}</p>
                 </div>
-                <p className="text-sm text-muted">{api.description}</p>
-              </div>
-              <div className="shrink-0 text-right">
-                <span className="font-display text-2xl">
-                  {api.price}
-                </span>
-                <span className="ml-1.5 font-mono text-xs text-muted">
-                  {api.unit}
-                </span>
-              </div>
+              ))}
             </div>
+          </div>
+
+          <div className="panel p-6">
+            <p className="section-kicker">Managed runtime</p>
+            <h2 className="panel-title">What Cosilico runs for you</h2>
+            <div className="ledger-list">
+              {systemLayers.runtime.map((item) => (
+                <div key={item.title} className="ledger-item">
+                  <p className="item-title">{item.title}</p>
+                  <p className="item-body">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="endpoint-grid mt-8">
+          {apiProducts.map((product) => (
+            <article key={product.endpoint} className="endpoint-card">
+              <p className="story-index">{product.endpoint}</p>
+              <h2 className="endpoint-title">{product.endpoint}</h2>
+              <div className="endpoint-meta">
+                <span className="endpoint-price">{product.price}</span>
+                <span>{product.unit}</span>
+              </div>
+              <p className="endpoint-copy">{product.body}</p>
+            </article>
           ))}
         </div>
 
-        {/* Free data */}
-        <div className="card-elevated p-8">
-          <h2 className="heading-md mb-4">
-            Data: <span style={{ color: "var(--color-green)" }}>free</span>
-          </h2>
-          <p className="mb-6 text-sm leading-relaxed text-secondary">
-            All data is freely available via R2. Full version history. Clone
-            and host yourself.
+        <div className="panel quote-panel mt-8">
+          <p className="section-kicker">Pricing principle</p>
+          <p className="quote-copy">
+            Pay for speed, scale, freshness, and reliability. Not for source
+            access.
           </p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {dataSources.map((src) => (
-              <div
-                key={src.host}
-                className="card rounded-lg px-4 py-3"
-              >
-                <code className="font-mono text-xs text-muted">
-                  {src.host}
-                </code>
-                <p className="mt-1 text-sm text-secondary">{src.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

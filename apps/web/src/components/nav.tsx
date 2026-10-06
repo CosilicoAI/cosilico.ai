@@ -5,10 +5,11 @@ import { useState } from "react";
 import { Logo } from "@/components/logo";
 
 const links = [
-  { label: "Stack", href: "/stack" },
+  { label: "Architecture", href: "/architecture" },
+  { label: "Microplex", href: "/microplex" },
+  { label: "Validation", href: "/validation" },
   { label: "Pricing", href: "/pricing" },
   { label: "Playground", href: "/playground" },
-  { label: "Thesis", href: "/thesis" },
   { label: "Docs", href: "https://docs.cosilico.ai", external: true },
 ];
 
@@ -17,24 +18,21 @@ export function Nav() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="nav-bar mt-4 flex items-center justify-between rounded-full border px-5 py-2.5">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 no-underline">
+      <div className="page-wrap">
+        <div className="nav-bar mt-4 flex items-center justify-between rounded-full border px-4 py-2.5 md:px-5">
+          <Link href="/" className="flex items-center gap-3 no-underline">
             <Logo />
-            <span className="font-mono text-sm text-[var(--color-text)]" style={{ letterSpacing: "0.08em" }}>
-              COSILICO
-            </span>
+            <span className="nav-wordmark hidden min-w-0 md:block">COSILICO</span>
           </Link>
 
-          {/* Desktop links */}
           <div className="hidden items-center gap-1 md:flex">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
-                className="link-secondary rounded-lg px-3.5 py-1.5 text-sm no-underline"
+                rel={link.external ? "noreferrer" : undefined}
+                className="nav-link"
               >
                 {link.label}
               </Link>
@@ -42,13 +40,13 @@ export function Nav() {
             <Link
               href="https://github.com/CosilicoAI"
               target="_blank"
-              className="btn-outline ml-2 rounded-lg px-3.5 py-1.5 text-sm"
+              rel="noreferrer"
+              className="btn-primary rounded-full px-4 py-2 text-sm"
             >
               GitHub
             </Link>
           </div>
 
-          {/* Mobile menu button */}
           <button
             className="text-muted md:hidden"
             onClick={() => setOpen(!open)}
@@ -64,20 +62,29 @@ export function Nav() {
           </button>
         </div>
 
-        {/* Mobile menu */}
         {open && (
-          <div className="nav-mobile mt-2 flex flex-col gap-1 rounded-2xl border p-4 md:hidden">
+          <div className="nav-mobile mt-2 flex flex-col gap-1 rounded-[1.5rem] border p-4 md:hidden">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer" : undefined}
                 onClick={() => setOpen(false)}
-                className="link-secondary rounded-lg px-4 py-2.5 text-sm no-underline"
+                className="nav-link"
               >
                 {link.label}
               </Link>
             ))}
+            <Link
+              href="https://github.com/CosilicoAI"
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setOpen(false)}
+              className="nav-link"
+            >
+              GitHub
+            </Link>
           </div>
         )}
       </div>

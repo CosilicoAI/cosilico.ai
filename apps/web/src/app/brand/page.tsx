@@ -1,24 +1,11 @@
 import type { Metadata } from "next";
+import { SectionIntro } from "@/components/section-intro";
+import { brandColors, brandPrinciples } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Brand — Cosilico",
-  description: "Cosilico brand guidelines, design system, and assets.",
+  description: "Visual and verbal system for Cosilico.",
 };
-
-const colors = [
-  { name: "Void", value: "#030306" },
-  { name: "Background", value: "#07070b" },
-  { name: "Card", value: "#11111a" },
-  { name: "Surface", value: "#191924" },
-  { name: "Cyan", value: "#00d4ff" },
-  { name: "Cyan bright", value: "#40e8ff" },
-  { name: "Amber", value: "#ffaa00" },
-  { name: "Green", value: "#00ff88" },
-  { name: "Coral", value: "#ff4466" },
-  { name: "Text", value: "#ededf2" },
-  { name: "Text secondary", value: "#b4b4c6" },
-  { name: "Text muted", value: "#6c6c84" },
-];
 
 const typefaces = [
   {
@@ -47,62 +34,66 @@ const typefaces = [
 
 export default function BrandPage() {
   return (
-    <section className="relative z-10 min-h-screen pt-32 pb-24">
-      <div className="mx-auto max-w-4xl px-6">
-        <p className="eyebrow mb-4">Brand</p>
-        <h1 className="heading-page mb-12">
-          Brand <span className="italic text-secondary">guidelines.</span>
-        </h1>
+    <section className="section-block page-top section-last">
+      <div className="page-wrap">
+        <SectionIntro
+          eyebrow="Brand"
+          as="h1"
+          title={<>Editorial systems, not generic SaaS chrome.</>}
+          description="The design language should feel like a field manual for economic infrastructure: precise, atmospheric, and a little severe."
+        />
 
-        {/* Color palette */}
-        <div className="mb-16">
-          <h2 className="heading-md mb-6">Colors</h2>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {colors.map((c) => (
-              <div key={c.name}>
-                <div
-                  className="mb-2 h-16 rounded-lg border"
-                  style={{
-                    background: c.value,
-                    borderColor: "var(--color-border-subtle)",
-                  }}
-                />
-                <p className="font-mono text-xs text-muted">{c.name}</p>
-                <p className="font-mono text-xs text-muted">{c.value}</p>
-              </div>
-            ))}
+        <div className="split-grid mt-8">
+          <div className="panel p-6">
+            <p className="section-kicker">Palette</p>
+            <h2 className="panel-title">Mineral, fog, signal</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {brandColors.map((color) => (
+                <div key={color.name}>
+                  <div
+                    className="brand-swatch"
+                    style={{ background: color.value }}
+                  />
+                  <p className="mt-2 font-mono text-xs text-muted">
+                    {color.name}
+                  </p>
+                  <p className="font-mono text-xs text-muted">{color.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="panel p-6">
+            <p className="section-kicker">Principles</p>
+            <h2 className="panel-title">Rules for the visual system</h2>
+            <div className="rail-list">
+              {brandPrinciples.map((item) => (
+                <div key={item} className="rail-item">
+                  <p className="rail-copy">{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Typography */}
-        <div className="mb-16">
-          <h2 className="heading-md mb-6">Typography</h2>
-          <div className="space-y-6">
-            {typefaces.map((t) => (
-              <div key={t.label}>
-                <p className="font-mono mb-1 text-xs text-muted">
-                  {t.label}
+        <div className="panel p-6">
+          <p className="section-kicker">Typography</p>
+          <h2 className="panel-title">Display, body, code</h2>
+          <div className="space-y-6 mt-6">
+            {typefaces.map((typeface) => (
+              <div key={typeface.label}>
+                <p className="font-mono mb-2 text-xs text-muted">
+                  {typeface.label}
                 </p>
                 <p
-                  className={t.sampleClass}
-                  style={{ fontFamily: t.family }}
+                  className={typeface.sampleClass}
+                  style={{ fontFamily: typeface.family }}
                 >
-                  {t.sample}
+                  {typeface.sample}
                 </p>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Writing */}
-        <div>
-          <h2 className="heading-md mb-6">Writing style</h2>
-          <ul className="list-inside space-y-2 text-sm text-secondary">
-            <li>Sentence case for all headings (not Title Case)</li>
-            <li>Active voice, direct statements</li>
-            <li>Quantitative where possible — numbers over adjectives</li>
-            <li>Neutral tone — describe, don&apos;t advocate</li>
-          </ul>
         </div>
       </div>
     </section>

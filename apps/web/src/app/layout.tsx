@@ -29,10 +29,12 @@ const body = DM_Sans({
 export const metadata: Metadata = {
   title: "Cosilico — Society, in silico",
   description:
-    "We simulate the economy. Household by household. Tax by tax. Policy by policy. Open source infrastructure. APIs for the rest.",
+    "Hosted APIs for household calculation, rule lookup, microsimulation, and imputation.",
+  metadataBase: new URL("https://cosilico.ai"),
   openGraph: {
     title: "Cosilico",
-    description: "We simulate the economy.",
+    description:
+      "Hosted APIs for household calculation, rule lookup, microsimulation, and imputation.",
     images: ["/og-image.png"],
   },
 };
@@ -50,7 +52,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body>
+      <body className="antialiased">
         <div className="grid-bg" />
         <div className="noise" />
         <Nav />
